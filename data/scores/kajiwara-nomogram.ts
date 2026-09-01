@@ -12,7 +12,7 @@ export const kajiwaraNomogram: ScoreDefinition = {
   category: 't1-colorectal',
   categoryLabel: '大腸T1癌',
   description:
-    '内視鏡治療後の大腸T1癌におけるリンパ節転移（LNM）確率を予測します。Kajiwara 2023 の多変量ロジスティック係数を使います。BEST-JやeCuraとは対象・目的が異なります。',
+    '内視鏡治療後の大腸T1癌におけるリンパ節転移（LNM）確率を予測します。Kajiwara 2023（GIE; 開発 3080 例）の6因子多変量ロジスティックです。BEST-JやeCuraとは対象・目的が異なります。',
   reference: 'Kajiwara Y et al. Gastrointest Endosc 2023;97:1119-1128.e5',
   fields: [
     {
@@ -36,15 +36,17 @@ export const kajiwaraNomogram: ScoreDefinition = {
     {
       id: 'grade',
       label: '組織型',
+      description: '優位組織型。G1=乳頭腺癌・高分化管状腺癌、G2=中分化、G3=低分化・粘液癌・印環細胞癌',
       options: [
-        { value: 0, label: 'G1' },
-        { value: 1, label: 'G2' },
-        { value: 2, label: 'G3' },
+        { value: 0, label: 'G1', description: '乳頭腺癌・高分化管状腺癌' },
+        { value: 1, label: 'G2', description: '中分化管状腺癌' },
+        { value: 2, label: 'G3', description: '低分化腺癌・粘液癌・印環細胞癌' },
       ],
     },
     {
       id: 'lvi',
       label: '脈管侵襲',
+      description: 'リンパ管侵襲または静脈侵襲',
       options: [
         { value: 0, label: 'なし' },
         { value: 1, label: 'あり' },
@@ -53,6 +55,7 @@ export const kajiwaraNomogram: ScoreDefinition = {
     {
       id: 'smDepth',
       label: 'SM浸潤深度',
+      description: 'JSCCR絶対計測。MM下縁から、または有茎性はhead/stalk境界から',
       options: [
         { value: 0, label: '<1000μm' },
         { value: 1, label: '1000–1999μm' },
@@ -62,9 +65,10 @@ export const kajiwaraNomogram: ScoreDefinition = {
     {
       id: 'budding',
       label: '簇出',
+      description: '20倍視野（0.785 mm²）hotspot。モデルでは BD2 と BD3 を同一係数',
       options: [
-        { value: 0, label: 'BD1' },
-        { value: 1, label: 'BD2-3' },
+        { value: 0, label: 'BD1', description: '<5個' },
+        { value: 1, label: 'BD2/3', description: 'BD2: 5–9個、BD3: ≥10個' },
       ],
     },
   ],

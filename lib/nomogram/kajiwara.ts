@@ -16,8 +16,9 @@ export type NomogramInput = {
 
 /**
  * Kajiwara 2023 多変量ロジスティックの切片と係数。
- * 参照カテゴリ: 男性, 横行結腸, G1, LVI−, SM<1000μm, BD1。
- * Table 2 の丸め OR の ln ではなく、モデル係数そのもの。
+ * 論文 Table 2 は丸めた OR のみ。切片は本文になく、モデル係数を使う。
+ * 参照カテゴリ: 男性, 横行結腸 T, G1, LVI−, SM<1000μm, BD1。
+ * G3 は低分化・粘液癌・印環細胞癌。簇出は BD2/3 をひとまとめ。
  */
 export const INTERCEPT = -5.656011847;
 
