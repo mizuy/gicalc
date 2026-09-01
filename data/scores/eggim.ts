@@ -21,6 +21,7 @@ export const eggimScore: ScoreDefinition = {
     'IEE で前庭・体部の小弯/大弯4領域の腸上皮化生を 0–8 点で評価します。5–8 が高リスク（Kawamura 2021）。生検は不要です。',
   reference:
     'Pimentel-Nunes P et al. Endoscopy 2016;48:723-730 / Kawamura M et al. Dig Endosc 2021',
+  pubmed: '27280384',
   fields: [
     areaField('antrumLesser', '前庭部小弯'),
     areaField('antrumGreater', '前庭部大弯'),

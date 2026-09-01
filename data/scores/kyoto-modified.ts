@@ -10,6 +10,7 @@ export const kyotoModifiedScore: ScoreDefinition = {
   description:
     'Kawamura 2021 の改変法。RAC 不可視 2点、開大型萎縮・体部 IEE 腸上皮化生>30%・体部地図状発赤 各1点。原法とは別スコアです。',
   reference: 'Kawamura M et al. Dig Endosc 2021',
+  pubmed: '34415621',
   fields: [
     {
       id: 'rac',

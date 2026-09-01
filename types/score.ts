@@ -40,6 +40,8 @@ type ToolBase = {
   categoryLabel: string;
   description: string;
   reference?: string;
+  /** PubMed PMID、または PubMed 上の URL（未収載論文は検索 URL） */
+  pubmed?: string;
 };
 
 export type ClassificationRow = {
@@ -67,6 +69,7 @@ export type ClassificationFigure = {
   caption: string;
   source: string;
   doi?: string;
+  pubmed?: string;
   note: string;
   aspectRatio: number;
 };

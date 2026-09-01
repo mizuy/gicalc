@@ -14,6 +14,8 @@ import { computeAronchick } from '../lib/scores/aronchick';
 import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
 import { getScoreById, SCORES } from '../data/scores';
+import { KIMURA_1969_PUBMED } from '../data/scores/kimura-takemoto';
+import { pubmedUrl } from '../lib/pubmed';
 import { isClassification } from '../types/score';
 
 test('登録スコアは15種でカテゴリ順に並ぶ', () => {
@@ -446,7 +448,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     jnet.entries.map((entry) => entry.label),
     ['Type 1', 'Type 2A', 'Type 2B', 'Type 3'],
   );
-  assert.equal(jnet.entries[1]?.meaning, '腺腫（LGIEN）');
+  assert.equal(jnet.entries[1]?.meaning, 'Low-grade intramucosal neoplasia');
 
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
@@ -454,7 +456,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     jes.entries.map((entry) => entry.label),
     ['Type A', 'Type B1', 'Type B2', 'Type B3'],
   );
-  assert.equal(jes.entries[2]?.meaning, 'MM / SM1');
+  assert.equal(jes.entries[2]?.meaning, 'T1a-MM / T1b-SM1');
 
   const kimura = getScoreById('kimura-takemoto');
   assert.ok(kimura && isClassification(kimura));
@@ -463,27 +465,45 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     ['C-0', 'C-1', 'C-2', 'C-3', 'O-1', 'O-2', 'O-3'],
   );
   assert.equal(kimura.entries[0]?.group, '萎縮なし');
-  assert.equal(kimura.entries[6]?.meaning, '開放型（高度）');
+  assert.equal(kimura.entries[6]?.meaning, 'Open type (severe)');
 
   const apcs = getScoreById('apcs');
   assert.ok(apcs && !isClassification(apcs));
 });
 
-test('分類の模式図は出典（引用）を持つ', () => {
+test('分類は原著の図を出典付きで持つ', () => {
   const jnet = getScoreById('jnet');
   assert.ok(jnet && isClassification(jnet));
   assert.equal(jnet.figures?.length, 1);
   assert.match(jnet.figures?.[0]?.source ?? '', /Sano Y/);
   assert.match(jnet.figures?.[0]?.doi ?? '', /10\.1111\/den\.12644/);
-  assert.match(jnet.figures?.[0]?.note ?? '', /複製ではない/);
+  assert.match(jnet.figures?.[0]?.src ?? '', /jnet-sano2016-fig7/);
+  assert.match(jnet.figures?.[0]?.caption ?? '', /Fig\. 7/);
+  assert.equal(jnet.pubmed, '26927367');
+  assert.equal(jnet.figures?.[0]?.pubmed, '26927367');
 
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
+  assert.equal(jes.figures?.length, 2);
   assert.match(jes.figures?.[0]?.source ?? '', /Oyama T/);
   assert.match(jes.figures?.[0]?.doi ?? '', /10\.1007\/s10388-016-0527-7/);
+  assert.match(jes.figures?.[0]?.src ?? '', /jes-oyama2017-fig1-4/);
+  assert.match(jes.figures?.[1]?.src ?? '', /jes-oyama2017-fig5/);
+  assert.equal(jes.pubmed, '28386209');
 
   const kimura = getScoreById('kimura-takemoto');
   assert.ok(kimura && isClassification(kimura));
   assert.match(kimura.figures?.[0]?.source ?? '', /Kimura K/);
   assert.match(kimura.figures?.[0]?.doi ?? '', /10\.1055\/s-0028-1098086/);
+  assert.match(kimura.figures?.[0]?.src ?? '', /kimura-takemoto-1969/);
+  assert.equal(kimura.pubmed, KIMURA_1969_PUBMED);
+  assert.equal(kimura.figures?.[0]?.pubmed, '31327182');
+});
+
+test('引用は PubMed へ行く', () => {
+  assert.equal(pubmedUrl('26927367'), 'https://pubmed.ncbi.nlm.nih.gov/26927367/');
+  assert.equal(pubmedUrl(KIMURA_1969_PUBMED), KIMURA_1969_PUBMED);
+  for (const score of SCORES) {
+    assert.ok(score.pubmed, score.id);
+  }
 });

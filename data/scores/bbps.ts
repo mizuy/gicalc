@@ -17,6 +17,7 @@ export const bbpsScore: ScoreDefinition = {
   description:
     '大腸内視鏡の前処置を3区域（0–3点、合計0–9）で評価します。洗浄・吸引後の抜去時に付けます。Aronchick は洗浄前の全体評価で、別尺度です。',
   reference: 'Lai EJ et al. Gastrointest Endosc 2009;69:620-625',
+  pubmed: '19136102',
   fields: [
     {
       id: 'right',

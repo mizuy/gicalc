@@ -11,6 +11,7 @@ export const kyotoScore: ScoreDefinition = {
     '萎縮・腸上皮化生・皺襞腫大・結節性・びまん性発赤の5所見（0–8点）。Shichijo 2017 は萎縮が独立因子、Kawamura 2021 は多変量で原法の説明力が不十分として改変法を提案しています。',
   reference:
     'Haruma K et al. Kyoto Classification of Gastritis, 2017 / Shichijo S et al. J Gastroenterol Hepatol 2017;32:1581-1586 / Kawamura M et al. Dig Endosc 2021',
+  pubmed: '28217843',
   fields: [
     {
       id: 'atrophy',

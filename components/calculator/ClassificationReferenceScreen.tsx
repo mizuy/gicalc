@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
+import { CitationLink } from '@/components/calculator/CitationLink';
 import { Text, useThemeColor } from '@/components/Themed';
 import { SeverityColors } from '@/constants/Colors';
 import type { ClassificationDefinition, ClassificationEntry } from '@/types/score';
@@ -44,7 +45,9 @@ export function ClassificationReferenceScreen({ score }: Props) {
       <Text style={styles.title}>{score.name}</Text>
       <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
       {score.reference ? (
-        <Text style={[styles.reference, { color: textSecondary }]}>文献: {score.reference}</Text>
+        <View style={styles.reference}>
+          <CitationLink label={`文献: ${score.reference}`} pubmed={score.pubmed} />
+        </View>
       ) : null}
 
       {score.figures?.map((figure) => (
@@ -114,8 +117,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   reference: {
-    fontSize: 12,
-    lineHeight: 18,
     marginBottom: 16,
   },
   group: {
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   rowHeading: {
-    width: 52,
+    width: 72,
     fontSize: 12,
     fontWeight: '700',
     lineHeight: 20,

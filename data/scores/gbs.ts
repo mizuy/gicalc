@@ -10,6 +10,7 @@ export const gbsScore: ScoreDefinition = {
   description:
     '上部消化管出血で治療介入（輸血・内視鏡・手術）の必要性を予測します。下部出血の NOBLADS とは別体系です。',
   reference: 'Blatchford O et al. Lancet 2000;356:1318-1321',
+  pubmed: '11073021',
   fields: [
     {
       id: 'sex',

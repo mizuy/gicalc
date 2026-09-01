@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
+import { CitationLink } from '@/components/calculator/CitationLink';
 import { ScoreFieldSelector } from '@/components/calculator/ScoreFieldSelector';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
 import { Text, useThemeColor } from '@/components/Themed';
@@ -37,7 +38,9 @@ export function ScoreCalculatorScreen({ score }: Props) {
       <Text style={styles.title}>{score.name}</Text>
       <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
       {score.reference ? (
-        <Text style={[styles.reference, { color: textSecondary }]}>文献: {score.reference}</Text>
+        <View style={styles.reference}>
+          <CitationLink label={`文献: ${score.reference}`} pubmed={score.pubmed} />
+        </View>
       ) : null}
 
       <ScoreResultPanel result={result} ready={allFieldsFilled} />
@@ -99,8 +102,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   reference: {
-    fontSize: 12,
-    lineHeight: 18,
     marginBottom: 20,
   },
   reset: {

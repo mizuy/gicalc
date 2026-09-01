@@ -1,6 +1,6 @@
-import * as Linking from 'expo-linking';
-import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
+import { CitationLink } from '@/components/calculator/CitationLink';
 import { Text, useThemeColor } from '@/components/Themed';
 import { publicPath } from '@/lib/web/baseUrl';
 import type { ClassificationFigure as Figure } from '@/types/score';
@@ -13,7 +13,6 @@ export function ClassificationFigure({ figure }: Props) {
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
   const textSecondary = useThemeColor({}, 'textSecondary');
-  const tint = useThemeColor({}, 'tint');
 
   return (
     <View style={[styles.box, { backgroundColor: surface, borderColor: border }]}>
@@ -24,17 +23,7 @@ export function ClassificationFigure({ figure }: Props) {
         resizeMode="contain"
       />
       <Text style={styles.caption}>{figure.caption}</Text>
-      {figure.doi ? (
-        <Pressable
-          accessibilityRole="link"
-          onPress={() => {
-            void Linking.openURL(figure.doi!);
-          }}>
-          <Text style={[styles.source, { color: tint }]}>出典: {figure.source}</Text>
-        </Pressable>
-      ) : (
-        <Text style={[styles.source, { color: textSecondary }]}>出典: {figure.source}</Text>
-      )}
+      <CitationLink label={`出典: ${figure.source}`} pubmed={figure.pubmed} />
       <Text style={[styles.note, { color: textSecondary }]}>{figure.note}</Text>
     </View>
   );
@@ -57,12 +46,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginTop: 10,
     lineHeight: 20,
-  },
-  source: {
-    fontSize: 12,
-    lineHeight: 18,
-    marginTop: 4,
-    textDecorationLine: 'underline',
   },
   note: {
     fontSize: 11,

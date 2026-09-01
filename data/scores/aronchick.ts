@@ -10,6 +10,7 @@ export const aronchickScore: ScoreDefinition = {
   description:
     '大腸全体の前処置を洗浄前に5段階で評価します。区域点はありません。BBPS は洗浄後の3区域評価で、別尺度です。',
   reference: 'Aronchick CA et al. Gastrointest Endosc 2000;52:346-352',
+  pubmed: '10968848',
   fields: [
     {
       id: 'grade',
