@@ -10,6 +10,9 @@ type Props = {
 };
 
 function formatValue(result: ScoreResult): string {
+  if (result.displayMode === 'classification') {
+    return result.classificationLabel ?? result.interpretation;
+  }
   if (result.displayMode === 'probability') {
     const value = result.probability ?? result.total;
     return `${value.toFixed(1)} %`;

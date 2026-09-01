@@ -6,15 +6,21 @@ import { bestJScore } from './best-j';
 import { ecuraHattaScore } from './ecura-hatta';
 import { eggimScore } from './eggim';
 import { gbsScore } from './gbs';
+import { jesScore } from './jes';
+import { jnetScore } from './jnet';
 import { kajiwaraNomogram } from './kajiwara-nomogram';
+import { kimuraTakemotoScore } from './kimura-takemoto';
 import { kyotoScore } from './kyoto';
 import { kyotoModifiedScore } from './kyoto-modified';
 import { nobladsScore } from './noblads';
 import { sekiguchiScore } from './sekiguchi';
 
-/** 表示順: 検診 → 大腸T1 → 前処置 → 早期胃癌 → 胃炎リスク → 出血 */
+/** 表示順: 検診 → 内視鏡分類 → 大腸T1 → 前処置 → 早期胃癌 → 胃炎リスク → 出血 */
 export const SCORES: ScoreDefinition[] = [
   apcsScore,
+  jesScore,
+  kimuraTakemotoScore,
+  jnetScore,
   kajiwaraNomogram,
   bbpsScore,
   aronchickScore,

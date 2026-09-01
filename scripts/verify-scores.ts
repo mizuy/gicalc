@@ -12,14 +12,20 @@ import { computeNoblads } from '../lib/scores/noblads';
 import { computeApcs } from '../lib/scores/apcs';
 import { computeAronchick } from '../lib/scores/aronchick';
 import { computeBbps } from '../lib/scores/bbps';
+import { computeJes } from '../lib/scores/jes';
+import { computeJnet } from '../lib/scores/jnet';
+import { computeKimuraTakemoto } from '../lib/scores/kimura-takemoto';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
 import { getScoreById, SCORES } from '../data/scores';
 
-test('登録スコアは12種でカテゴリ順に並ぶ', () => {
+test('登録スコアは15種でカテゴリ順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
       'apcs',
+      'jes',
+      'kimura-takemoto',
+      'jnet',
       'kajiwara-nomogram',
       'bbps',
       'aronchick',
@@ -433,4 +439,66 @@ test('Aronchick: Excellent/Good は adequate、Poor/Inadequate は inadequate', 
   const inadequate = computeAronchick({ grade: 5 });
   assert.equal(inadequate.interpretation, 'Inadequate（不適）');
   assert.equal(inadequate.severity, 'severe');
+});
+
+test('JNET: Type 1 / 2A / 2B / 3 は分類表示で組織推定が分かれる', () => {
+  const type1 = computeJnet({ type: 1 });
+  assert.equal(type1.displayMode, 'classification');
+  assert.equal(type1.classificationLabel, 'Type 1');
+  assert.equal(type1.interpretation, '過形成 / SSL');
+
+  const type2a = computeJnet({ type: 2 });
+  assert.equal(type2a.classificationLabel, 'Type 2A');
+  assert.equal(type2a.interpretation, '腺腫（LGIEN）');
+
+  const type2b = computeJnet({ type: 3 });
+  assert.equal(type2b.classificationLabel, 'Type 2B');
+  assert.equal(type2b.interpretation, 'HGIEN / 浅層SM');
+
+  const type3 = computeJnet({ type: 4 });
+  assert.equal(type3.classificationLabel, 'Type 3');
+  assert.equal(type3.interpretation, '深層SM以深');
+  assert.equal(type3.severity, 'severe');
+
+  const defined = getScoreById('jnet');
+  assert.ok(defined);
+  assert.equal(defined.compute({ type: 2 }).classificationLabel, 'Type 2A');
+});
+
+test('JES: Type A / B1 / B2 / B3 は推定深達度が分かれる', () => {
+  const typeA = computeJes({ type: 1 });
+  assert.equal(typeA.classificationLabel, 'Type A');
+  assert.equal(typeA.interpretation, '非癌（炎症 / LGIN）');
+
+  const typeB1 = computeJes({ type: 2 });
+  assert.equal(typeB1.classificationLabel, 'Type B1');
+  assert.equal(typeB1.interpretation, 'EP / LPM');
+
+  const typeB2 = computeJes({ type: 3 });
+  assert.equal(typeB2.classificationLabel, 'Type B2');
+  assert.equal(typeB2.interpretation, 'MM / SM1');
+
+  const typeB3 = computeJes({ type: 4 });
+  assert.equal(typeB3.classificationLabel, 'Type B3');
+  assert.equal(typeB3.interpretation, 'SM2 以深');
+  assert.equal(typeB3.severity, 'severe');
+});
+
+test('木村–竹本: C-0 から O-3 まで閉鎖型と開放型が分かれる', () => {
+  const c0 = computeKimuraTakemoto({ grade: 0 });
+  assert.equal(c0.classificationLabel, 'C-0');
+  assert.equal(c0.interpretation, '萎縮なし');
+
+  const c2 = computeKimuraTakemoto({ grade: 2 });
+  assert.equal(c2.classificationLabel, 'C-2');
+  assert.equal(c2.interpretation, '閉鎖型（中等度）');
+
+  const o3 = computeKimuraTakemoto({ grade: 6 });
+  assert.equal(o3.classificationLabel, 'O-3');
+  assert.equal(o3.interpretation, '開放型（高度）');
+  assert.equal(o3.severity, 'severe');
+
+  const defined = getScoreById('kimura-takemoto');
+  assert.ok(defined);
+  assert.equal(defined.compute({ grade: 4 }).classificationLabel, 'O-1');
 });

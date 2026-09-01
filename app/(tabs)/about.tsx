@@ -14,11 +14,18 @@ export default function AboutScreen() {
     <ScrollView style={[styles.scroll, { backgroundColor: background }]} contentContainerStyle={styles.content}>
       <Text style={styles.title}>GI Calc / gicalc</Text>
       <Text style={[styles.body, { color: textSecondary }]}>
-        消化管内視鏡臨床医向けのスコアリング・予測ツールです。ブラウザとPWAで利用でき、App
-        Storeは不要です。スコア追加は data/scores/ に定義ファイルを足すだけです。
+        消化管内視鏡臨床医向けのスコア・予測・内視鏡分類ツールです。ブラウザとPWAで利用でき、App
+        Storeは不要です。追加は data/scores/ に定義ファイルを足すだけです。
       </Text>
 
       <Text style={[styles.section, { color: tint }]}>収録ツール（体系は混同しない）</Text>
+      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
+        <Text style={styles.cardTitle}>JES / 木村–竹本 / JNET</Text>
+        <Text style={[styles.body, { color: textSecondary }]}>
+          内視鏡分類。JES は食道扁平上皮の拡大（A/B1/B2/B3）、木村–竹本は胃萎縮（C-0–O-3）、JNET
+          は大腸 NBI 拡大（1/2A/2B/3）です。混ぜないでください。
+        </Text>
+      </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
         <Text style={styles.cardTitle}>APCS</Text>
         <Text style={[styles.body, { color: textSecondary }]}>

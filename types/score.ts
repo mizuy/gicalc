@@ -1,4 +1,11 @@
-export type ScoreCategory = 'screening' | 't1-colorectal' | 'prep' | 'gastric' | 'gastritis' | 'bleeding';
+export type ScoreCategory =
+  | 'screening'
+  | 'classification'
+  | 't1-colorectal'
+  | 'prep'
+  | 'gastric'
+  | 'gastritis'
+  | 'bleeding';
 
 export type ScoreOption = {
   value: number;
@@ -21,8 +28,9 @@ export type ScoreResult = {
   interpretation: string;
   severity?: ScoreSeverity;
   details?: string[];
-  displayMode?: 'points' | 'probability';
+  displayMode?: 'points' | 'probability' | 'classification';
   probability?: number;
+  classificationLabel?: string;
 };
 
 export type ScoreDefinition = {
@@ -39,6 +47,7 @@ export type ScoreDefinition = {
 
 export const CATEGORY_LABELS: Record<ScoreCategory, string> = {
   screening: '大腸がん検診',
+  classification: '内視鏡分類',
   't1-colorectal': '大腸T1癌',
   prep: '腸管前処置',
   gastric: '早期胃癌',
@@ -48,6 +57,7 @@ export const CATEGORY_LABELS: Record<ScoreCategory, string> = {
 
 export const CATEGORY_ORDER: ScoreCategory[] = [
   'screening',
+  'classification',
   't1-colorectal',
   'prep',
   'gastric',
