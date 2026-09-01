@@ -20,6 +20,13 @@ export default function AboutScreen() {
 
       <Text style={[styles.section, { color: tint }]}>収録ツール（体系は混同しない）</Text>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
+        <Text style={styles.cardTitle}>BBPS / Aronchick</Text>
+        <Text style={[styles.body, { color: textSecondary }]}>
+          腸管前処置。BBPS は洗浄後の3区域（0–9）、Aronchick
+          は洗浄前の全体5段階です。混ぜないでください。
+        </Text>
+      </View>
+      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
         <Text style={styles.cardTitle}>T1 Nomogram</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
           大腸T1癌のリンパ節転移確率（Kajiwara 2023）。出力は確率（%）です。

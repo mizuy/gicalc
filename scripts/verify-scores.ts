@@ -9,14 +9,18 @@ import { computeGbs } from '../lib/scores/gbs';
 import { computeKyoto } from '../lib/scores/kyoto';
 import { computeKyotoModified } from '../lib/scores/kyoto-modified';
 import { computeNoblads } from '../lib/scores/noblads';
+import { computeAronchick } from '../lib/scores/aronchick';
+import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
 import { getScoreById, SCORES } from '../data/scores';
 
-test('登録スコアは9種でカテゴリ順に並ぶ', () => {
+test('登録スコアは11種でカテゴリ順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
       'kajiwara-nomogram',
+      'bbps',
+      'aronchick',
       'ecura-hatta',
       'sekiguchi',
       'best-j',
@@ -365,4 +369,32 @@ test('京都分類原法 0–8 / 改変 0–5 / EGGIM 0–8', () => {
   });
   assert.equal(eggimHigh.total, 8);
   assert.equal(eggimHigh.severity, 'severe');
+});
+
+test('BBPS: 各区域 ≥2 は adequate、1つでも 1 以下は inadequate', () => {
+  const adequate = computeBbps({ right: 2, transverse: 2, left: 2 });
+  assert.equal(adequate.total, 6);
+  assert.equal(adequate.interpretation, 'adequate');
+
+  const excellent = computeBbps({ right: 3, transverse: 3, left: 3 });
+  assert.equal(excellent.total, 9);
+  assert.equal(excellent.interpretation, '良好（adequate）');
+
+  const poorRight = computeBbps({ right: 1, transverse: 3, left: 3 });
+  assert.equal(poorRight.total, 7);
+  assert.equal(poorRight.interpretation, '不十分（inadequate）');
+});
+
+test('Aronchick: Excellent/Good は adequate、Poor/Inadequate は inadequate', () => {
+  const excellent = computeAronchick({ grade: 1 });
+  assert.equal(excellent.interpretation, 'Excellent（優）');
+  assert.equal(excellent.severity, 'none');
+
+  const fair = computeAronchick({ grade: 3 });
+  assert.equal(fair.interpretation, 'Fair（可）');
+  assert.equal(fair.severity, 'moderate');
+
+  const inadequate = computeAronchick({ grade: 5 });
+  assert.equal(inadequate.interpretation, 'Inadequate（不適）');
+  assert.equal(inadequate.severity, 'severe');
 });

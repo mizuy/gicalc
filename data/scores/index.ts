@@ -1,4 +1,6 @@
 import { CATEGORY_LABELS, CATEGORY_ORDER, type ScoreCategory, type ScoreDefinition } from '../../types/score';
+import { aronchickScore } from './aronchick';
+import { bbpsScore } from './bbps';
 import { bestJScore } from './best-j';
 import { ecuraHattaScore } from './ecura-hatta';
 import { eggimScore } from './eggim';
@@ -9,9 +11,11 @@ import { kyotoModifiedScore } from './kyoto-modified';
 import { nobladsScore } from './noblads';
 import { sekiguchiScore } from './sekiguchi';
 
-/** 表示順: 大腸T1 → 早期胃癌 → 胃炎リスク → 出血 */
+/** 表示順: 大腸T1 → 前処置 → 早期胃癌 → 胃炎リスク → 出血 */
 export const SCORES: ScoreDefinition[] = [
   kajiwaraNomogram,
+  bbpsScore,
+  aronchickScore,
   ecuraHattaScore,
   sekiguchiScore,
   bestJScore,

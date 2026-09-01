@@ -1,4 +1,4 @@
-export type ScoreCategory = 't1-colorectal' | 'gastric' | 'gastritis' | 'bleeding';
+export type ScoreCategory = 't1-colorectal' | 'prep' | 'gastric' | 'gastritis' | 'bleeding';
 
 export type ScoreOption = {
   value: number;
@@ -39,9 +39,16 @@ export type ScoreDefinition = {
 
 export const CATEGORY_LABELS: Record<ScoreCategory, string> = {
   't1-colorectal': '大腸T1癌',
+  prep: '腸管前処置',
   gastric: '早期胃癌',
   gastritis: '胃炎・胃癌リスク',
   bleeding: '消化管出血',
 };
 
-export const CATEGORY_ORDER: ScoreCategory[] = ['t1-colorectal', 'gastric', 'gastritis', 'bleeding'];
+export const CATEGORY_ORDER: ScoreCategory[] = [
+  't1-colorectal',
+  'prep',
+  'gastric',
+  'gastritis',
+  'bleeding',
+];

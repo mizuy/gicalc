@@ -21,7 +21,7 @@ export default function HomeScreen() {
         </View>
       </View>
       <Text style={[styles.lead, { color: textSecondary }]}>
-        消化管内視鏡向けスコアリング・予測ツール。各体系は目的も対象疾患も異なります。
+        消化管内視鏡向けのスコアと臨床尺度。予測系も評価尺度も、体系は混同しないでください。
       </Text>
 
       <PwaInstallBanner />
