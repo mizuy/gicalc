@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
+    "serve": "^14.2.6",
     "tsx": "^4.20.5",
     "typescript": "~6.0.3",
     "workbox-cli": "^7.3.0"

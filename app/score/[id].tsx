@@ -2,7 +2,11 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 
 import { ScoreCalculatorScreen } from '@/components/calculator/ScoreCalculatorScreen';
 import { Text, View } from '@/components/Themed';
-import { getScoreById } from '@/data/scores';
+import { SCORES, getScoreById } from '@/data/scores';
+
+export function generateStaticParams() {
+  return SCORES.map((score) => ({ id: score.id }));
+}
 
 export default function ScoreScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();

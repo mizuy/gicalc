@@ -1,5 +1,5 @@
-import { SymbolView } from 'expo-symbols';
 import { Tabs } from 'expo-router';
+import { Text } from 'react-native';
 
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -30,15 +30,7 @@ export default function TabLayout() {
         options={{
           title: 'スコア一覧',
           tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'list.bullet.rectangle',
-                android: 'list',
-                web: 'list',
-              }}
-              tintColor={color}
-              size={26}
-            />
+            <Text style={{ color, fontSize: 18, fontWeight: '700' }}>☰</Text>
           ),
         }}
       />
@@ -47,15 +39,7 @@ export default function TabLayout() {
         options={{
           title: 'About',
           tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'info.circle',
-                android: 'info',
-                web: 'info',
-              }}
-              tintColor={color}
-              size={26}
-            />
+            <Text style={{ color, fontSize: 18, fontWeight: '700' }}>ℹ</Text>
           ),
         }}
       />
