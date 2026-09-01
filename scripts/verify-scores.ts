@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { predictLnmProbability, valuesToNomogramInput } from '../lib/nomogram/kajiwara';
+import {
+  computeKajiwara,
+  nomogramPoints,
+  predictLnmProbability,
+  valuesToNomogramInput,
+} from '../lib/nomogram/kajiwara';
 import { computeBestJ } from '../lib/scores/best-j';
 import { computeEcura } from '../lib/scores/ecura';
 import { getScoreById, SCORES } from '../data/scores';
@@ -13,8 +18,8 @@ test('登録スコアは3種で表示順は大腸T1 → eCura → BEST-J', () =>
   );
 });
 
-test('Kajiwara: 参照カテゴリは約 3.1%', () => {
-  const probability = predictLnmProbability({
+test('Kajiwara: 参照カテゴリは公式サイトどおり 0 点 / 1.0%', () => {
+  const result = computeKajiwara({
     sex: 'male',
     location: 'transverse',
     grade: 'g1',
@@ -22,7 +27,80 @@ test('Kajiwara: 参照カテゴリは約 3.1%', () => {
     smDepth: 'lt1000',
     budding: 'bd1',
   });
-  assert.equal(probability, 3.1);
+  assert.equal(result.points, 0);
+  assert.equal(result.probability, 1.0);
+});
+
+test('Kajiwara: 公式サイトの代表組み合わせと一致する', () => {
+  const cases = [
+    {
+      input: {
+        sex: 'female' as const,
+        location: 'transverse' as const,
+        grade: 'g1' as const,
+        lvi: 'negative' as const,
+        smDepth: 'lt1000' as const,
+        budding: 'bd1' as const,
+      },
+      points: 28,
+      probability: 1.0,
+    },
+    {
+      input: {
+        sex: 'male' as const,
+        location: 'transverse' as const,
+        grade: 'g1' as const,
+        lvi: 'positive' as const,
+        smDepth: 'lt1000' as const,
+        budding: 'bd1' as const,
+      },
+      points: 75,
+      probability: 1.1,
+    },
+    {
+      input: {
+        sex: 'male' as const,
+        location: 'transverse' as const,
+        grade: 'g1' as const,
+        lvi: 'negative' as const,
+        smDepth: 'sm2000plus' as const,
+        budding: 'bd1' as const,
+      },
+      points: 100,
+      probability: 2.0,
+    },
+    {
+      input: {
+        sex: 'male' as const,
+        location: 'srb' as const,
+        grade: 'g1' as const,
+        lvi: 'positive' as const,
+        smDepth: 'sm2000plus' as const,
+        budding: 'bd1' as const,
+      },
+      points: 228,
+      probability: 9.3,
+    },
+    {
+      input: {
+        sex: 'female' as const,
+        location: 'rsra' as const,
+        grade: 'g3' as const,
+        lvi: 'positive' as const,
+        smDepth: 'sm2000plus' as const,
+        budding: 'bd23' as const,
+      },
+      points: 399,
+      probability: 54.8,
+    },
+  ];
+
+  for (const { input, points, probability } of cases) {
+    const result = computeKajiwara(input);
+    assert.equal(result.points, points, JSON.stringify(input));
+    assert.equal(result.probability, probability, JSON.stringify(input));
+    assert.equal(predictLnmProbability(input), probability);
+  }
 });
 
 test('Kajiwara: 高リスク組み合わせは 15% 以上', () => {
@@ -35,7 +113,15 @@ test('Kajiwara: 高リスク組み合わせは 15% 以上', () => {
     budding: 'bd23',
   });
   assert.ok(probability >= 15);
-  assert.equal(probability, Math.round(probability * 10) / 10);
+  assert.equal(probability, 54.8);
+  assert.equal(nomogramPoints({
+    sex: 'female',
+    location: 'rsra',
+    grade: 'g3',
+    lvi: 'positive',
+    smDepth: 'sm2000plus',
+    budding: 'bd23',
+  }), 399);
 });
 
 test('Kajiwara: フィールド値 0 は参照カテゴリに写像される', () => {
@@ -130,7 +216,8 @@ test('各スコア定義の compute がフィールド経由で動く', () => {
     budding: 0,
   });
   assert.equal(probability.displayMode, 'probability');
-  assert.equal(probability.probability, 3.1);
+  assert.equal(probability.probability, 1.0);
+  assert.ok(probability.details?.[0]?.includes('0 点'));
 
   const ecura = getScoreById('ecura-hatta');
   assert.ok(ecura);
