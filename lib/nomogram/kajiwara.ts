@@ -14,27 +14,28 @@ export type NomogramInput = {
   budding: NomogramBudding;
 };
 
-/** 参照カテゴリ: 男性, 横行結腸, G1, LVI−, SM<1000μm, BD1 */
-export const INTERCEPT = -3.437;
+/**
+ * Kajiwara 2023 多変量ロジスティックの切片と係数。
+ * 論文 Table 2 は丸めた OR のみ。切片は本文になく、モデル係数を使う。
+ * 参照カテゴリ: 男性, 横行結腸 T, G1, LVI−, SM<1000μm, BD1。
+ * G3 は低分化・粘液癌・印環細胞癌。簇出は BD2/3 をひとまとめ。
+ */
+export const INTERCEPT = -5.656011847;
 
 export const COEFFICIENTS = {
-  sexFemale: Math.log(1.55),
-  locationAcD: Math.log(1.74),
-  locationSRb: Math.log(2.18),
-  locationRsRa: Math.log(2.59),
-  gradeG2: Math.log(1.73),
-  gradeG3: Math.log(3.6),
-  lviPositive: Math.log(3.05),
-  sm1000to1999: Math.log(3.0),
-  sm2000plus: Math.log(4.33),
-  buddingBd23: Math.log(1.93),
+  sexFemale: 0.43559126,
+  locationAcD: 0.553854589,
+  locationSRb: 0.777513285,
+  locationRsRa: 0.951804316,
+  gradeG2: 0.548365808,
+  gradeG3: 1.282145115,
+  lviPositive: 1.113736937,
+  sm1000to1999: 1.099572355,
+  sm2000plus: 1.466372175,
+  buddingBd23: 0.659015203,
 } as const;
 
-/**
- * Kajiwara / JSCCR 大腸T1 LNM予測ノモグラム。
- * 戻り値はパーセント（小数第1位、例: 12.3）。
- */
-export function predictLnmProbability(input: NomogramInput): number {
+export function nomogramLogit(input: NomogramInput): number {
   let logit = INTERCEPT;
 
   if (input.sex === 'female') logit += COEFFICIENTS.sexFemale;
@@ -53,7 +54,15 @@ export function predictLnmProbability(input: NomogramInput): number {
 
   if (input.budding === 'bd23') logit += COEFFICIENTS.buddingBd23;
 
-  const probability = 1 / (1 + Math.exp(-logit));
+  return logit;
+}
+
+/**
+ * Kajiwara / JSCCR 大腸T1 LNM予測ノモグラム。
+ * 戻り値はパーセント（小数第1位、例: 12.3）。
+ */
+export function predictLnmProbability(input: NomogramInput): number {
+  const probability = 1 / (1 + Math.exp(-nomogramLogit(input)));
   return Math.round(probability * 1000) / 10;
 }
 
