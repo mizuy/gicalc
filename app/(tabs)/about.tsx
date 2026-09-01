@@ -18,23 +18,35 @@ export default function AboutScreen() {
         Storeは不要です。スコア追加は data/scores/ に定義ファイルを足すだけです。
       </Text>
 
-      <Text style={[styles.section, { color: tint }]}>収録ツール（3体系は混同しない）</Text>
+      <Text style={[styles.section, { color: tint }]}>収録ツール（体系は混同しない）</Text>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
         <Text style={styles.cardTitle}>T1 Nomogram</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          大腸T1癌のリンパ節転移確率（Kajiwara / JSCCR）。出力は確率（%）です。
+          大腸T1癌のリンパ節転移確率（Kajiwara 2023）。出力は確率（%）です。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>eCura</Text>
+        <Text style={styles.cardTitle}>eCura / Sekiguchi</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          早期胃癌の非治癒切除後LNMリスク（Hatta 2017）。大腸T1向けではありません。
+          早期胃癌のLNM。eCura（Hatta 2017、0–7）と Sekiguchi（2016、0–11、混合型を区別）は別スコアです。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
         <Text style={styles.cardTitle}>BEST-J</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          早期胃癌ESD後の遅発性出血リスク（Hatta 2021）。大腸T1ノモグラムとは別体系です。
+          早期胃癌ESD後の遅発性出血（Hatta 2021）。
+        </Text>
+      </View>
+      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
+        <Text style={styles.cardTitle}>京都分類 / 改変京都 / EGGIM</Text>
+        <Text style={[styles.body, { color: textSecondary }]}>
+          胃炎からの胃癌リスク。原法0–8（Shichijo 2017）、改変0–5とEGGIM（Kawamura 2021）。
+        </Text>
+      </View>
+      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
+        <Text style={styles.cardTitle}>GBS / NOBLADS</Text>
+        <Text style={[styles.body, { color: textSecondary }]}>
+          上部出血は GBS（Blatchford 2000）、下部出血は NOBLADS（Aoki 2016）。混ぜないでください。
         </Text>
       </View>
 
@@ -58,7 +70,7 @@ export default function AboutScreen() {
           スコア・ノモグラムの解釈は最新のJSCCR/JGESガイドラインと施設プロトコルに従ってください。
         </Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          3つのスコア体系（T1 Nomogram / eCura / BEST-J）は目的・対象疾患が異なります。
+          収録スコアは目的・対象疾患が異なります。同名に見えても混同しないでください。
         </Text>
       </View>
     </ScrollView>

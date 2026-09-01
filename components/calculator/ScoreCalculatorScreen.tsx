@@ -70,7 +70,7 @@ export function ScoreCalculatorScreen({ score }: Props) {
           本結果は診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。
         </Text>
         <Text style={[styles.footnote, { color: tint, marginTop: 6 }]}>
-          T1 Nomogram / eCura / BEST-J は目的も対象疾患も異なります。
+          各スコアは目的も対象疾患も異なります。混同しないでください。
         </Text>
       </View>
     </ScrollView>
