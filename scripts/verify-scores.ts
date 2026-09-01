@@ -468,3 +468,22 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   const apcs = getScoreById('apcs');
   assert.ok(apcs && !isClassification(apcs));
 });
+
+test('分類の模式図は出典（引用）を持つ', () => {
+  const jnet = getScoreById('jnet');
+  assert.ok(jnet && isClassification(jnet));
+  assert.equal(jnet.figures?.length, 1);
+  assert.match(jnet.figures?.[0]?.source ?? '', /Sano Y/);
+  assert.match(jnet.figures?.[0]?.doi ?? '', /10\.1111\/den\.12644/);
+  assert.match(jnet.figures?.[0]?.note ?? '', /複製ではない/);
+
+  const jes = getScoreById('jes');
+  assert.ok(jes && isClassification(jes));
+  assert.match(jes.figures?.[0]?.source ?? '', /Oyama T/);
+  assert.match(jes.figures?.[0]?.doi ?? '', /10\.1007\/s10388-016-0527-7/);
+
+  const kimura = getScoreById('kimura-takemoto');
+  assert.ok(kimura && isClassification(kimura));
+  assert.match(kimura.figures?.[0]?.source ?? '', /Kimura K/);
+  assert.match(kimura.figures?.[0]?.doi ?? '', /10\.1055\/s-0028-1098086/);
+});

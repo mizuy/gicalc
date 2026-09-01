@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 260" role="img" aria-label="JNET Type 1 2A 2B 3 vessel and surface schematic">
+  <rect width="800" height="260" fill="#F4F8F8"/>
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <g>
+      <rect x="16" y="36" width="180" height="180" rx="12" fill="#12383A"/>
+      <g fill="#E8F0C8">
+        <circle cx="48" cy="72" r="5"/><circle cx="78" cy="70" r="5"/><circle cx="108" cy="74" r="5"/>
+        <circle cx="138" cy="71" r="5"/><circle cx="168" cy="73" r="5"/>
+        <circle cx="52" cy="104" r="5"/><circle cx="82" cy="102" r="5"/><circle cx="112" cy="106" r="5"/>
+        <circle cx="142" cy="103" r="5"/><circle cx="172" cy="105" r="5"/>
+        <circle cx="48" cy="136" r="5"/><circle cx="78" cy="134" r="5"/><circle cx="108" cy="138" r="5"/>
+        <circle cx="138" cy="135" r="5"/><circle cx="168" cy="137" r="5"/>
+        <circle cx="52" cy="168" r="5"/><circle cx="82" cy="166" r="5"/><circle cx="112" cy="170" r="5"/>
+        <circle cx="142" cy="167" r="5"/><circle cx="172" cy="169" r="5"/>
+      </g>
+      <text x="106" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#1A2A2B">Type 1</text>
+      <text x="106" y="236" text-anchor="middle" font-size="12" fill="#5A6E70">invisible vessels / regular spots</text>
+    </g>
+    <g>
+      <rect x="212" y="36" width="180" height="180" rx="12" fill="#12383A"/>
+      <g fill="none" stroke="#C9A07A" stroke-width="1.6">
+        <ellipse cx="242" cy="72" rx="14" ry="9"/>
+        <ellipse cx="280" cy="70" rx="14" ry="9"/>
+        <ellipse cx="318" cy="73" rx="14" ry="9"/>
+        <ellipse cx="356" cy="71" rx="14" ry="9"/>
+        <ellipse cx="242" cy="108" rx="14" ry="9"/>
+        <ellipse cx="280" cy="106" rx="14" ry="9"/>
+        <ellipse cx="318" cy="109" rx="14" ry="9"/>
+        <ellipse cx="356" cy="107" rx="14" ry="9"/>
+        <ellipse cx="242" cy="144" rx="14" ry="9"/>
+        <ellipse cx="280" cy="142" rx="14" ry="9"/>
+        <ellipse cx="318" cy="145" rx="14" ry="9"/>
+        <ellipse cx="356" cy="143" rx="14" ry="9"/>
+        <ellipse cx="242" cy="180" rx="14" ry="9"/>
+        <ellipse cx="280" cy="178" rx="14" ry="9"/>
+        <ellipse cx="318" cy="181" rx="14" ry="9"/>
+        <ellipse cx="356" cy="179" rx="14" ry="9"/>
+      </g>
+      <g stroke="#8B3A2A" stroke-width="1.2" fill="none">
+        <path d="M242 81 L242 99"/>
+        <path d="M280 79 L280 97"/>
+        <path d="M318 82 L318 100"/>
+        <path d="M356 80 L356 98"/>
+        <path d="M242 117 L242 135"/>
+        <path d="M280 115 L280 133"/>
+        <path d="M318 118 L318 136"/>
+        <path d="M356 116 L356 134"/>
+        <path d="M242 153 L242 171"/>
+        <path d="M280 151 L280 169"/>
+        <path d="M318 154 L318 172"/>
+        <path d="M356 152 L356 170"/>
+      </g>
+      <text x="302" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#1A2A2B">Type 2A</text>
+      <text x="302" y="236" text-anchor="middle" font-size="12" fill="#5A6E70">regular caliber / tubular</text>
+    </g>
+    <g>
+      <rect x="408" y="36" width="180" height="180" rx="12" fill="#12383A"/>
+      <g fill="none" stroke="#C9A07A" stroke-width="1.4">
+        <path d="M430 70 q18 -10 28 6 q10 14 -8 22"/>
+        <path d="M478 62 q22 4 16 24 q-8 16 10 22"/>
+        <path d="M530 68 q14 -12 30 2 q8 18 -12 20"/>
+        <path d="M428 118 q20 8 10 28 q-16 10 8 20"/>
+        <path d="M488 124 q28 -8 20 22 q-6 18 16 16"/>
+        <path d="M548 130 q-10 20 8 28"/>
+        <path d="M436 176 q24 -6 18 18"/>
+        <path d="M500 168 q18 10 8 24"/>
+      </g>
+      <g fill="none" stroke="#8B3A2A" stroke-width="2.1" stroke-linecap="round">
+        <path d="M438 86 q20 16 8 40"/>
+        <path d="M498 78 q-8 28 22 36"/>
+        <path d="M548 92 q-18 24 4 44"/>
+        <path d="M456 150 q28 8 12 36"/>
+      </g>
+      <text x="498" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#1A2A2B">Type 2B</text>
+      <text x="498" y="236" text-anchor="middle" font-size="12" fill="#5A6E70">variable caliber / irregular</text>
+    </g>
+    <g>
+      <rect x="604" y="36" width="180" height="180" rx="12" fill="#12383A"/>
+      <ellipse cx="694" cy="126" rx="58" ry="42" fill="#2A3C3E"/>
+      <g fill="none" stroke="#6B2418" stroke-width="5.5" stroke-linecap="round">
+        <path d="M628 88 L668 118"/>
+        <path d="M700 70 L700 108"/>
+        <path d="M748 92 L708 128"/>
+        <path d="M640 168 L688 150"/>
+      </g>
+      <text x="694" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#1A2A2B">Type 3</text>
+      <text x="694" y="236" text-anchor="middle" font-size="12" fill="#5A6E70">loose / interrupted / amorphous</text>
+    </g>
+  </g>
+</svg>

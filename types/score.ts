@@ -61,9 +61,20 @@ export type CalculatorDefinition = ToolBase & {
   compute: (values: Record<string, number>) => ScoreResult;
 };
 
+export type ClassificationFigure = {
+  src: string;
+  alt: string;
+  caption: string;
+  source: string;
+  doi?: string;
+  note: string;
+  aspectRatio: number;
+};
+
 export type ClassificationDefinition = ToolBase & {
   kind: 'classification';
   entries: ClassificationEntry[];
+  figures?: ClassificationFigure[];
 };
 
 export type ScoreDefinition = CalculatorDefinition | ClassificationDefinition;

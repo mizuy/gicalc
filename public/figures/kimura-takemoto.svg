@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 300" role="img" aria-label="Kimura-Takemoto atrophic border schematic C-1 to O-3">
+  <rect width="780" height="300" fill="#F4F8F8"/>
+  <defs>
+    <path id="stomach" d="M58 22 C78 16 92 28 94 48 C96 78 90 108 80 128 C70 146 56 156 42 152 C28 148 20 132 22 112 C24 90 28 70 30 50 C32 32 40 22 58 22 Z"/>
+  </defs>
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <g transform="translate(20,28)">
+      <use href="#stomach" fill="#E7B3A4" stroke="#8A4A3A" stroke-width="2"/>
+      <path d="M28 132 C40 148 58 154 74 140 C70 148 56 156 42 152 C32 150 26 140 28 132 Z" fill="#F4E4B8"/>
+      <text x="58" y="188" text-anchor="middle" font-size="15" font-weight="700" fill="#1A2A2B">C-1</text>
+      <text x="58" y="204" text-anchor="middle" font-size="11" fill="#5A6E70">antrum only</text>
+    </g>
+    <g transform="translate(150,28)">
+      <use href="#stomach" fill="#E7B3A4" stroke="#8A4A3A" stroke-width="2"/>
+      <path d="M24 96 C36 88 70 100 86 124 C80 140 64 154 42 152 C28 148 22 124 24 96 Z" fill="#F4E4B8"/>
+      <text x="58" y="188" text-anchor="middle" font-size="15" font-weight="700" fill="#1A2A2B">C-2</text>
+      <text x="58" y="204" text-anchor="middle" font-size="11" fill="#5A6E70">lower lesser curve</text>
+    </g>
+    <g transform="translate(280,28)">
+      <use href="#stomach" fill="#E7B3A4" stroke="#8A4A3A" stroke-width="2"/>
+      <path d="M28 58 C48 52 82 70 92 100 C90 124 76 146 42 152 C26 148 22 110 24 84 C24 70 26 62 28 58 Z" fill="#F4E4B8"/>
+      <text x="58" y="188" text-anchor="middle" font-size="15" font-weight="700" fill="#1A2A2B">C-3</text>
+      <text x="58" y="204" text-anchor="middle" font-size="11" fill="#5A6E70">upper lesser curve</text>
+    </g>
+    <g transform="translate(410,28)">
+      <use href="#stomach" fill="#F4E4B8" stroke="#8A4A3A" stroke-width="2"/>
+      <path d="M30 28 C44 20 70 22 86 40 C78 34 58 28 40 36 C32 40 28 48 30 28 Z" fill="#E7B3A4"/>
+      <path d="M22 70 C20 90 22 120 28 138 C24 120 22 90 22 70 Z" fill="#E7B3A4"/>
+      <text x="58" y="188" text-anchor="middle" font-size="15" font-weight="700" fill="#1A2A2B">O-1</text>
+      <text x="58" y="204" text-anchor="middle" font-size="11" fill="#5A6E70">beyond cardia</text>
+    </g>
+    <g transform="translate(540,28)">
+      <use href="#stomach" fill="#F4E4B8" stroke="#8A4A3A" stroke-width="2"/>
+      <path d="M22 86 C20 108 24 132 34 146 C26 130 22 108 22 86 Z" fill="#E7B3A4"/>
+      <text x="58" y="188" text-anchor="middle" font-size="15" font-weight="700" fill="#1A2A2B">O-2</text>
+      <text x="58" y="204" text-anchor="middle" font-size="11" fill="#5A6E70">walls meet</text>
+    </g>
+    <g transform="translate(670,28)">
+      <use href="#stomach" fill="#F4E4B8" stroke="#8A4A3A" stroke-width="2"/>
+      <text x="58" y="188" text-anchor="middle" font-size="15" font-weight="700" fill="#1A2A2B">O-3</text>
+      <text x="58" y="204" text-anchor="middle" font-size="11" fill="#5A6E70">almost entire</text>
+    </g>
+    <g transform="translate(40,236)">
+      <rect x="0" y="0" width="18" height="12" rx="2" fill="#E7B3A4" stroke="#8A4A3A"/>
+      <text x="26" y="11" font-size="12" fill="#1A2A2B">non-atrophic</text>
+      <rect x="150" y="0" width="18" height="12" rx="2" fill="#F4E4B8" stroke="#8A4A3A"/>
+      <text x="176" y="11" font-size="12" fill="#1A2A2B">atrophic</text>
+      <text x="400" y="11" font-size="12" fill="#5A6E70">right = lesser curve, left = greater curve, top = cardia</text>
+    </g>
+    <text x="390" y="274" text-anchor="middle" font-size="12" fill="#5A6E70">Closed: border on lesser curve. Open: border crosses cardia.</text>
+  </g>
+</svg>

@@ -9,7 +9,19 @@ export const jesScore: ClassificationDefinition = {
   categoryLabel: '内視鏡分類',
   description:
     '食道扁平上皮の拡大内視鏡分類（Type A / B1 / B2 / B3）の定義一覧です。Inoue の IPCL I–V や食道静脈瘤分類とは別です。',
-  reference: 'Oyama T et al. Esophagus 2017;14:1-10（日本食道学会）',
+  reference: 'Oyama T et al. Esophagus 2017;14:105-112（日本食道学会）',
+  figures: [
+    {
+      src: '/figures/jes.svg',
+      alt: 'JES Type A・B1・B2・B3 の血管形態と AVA の模式図',
+      caption: '図. JES分類の血管形態と AVA（模式）',
+      source:
+        'Oyama T, Inoue H, Arima M, et al. Prediction of the invasion depth of superficial squamous cell carcinoma based on microvessel morphology: magnifying endoscopic classification of the Japan Esophageal Society. Esophagus. 2017;14:105-112.',
+      doi: 'https://doi.org/10.1007/s10388-016-0527-7',
+      note: '原著 Fig. は拡大内視鏡の実写真で Type A/B1/B2/B3 と AVA-small/middle/large を示している。本図は定義に基づく模式であり、原著図の複製ではない。',
+      aspectRatio: 800 / 340,
+    },
+  ],
   entries: [
     {
       label: 'Type A',

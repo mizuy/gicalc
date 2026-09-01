@@ -10,6 +10,18 @@ export const jnetScore: ClassificationDefinition = {
   description:
     '大腸腫瘍の NBI 拡大分類（Type 1 / 2A / 2B / 3）の定義一覧です。拡大不要の NICE 分類や大腸T1ノモグラムとは別です。',
   reference: 'Sano Y et al. Dig Endosc 2016;28:526-533',
+  figures: [
+    {
+      src: '/figures/jnet.svg',
+      alt: 'JNET Type 1・2A・2B・3 の血管と表面の模式図',
+      caption: '図. JNET分類の血管・表面パターン（模式）',
+      source:
+        'Sano Y, Tanaka S, Kudo S-E, et al. Narrow-band imaging (NBI) magnifying endoscopic classification of colorectal tumors proposed by the Japan NBI Expert Team. Dig Endosc. 2016;28:526-533.',
+      doi: 'https://doi.org/10.1111/den.12644',
+      note: '原著は NBI 拡大の実写真で4型を示している。本図は定義に基づく模式であり、原著図の複製ではない。',
+      aspectRatio: 800 / 260,
+    },
+  ],
   entries: [
     {
       label: 'Type 1',

@@ -10,6 +10,18 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
   description:
     '内視鏡的萎縮境界の位置による定義一覧です。C-0 は原著の6型にはなく京都分類で用います。京都分類の萎縮点や EGGIM・OLGA とは別です。',
   reference: 'Kimura K, Takemoto T. Endoscopy 1969;1:87-97',
+  figures: [
+    {
+      src: '/figures/kimura-takemoto.svg',
+      alt: '木村–竹本分類 C-1 から O-3 の萎縮境界模式図',
+      caption: '図. 木村–竹本分類の萎縮境界（模式）',
+      source:
+        'Kimura K, Takemoto T. An endoscopic recognition of the atrophic border and its significance in chronic gastritis. Endoscopy. 1969;1:87-97.',
+      doi: 'https://doi.org/10.1055/s-0028-1098086',
+      note: '原著は萎縮境界の位置で閉鎖型 C-1–C-3 と開放型 O-1–O-3 を分けた。本図は定義に基づく模式であり、原著図の複製ではない。C-0 は原著6型にない。',
+      aspectRatio: 780 / 300,
+    },
+  ],
   entries: [
     {
       label: 'C-0',

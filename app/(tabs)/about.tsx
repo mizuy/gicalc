@@ -23,7 +23,7 @@ export default function AboutScreen() {
         <Text style={styles.cardTitle}>JES / 木村–竹本 / JNET</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
           定義一覧。JES は食道扁平上皮の拡大（A/B1/B2/B3）、木村–竹本は胃萎縮（C-0–O-3）、JNET
-          は大腸 NBI 拡大（1/2A/2B/3）です。選択式の計算ではありません。混ぜないでください。
+          は大腸 NBI 拡大（1/2A/2B/3）です。重要な図は出典を付けた模式として示し、原著図は複製しません。混ぜないでください。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>

@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
+import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
 import { Text, useThemeColor } from '@/components/Themed';
 import { SeverityColors } from '@/constants/Colors';
 import type { ClassificationDefinition, ClassificationEntry } from '@/types/score';
@@ -45,6 +46,10 @@ export function ClassificationReferenceScreen({ score }: Props) {
       {score.reference ? (
         <Text style={[styles.reference, { color: textSecondary }]}>文献: {score.reference}</Text>
       ) : null}
+
+      {score.figures?.map((figure) => (
+        <ClassificationFigure key={figure.src} figure={figure} />
+      ))}
 
       {groups.map((group) => (
         <View key={group.key || 'default'} style={styles.group}>
