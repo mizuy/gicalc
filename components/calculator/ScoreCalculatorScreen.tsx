@@ -4,10 +4,10 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { ScoreFieldSelector } from '@/components/calculator/ScoreFieldSelector';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
 import { Text, useThemeColor } from '@/components/Themed';
-import type { ScoreDefinition } from '@/types/score';
+import type { CalculatorDefinition } from '@/types/score';
 
 type Props = {
-  score: ScoreDefinition;
+  score: CalculatorDefinition;
 };
 
 export function ScoreCalculatorScreen({ score }: Props) {

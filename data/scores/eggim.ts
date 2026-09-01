@@ -1,7 +1,7 @@
 import { computeEggim } from '../../lib/scores/eggim';
-import type { ScoreDefinition } from '../../types/score';
+import type { ScoreField, ScoreDefinition } from '../../types/score';
 
-const areaField = (id: string, label: string): ScoreDefinition['fields'][number] => ({
+const areaField = (id: string, label: string): ScoreField => ({
   id,
   label,
   options: [

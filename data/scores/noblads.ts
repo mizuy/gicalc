@@ -1,7 +1,7 @@
 import { computeNoblads } from '../../lib/scores/noblads';
-import type { ScoreDefinition } from '../../types/score';
+import type { ScoreField, ScoreDefinition } from '../../types/score';
 
-const yesNo = (label: string, description?: string): ScoreDefinition['fields'][number] => ({
+const yesNo = (label: string, description?: string): ScoreField => ({
   id: '',
   label,
   description,

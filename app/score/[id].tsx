@@ -1,8 +1,10 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
 
+import { ClassificationReferenceScreen } from '@/components/calculator/ClassificationReferenceScreen';
 import { ScoreCalculatorScreen } from '@/components/calculator/ScoreCalculatorScreen';
 import { Text, View } from '@/components/Themed';
 import { SCORES, getScoreById } from '@/data/scores';
+import { isClassification } from '@/types/score';
 
 export function generateStaticParams() {
   return SCORES.map((score) => ({ id: score.id }));
@@ -24,7 +26,11 @@ export default function ScoreScreen() {
   return (
     <>
       <Stack.Screen options={{ title: score.shortName, headerBackTitle: '戻る' }} />
-      <ScoreCalculatorScreen score={score} />
+      {isClassification(score) ? (
+        <ClassificationReferenceScreen score={score} />
+      ) : (
+        <ScoreCalculatorScreen score={score} />
+      )}
     </>
   );
 }

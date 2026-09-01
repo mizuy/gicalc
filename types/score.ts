@@ -28,22 +28,49 @@ export type ScoreResult = {
   interpretation: string;
   severity?: ScoreSeverity;
   details?: string[];
-  displayMode?: 'points' | 'probability' | 'classification';
+  displayMode?: 'points' | 'probability';
   probability?: number;
-  classificationLabel?: string;
 };
 
-export type ScoreDefinition = {
+type ToolBase = {
   id: string;
   name: string;
   shortName: string;
   category: ScoreCategory;
   categoryLabel: string;
   description: string;
-  fields: ScoreField[];
-  compute: (values: Record<string, number>) => ScoreResult;
   reference?: string;
 };
+
+export type ClassificationRow = {
+  heading: string;
+  text: string;
+};
+
+export type ClassificationEntry = {
+  label: string;
+  meaning: string;
+  rows: ClassificationRow[];
+  group?: string;
+  severity?: ScoreSeverity;
+};
+
+export type CalculatorDefinition = ToolBase & {
+  kind?: 'calculator';
+  fields: ScoreField[];
+  compute: (values: Record<string, number>) => ScoreResult;
+};
+
+export type ClassificationDefinition = ToolBase & {
+  kind: 'classification';
+  entries: ClassificationEntry[];
+};
+
+export type ScoreDefinition = CalculatorDefinition | ClassificationDefinition;
+
+export function isClassification(tool: ScoreDefinition): tool is ClassificationDefinition {
+  return tool.kind === 'classification';
+}
 
 export const CATEGORY_LABELS: Record<ScoreCategory, string> = {
   screening: '大腸がん検診',

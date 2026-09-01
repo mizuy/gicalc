@@ -6,9 +6,9 @@
 
 | ツール | 対象 | 出力 |
 |--------|------|------|
-| JES（Oyama 2017） | 食道扁平上皮の拡大（IPCL） | Type A/B1/B2/B3 |
-| 木村–竹本（1969） | 胃の内視鏡的萎縮 | C-0–O-3 |
-| JNET（Sano 2016） | 大腸 NBI 拡大 | Type 1/2A/2B/3 |
+| JES（Oyama 2017） | 食道扁平上皮の拡大（IPCL） | 定義一覧 |
+| 木村–竹本（1969） | 胃の内視鏡的萎縮 | 定義一覧 |
+| JNET（Sano 2016） | 大腸 NBI 拡大 | 定義一覧 |
 | APCS（Yeoh 2011） | 無症状アジア人の進行大腸腫瘍リスク | 点数 0–7 |
 | BBPS（Lai 2009） | 腸管前処置（洗浄後・3区域） | 点数 0–9 |
 | Aronchick | 腸管前処置（洗浄前・全体） | 5段階 |
@@ -56,7 +56,7 @@ npm run preview:pages
 
 ## スコア追加
 
-1. `data/scores/xxx.ts` に `ScoreDefinition` を定義する
+1. `data/scores/xxx.ts` に計算系（`fields` + `compute`）または分類一覧（`kind: 'classification'` + `entries`）を定義する
 2. `data/scores/index.ts` の `SCORES` に追加する
 3. 必要なら `types/score.ts` に `ScoreCategory` を追加する
 
