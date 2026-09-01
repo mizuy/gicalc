@@ -15,6 +15,7 @@ export const nobladsScore: ScoreDefinition = {
   id: 'noblads',
   name: 'NOBLADS Score（急性下部消化管出血）',
   shortName: 'NOBLADS',
+  organ: 'bleeding',
   category: 'bleeding',
   categoryLabel: '消化管出血',
   description:

@@ -43,6 +43,9 @@ export function ClassificationReferenceScreen({ score }: Props) {
       style={[styles.scroll, { backgroundColor: background }]}
       contentContainerStyle={styles.content}>
       <Text style={styles.title}>{score.name}</Text>
+      {score.originalLead ? (
+        <Text style={[styles.originalLead, { color: tint }]}>{score.originalLead}</Text>
+      ) : null}
       <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
       {score.reference ? (
         <View style={styles.reference}>
@@ -109,6 +112,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: '800',
+    marginBottom: 8,
+  },
+  originalLead: {
+    fontSize: 14,
+    lineHeight: 22,
     marginBottom: 8,
   },
   description: {

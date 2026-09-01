@@ -12,6 +12,7 @@ export const bbpsScore: ScoreDefinition = {
   id: 'bbps',
   name: 'Boston Bowel Preparation Scale（BBPS）',
   shortName: 'BBPS',
+  organ: 'colorectum',
   category: 'prep',
   categoryLabel: '腸管前処置',
   description:

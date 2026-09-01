@@ -9,10 +9,13 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
   kind: 'classification',
   name: '木村–竹本分類（胃萎縮）',
   shortName: '木村–竹本',
+  organ: 'stomach',
   category: 'classification',
   categoryLabel: '内視鏡分類',
   description:
-    'Closed type (C-1–C-3) and open type (O-1–O-3) according to the location of the endoscopic atrophic border. C-0 は原著の6型にはなく京都分類で用います。京都分類の萎縮点や EGGIM・OLGA とは別です。',
+    '内視鏡的萎縮境界による Closed / Open 分類。C-0 は原著6型になく京都分類で用います。EGGIM・OLGA とは別です。',
+  originalLead:
+    'Based on location of the endoscopic atrophic border, Kimura and Takemoto proposed closed type (C-1, C-2, C-3) and open type (O-1, O-2, O-3).',
   reference: 'Kimura K, Takemoto T. Endoscopy 1969;1:87-97',
   pubmed: KIMURA_1969_PUBMED,
   figures: [

@@ -5,10 +5,12 @@ export const jesScore: ClassificationDefinition = {
   kind: 'classification',
   name: 'JES分類（食道扁平上皮・拡大）',
   shortName: 'JES',
+  organ: 'esophagus',
   category: 'classification',
   categoryLabel: '内視鏡分類',
-  description:
-    'Type A microvessels correspond to noncancerous lesions and lack severe irregularity; type B to cancerous lesions and exhibit severe irregularity. Type B is subclassified into B1, B2, and B3. Inoue の IPCL I–V や食道静脈瘤分類とは別です。',
+  description: '食道扁平上皮の拡大内視鏡分類（Type A / B1 / B2 / B3）。Inoue の IPCL I–V や静脈瘤分類とは別です。',
+  originalLead:
+    'Type A microvessels correspond to noncancerous lesions and lack severe irregularity; type B, to cancerous lesions, and exhibit severe irregularity. Type B vessels were subclassified into B1, B2, and B3.',
   reference: 'Oyama T et al. Esophagus 2017;14:105-112',
   pubmed: '28386209',
   figures: [

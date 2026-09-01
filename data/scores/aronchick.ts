@@ -5,6 +5,7 @@ export const aronchickScore: ScoreDefinition = {
   id: 'aronchick',
   name: 'Aronchick Scale（腸管前処置）',
   shortName: 'Aronchick',
+  organ: 'colorectum',
   category: 'prep',
   categoryLabel: '腸管前処置',
   description:

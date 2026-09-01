@@ -18,56 +18,30 @@ export default function AboutScreen() {
         Storeは不要です。追加は data/scores/ に定義ファイルを足すだけです。
       </Text>
 
-      <Text style={[styles.section, { color: tint }]}>収録ツール（体系は混同しない）</Text>
+      <Text style={[styles.section, { color: tint }]}>収録ツール（臓器別。体系は混同しない）</Text>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>JES / 木村–竹本 / JNET</Text>
+        <Text style={styles.cardTitle}>食道</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          定義一覧。JES は食道扁平上皮の拡大（A/B1/B2/B3）、木村–竹本は胃萎縮（C-0–O-3）、JNET
-          は大腸 NBI 拡大（1/2A/2B/3）です。原著の図と定義文を出典付きで示します。文献は PubMed
-          に飛びます。混ぜないでください。
+          JES（Oyama 2017）: Type A / B1 / B2 / B3。原著の図と定義文。文献は PubMed に飛びます。Inoue
+          IPCL I–V とは別です。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>APCS</Text>
+        <Text style={styles.cardTitle}>胃</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          無症状アジア人の進行大腸腫瘍リスク（Yeoh 2011、0–7）。年齢・性別・家族歴・喫煙。大腸T1ノモグラムとは別です。
+          木村–竹本（萎縮分類）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura / Sekiguchi（LNM）、BEST-J（ESD後出血）。混ぜないでください。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>BBPS / Aronchick</Text>
+        <Text style={styles.cardTitle}>大腸</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          腸管前処置。BBPS は洗浄後の3区域（0–9）、Aronchick
-          は洗浄前の全体5段階です。混ぜないでください。
+          APCS（検診）、JNET（NBI拡大分類）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。混ぜないでください。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>T1 Nomogram</Text>
+        <Text style={styles.cardTitle}>出血</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          大腸T1癌のリンパ節転移確率（Kajiwara 2023）。出力は確率（%）です。
-        </Text>
-      </View>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>eCura / Sekiguchi</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          早期胃癌のLNM。eCura（Hatta 2017、0–7）と Sekiguchi（2016、0–11、混合型を区別）は別スコアです。
-        </Text>
-      </View>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>BEST-J</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          早期胃癌ESD後の遅発性出血（Hatta 2021）。
-        </Text>
-      </View>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>京都分類 / 改変京都 / EGGIM</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          胃炎からの胃癌リスク。原法0–8（Shichijo 2017）、改変0–5とEGGIM（Kawamura 2021）。
-        </Text>
-      </View>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>GBS / NOBLADS</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          上部出血は GBS（Blatchford 2000）、下部出血は NOBLADS（Aoki 2016）。混ぜないでください。
+          上部は GBS（Blatchford 2000）、下部は NOBLADS（Aoki 2016）。混ぜないでください。
         </Text>
       </View>
 

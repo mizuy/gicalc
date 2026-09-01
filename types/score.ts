@@ -1,3 +1,5 @@
+export type ScoreOrgan = 'esophagus' | 'stomach' | 'colorectum' | 'bleeding';
+
 export type ScoreCategory =
   | 'screening'
   | 'classification'
@@ -36,6 +38,7 @@ type ToolBase = {
   id: string;
   name: string;
   shortName: string;
+  organ: ScoreOrgan;
   category: ScoreCategory;
   categoryLabel: string;
   description: string;
@@ -76,6 +79,8 @@ export type ClassificationFigure = {
 
 export type ClassificationDefinition = ToolBase & {
   kind: 'classification';
+  /** 原著の定義文。画面では日本語コメントの前に出す */
+  originalLead?: string;
   entries: ClassificationEntry[];
   figures?: ClassificationFigure[];
 };
@@ -85,6 +90,15 @@ export type ScoreDefinition = CalculatorDefinition | ClassificationDefinition;
 export function isClassification(tool: ScoreDefinition): tool is ClassificationDefinition {
   return tool.kind === 'classification';
 }
+
+export const ORGAN_LABELS: Record<ScoreOrgan, string> = {
+  esophagus: '食道',
+  stomach: '胃',
+  colorectum: '大腸',
+  bleeding: '出血',
+};
+
+export const ORGAN_ORDER: ScoreOrgan[] = ['esophagus', 'stomach', 'colorectum', 'bleeding'];
 
 export const CATEGORY_LABELS: Record<ScoreCategory, string> = {
   screening: '大腸がん検診',

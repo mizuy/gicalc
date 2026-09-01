@@ -5,6 +5,7 @@ export const gbsScore: ScoreDefinition = {
   id: 'gbs',
   name: 'Glasgow-Blatchford Score（上部消化管出血）',
   shortName: 'GBS',
+  organ: 'bleeding',
   category: 'bleeding',
   categoryLabel: '消化管出血',
   description:

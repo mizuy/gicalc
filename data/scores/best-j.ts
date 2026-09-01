@@ -11,6 +11,7 @@ export const bestJScore: ScoreDefinition = {
   id: 'best-j',
   name: 'BEST-J Score（早期胃癌 ESD後出血）',
   shortName: 'BEST-J',
+  organ: 'stomach',
   category: 'gastric',
   categoryLabel: '早期胃癌',
   description:

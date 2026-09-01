@@ -5,6 +5,7 @@ export const ecuraHattaScore: ScoreDefinition = {
   id: 'ecura-hatta',
   name: 'eCura Scoring System（早期胃癌 LNM）',
   shortName: 'eCura',
+  organ: 'stomach',
   category: 'gastric',
   categoryLabel: '早期胃癌',
   description:

@@ -5,6 +5,7 @@ export const apcsScore: ScoreDefinition = {
   id: 'apcs',
   name: 'Asia-Pacific Colorectal Screening Score（APCS）',
   shortName: 'APCS',
+  organ: 'colorectum',
   category: 'screening',
   categoryLabel: '大腸がん検診',
   description:

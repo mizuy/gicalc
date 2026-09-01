@@ -5,6 +5,7 @@ export const sekiguchiScore: ScoreDefinition = {
   id: 'sekiguchi',
   name: 'Sekiguchi Score（早期胃癌 LNM 11点）',
   shortName: 'Sekiguchi',
+  organ: 'stomach',
   category: 'gastric',
   categoryLabel: '早期胃癌',
   description:

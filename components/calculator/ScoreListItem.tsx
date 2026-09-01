@@ -33,7 +33,9 @@ export function ScoreListItem({ score }: Props) {
           <Text style={[styles.category, { color: textSecondary }]}>{score.categoryLabel}</Text>
         </View>
         <Text style={styles.name}>{score.name}</Text>
-        <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
+        <Text style={[styles.description, { color: textSecondary }]} numberOfLines={2}>
+          {score.description}
+        </Text>
       </Pressable>
     </Link>
   );

@@ -5,10 +5,12 @@ export const jnetScore: ClassificationDefinition = {
   kind: 'classification',
   name: 'JNET分類（大腸 NBI 拡大）',
   shortName: 'JNET',
+  organ: 'colorectum',
   category: 'classification',
   categoryLabel: '内視鏡分類',
-  description:
-    'The JNET classification consists of four categories of vessel and surface pattern (Types 1, 2A, 2B, and 3). 拡大不要の NICE 分類や大腸T1ノモグラムとは別です。',
+  description: '大腸腫瘍の NBI 拡大分類（Type 1 / 2A / 2B / 3）。拡大不要の NICE 分類や大腸T1ノモグラムとは別です。',
+  originalLead:
+    'The JNET classification consists of four categories of vessel and surface pattern (Types 1, 2A, 2B, and 3). Types 1, 2A, 2B, and 3 are correlated with hyperplastic polyp/SSP, low-grade intramucosal neoplasia, high-grade intramucosal neoplasia/shallow SM invasive cancer, and deep SM invasive cancer, respectively.',
   reference: 'Sano Y et al. Dig Endosc 2016;28:526-533',
   pubmed: '26927367',
   figures: [

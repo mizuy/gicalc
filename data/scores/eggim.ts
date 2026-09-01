@@ -15,6 +15,7 @@ export const eggimScore: ScoreDefinition = {
   id: 'eggim',
   name: 'EGGIM（内視鏡的腸上皮化生スコア）',
   shortName: 'EGGIM',
+  organ: 'stomach',
   category: 'gastritis',
   categoryLabel: '胃炎・胃癌リスク',
   description:

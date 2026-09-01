@@ -13,30 +13,42 @@ import { computeApcs } from '../lib/scores/apcs';
 import { computeAronchick } from '../lib/scores/aronchick';
 import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
-import { getScoreById, SCORES } from '../data/scores';
+import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
 import { KIMURA_1969_PUBMED } from '../data/scores/kimura-takemoto';
 import { pubmedUrl } from '../lib/pubmed';
 import { isClassification } from '../types/score';
 
-test('登録スコアは15種でカテゴリ順に並ぶ', () => {
+test('登録スコアは15種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
-      'apcs',
       'jes',
       'kimura-takemoto',
+      'kyoto',
+      'kyoto-modified',
+      'eggim',
+      'ecura-hatta',
+      'sekiguchi',
+      'best-j',
+      'apcs',
       'jnet',
       'kajiwara-nomogram',
       'bbps',
       'aronchick',
-      'ecura-hatta',
-      'sekiguchi',
-      'best-j',
-      'kyoto',
-      'kyoto-modified',
-      'eggim',
       'gbs',
       'noblads',
+    ],
+  );
+  assert.deepEqual(
+    getScoresGroupedByOrgan().map((group) => [group.organ, group.scores.map((score) => score.id)]),
+    [
+      ['esophagus', ['jes']],
+      [
+        'stomach',
+        ['kimura-takemoto', 'kyoto', 'kyoto-modified', 'eggim', 'ecura-hatta', 'sekiguchi', 'best-j'],
+      ],
+      ['colorectum', ['apcs', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
+      ['bleeding', ['gbs', 'noblads']],
     ],
   );
 });
@@ -449,6 +461,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     ['Type 1', 'Type 2A', 'Type 2B', 'Type 3'],
   );
   assert.equal(jnet.entries[1]?.meaning, 'Low-grade intramucosal neoplasia');
+  assert.match(jnet.originalLead ?? '', /vessel and surface pattern/);
 
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
