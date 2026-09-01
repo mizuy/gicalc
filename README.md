@@ -25,7 +25,22 @@ npm run build:web
 npm run preview:web
 ```
 
-`dist/` を静的ホスティングへ配置します。
+## GitHub Pages
+
+公開 URL: https://mizuy.github.io/gicalc/
+
+`main` への push で GitHub Actions が `dist/` をデプロイします。初回だけリポジトリの
+[Settings → Pages](https://github.com/mizuy/gicalc/settings/pages) で
+**Source を GitHub Actions** にしてください。
+
+プロジェクトサイトなので、本番ビルドは base path `/gicalc` を付けます。
+
+```bash
+npm run build:pages
+npm run preview:pages
+```
+
+`dist/` を静的ホスティングへ配置することもできます。
 
 ## スコア追加
 

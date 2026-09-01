@@ -1,6 +1,12 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
 import type { ReactNode } from 'react';
 
+import { publicPath } from '../lib/web/baseUrl';
+
+const manifestHref = publicPath('/manifest.json');
+const iconHref = publicPath('/logo192.png');
+const swHref = publicPath('/sw.js');
+
 export default function Root({ children }: { children: ReactNode }) {
   return (
     <html lang="ja">
@@ -16,12 +22,22 @@ export default function Root({ children }: { children: ReactNode }) {
           name="description"
           content="消化管内視鏡向けスコアリング・予測ツール（T1 Nomogram / eCura / BEST-J）"
         />
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/logo192.png" />
-        <link rel="icon" href="/logo192.png" />
+        <link rel="manifest" href={manifestHref} />
+        <link rel="apple-touch-icon" href={iconHref} />
+        <link rel="icon" href={iconHref} />
         <ScrollViewStyleReset />
         <style dangerouslySetInnerHTML={{ __html: responsiveBackground }} />
-        <script dangerouslySetInnerHTML={{ __html: serviceWorkerRegistration }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register(${JSON.stringify(swHref)}).catch(function () {});
+  });
+}
+`,
+          }}
+        />
       </head>
       <body>{children}</body>
     </html>
@@ -37,11 +53,3 @@ body {
     background-color: #0F1718;
   }
 }`;
-
-const serviceWorkerRegistration = `
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/sw.js').catch(function () {});
-  });
-}
-`;
