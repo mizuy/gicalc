@@ -9,15 +9,17 @@ import { computeGbs } from '../lib/scores/gbs';
 import { computeKyoto } from '../lib/scores/kyoto';
 import { computeKyotoModified } from '../lib/scores/kyoto-modified';
 import { computeNoblads } from '../lib/scores/noblads';
+import { computeApcs } from '../lib/scores/apcs';
 import { computeAronchick } from '../lib/scores/aronchick';
 import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
 import { getScoreById, SCORES } from '../data/scores';
 
-test('登録スコアは11種でカテゴリ順に並ぶ', () => {
+test('登録スコアは12種でカテゴリ順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
+      'apcs',
       'kajiwara-nomogram',
       'bbps',
       'aronchick',
@@ -383,6 +385,40 @@ test('BBPS: 各区域 ≥2 は adequate、1つでも 1 以下は inadequate', ()
   const poorRight = computeBbps({ right: 1, transverse: 3, left: 3 });
   assert.equal(poorRight.total, 7);
   assert.equal(poorRight.interpretation, '不十分（inadequate）');
+});
+
+test('APCS: 0–1 平均 / 2–3 中等度 / 4–7 高リスク（Yeoh 2011）', () => {
+  const average = computeApcs({ age: 0, sex: 0, family: 0, smoking: 0 });
+  assert.equal(average.total, 0);
+  assert.equal(average.interpretation, '平均リスク（AR）');
+  assert.equal(average.severity, 'none');
+  assert.equal(average.maxScore, 7);
+
+  const averageMale = computeApcs({ age: 0, sex: 1, family: 0, smoking: 0 });
+  assert.equal(averageMale.total, 1);
+  assert.equal(averageMale.interpretation, '平均リスク（AR）');
+
+  const moderate = computeApcs({ age: 2, sex: 0, family: 0, smoking: 0 });
+  assert.equal(moderate.total, 2);
+  assert.equal(moderate.interpretation, '中等度リスク（MR）');
+  assert.equal(moderate.severity, 'moderate');
+
+  const familyOnly = computeApcs({ age: 0, sex: 0, family: 2, smoking: 0 });
+  assert.equal(familyOnly.total, 2);
+  assert.equal(familyOnly.interpretation, '中等度リスク（MR）');
+
+  const high = computeApcs({ age: 2, sex: 1, family: 0, smoking: 1 });
+  assert.equal(high.total, 4);
+  assert.equal(high.interpretation, '高リスク（HR）');
+  assert.equal(high.severity, 'severe');
+
+  const max = computeApcs({ age: 3, sex: 1, family: 2, smoking: 1 });
+  assert.equal(max.total, 7);
+  assert.equal(max.interpretation, '高リスク（HR）');
+
+  const defined = getScoreById('apcs');
+  assert.ok(defined);
+  assert.equal(defined.compute({ age: 0, sex: 0, family: 0, smoking: 0 }).interpretation, '平均リスク（AR）');
 });
 
 test('Aronchick: Excellent/Good は adequate、Poor/Inadequate は inadequate', () => {

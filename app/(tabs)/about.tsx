@@ -20,6 +20,12 @@ export default function AboutScreen() {
 
       <Text style={[styles.section, { color: tint }]}>収録ツール（体系は混同しない）</Text>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
+        <Text style={styles.cardTitle}>APCS</Text>
+        <Text style={[styles.body, { color: textSecondary }]}>
+          無症状アジア人の進行大腸腫瘍リスク（Yeoh 2011、0–7）。年齢・性別・家族歴・喫煙。大腸T1ノモグラムとは別です。
+        </Text>
+      </View>
+      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
         <Text style={styles.cardTitle}>BBPS / Aronchick</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
           腸管前処置。BBPS は洗浄後の3区域（0–9）、Aronchick
