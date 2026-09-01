@@ -1,6 +1,6 @@
 import {
-  computeKajiwara,
   interpretLnmProbability,
+  predictLnmProbability,
   valuesToNomogramInput,
 } from '../../lib/nomogram/kajiwara';
 import type { ScoreDefinition } from '../../types/score';
@@ -12,9 +12,8 @@ export const kajiwaraNomogram: ScoreDefinition = {
   category: 't1-colorectal',
   categoryLabel: '大腸T1癌',
   description:
-    '内視鏡治療後の大腸T1癌におけるリンパ節転移（LNM）確率を予測します。Kajiwara 2023 の rms ノモグラム整数点と、JSCCR公式計算機と同じ確率表を使います。BEST-JやeCuraとは対象・目的が異なります。',
-  reference:
-    'Kajiwara Y et al. Gastrointest Endosc 2023;97:1119-1128.e5 / https://nomogram.jsccr.jp/nomograms/lnm',
+    '内視鏡治療後の大腸T1癌におけるリンパ節転移（LNM）確率を予測します。Kajiwara 2023 の多変量ロジスティック係数を使います。BEST-JやeCuraとは対象・目的が異なります。',
+  reference: 'Kajiwara Y et al. Gastrointest Endosc 2023;97:1119-1128.e5',
   fields: [
     {
       id: 'sex',
@@ -70,15 +69,13 @@ export const kajiwaraNomogram: ScoreDefinition = {
     },
   ],
   compute: (values) => {
-    const { points, probability } = computeKajiwara(valuesToNomogramInput(values));
+    const probability = predictLnmProbability(valuesToNomogramInput(values));
     const interpretation = interpretLnmProbability(probability);
     return {
       total: probability,
       displayMode: 'probability',
       probability,
-      interpretation: interpretation.interpretation,
-      severity: interpretation.severity,
-      details: [`ノモグラム点数 ${points} 点（JSCCR公式計算機準拠）`, ...interpretation.details],
+      ...interpretation,
     };
   },
 };
