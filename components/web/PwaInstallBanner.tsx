@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
+import { useLocale } from '@/lib/i18n';
 
 type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -25,6 +26,7 @@ export function PwaInstallBanner() {
   const border = useThemeColor({}, 'border');
   const tint = useThemeColor({}, 'tint');
   const textSecondary = useThemeColor({}, 'textSecondary');
+  const { t } = useLocale();
 
   useEffect(() => {
     if (Platform.OS !== 'web') return;
@@ -59,15 +61,11 @@ export function PwaInstallBanner() {
 
   return (
     <View style={[styles.banner, { backgroundColor: surface, borderColor: border }]}>
-      <Text style={styles.title}>ホーム画面に追加（PWA）</Text>
+      <Text style={styles.title}>{t.pwa.title}</Text>
       {canInstall ? (
-        <Text style={[styles.body, { color: textSecondary }]}>
-          ブラウザからインストールすると、アプリのように使えます。
-        </Text>
+        <Text style={[styles.body, { color: textSecondary }]}>{t.pwa.installHint}</Text>
       ) : (
-        <Text style={[styles.body, { color: textSecondary }]}>
-          Safari: 共有 → 「ホーム画面に追加」 / Chrome: メニュー → 「アプリをインストール」または「ホーム画面に追加」
-        </Text>
+        <Text style={[styles.body, { color: textSecondary }]}>{t.pwa.manualHint}</Text>
       )}
       <View style={styles.actions}>
         {canInstall ? (
@@ -75,14 +73,14 @@ export function PwaInstallBanner() {
             accessibilityRole="button"
             onPress={handleInstall}
             style={({ pressed }) => [styles.button, { backgroundColor: tint, opacity: pressed ? 0.85 : 1 }]}>
-            <Text style={styles.buttonText}>インストール</Text>
+            <Text style={styles.buttonText}>{t.pwa.install}</Text>
           </Pressable>
         ) : null}
         <Pressable
           accessibilityRole="button"
           onPress={() => setDismissed(true)}
           style={({ pressed }) => [styles.dismiss, { opacity: pressed ? 0.7 : 1 }]}>
-          <Text style={[styles.dismissText, { color: textSecondary }]}>閉じる</Text>
+          <Text style={[styles.dismissText, { color: textSecondary }]}>{t.pwa.close}</Text>
         </Pressable>
       </View>
     </View>

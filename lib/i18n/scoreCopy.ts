@@ -1,0 +1,649 @@
+export type FieldCopy = {
+  label: string;
+  description?: string;
+  options: Array<{ label: string; description?: string }>;
+};
+
+export type ScoreCopy = {
+  name: string;
+  shortName?: string;
+  description: string;
+  fields?: Record<string, FieldCopy>;
+  groups?: Record<string, string>;
+  comments?: Record<string, string>;
+  meanings?: Record<string, string>;
+  figureNotes?: string[];
+};
+
+const pts = (n: number, plus = true): string => {
+  const unit = n === 1 ? 'point' : 'points';
+  return `${plus && n > 0 ? '+' : ''}${n} ${unit}`;
+};
+
+export const SCORE_EN: Record<string, ScoreCopy> = {
+  jes: {
+    name: 'JES classification (esophageal squamous, magnifying)',
+    description: 'Magnifying endoscopic classification of esophageal squamous epithelium (Type A / B1 / B2 / B3).',
+    comments: {
+      'Type B2': 'Esophageal SM1 is ≤200 μm.',
+    },
+    figureNotes: [
+      'Top left Fig. 1 Type A; top right Fig. 2 Type B1; bottom left Fig. 3 Type B2; bottom right Fig. 4 Type B3.',
+      'AVA-small / middle / large.',
+    ],
+  },
+  'kimura-takemoto': {
+    name: 'Kimura–Takemoto classification (gastric atrophy)',
+    shortName: 'Kimura',
+    description: 'Closed / Open classification by the endoscopic atrophic border.',
+    groups: {
+      萎縮なし: 'No atrophy',
+      '閉鎖型（Closed）': 'Closed type',
+      '開放型（Open）': 'Open type',
+    },
+    meanings: {
+      'C-0': 'Not in the original paper',
+    },
+    comments: {
+      'C-0': 'Not one of the original 6 types. Used as Kyoto atrophy 0 (C-0/C-1).',
+      'C-1': 'Kyoto atrophy 0 points (C-0/C-1).',
+      'C-2': 'Kyoto atrophy +1 point (C-2/C-3).',
+      'C-3': 'Kyoto atrophy +1 point (C-2/C-3).',
+      'O-1': 'Kyoto atrophy +2 points (O-1–O-3).',
+      'O-2': 'Kyoto atrophy +2 points (O-1–O-3).',
+      'O-3': 'Kyoto atrophy +2 points (O-1–O-3).',
+    },
+    figureNotes: ['C-1–C-3, O-1–O-3. Figure reprinted in Quach 2019.'],
+  },
+  kyoto: {
+    name: 'Kyoto classification risk score (original 0–8)',
+    shortName: 'Kyoto',
+    description:
+      'Five findings — atrophy, intestinal metaplasia, enlarged folds, nodularity, and diffuse redness (0–8). Shichijo 2017 found atrophy independently predictive; Kawamura 2021 proposed a modified score because the original model was underpowered in multivariable analysis.',
+    fields: {
+      atrophy: {
+        label: 'Atrophy (Kimura–Takemoto)',
+        options: [
+          { label: 'C-0 / C-1', description: pts(0, false) },
+          { label: 'C-2 / C-3', description: pts(1) },
+          { label: 'O-1 / O-2 / O-3', description: pts(2) },
+        ],
+      },
+      im: {
+        label: 'Intestinal metaplasia (WLI)',
+        description: 'Gray-white flat elevation. Corpus involvement scores 2',
+        options: [
+          { label: 'Absent', description: pts(0, false) },
+          { label: 'Antrum', description: pts(1) },
+          { label: 'Corpus', description: pts(2) },
+        ],
+      },
+      fold: {
+        label: 'Enlarged folds',
+        description: 'Corpus fold width ≥5 mm',
+        options: [
+          { label: '<5 mm', description: pts(0, false) },
+          { label: '≥5 mm', description: pts(1) },
+        ],
+      },
+      nodularity: {
+        label: 'Nodularity',
+        description: 'Fine granular elevations in the antrum',
+        options: [
+          { label: 'Absent', description: pts(0, false) },
+          { label: 'Present', description: pts(1) },
+        ],
+      },
+      redness: {
+        label: 'Diffuse redness',
+        description: 'Uniform redness of the corpus mucosa',
+        options: [
+          { label: 'Absent', description: pts(0, false) },
+          { label: 'Mild', description: pts(1) },
+          { label: 'Severe', description: pts(2) },
+        ],
+      },
+    },
+  },
+  'kyoto-modified': {
+    name: 'Modified Kyoto classification risk score (0–5)',
+    shortName: 'Kyoto-mod',
+    description:
+      'Kawamura 2021 modification. Invisible RAC 2 points; open-type atrophy, corpus IEE IM >30%, and corpus map-like redness 1 point each.',
+    fields: {
+      rac: {
+        label: 'Angular RAC',
+        description: 'Regular arrangement of collecting venules',
+        options: [
+          { label: 'Visible', description: pts(0, false) },
+          { label: 'Invisible', description: pts(2) },
+        ],
+      },
+      openAtrophy: {
+        label: 'Open-type atrophy',
+        description: 'Kimura–Takemoto O-1–O-3',
+        options: [
+          { label: 'Closed (C-0–C-3)', description: pts(0, false) },
+          { label: 'Open (O-1–O-3)', description: pts(1) },
+        ],
+      },
+      corpusIm: {
+        label: 'Corpus IEE IM >30%',
+        description: 'LBC / WOS / villous pattern',
+        options: [
+          { label: 'None / antrum only', description: pts(0, false) },
+          { label: 'Corpus >30%', description: pts(1) },
+        ],
+      },
+      mapRedness: {
+        label: 'Map-like redness',
+        description: 'Only corpus map-like redness is scored',
+        options: [
+          { label: 'None / antrum only', description: pts(0, false) },
+          { label: 'Present in corpus', description: pts(1) },
+        ],
+      },
+    },
+  },
+  eggim: {
+    name: 'EGGIM (endoscopic IM score)',
+    description:
+      'Scores intestinal metaplasia in 4 antrum/corpus lesser- and greater-curvature areas on IEE (0–8). 5–8 is high risk (Kawamura 2021). No biopsy required.',
+    fields: {
+      antrumLesser: {
+        label: 'Antrum, lesser curvature',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'Focal ≤30%', description: pts(1) },
+          { label: 'Extensive >30%', description: pts(2) },
+        ],
+      },
+      antrumGreater: {
+        label: 'Antrum, greater curvature',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'Focal ≤30%', description: pts(1) },
+          { label: 'Extensive >30%', description: pts(2) },
+        ],
+      },
+      corpusLesser: {
+        label: 'Corpus, lesser curvature',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'Focal ≤30%', description: pts(1) },
+          { label: 'Extensive >30%', description: pts(2) },
+        ],
+      },
+      corpusGreater: {
+        label: 'Corpus, greater curvature',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'Focal ≤30%', description: pts(1) },
+          { label: 'Extensive >30%', description: pts(2) },
+        ],
+      },
+    },
+  },
+  'ecura-hatta': {
+    name: 'eCura scoring system (early gastric cancer LNM)',
+    description:
+      'Scores lymph-node metastasis risk after non-curative resection of early gastric cancer. Shows the LNM rate for each score 0–7 as well as the low / intermediate / high-risk groups.',
+    fields: {
+      ly: {
+        label: 'Lymphatic invasion Ly',
+        options: [
+          { label: 'Ly0', description: pts(0, false) },
+          { label: 'Ly1', description: pts(3) },
+        ],
+      },
+      size: {
+        label: 'Maximum tumor size',
+        options: [
+          { label: '≤30 mm', description: pts(0, false) },
+          { label: '>30 mm', description: pts(1) },
+        ],
+      },
+      vm: {
+        label: 'Vertical margin VM',
+        options: [
+          { label: 'VM0', description: pts(0, false) },
+          { label: 'VM1', description: pts(1) },
+        ],
+      },
+      v: {
+        label: 'Venous invasion V',
+        options: [
+          { label: 'V0', description: pts(0, false) },
+          { label: 'V1', description: pts(1) },
+        ],
+      },
+      sm: {
+        label: 'SM invasion depth',
+        options: [
+          { label: 'SM1 <500 μm', description: pts(0, false) },
+          { label: 'SM2 ≥500 μm', description: pts(1) },
+        ],
+      },
+    },
+  },
+  sekiguchi: {
+    name: 'Sekiguchi score (early gastric cancer LNM, 11 points)',
+    description: 'Stratifies early gastric cancer LNM on an 11-point scale. Separates mixed histology.',
+    fields: {
+      size: {
+        label: 'Tumor size',
+        options: [
+          { label: '≤2 cm', description: pts(0, false) },
+          { label: '>2–≤3 cm', description: pts(1) },
+          { label: '>3 cm', description: pts(2) },
+        ],
+      },
+      depth: {
+        label: 'Depth',
+        description: 'SM1 is scored 0, same as mucosa',
+        options: [
+          { label: 'M / SM1', description: '0 points (SM1 <500 μm)' },
+          { label: 'SM2', description: '+2 points (≥500 μm)' },
+        ],
+      },
+      histology: {
+        label: 'Histology',
+        description: 'Differentiated = tub1/tub2/pap; undifferentiated = por/sig/muc',
+        options: [
+          { label: 'Pure differentiated', description: pts(0, false) },
+          { label: 'Pure undifferentiated', description: pts(1) },
+          { label: 'Mixed, differentiated-predominant', description: pts(1) },
+          { label: 'Mixed, undifferentiated-predominant', description: pts(2) },
+        ],
+      },
+      ulcer: {
+        label: 'Ulcer UL',
+        options: [
+          { label: 'Absent', description: pts(0, false) },
+          { label: 'Present', description: pts(1) },
+        ],
+      },
+      lvi: {
+        label: 'Lymphovascular invasion',
+        description: 'Strongest factor (+4)',
+        options: [
+          { label: 'Absent', description: pts(0, false) },
+          { label: 'Present', description: pts(4) },
+        ],
+      },
+    },
+  },
+  'best-j': {
+    name: 'BEST-J score (post-ESD bleeding, early gastric cancer)',
+    description: 'Bleeding after ESD Trend from Japan. Predicts delayed bleeding after ESD for early gastric cancer.',
+    fields: {
+      warfarin: {
+        label: 'Warfarin',
+        description: 'Antithrombotic (none / continued / withdrawn)',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'Continued', description: pts(4, false) },
+          { label: 'Withdrawn', description: pts(3, false) },
+        ],
+      },
+      doac: {
+        label: 'DOAC',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'Continued', description: pts(4, false) },
+          { label: 'Withdrawn', description: pts(3, false) },
+        ],
+      },
+      p2y12: {
+        label: 'P2Y12 inhibitor',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'Continued', description: pts(2, false) },
+          { label: 'Withdrawn', description: pts(1, false) },
+        ],
+      },
+      aspirin: {
+        label: 'Aspirin',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'Continued', description: pts(2, false) },
+          { label: 'Withdrawn', description: pts(1, false) },
+        ],
+      },
+      cilostazol: {
+        label: 'Cilostazol',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'Continued', description: pts(1, false) },
+          { label: 'Withdrawn', description: pts(0, false) },
+        ],
+      },
+      dialysis: {
+        label: 'Dialysis CKD',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(3) },
+        ],
+      },
+      tumorSize: {
+        label: 'Tumor >30 mm',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(1) },
+        ],
+      },
+      lowerThird: {
+        label: 'Lower third of stomach',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(1) },
+        ],
+      },
+      multiple: {
+        label: 'Multiple lesions',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(1) },
+        ],
+      },
+    },
+  },
+  apcs: {
+    name: 'Asia-Pacific Colorectal Screening Score (APCS)',
+    description:
+      'Stratifies asymptomatic Asian adults for advanced colorectal neoplasia (advanced adenoma or cancer) by age, sex, family history, and smoking (0–7).',
+    fields: {
+      age: {
+        label: 'Age',
+        options: [
+          { label: '<50 y', description: pts(0, false) },
+          { label: '50–69 y', description: pts(2) },
+          { label: '≥70 y', description: pts(3) },
+        ],
+      },
+      sex: {
+        label: 'Sex',
+        options: [
+          { label: 'Female', description: pts(0, false) },
+          { label: 'Male', description: pts(1) },
+        ],
+      },
+      family: {
+        label: 'Family history of CRC',
+        description: 'First-degree relatives only (parents, siblings, children)',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(2) },
+        ],
+      },
+      smoking: {
+        label: 'Smoking',
+        description: 'Current or former. Original “current” is ≥1 pack/week',
+        options: [
+          { label: 'Never', description: pts(0, false) },
+          { label: 'Current or former', description: pts(1) },
+        ],
+      },
+    },
+  },
+  'kudo-tsuruta': {
+    name: 'Kudo–Tsuruta classification (pit pattern)',
+    description: 'Chromoendoscopic pit-pattern classification of colorectal neoplasia (I / II / IIIs / IIIL / IV / VI / VN).',
+    groups: {
+      非腫瘍: 'Non-neoplastic',
+      腺腫: 'Adenoma',
+      癌: 'Carcinoma',
+    },
+    figureNotes: ['Types I–VN. Figure from Clin Endosc 2025 Fig. 4 (adapted from Tanaka 2004).'],
+  },
+  jnet: {
+    name: 'JNET classification (colorectal NBI magnifying)',
+    description: 'NBI magnifying classification of colorectal tumors (Type 1 / 2A / 2B / 3).',
+    figureNotes: ['Original Fig. 7.'],
+  },
+  'kajiwara-nomogram': {
+    name: 'Colorectal T1 LNM nomogram (Kajiwara / JSCCR)',
+    description:
+      'Predicts lymph-node metastasis (LNM) probability after endoscopic treatment of colorectal T1 cancer. Six-factor multivariable logistic model from Kajiwara 2023 (GIE; derivation n=3080).',
+    fields: {
+      sex: {
+        label: 'Sex',
+        options: [{ label: 'Male' }, { label: 'Female' }],
+      },
+      location: {
+        label: 'Tumor location',
+        options: [
+          { label: 'Transverse (T)', description: 'Transverse colon' },
+          { label: 'A/C/D', description: 'Ascending colon, cecum, descending colon' },
+          { label: 'S/Rb', description: 'Sigmoid colon, lower rectum' },
+          { label: 'RS/Ra', description: 'Rectosigmoid, upper rectum' },
+        ],
+      },
+      grade: {
+        label: 'Histology',
+        description:
+          'Predominant type. G1 = papillary / well-differentiated tubular; G2 = moderately differentiated; G3 = poorly differentiated, mucinous, or signet-ring',
+        options: [
+          { label: 'G1', description: 'Papillary or well-differentiated tubular adenocarcinoma' },
+          { label: 'G2', description: 'Moderately differentiated tubular adenocarcinoma' },
+          { label: 'G3', description: 'Poorly differentiated, mucinous, or signet-ring cell carcinoma' },
+        ],
+      },
+      lvi: {
+        label: 'Lymphovascular invasion',
+        description: 'Lymphatic or venous invasion',
+        options: [{ label: 'Absent' }, { label: 'Present' }],
+      },
+      smDepth: {
+        label: 'SM invasion depth',
+        description: 'JSCCR absolute measurement from the MM, or from the head/stalk border if pedunculated',
+        options: [{ label: '<1000 μm' }, { label: '1000–1999 μm' }, { label: '≥2000 μm' }],
+      },
+      budding: {
+        label: 'Tumor budding',
+        description: '20× hotspot (0.785 mm²). The model uses the same coefficient for BD2 and BD3',
+        options: [
+          { label: 'BD1', description: '<5 buds' },
+          { label: 'BD2/3', description: 'BD2: 5–9 buds; BD3: ≥10 buds' },
+        ],
+      },
+    },
+  },
+  bbps: {
+    name: 'Boston Bowel Preparation Scale (BBPS)',
+    description:
+      'Scores bowel preparation in 3 segments (0–3 each, total 0–9). Assign during withdrawal after washing and suction.',
+    fields: {
+      right: {
+        label: 'Right colon',
+        description: 'Cecum and ascending colon',
+        options: [
+          { label: '0', description: 'Solid stool; mucosa not seen' },
+          { label: '1', description: 'Only part of the mucosa seen; residue or opaque fluid hides the rest' },
+          { label: '2', description: 'Minor residue, fragments, or opaque fluid; mucosa seen well' },
+          { label: '3', description: 'No residue. Entire segment mucosa seen' },
+        ],
+      },
+      transverse: {
+        label: 'Transverse colon',
+        description: 'Includes hepatic and splenic flexures',
+        options: [
+          { label: '0', description: 'Solid stool; mucosa not seen' },
+          { label: '1', description: 'Only part of the mucosa seen; residue or opaque fluid hides the rest' },
+          { label: '2', description: 'Minor residue, fragments, or opaque fluid; mucosa seen well' },
+          { label: '3', description: 'No residue. Entire segment mucosa seen' },
+        ],
+      },
+      left: {
+        label: 'Left colon',
+        description: 'Descending colon, sigmoid, and rectum',
+        options: [
+          { label: '0', description: 'Solid stool; mucosa not seen' },
+          { label: '1', description: 'Only part of the mucosa seen; residue or opaque fluid hides the rest' },
+          { label: '2', description: 'Minor residue, fragments, or opaque fluid; mucosa seen well' },
+          { label: '3', description: 'No residue. Entire segment mucosa seen' },
+        ],
+      },
+    },
+  },
+  aronchick: {
+    name: 'Aronchick scale (bowel preparation)',
+    description: 'Rates whole-colon preparation in 5 grades before washing. No segmental scores.',
+    fields: {
+      grade: {
+        label: 'Preparation grade',
+        description: 'Score the entire colon before washing or suction',
+        options: [
+          { label: 'Excellent', description: 'Small amount of clear fluid. Mucosa >95%' },
+          { label: 'Good', description: 'Larger volume of clear fluid. Mucosa >90%' },
+          { label: 'Fair', description: 'Semisolid stool suctionable. Mucosa >90%' },
+          { label: 'Poor', description: 'Not suctionable. Mucosa <90%' },
+          { label: 'Inadequate', description: 'Repeat preparation required' },
+        ],
+      },
+    },
+  },
+  gbs: {
+    name: 'Glasgow-Blatchford Score (upper GI bleeding)',
+    description: 'Predicts need for intervention (transfusion, endoscopy, or surgery) in upper GI bleeding.',
+    fields: {
+      sex: {
+        label: 'Sex',
+        description: 'Used for hemoglobin scoring (not a point itself)',
+        options: [{ label: 'Male' }, { label: 'Female' }],
+      },
+      bun: {
+        label: 'BUN',
+        description: 'mg/dL (original mmol/L × 2.8)',
+        options: [
+          { label: '<18.2', description: pts(0, false) },
+          { label: '18.2–22.3', description: pts(2) },
+          { label: '22.4–27.9', description: pts(3) },
+          { label: '28.0–69.9', description: pts(4) },
+          { label: '≥70', description: pts(6) },
+        ],
+      },
+      hb: {
+        label: 'Hemoglobin',
+        description: 'g/dL. 12.0–12.9 scores 1 in men only; 10.0–11.9 scores 3 in men / 1 in women',
+        options: [
+          { label: '≥13.0', description: pts(0, false) },
+          { label: '12.0–12.9', description: 'Male +1 / female 0' },
+          { label: '10.0–11.9', description: 'Male +3 / female +1' },
+          { label: '<10.0', description: pts(6) },
+        ],
+      },
+      sbp: {
+        label: 'Systolic blood pressure',
+        options: [
+          { label: '≥110', description: pts(0, false) },
+          { label: '100–109', description: pts(1) },
+          { label: '90–99', description: pts(2) },
+          { label: '<90', description: pts(3) },
+        ],
+      },
+      pulse: {
+        label: 'Pulse',
+        options: [
+          { label: '<100 /min', description: pts(0, false) },
+          { label: '≥100 /min', description: pts(1) },
+        ],
+      },
+      melena: {
+        label: 'Melena',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(1) },
+        ],
+      },
+      syncope: {
+        label: 'Syncope',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(2) },
+        ],
+      },
+      hepatic: {
+        label: 'Liver disease',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(2) },
+        ],
+      },
+      cardiac: {
+        label: 'Heart failure',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(2) },
+        ],
+      },
+    },
+  },
+  noblads: {
+    name: 'NOBLADS score (acute lower GI bleeding)',
+    description: 'Predicts severe acute lower GI bleeding (ongoing or recurrent). 1 point per factor.',
+    fields: {
+      nsaids: {
+        label: 'NSAIDs',
+        description: 'Nonselective NSAIDs or COX-2 inhibitors (past 2 weeks)',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(1) },
+        ],
+      },
+      noDiarrhea: {
+        label: 'No diarrhea',
+        description: 'Diarrhea = >3 loose/watery stools a day. Absence of diarrhea is the risk',
+        options: [
+          { label: 'Diarrhea present', description: pts(0, false) },
+          { label: 'No diarrhea', description: pts(1) },
+        ],
+      },
+      noTenderness: {
+        label: 'No abdominal tenderness',
+        description: 'Absence of tenderness is the risk',
+        options: [
+          { label: 'Tenderness present', description: pts(0, false) },
+          { label: 'No tenderness', description: pts(1) },
+        ],
+      },
+      hypotension: {
+        label: 'Systolic BP ≤100',
+        options: [
+          { label: '>100 mmHg', description: pts(0, false) },
+          { label: '≤100 mmHg', description: pts(1) },
+        ],
+      },
+      antiplatelet: {
+        label: 'Non-aspirin antiplatelet',
+        description: 'Clopidogrel, ticlopidine, cilostazol, etc. Do not include aspirin',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(1) },
+        ],
+      },
+      albumin: {
+        label: 'Albumin <3.0 g/dL',
+        options: [
+          { label: '≥3.0', description: pts(0, false) },
+          { label: '<3.0', description: pts(1) },
+        ],
+      },
+      charlson: {
+        label: 'Charlson comorbidity ≥2',
+        options: [
+          { label: '0–1', description: pts(0, false) },
+          { label: '≥2', description: pts(1) },
+        ],
+      },
+      syncope: {
+        label: 'Syncope',
+        description: 'Transient altered consciousness (GCS ≤14) or prior syncope',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(1) },
+        ],
+      },
+    },
+  },
+};

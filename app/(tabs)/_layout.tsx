@@ -1,12 +1,15 @@
 import { Tabs } from 'expo-router';
 import { Text } from 'react-native';
 
+import { LanguageToggle } from '@/components/LanguageToggle';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { useLocale } from '@/lib/i18n';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { t } = useLocale();
 
   return (
     <Tabs
@@ -24,11 +27,12 @@ export default function TabLayout() {
           fontWeight: '700',
         },
         headerShown: useClientOnlyValue(false, true),
+        headerRight: () => <LanguageToggle />,
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'スコア一覧',
+          title: t.tabs.scores,
           tabBarIcon: ({ color }) => (
             <Text style={{ color, fontSize: 18, fontWeight: '700' }}>☰</Text>
           ),
@@ -37,7 +41,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="about"
         options={{
-          title: 'About',
+          title: t.tabs.about,
           tabBarIcon: ({ color }) => (
             <Text style={{ color, fontSize: 18, fontWeight: '700' }}>ℹ</Text>
           ),

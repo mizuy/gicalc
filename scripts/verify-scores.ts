@@ -3,7 +3,7 @@ import { test } from 'node:test';
 
 import { predictLnmProbability, valuesToNomogramInput } from '../lib/nomogram/kajiwara';
 import { computeBestJ } from '../lib/scores/best-j';
-import { computeEcura } from '../lib/scores/ecura';
+import { computeEcura, ECURA_LNM_BY_SCORE } from '../lib/scores/ecura';
 import { computeEggim } from '../lib/scores/eggim';
 import { computeGbs } from '../lib/scores/gbs';
 import { computeKyoto } from '../lib/scores/kyoto';
@@ -13,12 +13,14 @@ import { computeApcs } from '../lib/scores/apcs';
 import { computeAronchick } from '../lib/scores/aronchick';
 import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
+import { lowestFieldValues } from '../lib/scores/initialValues';
 import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
 import { KIMURA_1969_PUBMED } from '../data/scores/kimura-takemoto';
+import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { isClassification } from '../types/score';
 
-test('登録スコアは15種で臓器順に並ぶ', () => {
+test('登録スコアは16種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -31,6 +33,7 @@ test('登録スコアは15種で臓器順に並ぶ', () => {
       'sekiguchi',
       'best-j',
       'apcs',
+      'kudo-tsuruta',
       'jnet',
       'kajiwara-nomogram',
       'bbps',
@@ -47,7 +50,7 @@ test('登録スコアは15種で臓器順に並ぶ', () => {
         'stomach',
         ['kimura-takemoto', 'kyoto', 'kyoto-modified', 'eggim', 'ecura-hatta', 'sekiguchi', 'best-j'],
       ],
-      ['colorectum', ['apcs', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
+      ['colorectum', ['apcs', 'kudo-tsuruta', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
       ['bleeding', ['gbs', 'noblads']],
     ],
   );
@@ -162,19 +165,30 @@ test('Kajiwara: フィールド値 0 は参照カテゴリに写像される', (
 });
 
 test('eCura: 0–1 低リスク / 2–4 中リスク / 5–7 高リスク', () => {
+  const zero = computeEcura({ ly: 0, size: 0, vm: 0, v: 0, sm: 0 });
+  assert.equal(zero.total, 0);
+  assert.equal(zero.severity, 'none');
+  assert.match(zero.details?.[0] ?? '', /1\.6%/);
+  assert.match(zero.details?.[0] ?? '', /1\/62/);
+
   const low = computeEcura({ ly: 0, size: 0, vm: 0, v: 0, sm: 1 });
   assert.equal(low.total, 1);
   assert.equal(low.severity, 'none');
   assert.equal(low.displayMode, 'points');
   assert.equal(low.maxScore, 7);
+  assert.match(low.details?.[0] ?? '', /2\.6%/);
+  assert.match(low.details?.[1] ?? '', /2\.5%/);
 
   const mid = computeEcura({ ly: 3, size: 1, vm: 0, v: 0, sm: 0 });
   assert.equal(mid.total, 4);
   assert.equal(mid.severity, 'moderate');
+  assert.match(mid.details?.[0] ?? '', /8\.3%/);
 
   const high = computeEcura({ ly: 3, size: 1, vm: 1, v: 1, sm: 1 });
   assert.equal(high.total, 7);
   assert.equal(high.severity, 'severe');
+  assert.match(high.details?.[0] ?? '', /26\.7%/);
+  assert.equal(Object.keys(ECURA_LNM_BY_SCORE).length, 8);
 });
 
 test('BEST-J: 抗血栓は継続が満点、休薬は満点-1', () => {
@@ -464,6 +478,16 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(jnet.originalLead ?? '', /vessel and surface pattern/);
   assert.match(jnet.entries[0]?.rows.find((row) => row.heading === '*1')?.text ?? '', /caliber/);
 
+  const kudo = getScoreById('kudo-tsuruta');
+  assert.ok(kudo && isClassification(kudo));
+  assert.deepEqual(
+    kudo.entries.map((entry) => entry.label),
+    ['Type I', 'Type II', 'Type IIIs', 'Type IIIL', 'Type IV', 'Type VI', 'Type VN'],
+  );
+  assert.equal(kudo.entries[5]?.meaning, 'Intramucosal / superficial SM ca');
+  assert.match(kudo.originalLead ?? '', /Type V was later subdivided/);
+  assert.match(kudo.entries[2]?.rows.find((row) => row.heading === 'Note')?.text ?? '', /small or short/);
+
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
   assert.deepEqual(
@@ -484,7 +508,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(kimura.entries[6]?.meaning, 'Open type');
   assert.match(kimura.entries[0]?.comment ?? '', /原著の6型にはない/);
 
-  for (const score of [jnet, jes, kimura]) {
+  for (const score of [jnet, kudo, jes, kimura]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -508,6 +532,16 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(jnet.pubmed, '26927367');
   assert.equal(jnet.figures?.[0]?.pubmed, '26927367');
 
+  const kudo = getScoreById('kudo-tsuruta');
+  assert.ok(kudo && isClassification(kudo));
+  assert.equal(kudo.figures?.length, 1);
+  assert.match(kudo.figures?.[0]?.source ?? '', /Kudo S/);
+  assert.match(kudo.figures?.[0]?.doi ?? '', /10\.5946\/ce\.2024\.263/);
+  assert.match(kudo.figures?.[0]?.src ?? '', /kudo-tsuruta-pit/);
+  assert.match(kudo.figures?.[0]?.caption ?? '', /Fig\. 4/);
+  assert.equal(kudo.pubmed, '8836710');
+  assert.equal(kudo.figures?.[0]?.pubmed, '40336268');
+
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
   assert.equal(jes.figures?.length, 2);
@@ -524,6 +558,106 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(kimura.figures?.[0]?.src ?? '', /kimura-takemoto-1969/);
   assert.equal(kimura.pubmed, KIMURA_1969_PUBMED);
   assert.equal(kimura.figures?.[0]?.pubmed, '31327182');
+});
+
+test('英語コピーが全スコアの表示項目を覆う', () => {
+  const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
+  for (const score of SCORES) {
+    const copy = SCORE_EN[score.id];
+    assert.ok(copy, score.id);
+    const english = localizeScore(score, 'en');
+    assert.equal(english.name, copy.name);
+    assert.equal(english.categoryLabel, UI.en.category[score.category]);
+    assert.equal(localizeScore(score, 'ja').name, score.name);
+    assert.doesNotMatch(english.name, japanese);
+    assert.doesNotMatch(english.description, japanese);
+
+    if (isClassification(score) && isClassification(english)) {
+      for (const entry of score.entries) {
+        if (entry.group) {
+          assert.ok(copy.groups?.[entry.group], `${score.id} group ${entry.group}`);
+        }
+        if (entry.comment) {
+          assert.ok(copy.comments?.[entry.label], `${score.id} comment ${entry.label}`);
+        }
+      }
+      for (const entry of english.entries) {
+        if (entry.group) assert.doesNotMatch(entry.group, japanese);
+        if (entry.comment) assert.doesNotMatch(entry.comment, japanese);
+        if (entry.meaning) assert.doesNotMatch(entry.meaning, japanese);
+      }
+      for (const note of english.figures?.map((figure) => figure.note) ?? []) {
+        assert.doesNotMatch(note, japanese);
+      }
+    } else if (!isClassification(score) && !isClassification(english)) {
+      assert.ok(copy.fields);
+      for (const field of score.fields) {
+        const fieldCopy = copy.fields?.[field.id];
+        assert.ok(fieldCopy, `${score.id}.${field.id}`);
+        assert.equal(fieldCopy.options.length, field.options.length, `${score.id}.${field.id} options`);
+      }
+      for (const field of english.fields) {
+        assert.doesNotMatch(field.label, japanese, field.label);
+        if (field.description) assert.doesNotMatch(field.description, japanese, field.description);
+        for (const option of field.options) {
+          assert.doesNotMatch(option.label, japanese, option.label);
+          if (option.description) assert.doesNotMatch(option.description, japanese, option.description);
+        }
+      }
+    }
+  }
+});
+
+test('英語結果は解釈だけ訳し、点数は変えない', () => {
+  const japanese = computeBestJ({
+    warfarin: 0,
+    doac: 0,
+    p2y12: 0,
+    aspirin: 0,
+    cilostazol: 0,
+    dialysis: 0,
+    tumorSize: 0,
+    lowerThird: 0,
+    multiple: 0,
+  });
+  const english = localizeResult(japanese, 'en');
+  assert.equal(english.total, japanese.total);
+  assert.equal(english.severity, japanese.severity);
+  assert.equal(english.interpretation, 'Low risk');
+  assert.deepEqual(english.details, ['Delayed post-ESD bleeding rate 2.8%']);
+  assert.equal(localizeResult(japanese, 'ja').interpretation, '低リスク');
+
+  const bbps = localizeResult(computeBbps({ right: 2, transverse: 2, left: 2 }), 'en');
+  assert.equal(bbps.interpretation, 'Adequate');
+  assert.match(bbps.details?.[0] ?? '', /Right \(cecum\/ascending\) 2/);
+
+  const sekiguchi = localizeResult(
+    computeSekiguchi({ size: 0, depth: 0, histology: 0, ulcer: 0, lvi: 0 }),
+    'en',
+  );
+  assert.match(sekiguchi.details?.[0] ?? '', /derivation cohort/);
+
+  const ecura = localizeResult(computeEcura({ ly: 0, size: 0, vm: 0, v: 0, sm: 0 }), 'en');
+  assert.equal(ecura.interpretation, 'Low risk');
+  assert.match(ecura.details?.[0] ?? '', /LNM rate at this score 1\.6%/);
+  assert.doesNotMatch(ecura.details?.join(' ') ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+});
+
+test('既定言語は英語で、計算は最低点から始まる', () => {
+  assert.equal(DEFAULT_LOCALE, 'en');
+
+  const ecura = getScoreById('ecura-hatta');
+  assert.ok(ecura && !isClassification(ecura));
+  assert.deepEqual(lowestFieldValues(ecura.fields), { ly: 0, size: 0, vm: 0, v: 0, sm: 0 });
+
+  const aronchick = getScoreById('aronchick');
+  assert.ok(aronchick && !isClassification(aronchick));
+  assert.deepEqual(lowestFieldValues(aronchick.fields), { grade: 1 });
+
+  const apcs = getScoreById('apcs');
+  assert.ok(apcs && !isClassification(apcs));
+  assert.deepEqual(lowestFieldValues(apcs.fields), { age: 0, sex: 0, family: 0, smoking: 0 });
+  assert.equal(apcs.compute(lowestFieldValues(apcs.fields)).interpretation, '平均リスク（AR）');
 });
 
 test('引用は PubMed へ行く', () => {

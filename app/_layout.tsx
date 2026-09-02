@@ -4,8 +4,10 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
+import { LanguageToggle } from '@/components/LanguageToggle';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { LocaleProvider, useLocale } from '@/lib/i18n';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -58,17 +60,25 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <LocaleProvider>
+      <RootLayoutNav />
+    </LocaleProvider>
+  );
 }
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const { t } = useLocale();
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkNavTheme : LightNavTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="score/[id]" options={{ headerBackTitle: '戻る' }} />
+        <Stack.Screen
+          name="score/[id]"
+          options={{ headerBackTitle: t.back, headerRight: () => <LanguageToggle /> }}
+        />
       </Stack>
     </ThemeProvider>
   );
