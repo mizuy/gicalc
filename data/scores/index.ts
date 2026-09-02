@@ -10,6 +10,7 @@ import { jesScore } from './jes';
 import { jnetScore } from './jnet';
 import { kajiwaraNomogram } from './kajiwara-nomogram';
 import { kimuraTakemotoScore } from './kimura-takemoto';
+import { kudoTsurutaScore } from './kudo-tsuruta';
 import { kyotoScore } from './kyoto';
 import { kyotoModifiedScore } from './kyoto-modified';
 import { nobladsScore } from './noblads';
@@ -26,6 +27,7 @@ export const SCORES: ScoreDefinition[] = [
   sekiguchiScore,
   bestJScore,
   apcsScore,
+  kudoTsurutaScore,
   jnetScore,
   kajiwaraNomogram,
   bbpsScore,

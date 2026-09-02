@@ -18,7 +18,7 @@ import { KIMURA_1969_PUBMED } from '../data/scores/kimura-takemoto';
 import { pubmedUrl } from '../lib/pubmed';
 import { isClassification } from '../types/score';
 
-test('登録スコアは15種で臓器順に並ぶ', () => {
+test('登録スコアは16種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -31,6 +31,7 @@ test('登録スコアは15種で臓器順に並ぶ', () => {
       'sekiguchi',
       'best-j',
       'apcs',
+      'kudo-tsuruta',
       'jnet',
       'kajiwara-nomogram',
       'bbps',
@@ -47,7 +48,7 @@ test('登録スコアは15種で臓器順に並ぶ', () => {
         'stomach',
         ['kimura-takemoto', 'kyoto', 'kyoto-modified', 'eggim', 'ecura-hatta', 'sekiguchi', 'best-j'],
       ],
-      ['colorectum', ['apcs', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
+      ['colorectum', ['apcs', 'kudo-tsuruta', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
       ['bleeding', ['gbs', 'noblads']],
     ],
   );
@@ -464,6 +465,16 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(jnet.originalLead ?? '', /vessel and surface pattern/);
   assert.match(jnet.entries[0]?.rows.find((row) => row.heading === '*1')?.text ?? '', /caliber/);
 
+  const kudo = getScoreById('kudo-tsuruta');
+  assert.ok(kudo && isClassification(kudo));
+  assert.deepEqual(
+    kudo.entries.map((entry) => entry.label),
+    ['Type I', 'Type II', 'Type IIIs', 'Type IIIL', 'Type IV', 'Type VI', 'Type VN'],
+  );
+  assert.equal(kudo.entries[5]?.meaning, 'Intramucosal / superficial SM ca');
+  assert.match(kudo.originalLead ?? '', /Type V was later subdivided/);
+  assert.match(kudo.entries[2]?.rows.find((row) => row.heading === 'Note')?.text ?? '', /small or short/);
+
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
   assert.deepEqual(
@@ -484,7 +495,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(kimura.entries[6]?.meaning, 'Open type');
   assert.match(kimura.entries[0]?.comment ?? '', /原著の6型にはない/);
 
-  for (const score of [jnet, jes, kimura]) {
+  for (const score of [jnet, kudo, jes, kimura]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -507,6 +518,16 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(jnet.figures?.[0]?.caption ?? '', /Fig\. 7/);
   assert.equal(jnet.pubmed, '26927367');
   assert.equal(jnet.figures?.[0]?.pubmed, '26927367');
+
+  const kudo = getScoreById('kudo-tsuruta');
+  assert.ok(kudo && isClassification(kudo));
+  assert.equal(kudo.figures?.length, 1);
+  assert.match(kudo.figures?.[0]?.source ?? '', /Kudo S/);
+  assert.match(kudo.figures?.[0]?.doi ?? '', /10\.5946\/ce\.2024\.263/);
+  assert.match(kudo.figures?.[0]?.src ?? '', /kudo-tsuruta-pit/);
+  assert.match(kudo.figures?.[0]?.caption ?? '', /Fig\. 4/);
+  assert.equal(kudo.pubmed, '8836710');
+  assert.equal(kudo.figures?.[0]?.pubmed, '40336268');
 
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));

@@ -34,7 +34,7 @@ export default function AboutScreen() {
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
         <Text style={styles.cardTitle}>大腸</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          APCS（検診）、JNET（NBI拡大分類）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。
+          APCS（検診）、工藤–鶴田（pit pattern）、JNET（NBI拡大分類）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
