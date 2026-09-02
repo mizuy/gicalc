@@ -31,7 +31,7 @@ export function computeSekiguchi(values: Record<string, number>): ScoreResult {
       displayMode: 'points',
       severity: 'none',
       interpretation: '低リスク',
-      details: [`LNM ${lnm.rate}（95% CI ${lnm.ci}、導出コホート）`, 'eCura とは点数・因子が異なります。'],
+      details: [`LNM ${lnm.rate}（95% CI ${lnm.ci}、導出コホート）`],
     };
   }
   if (total <= 5) {

@@ -1,13 +1,14 @@
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
+import { CitationLink } from '@/components/calculator/CitationLink';
 import { ScoreFieldSelector } from '@/components/calculator/ScoreFieldSelector';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
 import { Text, useThemeColor } from '@/components/Themed';
-import type { ScoreDefinition } from '@/types/score';
+import type { CalculatorDefinition } from '@/types/score';
 
 type Props = {
-  score: ScoreDefinition;
+  score: CalculatorDefinition;
 };
 
 export function ScoreCalculatorScreen({ score }: Props) {
@@ -37,7 +38,9 @@ export function ScoreCalculatorScreen({ score }: Props) {
       <Text style={styles.title}>{score.name}</Text>
       <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
       {score.reference ? (
-        <Text style={[styles.reference, { color: textSecondary }]}>文献: {score.reference}</Text>
+        <View style={styles.reference}>
+          <CitationLink label={`文献: ${score.reference}`} pubmed={score.pubmed} />
+        </View>
       ) : null}
 
       <ScoreResultPanel result={result} ready={allFieldsFilled} />
@@ -67,10 +70,7 @@ export function ScoreCalculatorScreen({ score }: Props) {
 
       <View style={[styles.footnoteBox, { borderColor: border }]}>
         <Text style={[styles.footnote, { color: textSecondary }]}>
-          本結果は診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。
-        </Text>
-        <Text style={[styles.footnote, { color: tint, marginTop: 6 }]}>
-          各スコアは目的も対象疾患も異なります。混同しないでください。
+          診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。
         </Text>
       </View>
     </ScrollView>
@@ -99,8 +99,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   reference: {
-    fontSize: 12,
-    lineHeight: 18,
     marginBottom: 20,
   },
   reset: {

@@ -1,7 +1,7 @@
 import { computeNoblads } from '../../lib/scores/noblads';
-import type { ScoreDefinition } from '../../types/score';
+import type { ScoreField, ScoreDefinition } from '../../types/score';
 
-const yesNo = (label: string, description?: string): ScoreDefinition['fields'][number] => ({
+const yesNo = (label: string, description?: string): ScoreField => ({
   id: '',
   label,
   description,
@@ -15,11 +15,13 @@ export const nobladsScore: ScoreDefinition = {
   id: 'noblads',
   name: 'NOBLADS Score（急性下部消化管出血）',
   shortName: 'NOBLADS',
+  organ: 'bleeding',
   category: 'bleeding',
   categoryLabel: '消化管出血',
   description:
-    '急性下部消化管出血の重症化（持続・再出血）を予測します。上部出血の GBS とは別体系です。各因子1点。',
+    '急性下部消化管出血の重症化（持続・再出血）を予測します。各因子1点。',
   reference: 'Aoki T et al. Clin Gastroenterol Hepatol 2016;14:1562-1570',
+  pubmed: '27311620',
   fields: [
     { ...yesNo('NSAIDs', '非選択的 NSAIDs または COX-2 阻害薬（直近2週）'), id: 'nsaids' },
     {

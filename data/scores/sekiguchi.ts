@@ -5,11 +5,13 @@ export const sekiguchiScore: ScoreDefinition = {
   id: 'sekiguchi',
   name: 'Sekiguchi Score（早期胃癌 LNM 11点）',
   shortName: 'Sekiguchi',
+  organ: 'stomach',
   category: 'gastric',
   categoryLabel: '早期胃癌',
   description:
-    '早期胃癌のリンパ節転移を11点で層別します。混合型組織を分けます。eCura（Hatta 2017）とは因子・点数が異なります。',
+    '早期胃癌のリンパ節転移を11点で層別します。混合型組織を分けます。',
   reference: 'Sekiguchi M et al. J Gastroenterol 2016;51:961-970',
+  pubmed: '26884381',
   fields: [
     {
       id: 'size',

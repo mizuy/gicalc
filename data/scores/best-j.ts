@@ -11,11 +11,13 @@ export const bestJScore: ScoreDefinition = {
   id: 'best-j',
   name: 'BEST-J Score（早期胃癌 ESD後出血）',
   shortName: 'BEST-J',
+  organ: 'stomach',
   category: 'gastric',
   categoryLabel: '早期胃癌',
   description:
-    'Bleeding after ESD Trend from Japan。早期胃癌ESD後の遅発性出血リスクを予測します。大腸T1ノモグラムとは別体系です。',
+    'Bleeding after ESD Trend from Japan。早期胃癌ESD後の遅発性出血リスクを予測します。',
   reference: 'Hatta W et al. Gut 2021;70:476-484',
+  pubmed: '32499390',
   fields: [
     {
       id: 'warfarin',

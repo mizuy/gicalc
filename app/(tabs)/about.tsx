@@ -14,39 +14,33 @@ export default function AboutScreen() {
     <ScrollView style={[styles.scroll, { backgroundColor: background }]} contentContainerStyle={styles.content}>
       <Text style={styles.title}>GI Calc / gicalc</Text>
       <Text style={[styles.body, { color: textSecondary }]}>
-        消化管内視鏡臨床医向けのスコアリング・予測ツールです。ブラウザとPWAで利用でき、App
-        Storeは不要です。スコア追加は data/scores/ に定義ファイルを足すだけです。
+        消化管内視鏡臨床医向けのスコア・予測・内視鏡分類ツールです。ブラウザとPWAで利用でき、App
+        Storeは不要です。追加は data/scores/ に定義ファイルを足すだけです。
       </Text>
 
-      <Text style={[styles.section, { color: tint }]}>収録ツール（体系は混同しない）</Text>
+      <Text style={[styles.section, { color: tint }]}>収録ツール</Text>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>T1 Nomogram</Text>
+        <Text style={styles.cardTitle}>食道</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          大腸T1癌のリンパ節転移確率（Kajiwara 2023）。出力は確率（%）です。
+          JES（Oyama 2017）: Type A / B1 / B2 / B3。原著の図と定義文。文献は PubMed に飛びます。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>eCura / Sekiguchi</Text>
+        <Text style={styles.cardTitle}>胃</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          早期胃癌のLNM。eCura（Hatta 2017、0–7）と Sekiguchi（2016、0–11、混合型を区別）は別スコアです。
+          木村–竹本（萎縮分類）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura / Sekiguchi（LNM）、BEST-J（ESD後出血）。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>BEST-J</Text>
+        <Text style={styles.cardTitle}>大腸</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          早期胃癌ESD後の遅発性出血（Hatta 2021）。
+          APCS（検診）、JNET（NBI拡大分類）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>京都分類 / 改変京都 / EGGIM</Text>
+        <Text style={styles.cardTitle}>出血</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          胃炎からの胃癌リスク。原法0–8（Shichijo 2017）、改変0–5とEGGIM（Kawamura 2021）。
-        </Text>
-      </View>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>GBS / NOBLADS</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          上部出血は GBS（Blatchford 2000）、下部出血は NOBLADS（Aoki 2016）。混ぜないでください。
+          上部は GBS（Blatchford 2000）、下部は NOBLADS（Aoki 2016）。
         </Text>
       </View>
 
@@ -68,9 +62,6 @@ export default function AboutScreen() {
         </Text>
         <Text style={[styles.body, { color: textSecondary }]}>
           スコア・ノモグラムの解釈は最新のJSCCR/JGESガイドラインと施設プロトコルに従ってください。
-        </Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          収録スコアは目的・対象疾患が異なります。同名に見えても混同しないでください。
         </Text>
       </View>
     </ScrollView>

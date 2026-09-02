@@ -5,11 +5,13 @@ export const kyotoModifiedScore: ScoreDefinition = {
   id: 'kyoto-modified',
   name: '改変京都分類リスクスコア（0–5）',
   shortName: '改変京都',
+  organ: 'stomach',
   category: 'gastritis',
   categoryLabel: '胃炎・胃癌リスク',
   description:
-    'Kawamura 2021 の改変法。RAC 不可視 2点、開大型萎縮・体部 IEE 腸上皮化生>30%・体部地図状発赤 各1点。原法とは別スコアです。',
+    'Kawamura 2021 の改変法。RAC 不可視 2点、開大型萎縮・体部 IEE 腸上皮化生>30%・体部地図状発赤 各1点。',
   reference: 'Kawamura M et al. Dig Endosc 2021',
+  pubmed: '34415621',
   fields: [
     {
       id: 'rac',

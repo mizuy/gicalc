@@ -5,11 +5,13 @@ export const ecuraHattaScore: ScoreDefinition = {
   id: 'ecura-hatta',
   name: 'eCura Scoring System（早期胃癌 LNM）',
   shortName: 'eCura',
+  organ: 'stomach',
   category: 'gastric',
   categoryLabel: '早期胃癌',
   description:
-    '早期胃癌の非治癒切除後におけるリンパ節転移リスクを点数化します。大腸T1向けスコアではありません。',
+    '早期胃癌の非治癒切除後におけるリンパ節転移リスクを点数化します。',
   reference: 'Hatta W et al. Am J Gastroenterol 2017;112:874-881',
+  pubmed: '28397873',
   fields: [
     {
       id: 'ly',

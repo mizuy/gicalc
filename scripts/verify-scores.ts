@@ -9,22 +9,46 @@ import { computeGbs } from '../lib/scores/gbs';
 import { computeKyoto } from '../lib/scores/kyoto';
 import { computeKyotoModified } from '../lib/scores/kyoto-modified';
 import { computeNoblads } from '../lib/scores/noblads';
+import { computeApcs } from '../lib/scores/apcs';
+import { computeAronchick } from '../lib/scores/aronchick';
+import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
-import { getScoreById, SCORES } from '../data/scores';
+import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
+import { KIMURA_1969_PUBMED } from '../data/scores/kimura-takemoto';
+import { pubmedUrl } from '../lib/pubmed';
+import { isClassification } from '../types/score';
 
-test('登録スコアは9種でカテゴリ順に並ぶ', () => {
+test('登録スコアは15種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
-      'kajiwara-nomogram',
-      'ecura-hatta',
-      'sekiguchi',
-      'best-j',
+      'jes',
+      'kimura-takemoto',
       'kyoto',
       'kyoto-modified',
       'eggim',
+      'ecura-hatta',
+      'sekiguchi',
+      'best-j',
+      'apcs',
+      'jnet',
+      'kajiwara-nomogram',
+      'bbps',
+      'aronchick',
       'gbs',
       'noblads',
+    ],
+  );
+  assert.deepEqual(
+    getScoresGroupedByOrgan().map((group) => [group.organ, group.scores.map((score) => score.id)]),
+    [
+      ['esophagus', ['jes']],
+      [
+        'stomach',
+        ['kimura-takemoto', 'kyoto', 'kyoto-modified', 'eggim', 'ecura-hatta', 'sekiguchi', 'best-j'],
+      ],
+      ['colorectum', ['apcs', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
+      ['bleeding', ['gbs', 'noblads']],
     ],
   );
 });
@@ -365,4 +389,148 @@ test('京都分類原法 0–8 / 改変 0–5 / EGGIM 0–8', () => {
   });
   assert.equal(eggimHigh.total, 8);
   assert.equal(eggimHigh.severity, 'severe');
+});
+
+test('BBPS: 各区域 ≥2 は adequate、1つでも 1 以下は inadequate', () => {
+  const adequate = computeBbps({ right: 2, transverse: 2, left: 2 });
+  assert.equal(adequate.total, 6);
+  assert.equal(adequate.interpretation, 'adequate');
+
+  const excellent = computeBbps({ right: 3, transverse: 3, left: 3 });
+  assert.equal(excellent.total, 9);
+  assert.equal(excellent.interpretation, '良好（adequate）');
+
+  const poorRight = computeBbps({ right: 1, transverse: 3, left: 3 });
+  assert.equal(poorRight.total, 7);
+  assert.equal(poorRight.interpretation, '不十分（inadequate）');
+});
+
+test('APCS: 0–1 平均 / 2–3 中等度 / 4–7 高リスク（Yeoh 2011）', () => {
+  const average = computeApcs({ age: 0, sex: 0, family: 0, smoking: 0 });
+  assert.equal(average.total, 0);
+  assert.equal(average.interpretation, '平均リスク（AR）');
+  assert.equal(average.severity, 'none');
+  assert.equal(average.maxScore, 7);
+
+  const averageMale = computeApcs({ age: 0, sex: 1, family: 0, smoking: 0 });
+  assert.equal(averageMale.total, 1);
+  assert.equal(averageMale.interpretation, '平均リスク（AR）');
+
+  const moderate = computeApcs({ age: 2, sex: 0, family: 0, smoking: 0 });
+  assert.equal(moderate.total, 2);
+  assert.equal(moderate.interpretation, '中等度リスク（MR）');
+  assert.equal(moderate.severity, 'moderate');
+
+  const familyOnly = computeApcs({ age: 0, sex: 0, family: 2, smoking: 0 });
+  assert.equal(familyOnly.total, 2);
+  assert.equal(familyOnly.interpretation, '中等度リスク（MR）');
+
+  const high = computeApcs({ age: 2, sex: 1, family: 0, smoking: 1 });
+  assert.equal(high.total, 4);
+  assert.equal(high.interpretation, '高リスク（HR）');
+  assert.equal(high.severity, 'severe');
+
+  const max = computeApcs({ age: 3, sex: 1, family: 2, smoking: 1 });
+  assert.equal(max.total, 7);
+  assert.equal(max.interpretation, '高リスク（HR）');
+
+  const defined = getScoreById('apcs');
+  assert.ok(defined);
+  assert.equal(defined.compute({ age: 0, sex: 0, family: 0, smoking: 0 }).interpretation, '平均リスク（AR）');
+});
+
+test('Aronchick: Excellent/Good は adequate、Poor/Inadequate は inadequate', () => {
+  const excellent = computeAronchick({ grade: 1 });
+  assert.equal(excellent.interpretation, 'Excellent（優）');
+  assert.equal(excellent.severity, 'none');
+
+  const fair = computeAronchick({ grade: 3 });
+  assert.equal(fair.interpretation, 'Fair（可）');
+  assert.equal(fair.severity, 'moderate');
+
+  const inadequate = computeAronchick({ grade: 5 });
+  assert.equal(inadequate.interpretation, 'Inadequate（不適）');
+  assert.equal(inadequate.severity, 'severe');
+});
+
+test('分類は選択計算ではなく定義一覧を持つ', () => {
+  const jnet = getScoreById('jnet');
+  assert.ok(jnet && isClassification(jnet));
+  assert.deepEqual(
+    jnet.entries.map((entry) => entry.label),
+    ['Type 1', 'Type 2A', 'Type 2B', 'Type 3'],
+  );
+  assert.equal(jnet.entries[1]?.meaning, 'Low-grade intramucosal neoplasia');
+  assert.match(jnet.originalLead ?? '', /vessel and surface pattern/);
+  assert.match(jnet.entries[0]?.rows.find((row) => row.heading === '*1')?.text ?? '', /caliber/);
+
+  const jes = getScoreById('jes');
+  assert.ok(jes && isClassification(jes));
+  assert.deepEqual(
+    jes.entries.map((entry) => entry.label),
+    ['Type A', 'Type B1', 'Type B2', 'Type B3', 'AVA'],
+  );
+  assert.equal(jes.entries[2]?.meaning, 'T1a-MM or T1b-SM1');
+  assert.match(jes.originalLead ?? '', /three or fewer factors/);
+  assert.equal(jes.entries[2]?.comment, '食道 SM1 は ≤200 μm。');
+
+  const kimura = getScoreById('kimura-takemoto');
+  assert.ok(kimura && isClassification(kimura));
+  assert.deepEqual(
+    kimura.entries.map((entry) => entry.label),
+    ['C-0', 'C-1', 'C-2', 'C-3', 'O-1', 'O-2', 'O-3'],
+  );
+  assert.equal(kimura.entries[0]?.group, '萎縮なし');
+  assert.equal(kimura.entries[6]?.meaning, 'Open type');
+  assert.match(kimura.entries[0]?.comment ?? '', /原著の6型にはない/);
+
+  for (const score of [jnet, jes, kimura]) {
+    for (const entry of score.entries) {
+      assert.ok(
+        entry.rows.every((row) => row.heading !== '注'),
+        `${score.id} ${entry.label} の行は原著`,
+      );
+    }
+  }
+
+  const apcs = getScoreById('apcs');
+  assert.ok(apcs && !isClassification(apcs));
+});
+
+test('分類は原著の図を出典付きで持つ', () => {
+  const jnet = getScoreById('jnet');
+  assert.ok(jnet && isClassification(jnet));
+  assert.equal(jnet.figures?.length, 1);
+  assert.match(jnet.figures?.[0]?.source ?? '', /Sano Y/);
+  assert.match(jnet.figures?.[0]?.doi ?? '', /10\.1111\/den\.12644/);
+  assert.match(jnet.figures?.[0]?.src ?? '', /jnet-sano2016-fig7/);
+  assert.match(jnet.figures?.[0]?.caption ?? '', /Fig\. 7/);
+  assert.equal(jnet.pubmed, '26927367');
+  assert.equal(jnet.figures?.[0]?.pubmed, '26927367');
+
+  const jes = getScoreById('jes');
+  assert.ok(jes && isClassification(jes));
+  assert.equal(jes.figures?.length, 2);
+  assert.match(jes.figures?.[0]?.source ?? '', /Oyama T/);
+  assert.match(jes.figures?.[0]?.doi ?? '', /10\.1007\/s10388-016-0527-7/);
+  assert.match(jes.figures?.[0]?.src ?? '', /jes-oyama2017-fig1-4/);
+  assert.match(jes.figures?.[1]?.src ?? '', /jes-oyama2017-fig5/);
+  assert.equal(jes.pubmed, '28386209');
+
+  const kimura = getScoreById('kimura-takemoto');
+  assert.ok(kimura && isClassification(kimura));
+  assert.match(kimura.figures?.[0]?.source ?? '', /Kimura K/);
+  assert.match(kimura.figures?.[0]?.doi ?? '', /10\.1055\/s-0028-1098086/);
+  assert.match(kimura.figures?.[0]?.src ?? '', /kimura-takemoto-1969/);
+  assert.equal(kimura.pubmed, KIMURA_1969_PUBMED);
+  assert.equal(kimura.figures?.[0]?.pubmed, '31327182');
+});
+
+test('引用は PubMed へ行く', () => {
+  assert.equal(pubmedUrl('26927367'), 'https://pubmed.ncbi.nlm.nih.gov/26927367/');
+  assert.equal(pubmedUrl(KIMURA_1969_PUBMED), KIMURA_1969_PUBMED);
+  for (const score of SCORES) {
+    assert.ok(score.pubmed, score.id);
+    assert.match(pubmedUrl(score.pubmed!), /^https:\/\/pubmed\.ncbi\.nlm\.nih\.gov\//);
+  }
 });

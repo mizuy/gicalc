@@ -5,11 +5,13 @@ export const gbsScore: ScoreDefinition = {
   id: 'gbs',
   name: 'Glasgow-Blatchford Score（上部消化管出血）',
   shortName: 'GBS',
+  organ: 'bleeding',
   category: 'bleeding',
   categoryLabel: '消化管出血',
   description:
-    '上部消化管出血で治療介入（輸血・内視鏡・手術）の必要性を予測します。下部出血の NOBLADS とは別体系です。',
+    '上部消化管出血で治療介入（輸血・内視鏡・手術）の必要性を予測します。',
   reference: 'Blatchford O et al. Lancet 2000;356:1318-1321',
+  pubmed: '11073021',
   fields: [
     {
       id: 'sex',

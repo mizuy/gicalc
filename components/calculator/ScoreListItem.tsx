@@ -6,11 +6,11 @@ import type { ScoreDefinition } from '@/types/score';
 
 type Props = {
   score: ScoreDefinition;
+  last?: boolean;
 };
 
-export function ScoreListItem({ score }: Props) {
+export function ScoreListItem({ score, last }: Props) {
   const tint = useThemeColor({}, 'tint');
-  const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
   const textSecondary = useThemeColor({}, 'textSecondary');
 
@@ -19,59 +19,58 @@ export function ScoreListItem({ score }: Props) {
       <Pressable
         accessibilityRole="link"
         style={({ pressed }) => [
-          styles.card,
-          {
-            backgroundColor: surface,
-            borderColor: border,
-            opacity: pressed ? 0.88 : 1,
-          },
+          styles.row,
+          { borderBottomColor: border, opacity: pressed ? 0.72 : 1 },
+          last ? styles.rowLast : null,
         ]}>
-        <View style={styles.row}>
-          <View style={[styles.badge, { backgroundColor: `${tint}18` }]}>
-            <Text style={[styles.badgeText, { color: tint }]}>{score.shortName}</Text>
-          </View>
-          <Text style={[styles.category, { color: textSecondary }]}>{score.categoryLabel}</Text>
+        <View style={[styles.badge, { backgroundColor: `${tint}18` }]}>
+          <Text style={[styles.badgeText, { color: tint }]} numberOfLines={1}>
+            {score.shortName}
+          </Text>
         </View>
-        <Text style={styles.name}>{score.name}</Text>
-        <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
+        <Text style={styles.name} numberOfLines={1}>
+          {score.name}
+        </Text>
+        <Text style={[styles.category, { color: textSecondary }]} numberOfLines={1}>
+          {score.categoryLabel}
+        </Text>
       </Pressable>
     </Link>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    borderWidth: 1,
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 12,
-  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    marginBottom: 8,
+    gap: 10,
+    paddingVertical: 11,
+    paddingHorizontal: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  rowLast: {
+    borderBottomWidth: 0,
   },
   badge: {
     borderRadius: 999,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    minWidth: 72,
+    alignItems: 'center',
   },
   badgeText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
-  },
-  category: {
-    fontSize: 12,
-    fontWeight: '600',
   },
   name: {
-    fontSize: 16,
-    fontWeight: '700',
-    marginBottom: 6,
+    flex: 1,
+    fontSize: 14,
+    fontWeight: '600',
   },
-  description: {
-    fontSize: 13,
-    lineHeight: 20,
+  category: {
+    fontSize: 11,
+    fontWeight: '600',
+    maxWidth: 96,
+    textAlign: 'right',
   },
 });
