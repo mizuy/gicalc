@@ -55,6 +55,33 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: ['C-1–C-3, O-1–O-3. Figure reprinted in Quach 2019.'],
   },
+  'mesda-g': {
+    name: 'MESDA-G (early gastric cancer, magnifying)',
+    description:
+      'Simple magnifying (M-NBI) diagnostic algorithm for early gastric cancer. After a suspicious lesion on white-light imaging, decide by the demarcation line (DL), then irregular microvascular (IMVP) and/or irregular microsurface (IMSP) patterns within the DL. Separate from colorectal JNET / NICE. Stomach only.',
+    groups: {
+      アルゴリズム: 'Algorithm',
+      判定: 'Diagnosis',
+      'VS分類・微小血管': 'VS classification · microvascular',
+      'VS分類・微小表面': 'VS classification · microsurface',
+    },
+    comments: {
+      'Suspicious lesion':
+        'Look for subtle color or morphological change on white-light imaging. Stomach only. Separate from colorectal JNET / NICE.',
+      'Demarcation line (DL)':
+        'If the demarcation line is absent, diagnose non-cancer. If present, evaluate MV and MS separately within the DL.',
+      'Irregular MV and/or MS within DL':
+        'The original paper reports that 97% of EGC cases fit these criteria. Diagnostic yield for undifferentiated (diffuse-type) EGC was unclear. Contact bleeding or mucus can prevent a clear image.',
+      'Irregular MV':
+        'A later subclassification (fine-network for differentiated, corkscrew for poorly differentiated) is not a MESDA-G branch.',
+      'Absent MV':
+        'When white opaque substance (WOS) hides vessels, use WOS morphology as an alternative marker of the microsurface pattern.',
+    },
+    figureNotes: [
+      'Original Fig. 1. Magnifying algorithm for the stomach. Separate from JNET / NICE.',
+      'Original Fig. 13. Microvascular (V) and microsurface (S) patterns as regular / irregular / absent. Arrows mark the demarcation line (DL).',
+    ],
+  },
   kyoto: {
     name: 'Kyoto classification risk score (original 0–8)',
     shortName: 'Kyoto',

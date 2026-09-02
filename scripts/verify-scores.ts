@@ -17,18 +17,20 @@ import { lowestFieldValues } from '../lib/scores/initialValues';
 import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
 import { KIMURA_1969_PUBMED } from '../data/scores/kimura-takemoto';
 import { LST_2008_PUBMED } from '../data/scores/lst';
+import { MESDA_G_2016_PUBMED } from '../data/scores/mesda-g';
 import { NICE_2013_PUBMED } from '../data/scores/nice';
 import { PARIS_2003_PUBMED } from '../data/scores/paris';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { isClassification } from '../types/score';
 
-test('登録スコアは19種で臓器順に並ぶ', () => {
+test('登録スコアは20種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
       'jes',
       'kimura-takemoto',
+      'mesda-g',
       'kyoto',
       'kyoto-modified',
       'eggim',
@@ -54,7 +56,16 @@ test('登録スコアは19種で臓器順に並ぶ', () => {
       ['esophagus', ['jes']],
       [
         'stomach',
-        ['kimura-takemoto', 'kyoto', 'kyoto-modified', 'eggim', 'ecura-hatta', 'sekiguchi', 'best-j'],
+        [
+          'kimura-takemoto',
+          'mesda-g',
+          'kyoto',
+          'kyoto-modified',
+          'eggim',
+          'ecura-hatta',
+          'sekiguchi',
+          'best-j',
+        ],
       ],
       ['colorectum', ['apcs', 'paris', 'lst', 'kudo-tsuruta', 'nice', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
       ['bleeding', ['gbs', 'noblads']],
@@ -548,7 +559,36 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.doesNotMatch(nice.entries.map((entry) => entry.label).join(' '), /2A|2B/);
   assert.equal(nice.pubmed, NICE_2013_PUBMED);
 
-  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice]) {
+  const mesda = getScoreById('mesda-g');
+  assert.ok(mesda && isClassification(mesda));
+  assert.deepEqual(
+    mesda.entries.map((entry) => entry.label),
+    [
+      'Suspicious lesion',
+      'Demarcation line (DL)',
+      'DL absent',
+      'Regular MV and MS within DL',
+      'Irregular MV and/or MS within DL',
+      'Regular MV',
+      'Irregular MV',
+      'Absent MV',
+      'Regular MS',
+      'Irregular MS',
+      'Absent MS',
+    ],
+  );
+  assert.equal(mesda.entries[4]?.meaning, 'EGC');
+  assert.equal(mesda.entries[2]?.meaning, 'Non-cancer');
+  assert.match(mesda.originalLead ?? '', /demarcation line \(DL\)/);
+  assert.match(
+    mesda.entries[4]?.rows.find((row) => row.heading === 'Criteria')?.text ?? '',
+    /irregular MV pattern with a DL/,
+  );
+  assert.doesNotMatch(mesda.entries.map((entry) => entry.label).join(' '), /Type 1|2A|2B|NICE|JNET/);
+  assert.equal(mesda.pubmed, MESDA_G_2016_PUBMED);
+  assert.equal(mesda.organ, 'stomach');
+
+  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, mesda]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -623,6 +663,18 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(nice.figures?.[0]?.source ?? '', /Hayashi N/);
   assert.equal(nice.pubmed, NICE_2013_PUBMED);
   assert.equal(nice.figures?.[0]?.pubmed, NICE_2013_PUBMED);
+
+  const mesda = getScoreById('mesda-g');
+  assert.ok(mesda && isClassification(mesda));
+  assert.equal(mesda.figures?.length, 2);
+  assert.match(mesda.figures?.[0]?.src ?? '', /mesda-g-muto2016-fig1/);
+  assert.match(mesda.figures?.[0]?.caption ?? '', /Fig\. 1/);
+  assert.match(mesda.figures?.[0]?.source ?? '', /Muto M/);
+  assert.match(mesda.figures?.[1]?.src ?? '', /mesda-g-muto2016-fig13/);
+  assert.match(mesda.figures?.[1]?.caption ?? '', /Fig\. 13/);
+  assert.equal(mesda.pubmed, MESDA_G_2016_PUBMED);
+  assert.equal(mesda.figures?.[0]?.pubmed, MESDA_G_2016_PUBMED);
+  assert.equal(mesda.figures?.[1]?.pubmed, MESDA_G_2016_PUBMED);
 });
 
 test('英語コピーが全スコアの表示項目を覆う', () => {

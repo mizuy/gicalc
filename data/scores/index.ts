@@ -14,6 +14,7 @@ import { kudoTsurutaScore } from './kudo-tsuruta';
 import { kyotoScore } from './kyoto';
 import { kyotoModifiedScore } from './kyoto-modified';
 import { lstScore } from './lst';
+import { mesdaGScore } from './mesda-g';
 import { niceScore } from './nice';
 import { nobladsScore } from './noblads';
 import { parisScore } from './paris';
@@ -23,6 +24,7 @@ import { sekiguchiScore } from './sekiguchi';
 export const SCORES: ScoreDefinition[] = [
   jesScore,
   kimuraTakemotoScore,
+  mesdaGScore,
   kyotoScore,
   kyotoModifiedScore,
   eggimScore,

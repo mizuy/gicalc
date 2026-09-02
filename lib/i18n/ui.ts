@@ -99,7 +99,7 @@ export const UI: Record<Locale, UiStrings> = {
       esophagusBody: 'JES（Oyama 2017）: Type A / B1 / B2 / B3。原著の図と定義文。文献は PubMed に飛びます。',
       stomach: '胃',
       stomachBody:
-        '木村–竹本（萎縮分類）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura / Sekiguchi（LNM）、BEST-J（ESD後出血）。',
+        '木村–竹本（萎縮分類）、MESDA-G（早期胃癌の拡大診断アルゴリズム）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura / Sekiguchi（LNM）、BEST-J（ESD後出血）。',
       colorectum: '大腸',
       colorectumBody:
         'APCS（検診）、Paris（肉眼型）、LST（側方発育）、工藤–鶴田（pit pattern）、NICE（NBI非拡大）、JNET（NBI拡大）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。',
@@ -165,7 +165,7 @@ export const UI: Record<Locale, UiStrings> = {
         'JES (Oyama 2017): Type A / B1 / B2 / B3. Original figures and wording. Citations open PubMed.',
       stomach: 'Stomach',
       stomachBody:
-        'Kimura–Takemoto (atrophy), Kyoto / modified Kyoto / EGGIM (gastritis risk), eCura / Sekiguchi (LNM), BEST-J (post-ESD bleeding).',
+        'Kimura–Takemoto (atrophy), MESDA-G (magnifying algorithm for EGC), Kyoto / modified Kyoto / EGGIM (gastritis risk), eCura / Sekiguchi (LNM), BEST-J (post-ESD bleeding).',
       colorectum: 'Colorectum',
       colorectumBody:
         'APCS (screening), Paris (morphology), LST (laterally spreading), Kudo–Tsuruta (pit pattern), NICE (NBI, non-magnifying), JNET (NBI magnifying), T1 Nomogram (Kajiwara), BBPS / Aronchick (bowel prep).',
