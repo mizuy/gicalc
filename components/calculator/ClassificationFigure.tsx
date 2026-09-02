@@ -45,6 +45,7 @@ export function ClassificationFigure({ figure }: Props) {
         visible={open}
         transparent
         animationType="fade"
+        presentationStyle="overFullScreen"
         onRequestClose={() => setOpen(false)}
         statusBarTranslucent>
         <View style={styles.lightbox}>
@@ -59,16 +60,20 @@ export function ClassificationFigure({ figure }: Props) {
             contentContainerStyle={styles.lightboxContent}
             maximumZoomScale={4}
             minimumZoomScale={1}
-            centerContent
-            bouncesZoom>
-            <Pressable onPress={() => setOpen(false)} accessibilityRole="button">
+            bouncesZoom
+            horizontal={false}>
+            <ScrollView
+              horizontal
+              bounces={false}
+              showsHorizontalScrollIndicator
+              contentContainerStyle={styles.lightboxHContent}>
               <Image
                 accessibilityLabel={figure.alt}
                 source={{ uri }}
                 style={[styles.lightboxImage, { aspectRatio: figure.aspectRatio }]}
                 resizeMode="contain"
               />
-            </Pressable>
+            </ScrollView>
           </ScrollView>
           <Pressable
             accessibilityRole="button"
@@ -139,13 +144,16 @@ const styles = StyleSheet.create({
   lightboxContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: 16,
     paddingTop: 56,
+    paddingBottom: 24,
+  },
+  lightboxHContent: {
+    paddingHorizontal: 16,
+    alignItems: 'center',
   },
   lightboxImage: {
-    width: '100%',
-    maxWidth: 1100,
-    alignSelf: 'center',
+    width: 1000,
+    maxWidth: 1000,
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
   },
