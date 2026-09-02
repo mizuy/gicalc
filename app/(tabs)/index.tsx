@@ -9,6 +9,8 @@ export default function HomeScreen() {
   const background = useThemeColor({}, 'background');
   const tint = useThemeColor({}, 'tint');
   const textSecondary = useThemeColor({}, 'textSecondary');
+  const surface = useThemeColor({}, 'surface');
+  const border = useThemeColor({}, 'border');
   const groups = getScoresGroupedByOrgan();
 
   return (
@@ -28,10 +30,19 @@ export default function HomeScreen() {
 
       {groups.map((group) => (
         <View key={group.organ} style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: tint }]}>{group.label}</Text>
-          {group.scores.map((score) => (
-            <ScoreListItem key={score.id} score={score} />
-          ))}
+          <View style={styles.sectionHead}>
+            <Text style={[styles.sectionTitle, { color: tint }]}>{group.label}</Text>
+            <Text style={[styles.sectionCount, { color: textSecondary }]}>{group.scores.length}</Text>
+          </View>
+          <View style={[styles.table, { backgroundColor: surface, borderColor: border }]}>
+            {group.scores.map((score, index) => (
+              <ScoreListItem
+                key={score.id}
+                score={score}
+                last={index === group.scores.length - 1}
+              />
+            ))}
+          </View>
         </View>
       ))}
     </ScrollView>
@@ -72,12 +83,27 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   section: {
-    marginBottom: 16,
+    marginBottom: 18,
+  },
+  sectionHead: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+    paddingHorizontal: 2,
   },
   sectionTitle: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '800',
-    marginBottom: 10,
     letterSpacing: 0.4,
+  },
+  sectionCount: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  table: {
+    borderWidth: 1,
+    borderRadius: 14,
+    overflow: 'hidden',
   },
 });
