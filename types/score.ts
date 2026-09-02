@@ -55,7 +55,10 @@ export type ClassificationRow = {
 export type ClassificationEntry = {
   label: string;
   meaning: string;
+  /** 原著の定義（英語または原著どおりの文言） */
   rows: ClassificationRow[];
+  /** 必要なときだけ付ける日本語コメント */
+  comment?: string;
   group?: string;
   severity?: ScoreSeverity;
 };

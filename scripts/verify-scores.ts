@@ -462,14 +462,17 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   );
   assert.equal(jnet.entries[1]?.meaning, 'Low-grade intramucosal neoplasia');
   assert.match(jnet.originalLead ?? '', /vessel and surface pattern/);
+  assert.match(jnet.entries[0]?.rows.find((row) => row.heading === '*1')?.text ?? '', /caliber/);
 
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
   assert.deepEqual(
     jes.entries.map((entry) => entry.label),
-    ['Type A', 'Type B1', 'Type B2', 'Type B3'],
+    ['Type A', 'Type B1', 'Type B2', 'Type B3', 'AVA'],
   );
-  assert.equal(jes.entries[2]?.meaning, 'T1a-MM / T1b-SM1');
+  assert.equal(jes.entries[2]?.meaning, 'T1a-MM or T1b-SM1');
+  assert.match(jes.originalLead ?? '', /three or fewer factors/);
+  assert.equal(jes.entries[2]?.comment, '食道 SM1 は ≤200 μm。');
 
   const kimura = getScoreById('kimura-takemoto');
   assert.ok(kimura && isClassification(kimura));
@@ -478,7 +481,17 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     ['C-0', 'C-1', 'C-2', 'C-3', 'O-1', 'O-2', 'O-3'],
   );
   assert.equal(kimura.entries[0]?.group, '萎縮なし');
-  assert.equal(kimura.entries[6]?.meaning, 'Open type (severe)');
+  assert.equal(kimura.entries[6]?.meaning, 'Open type');
+  assert.match(kimura.entries[0]?.comment ?? '', /原著の6型にはない/);
+
+  for (const score of [jnet, jes, kimura]) {
+    for (const entry of score.entries) {
+      assert.ok(
+        entry.rows.every((row) => row.heading !== '注'),
+        `${score.id} ${entry.label} の行は原著`,
+      );
+    }
+  }
 
   const apcs = getScoreById('apcs');
   assert.ok(apcs && !isClassification(apcs));

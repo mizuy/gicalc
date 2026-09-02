@@ -44,9 +44,14 @@ export function ClassificationReferenceScreen({ score }: Props) {
       contentContainerStyle={styles.content}>
       <Text style={styles.title}>{score.name}</Text>
       {score.originalLead ? (
-        <Text style={[styles.originalLead, { color: tint }]}>{score.originalLead}</Text>
+        <View style={styles.originalBlock}>
+          <Text style={[styles.originalLabel, { color: tint }]}>原著</Text>
+          <Text style={[styles.originalLead, { color: tint }]}>{score.originalLead}</Text>
+        </View>
       ) : null}
-      <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
+      {score.description ? (
+        <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
+      ) : null}
       {score.reference ? (
         <View style={styles.reference}>
           <CitationLink label={`文献: ${score.reference}`} pubmed={score.pubmed} />
@@ -80,6 +85,9 @@ export function ClassificationReferenceScreen({ score }: Props) {
                     <Text style={styles.rowText}>{row.text}</Text>
                   </View>
                 ))}
+                {entry.comment ? (
+                  <Text style={[styles.comment, { color: textSecondary }]}>注: {entry.comment}</Text>
+                ) : null}
               </View>
             );
           })}
@@ -111,10 +119,18 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     marginBottom: 8,
   },
+  originalBlock: {
+    marginBottom: 8,
+  },
+  originalLabel: {
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 0.4,
+    marginBottom: 4,
+  },
   originalLead: {
     fontSize: 14,
     lineHeight: 22,
-    marginBottom: 8,
   },
   description: {
     fontSize: 14,
@@ -168,7 +184,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   rowHeading: {
-    width: 72,
+    width: 88,
     fontSize: 12,
     fontWeight: '700',
     lineHeight: 20,
@@ -177,6 +193,11 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     lineHeight: 20,
+  },
+  comment: {
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 8,
   },
   footnoteBox: {
     marginTop: 12,

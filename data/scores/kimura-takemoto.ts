@@ -12,10 +12,9 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
   organ: 'stomach',
   category: 'classification',
   categoryLabel: '内視鏡分類',
-  description:
-    '内視鏡的萎縮境界による Closed / Open 分類。C-0 は原著6型になく京都分類で用います。',
+  description: '内視鏡的萎縮境界による Closed / Open 分類。',
   originalLead:
-    'Based on location of the endoscopic atrophic border, Kimura and Takemoto proposed closed type (C-1, C-2, C-3) and open type (O-1, O-2, O-3).',
+    'The endoscopic atrophic border can be recognized by discriminating mucosal differences between the 2 sides: the gastric mucosa has a lower level and is pale in color on 1 side, while it has a higher level and is homogeneously reddish on the other side. Based on location of the endoscopic atrophic border, Kimura and Takemoto proposed closed type (C-1, C-2, C-3) and open type (O-1, O-2, O-3).',
   reference: 'Kimura K, Takemoto T. Endoscopy 1969;1:87-97',
   pubmed: KIMURA_1969_PUBMED,
   figures: [
@@ -27,20 +26,18 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
         'Kimura K, Takemoto T. An endoscopic recognition of the atrophic border and its significance in chronic gastritis. Endoscopy. 1969;1:87-97. Figure as published in Quach DT, Hiyama T. Clin Endosc. 2019;52:321-327, Fig. 2.',
       doi: 'https://doi.org/10.1055/s-0028-1098086',
       pubmed: '31327182',
-      note: '閉鎖型 C-1–C-3 と開放型 O-1–O-3。C-0 は原著6型にない。図は Quach 2019 再掲。',
+      note: 'C-1–C-3, O-1–O-3。図は Quach 2019 再掲。',
       aspectRatio: 966 / 876,
     },
   ],
   entries: [
     {
       label: 'C-0',
-      meaning: 'No atrophy',
+      meaning: '（原著にない）',
       group: '萎縮なし',
       severity: 'none',
-      rows: [
-        { heading: '境界', text: 'Atrophic border is absent; gastric areas are preserved throughout' },
-        { heading: '注', text: '原著の6型にはない。京都分類の萎縮 0 点（C-0/C-1）で用いる。' },
-      ],
+      rows: [],
+      comment: '原著の6型にはない。京都分類の萎縮 0 点（C-0/C-1）で用いる。',
     },
     {
       label: 'C-1',
@@ -49,11 +46,11 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
       severity: 'none',
       rows: [
         {
-          heading: '境界',
-          text: 'Atrophic findings are not visible in the corpus but only in the antrum',
+          heading: 'Border',
+          text: 'Endoscopic atrophic findings are not visible in the corpus but only in the antrum.',
         },
-        { heading: '注', text: '京都分類の萎縮 0 点（C-0/C-1）。' },
       ],
+      comment: '京都分類の萎縮 0 点（C-0/C-1）。',
     },
     {
       label: 'C-2',
@@ -62,11 +59,11 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
       severity: 'mild',
       rows: [
         {
-          heading: '境界',
-          text: 'The atrophic border lies below the middle of the stomach on the lesser curvature',
+          heading: 'Border',
+          text: 'The atrophic border starts from the greater curvature of the antrum, coming up to the anterior wall, crossing the lesser curvature, making an almost symmetric enclosure. The atrophic border lies below the middle of the stomach on the lesser curvature.',
         },
-        { heading: '注', text: '京都分類の萎縮 +1 点（C-2/C-3）。' },
       ],
+      comment: '京都分類の萎縮 +1 点（C-2/C-3）。',
     },
     {
       label: 'C-3',
@@ -75,11 +72,11 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
       severity: 'mild',
       rows: [
         {
-          heading: '境界',
-          text: 'The atrophic border lies above the middle of the stomach on the lesser curvature and does not pass the cardia',
+          heading: 'Border',
+          text: 'The atrophic border starts from the greater curvature of the antrum, coming up to the anterior wall, crossing the lesser curvature, making an almost symmetric enclosure. The atrophic border lies above the middle of the stomach on the lesser curvature.',
         },
-        { heading: '注', text: '京都分類の萎縮 +1 点（C-2/C-3）。' },
       ],
+      comment: '京都分類の萎縮 +1 点（C-2/C-3）。',
     },
     {
       label: 'O-1',
@@ -88,11 +85,11 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
       severity: 'moderate',
       rows: [
         {
-          heading: '境界',
-          text: 'The atrophic border lies between the lesser curvature and the anterior wall',
+          heading: 'Border',
+          text: 'The endoscopic atrophic area is widely spread. The atrophic border no longer lies on the lesser curvature, but instead between the lesser curvature and the anterior wall.',
         },
-        { heading: '注', text: '京都分類の萎縮 +2 点（O-1–O-3）。開放型は閉鎖型より胃癌リスクが高い。' },
       ],
+      comment: '京都分類の萎縮 +2 点（O-1–O-3）。',
     },
     {
       label: 'O-2',
@@ -100,22 +97,22 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
       group: '開放型（Open）',
       severity: 'moderate',
       rows: [
-        { heading: '境界', text: 'The atrophic border lies on the anterior wall' },
-        { heading: '注', text: '京都分類の萎縮 +2 点（O-1–O-3）。' },
+        { heading: 'Border', text: 'The atrophic border lies on the anterior wall.' },
       ],
+      comment: '京都分類の萎縮 +2 点（O-1–O-3）。',
     },
     {
       label: 'O-3',
-      meaning: 'Open type (severe)',
+      meaning: 'Open type',
       group: '開放型（Open）',
       severity: 'severe',
       rows: [
         {
-          heading: '境界',
-          text: 'The atrophic border lies between the anterior wall and the greater curvature (almost the entire stomach is atrophic)',
+          heading: 'Border',
+          text: 'The atrophic border lies between the anterior wall and the greater curvature.',
         },
-        { heading: '注', text: '京都分類の萎縮 +2 点（O-1–O-3）。' },
       ],
+      comment: '京都分類の萎縮 +2 点（O-1–O-3）。',
     },
   ],
 };
