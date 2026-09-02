@@ -1,8 +1,8 @@
 {
   "short_name": "gicalc",
   "name": "GI Calc",
-  "description": "消化管内視鏡向けスコアリング・予測ツール",
-  "lang": "ja",
+  "description": "Scoring, prediction, and endoscopic classification tools for GI endoscopy",
+  "lang": "en",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

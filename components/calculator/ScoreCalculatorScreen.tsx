@@ -6,6 +6,7 @@ import { ScoreFieldSelector } from '@/components/calculator/ScoreFieldSelector';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
 import { Text, useThemeColor } from '@/components/Themed';
 import { localizeResult, useLocale } from '@/lib/i18n';
+import { lowestFieldValues } from '@/lib/scores/initialValues';
 import type { CalculatorDefinition } from '@/types/score';
 
 type Props = {
@@ -13,7 +14,7 @@ type Props = {
 };
 
 export function ScoreCalculatorScreen({ score }: Props) {
-  const [values, setValues] = useState<Record<string, number>>({});
+  const [values, setValues] = useState<Record<string, number>>(() => lowestFieldValues(score.fields));
   const background = useThemeColor({}, 'background');
   const textSecondary = useThemeColor({}, 'textSecondary');
   const tint = useThemeColor({}, 'tint');
@@ -58,7 +59,7 @@ export function ScoreCalculatorScreen({ score }: Props) {
 
       <Pressable
         accessibilityRole="button"
-        onPress={() => setValues({})}
+        onPress={() => setValues(lowestFieldValues(score.fields))}
         style={({ pressed }) => [
           styles.reset,
           {

@@ -32,10 +32,13 @@ const DETAIL_EXACT_EN: Record<string, string> = {
   'ESD後遅発性出血率 11.4%': 'Delayed post-ESD bleeding rate 11.4%',
   'ESD後遅発性出血率 29.7%': 'Delayed post-ESD bleeding rate 29.7%',
   'LNM率 2.5%（CSS 99.6%）': 'LNM rate 2.5% (CSS 99.6%)',
+  'リスク区分の LNM率 2.5%（CSS 99.6%）': 'Risk-group LNM rate 2.5% (CSS 99.6%)',
   'ESD単独も選択肢です。': 'ESD alone is also an option.',
   'LNM率 6.7%（CSS 96.0%）': 'LNM rate 6.7% (CSS 96.0%)',
+  'リスク区分の LNM率 6.7%（CSS 96.0%）': 'Risk-group LNM rate 6.7% (CSS 96.0%)',
   '追加治療は個別判断してください。': 'Decide additional treatment case by case.',
   'LNM率 22.7%（CSS 90.1%）': 'LNM rate 22.7% (CSS 90.1%)',
+  'リスク区分の LNM率 22.7%（CSS 90.1%）': 'Risk-group LNM rate 22.7% (CSS 90.1%)',
   '救済胃切除＋リンパ節郭清を推奨します。': 'Salvage gastrectomy with lymphadenectomy is recommended.',
   '介入不要の見込みが高いです。': 'Intervention is unlikely to be needed.',
   'ESGE では GBS 0–1 を外来管理の候補とします。': 'ESGE considers GBS 0–1 a candidate for outpatient care.',
@@ -100,6 +103,10 @@ const DETAIL_EXACT_EN: Record<string, string> = {
 };
 
 const DETAIL_PATTERNS: Array<{ re: RegExp; to: (...args: string[]) => string }> = [
+  {
+    re: /^この点数の LNM率 (.+)（(.+)、95% CI (.+)）$/,
+    to: (rate, n, ci) => `LNM rate at this score ${rate} (${n}, 95% CI ${ci})`,
+  },
   {
     re: /^右（盲腸・上行） (\d+) \/ 横行（肝・脾弯曲含む） (\d+) \/ 左（下行・S状・直腸） (\d+)$/,
     to: (right, transverse, left) =>

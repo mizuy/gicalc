@@ -186,7 +186,8 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
   },
   'ecura-hatta': {
     name: 'eCura scoring system (early gastric cancer LNM)',
-    description: 'Scores lymph-node metastasis risk after non-curative resection of early gastric cancer.',
+    description:
+      'Scores lymph-node metastasis risk after non-curative resection of early gastric cancer. Shows the LNM rate for each score 0–7 as well as the low / intermediate / high-risk groups.',
     fields: {
       ly: {
         label: 'Lymphatic invasion Ly',

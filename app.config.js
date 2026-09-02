@@ -28,11 +28,11 @@ module.exports = {
       favicon: './assets/images/favicon.png',
       name: 'GI Calc',
       shortName: 'gicalc',
-      description: '大腸T1 LNMノモグラム / eCura / BEST-J',
+      description: 'GI endoscopy scores, predictions, and classifications (T1 Nomogram / eCura / BEST-J)',
       themeColor: '#0D7377',
       backgroundColor: '#F4F8F8',
       display: 'standalone',
-      lang: 'ja',
+      lang: 'en',
     },
     plugins: [
       'expo-router',

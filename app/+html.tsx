@@ -9,7 +9,7 @@ const swHref = publicPath('/sw.js');
 
 export default function Root({ children }: { children: ReactNode }) {
   return (
-    <html lang="ja">
+    <html lang="en">
       <head>
         <title>GI Calc</title>
         <meta charSet="utf-8" />
@@ -20,7 +20,7 @@ export default function Root({ children }: { children: ReactNode }) {
         <meta name="apple-mobile-web-app-title" content="gicalc" />
         <meta
           name="description"
-          content="消化管内視鏡向けスコアリング・予測ツール（T1 Nomogram / eCura / BEST-J）"
+          content="Scoring, prediction, and endoscopic classification tools for GI endoscopy (T1 Nomogram / eCura / BEST-J)"
         />
         <link rel="manifest" href={manifestHref} />
         <link rel="apple-touch-icon" href={iconHref} />

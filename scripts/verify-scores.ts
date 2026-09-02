@@ -3,7 +3,7 @@ import { test } from 'node:test';
 
 import { predictLnmProbability, valuesToNomogramInput } from '../lib/nomogram/kajiwara';
 import { computeBestJ } from '../lib/scores/best-j';
-import { computeEcura } from '../lib/scores/ecura';
+import { computeEcura, ECURA_LNM_BY_SCORE } from '../lib/scores/ecura';
 import { computeEggim } from '../lib/scores/eggim';
 import { computeGbs } from '../lib/scores/gbs';
 import { computeKyoto } from '../lib/scores/kyoto';
@@ -13,9 +13,10 @@ import { computeApcs } from '../lib/scores/apcs';
 import { computeAronchick } from '../lib/scores/aronchick';
 import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
+import { lowestFieldValues } from '../lib/scores/initialValues';
 import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
 import { KIMURA_1969_PUBMED } from '../data/scores/kimura-takemoto';
-import { localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
+import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { isClassification } from '../types/score';
 
@@ -164,19 +165,30 @@ test('Kajiwara: フィールド値 0 は参照カテゴリに写像される', (
 });
 
 test('eCura: 0–1 低リスク / 2–4 中リスク / 5–7 高リスク', () => {
+  const zero = computeEcura({ ly: 0, size: 0, vm: 0, v: 0, sm: 0 });
+  assert.equal(zero.total, 0);
+  assert.equal(zero.severity, 'none');
+  assert.match(zero.details?.[0] ?? '', /1\.6%/);
+  assert.match(zero.details?.[0] ?? '', /1\/62/);
+
   const low = computeEcura({ ly: 0, size: 0, vm: 0, v: 0, sm: 1 });
   assert.equal(low.total, 1);
   assert.equal(low.severity, 'none');
   assert.equal(low.displayMode, 'points');
   assert.equal(low.maxScore, 7);
+  assert.match(low.details?.[0] ?? '', /2\.6%/);
+  assert.match(low.details?.[1] ?? '', /2\.5%/);
 
   const mid = computeEcura({ ly: 3, size: 1, vm: 0, v: 0, sm: 0 });
   assert.equal(mid.total, 4);
   assert.equal(mid.severity, 'moderate');
+  assert.match(mid.details?.[0] ?? '', /8\.3%/);
 
   const high = computeEcura({ ly: 3, size: 1, vm: 1, v: 1, sm: 1 });
   assert.equal(high.total, 7);
   assert.equal(high.severity, 'severe');
+  assert.match(high.details?.[0] ?? '', /26\.7%/);
+  assert.equal(Object.keys(ECURA_LNM_BY_SCORE).length, 8);
 });
 
 test('BEST-J: 抗血栓は継続が満点、休薬は満点-1', () => {
@@ -624,6 +636,28 @@ test('英語結果は解釈だけ訳し、点数は変えない', () => {
     'en',
   );
   assert.match(sekiguchi.details?.[0] ?? '', /derivation cohort/);
+
+  const ecura = localizeResult(computeEcura({ ly: 0, size: 0, vm: 0, v: 0, sm: 0 }), 'en');
+  assert.equal(ecura.interpretation, 'Low risk');
+  assert.match(ecura.details?.[0] ?? '', /LNM rate at this score 1\.6%/);
+  assert.doesNotMatch(ecura.details?.join(' ') ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+});
+
+test('既定言語は英語で、計算は最低点から始まる', () => {
+  assert.equal(DEFAULT_LOCALE, 'en');
+
+  const ecura = getScoreById('ecura-hatta');
+  assert.ok(ecura && !isClassification(ecura));
+  assert.deepEqual(lowestFieldValues(ecura.fields), { ly: 0, size: 0, vm: 0, v: 0, sm: 0 });
+
+  const aronchick = getScoreById('aronchick');
+  assert.ok(aronchick && !isClassification(aronchick));
+  assert.deepEqual(lowestFieldValues(aronchick.fields), { grade: 1 });
+
+  const apcs = getScoreById('apcs');
+  assert.ok(apcs && !isClassification(apcs));
+  assert.deepEqual(lowestFieldValues(apcs.fields), { age: 0, sex: 0, family: 0, smoking: 0 });
+  assert.equal(apcs.compute(lowestFieldValues(apcs.fields)).interpretation, '平均リスク（AR）');
 });
 
 test('引用は PubMed へ行く', () => {

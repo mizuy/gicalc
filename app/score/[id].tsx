@@ -33,7 +33,7 @@ export default function ScoreScreen() {
       {isClassification(localized) ? (
         <ClassificationReferenceScreen score={localized} />
       ) : (
-        <ScoreCalculatorScreen score={localized} />
+        <ScoreCalculatorScreen key={localized.id} score={localized} />
       )}
     </>
   );

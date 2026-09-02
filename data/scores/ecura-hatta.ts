@@ -9,7 +9,7 @@ export const ecuraHattaScore: ScoreDefinition = {
   category: 'gastric',
   categoryLabel: '早期胃癌',
   description:
-    '早期胃癌の非治癒切除後におけるリンパ節転移リスクを点数化します。',
+    '早期胃癌の非治癒切除後におけるリンパ節転移リスクを点数化します。0–7 点ごとの LNM率と、低 / 中 / 高リスク区分を示します。',
   reference: 'Hatta W et al. Am J Gastroenterol 2017;112:874-881',
   pubmed: '28397873',
   fields: [
