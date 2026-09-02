@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { predictLnmProbability, valuesToNomogramInput } from '../lib/nomogram/kajiwara';
+import {
+  NOMOGRAM_ITEM_POINTS,
+  nomogramTotalPoints,
+  predictLnmProbability,
+  valuesToNomogramInput,
+} from '../lib/nomogram/kajiwara';
 import { computeBestJ } from '../lib/scores/best-j';
 import { computeEcura, ECURA_LNM_BY_SCORE } from '../lib/scores/ecura';
 import { computeEggim } from '../lib/scores/eggim';
@@ -162,6 +167,61 @@ test('Kajiwara: フィールド値 0 は参照カテゴリに写像される', (
     smDepth: 'lt1000',
     budding: 'bd1',
   });
+});
+
+test('Kajiwara: 部位は C A T D S RS Ra Rb で、同じ係数は同じ点数', () => {
+  const defined = getScoreById('kajiwara-nomogram');
+  assert.ok(defined && !isClassification(defined));
+  assert.deepEqual(
+    defined.fields.find((field) => field.id === 'location')?.options.map((option) => option.label),
+    ['C', 'A', 'T', 'D', 'S', 'RS', 'Ra', 'Rb'],
+  );
+  assert.equal(valuesToNomogramInput({ location: 1 }).location, 'acd');
+  assert.equal(valuesToNomogramInput({ location: 2 }).location, 'acd');
+  assert.equal(valuesToNomogramInput({ location: 0 }).location, 'transverse');
+  assert.equal(valuesToNomogramInput({ location: 3 }).location, 'acd');
+  assert.equal(valuesToNomogramInput({ location: 4 }).location, 'srb');
+  assert.equal(valuesToNomogramInput({ location: 5 }).location, 'rsra');
+  assert.equal(valuesToNomogramInput({ location: 6 }).location, 'rsra');
+  assert.equal(valuesToNomogramInput({ location: 7 }).location, 'srb');
+  assert.equal(NOMOGRAM_ITEM_POINTS.locationAcD, 37.8);
+  assert.equal(NOMOGRAM_ITEM_POINTS.locationSRb, 53.0);
+  assert.equal(NOMOGRAM_ITEM_POINTS.locationRsRa, 64.9);
+  assert.equal(NOMOGRAM_ITEM_POINTS.sm2000plus, 100);
+  assert.equal(NOMOGRAM_ITEM_POINTS.sexFemale, 29.7);
+
+  const reference = defined.compute({
+    sex: 0,
+    location: 0,
+    grade: 0,
+    lvi: 0,
+    smDepth: 0,
+    budding: 0,
+  });
+  assert.equal(reference.probability, 0.3);
+  assert.equal(reference.nomogramPoints, 0);
+
+  const cecum = defined.compute({
+    sex: 0,
+    location: 1,
+    grade: 0,
+    lvi: 0,
+    smDepth: 0,
+    budding: 0,
+  });
+  assert.equal(cecum.nomogramPoints, 37.8);
+  assert.equal(cecum.probability, 0.6);
+  assert.equal(
+    nomogramTotalPoints({
+      sex: 'male',
+      location: 'acd',
+      grade: 'g1',
+      lvi: 'negative',
+      smDepth: 'lt1000',
+      budding: 'bd1',
+    }),
+    37.8,
+  );
 });
 
 test('eCura: 0–1 低リスク / 2–4 中リスク / 5–7 高リスク', () => {

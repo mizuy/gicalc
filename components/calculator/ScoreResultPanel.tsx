@@ -42,6 +42,11 @@ export function ScoreResultPanel({ result, ready }: Props) {
   return (
     <View style={[styles.panel, { backgroundColor: surface, borderColor: border }]}>
       <Text style={[styles.value, { color: tint }]}>{formatValue(result)}</Text>
+      {result.nomogramPoints != null ? (
+        <Text style={[styles.points, { color: textSecondary }]}>
+          {t.totalPoints}: {result.nomogramPoints.toFixed(1)}
+        </Text>
+      ) : null}
       <View style={[styles.badge, { backgroundColor: badgeColor }]}>
         <Text style={styles.badgeText}>{result.interpretation}</Text>
       </View>
@@ -69,6 +74,12 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 36,
     fontWeight: '800',
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  points: {
+    fontSize: 16,
+    fontWeight: '700',
     textAlign: 'center',
     marginBottom: 12,
   },

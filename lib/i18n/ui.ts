@@ -10,6 +10,7 @@ export type UiStrings = {
   original: string;
   note: string;
   reset: string;
+  totalPoints: string;
   resultPlaceholder: string;
   footnote: string;
   missingTitle: string;
@@ -59,6 +60,7 @@ export const UI: Record<Locale, UiStrings> = {
     original: '原著',
     note: '注',
     reset: 'リセット',
+    totalPoints: '合計点',
     resultPlaceholder: 'すべての項目を選択すると結果が表示されます',
     footnote: '診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。',
     missingTitle: '未登録',
@@ -124,6 +126,7 @@ export const UI: Record<Locale, UiStrings> = {
     original: 'Original',
     note: 'Note',
     reset: 'Reset',
+    totalPoints: 'Total points',
     resultPlaceholder: 'Select every item to see the result',
     footnote: 'Decision support only. Follow current guidelines and local protocols.',
     missingTitle: 'Not found',

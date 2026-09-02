@@ -32,6 +32,8 @@ export type ScoreResult = {
   details?: string[];
   displayMode?: 'points' | 'probability';
   probability?: number;
+  /** Kajiwara nomogram の合計点（SM≥2000 = 100） */
+  nomogramPoints?: number;
 };
 
 type ToolBase = {

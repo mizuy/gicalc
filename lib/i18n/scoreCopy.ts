@@ -1,3 +1,10 @@
+import { formatAddedPoints, NOMOGRAM_ITEM_POINTS } from '../nomogram/kajiwara';
+
+const nomogramPts = (points: number, note?: string): string => {
+  const score = formatAddedPoints(points, 'en');
+  return note ? `${score}. ${note}` : score;
+};
+
 export type FieldCopy = {
   label: string;
   description?: string;
@@ -404,19 +411,27 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
   'kajiwara-nomogram': {
     name: 'Colorectal T1 LNM nomogram (Kajiwara / JSCCR)',
     description:
-      'Predicts lymph-node metastasis (LNM) probability after endoscopic treatment of colorectal T1 cancer. Six-factor multivariable logistic model from Kajiwara 2023 (GIE; derivation n=3080).',
+      'Predicts lymph-node metastasis (LNM) probability after endoscopic treatment of colorectal T1 cancer. Six-factor multivariable logistic model from Kajiwara 2023 (GIE; derivation n=3080). Total points treat SM ≥2000 μm as 100 on the nomogram scale.',
     fields: {
       sex: {
         label: 'Sex',
-        options: [{ label: 'Male' }, { label: 'Female' }],
+        options: [
+          { label: 'Male', description: nomogramPts(NOMOGRAM_ITEM_POINTS.sexMale) },
+          { label: 'Female', description: nomogramPts(NOMOGRAM_ITEM_POINTS.sexFemale) },
+        ],
       },
       location: {
         label: 'Tumor location',
+        description: 'Cecum to lower rectum. Sites with the same points share a coefficient.',
         options: [
-          { label: 'Transverse (T)', description: 'Transverse colon' },
-          { label: 'A/C/D', description: 'Ascending colon, cecum, descending colon' },
-          { label: 'S/Rb', description: 'Sigmoid colon, lower rectum' },
-          { label: 'RS/Ra', description: 'Rectosigmoid, upper rectum' },
+          { label: 'C', description: nomogramPts(NOMOGRAM_ITEM_POINTS.locationAcD, 'Cecum') },
+          { label: 'A', description: nomogramPts(NOMOGRAM_ITEM_POINTS.locationAcD, 'Ascending colon') },
+          { label: 'T', description: nomogramPts(NOMOGRAM_ITEM_POINTS.locationT, 'Transverse colon') },
+          { label: 'D', description: nomogramPts(NOMOGRAM_ITEM_POINTS.locationAcD, 'Descending colon') },
+          { label: 'S', description: nomogramPts(NOMOGRAM_ITEM_POINTS.locationSRb, 'Sigmoid colon') },
+          { label: 'RS', description: nomogramPts(NOMOGRAM_ITEM_POINTS.locationRsRa, 'Rectosigmoid') },
+          { label: 'Ra', description: nomogramPts(NOMOGRAM_ITEM_POINTS.locationRsRa, 'Upper rectum') },
+          { label: 'Rb', description: nomogramPts(NOMOGRAM_ITEM_POINTS.locationSRb, 'Lower rectum') },
         ],
       },
       grade: {
@@ -424,27 +439,46 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         description:
           'Predominant type. G1 = papillary / well-differentiated tubular; G2 = moderately differentiated; G3 = poorly differentiated, mucinous, or signet-ring',
         options: [
-          { label: 'G1', description: 'Papillary or well-differentiated tubular adenocarcinoma' },
-          { label: 'G2', description: 'Moderately differentiated tubular adenocarcinoma' },
-          { label: 'G3', description: 'Poorly differentiated, mucinous, or signet-ring cell carcinoma' },
+          {
+            label: 'G1',
+            description: nomogramPts(NOMOGRAM_ITEM_POINTS.gradeG1, 'Papillary or well-differentiated tubular adenocarcinoma'),
+          },
+          {
+            label: 'G2',
+            description: nomogramPts(NOMOGRAM_ITEM_POINTS.gradeG2, 'Moderately differentiated tubular adenocarcinoma'),
+          },
+          {
+            label: 'G3',
+            description: nomogramPts(
+              NOMOGRAM_ITEM_POINTS.gradeG3,
+              'Poorly differentiated, mucinous, or signet-ring cell carcinoma',
+            ),
+          },
         ],
       },
       lvi: {
         label: 'Lymphovascular invasion',
         description: 'Lymphatic or venous invasion',
-        options: [{ label: 'Absent' }, { label: 'Present' }],
+        options: [
+          { label: 'Absent', description: nomogramPts(NOMOGRAM_ITEM_POINTS.lviNegative) },
+          { label: 'Present', description: nomogramPts(NOMOGRAM_ITEM_POINTS.lviPositive) },
+        ],
       },
       smDepth: {
         label: 'SM invasion depth',
         description: 'JSCCR absolute measurement from the MM, or from the head/stalk border if pedunculated',
-        options: [{ label: '<1000 μm' }, { label: '1000–1999 μm' }, { label: '≥2000 μm' }],
+        options: [
+          { label: '<1000 μm', description: nomogramPts(NOMOGRAM_ITEM_POINTS.smLt1000) },
+          { label: '1000–1999 μm', description: nomogramPts(NOMOGRAM_ITEM_POINTS.sm1000to1999) },
+          { label: '≥2000 μm', description: nomogramPts(NOMOGRAM_ITEM_POINTS.sm2000plus) },
+        ],
       },
       budding: {
         label: 'Tumor budding',
         description: '20× hotspot (0.785 mm²). The model uses the same coefficient for BD2 and BD3',
         options: [
-          { label: 'BD1', description: '<5 buds' },
-          { label: 'BD2/3', description: 'BD2: 5–9 buds; BD3: ≥10 buds' },
+          { label: 'BD1', description: nomogramPts(NOMOGRAM_ITEM_POINTS.buddingBd1, '<5 buds') },
+          { label: 'BD2/3', description: nomogramPts(NOMOGRAM_ITEM_POINTS.buddingBd23, 'BD2: 5–9 buds; BD3: ≥10 buds') },
         ],
       },
     },
