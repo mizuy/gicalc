@@ -19,7 +19,7 @@ export const nobladsScore: ScoreDefinition = {
   category: 'bleeding',
   categoryLabel: '消化管出血',
   description:
-    '急性下部消化管出血の重症化（持続・再出血）を予測します。上部出血の GBS とは別体系です。各因子1点。',
+    '急性下部消化管出血の重症化（持続・再出血）を予測します。各因子1点。',
   reference: 'Aoki T et al. Clin Gastroenterol Hepatol 2016;14:1562-1570',
   pubmed: '27311620',
   fields: [

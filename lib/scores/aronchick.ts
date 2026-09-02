@@ -19,7 +19,7 @@ const GRADES: Record<
     severity: 'moderate',
     details: [
       '半固形便があるが吸引・洗浄で除去でき、粘膜の 90% 超が見える。',
-      '施設により adequate に含めることがあります。BBPS とは別尺度です。',
+      '施設により adequate に含めることがあります。',
     ],
   },
   4: {

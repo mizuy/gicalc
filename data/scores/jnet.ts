@@ -8,7 +8,7 @@ export const jnetScore: ClassificationDefinition = {
   organ: 'colorectum',
   category: 'classification',
   categoryLabel: '内視鏡分類',
-  description: '大腸腫瘍の NBI 拡大分類（Type 1 / 2A / 2B / 3）。拡大不要の NICE 分類や大腸T1ノモグラムとは別です。',
+  description: '大腸腫瘍の NBI 拡大分類（Type 1 / 2A / 2B / 3）。',
   originalLead:
     'The JNET classification consists of four categories of vessel and surface pattern (Types 1, 2A, 2B, and 3). Types 1, 2A, 2B, and 3 are correlated with hyperplastic polyp/SSP, low-grade intramucosal neoplasia, high-grade intramucosal neoplasia/shallow SM invasive cancer, and deep SM invasive cancer, respectively.',
   reference: 'Sano Y et al. Dig Endosc 2016;28:526-533',
@@ -37,7 +37,7 @@ export const jnetScore: ClassificationDefinition = {
         { heading: 'Histology', text: 'Hyperplastic polyp / sessile serrated polyp (SSP)' },
         {
           heading: '注',
-          text: '原著注: 見える場合、口径は周囲正常粘膜と同程度。右側で粘液帽など SSL を疑う場合は切除を検討。NICE とは別。',
+          text: '原著注: 見える場合、口径は周囲正常粘膜と同程度。右側で粘液帽など SSL を疑う場合は切除を検討。',
         },
       ],
     },
@@ -77,7 +77,7 @@ export const jnetScore: ClassificationDefinition = {
         { heading: 'Vessel', text: 'Loose vessel areas; interruption of thick vessels' },
         { heading: 'Surface', text: 'Amorphous areas' },
         { heading: 'Histology', text: 'Deep submucosal invasive cancer' },
-        { heading: '注', text: '外科手術を検討。大腸T1ノモグラムとは別。' },
+        { heading: '注', text: '外科手術を検討。' },
       ],
     },
   ],

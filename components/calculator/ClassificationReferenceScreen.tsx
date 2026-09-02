@@ -88,10 +88,7 @@ export function ClassificationReferenceScreen({ score }: Props) {
 
       <View style={[styles.footnoteBox, { borderColor: border }]}>
         <Text style={[styles.footnote, { color: textSecondary }]}>
-          本結果は診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。
-        </Text>
-        <Text style={[styles.footnote, { color: tint, marginTop: 6 }]}>
-          各分類は目的も対象疾患も異なります。混同しないでください。
+          診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。
         </Text>
       </View>
     </ScrollView>

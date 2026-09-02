@@ -9,7 +9,7 @@ export const apcsScore: ScoreDefinition = {
   category: 'screening',
   categoryLabel: '大腸がん検診',
   description:
-    '無症状のアジア人で、進行大腸腫瘍（進行腺腫または癌）のリスクを年齢・性別・家族歴・喫煙で 0–7 点に層別します。大腸T1ノモグラムや前処置尺度とは別です。',
+    '無症状のアジア人で、進行大腸腫瘍（進行腺腫または癌）のリスクを年齢・性別・家族歴・喫煙で 0–7 点に層別します。',
   reference: 'Yeoh KG et al. Gut 2011;60:1236-1241',
   pubmed: '21402615',
   fields: [

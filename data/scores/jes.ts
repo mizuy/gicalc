@@ -8,7 +8,7 @@ export const jesScore: ClassificationDefinition = {
   organ: 'esophagus',
   category: 'classification',
   categoryLabel: '内視鏡分類',
-  description: '食道扁平上皮の拡大内視鏡分類（Type A / B1 / B2 / B3）。Inoue の IPCL I–V や静脈瘤分類とは別です。',
+  description: '食道扁平上皮の拡大内視鏡分類（Type A / B1 / B2 / B3）。',
   originalLead:
     'Type A microvessels correspond to noncancerous lesions and lack severe irregularity; type B, to cancerous lesions, and exhibit severe irregularity. Type B vessels were subclassified into B1, B2, and B3.',
   reference: 'Oyama T et al. Esophagus 2017;14:105-112',
@@ -47,7 +47,7 @@ export const jesScore: ClassificationDefinition = {
           text: 'Normal IPCL, or abnormal microvessels without severe irregularity',
         },
         { heading: '推定', text: 'Noncancerous lesions (inflammation / low-grade intraepithelial neoplasia)' },
-        { heading: '注', text: '必要なら生検。Inoue IPCL I–V とは別分類。' },
+        { heading: '注', text: '必要なら生検。' },
       ],
     },
     {

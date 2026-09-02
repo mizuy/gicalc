@@ -21,7 +21,7 @@ export default function HomeScreen() {
         </View>
       </View>
       <Text style={[styles.lead, { color: textSecondary }]}>
-        消化管内視鏡向けのスコア、臨床尺度、内視鏡分類。食道・胃・大腸・出血の順です。体系は混同しないでください。
+        消化管内視鏡向けのスコア、臨床尺度、内視鏡分類。食道、胃、大腸、出血の順です。
       </Text>
 
       <PwaInstallBanner />

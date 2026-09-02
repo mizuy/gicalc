@@ -14,7 +14,7 @@ export function computeApcs(values: Record<string, number>): ScoreResult {
       interpretation: '平均リスク（AR）',
       details: [
         '検証コホートの進行腫瘍有病率 1.3%。',
-        '便潜血による検診も選択肢です。大腸T1ノモグラムとは別です。',
+        '便潜血による検診も選択肢です。',
       ],
     };
   }

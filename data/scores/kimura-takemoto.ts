@@ -13,7 +13,7 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
   category: 'classification',
   categoryLabel: '内視鏡分類',
   description:
-    '内視鏡的萎縮境界による Closed / Open 分類。C-0 は原著6型になく京都分類で用います。EGGIM・OLGA とは別です。',
+    '内視鏡的萎縮境界による Closed / Open 分類。C-0 は原著6型になく京都分類で用います。',
   originalLead:
     'Based on location of the endoscopic atrophic border, Kimura and Takemoto proposed closed type (C-1, C-2, C-3) and open type (O-1, O-2, O-3).',
   reference: 'Kimura K, Takemoto T. Endoscopy 1969;1:87-97',

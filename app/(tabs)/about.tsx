@@ -18,30 +18,29 @@ export default function AboutScreen() {
         Storeは不要です。追加は data/scores/ に定義ファイルを足すだけです。
       </Text>
 
-      <Text style={[styles.section, { color: tint }]}>収録ツール（臓器別。体系は混同しない）</Text>
+      <Text style={[styles.section, { color: tint }]}>収録ツール</Text>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
         <Text style={styles.cardTitle}>食道</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          JES（Oyama 2017）: Type A / B1 / B2 / B3。原著の図と定義文。文献は PubMed に飛びます。Inoue
-          IPCL I–V とは別です。
+          JES（Oyama 2017）: Type A / B1 / B2 / B3。原著の図と定義文。文献は PubMed に飛びます。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
         <Text style={styles.cardTitle}>胃</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          木村–竹本（萎縮分類）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura / Sekiguchi（LNM）、BEST-J（ESD後出血）。混ぜないでください。
+          木村–竹本（萎縮分類）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura / Sekiguchi（LNM）、BEST-J（ESD後出血）。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
         <Text style={styles.cardTitle}>大腸</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          APCS（検診）、JNET（NBI拡大分類）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。混ぜないでください。
+          APCS（検診）、JNET（NBI拡大分類）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。
         </Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
         <Text style={styles.cardTitle}>出血</Text>
         <Text style={[styles.body, { color: textSecondary }]}>
-          上部は GBS（Blatchford 2000）、下部は NOBLADS（Aoki 2016）。混ぜないでください。
+          上部は GBS（Blatchford 2000）、下部は NOBLADS（Aoki 2016）。
         </Text>
       </View>
 
@@ -63,9 +62,6 @@ export default function AboutScreen() {
         </Text>
         <Text style={[styles.body, { color: textSecondary }]}>
           スコア・ノモグラムの解釈は最新のJSCCR/JGESガイドラインと施設プロトコルに従ってください。
-        </Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          収録スコアは目的・対象疾患が異なります。同名に見えても混同しないでください。
         </Text>
       </View>
     </ScrollView>
