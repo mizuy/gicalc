@@ -17,7 +17,7 @@
 | 大腸 | APCS（Yeoh 2011） | 無症状アジア人の進行大腸腫瘍リスク | 点数 0–7 |
 | 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（原著の図・文言） |
 | 大腸 | JNET（Sano 2016） | NBI 拡大 | 定義一覧（原著の図・文言） |
-| 大腸 | T1 Nomogram（Kajiwara 2023） | 大腸T1癌の LNM 確率 | 確率（%） |
+| 大腸 | T1 Nomogram（Kajiwara 2023） | 大腸T1癌の LNM 確率 | 確率（%）と nomogram 点 |
 | 大腸 | BBPS（Lai 2009） | 腸管前処置（洗浄後・3区域） | 点数 0–9 |
 | 大腸 | Aronchick | 腸管前処置（洗浄前・全体） | 5段階 |
 | 出血 | GBS（Blatchford 2000） | 上部消化管出血 | 点数 0–23 |
