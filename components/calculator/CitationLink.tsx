@@ -1,5 +1,5 @@
 import * as Linking from 'expo-linking';
-import { Pressable, StyleSheet } from 'react-native';
+import { Platform, Pressable, StyleSheet } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
 import { pubmedUrl } from '@/lib/pubmed';
@@ -7,6 +7,11 @@ import { pubmedUrl } from '@/lib/pubmed';
 type Props = {
   label: string;
   pubmed?: string;
+};
+
+type WebLinkProps = {
+  href: string;
+  hrefAttrs: { target: string; rel: string };
 };
 
 export function CitationLink({ label, pubmed }: Props) {
@@ -17,11 +22,28 @@ export function CitationLink({ label, pubmed }: Props) {
     return <Text style={[styles.text, { color: textSecondary }]}>{label}</Text>;
   }
 
+  const url = pubmedUrl(pubmed);
+
+  if (Platform.OS === 'web') {
+    const webProps: WebLinkProps = {
+      href: url,
+      hrefAttrs: { target: '_blank', rel: 'noopener noreferrer' },
+    };
+    return (
+      <Text
+        accessibilityRole="link"
+        style={[styles.text, { color: tint }]}
+        {...webProps}>
+        {label}
+      </Text>
+    );
+  }
+
   return (
     <Pressable
       accessibilityRole="link"
       onPress={() => {
-        void Linking.openURL(pubmedUrl(pubmed));
+        void Linking.openURL(url);
       }}>
       <Text style={[styles.text, { color: tint }]}>{label}</Text>
     </Pressable>

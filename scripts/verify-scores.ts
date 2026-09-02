@@ -531,5 +531,6 @@ test('引用は PubMed へ行く', () => {
   assert.equal(pubmedUrl(KIMURA_1969_PUBMED), KIMURA_1969_PUBMED);
   for (const score of SCORES) {
     assert.ok(score.pubmed, score.id);
+    assert.match(pubmedUrl(score.pubmed!), /^https:\/\/pubmed\.ncbi\.nlm\.nih\.gov\//);
   }
 });
