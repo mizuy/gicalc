@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   category: {
     fontSize: 11,
     fontWeight: '600',
-    maxWidth: 96,
+    maxWidth: 118,
     textAlign: 'right',
   },
 });

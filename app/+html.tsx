@@ -30,6 +30,12 @@ export default function Root({ children }: { children: ReactNode }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
+try {
+  var storedLocale = window.localStorage.getItem('gicalc.locale');
+  if (storedLocale === 'en' || storedLocale === 'ja') {
+    document.documentElement.lang = storedLocale;
+  }
+} catch (e) {}
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     navigator.serviceWorker.register(${JSON.stringify(swHref)}).catch(function () {});

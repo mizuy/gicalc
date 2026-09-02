@@ -15,6 +15,7 @@ import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
 import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
 import { KIMURA_1969_PUBMED } from '../data/scores/kimura-takemoto';
+import { localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { isClassification } from '../types/score';
 
@@ -545,6 +546,84 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(kimura.figures?.[0]?.src ?? '', /kimura-takemoto-1969/);
   assert.equal(kimura.pubmed, KIMURA_1969_PUBMED);
   assert.equal(kimura.figures?.[0]?.pubmed, '31327182');
+});
+
+test('英語コピーが全スコアの表示項目を覆う', () => {
+  const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
+  for (const score of SCORES) {
+    const copy = SCORE_EN[score.id];
+    assert.ok(copy, score.id);
+    const english = localizeScore(score, 'en');
+    assert.equal(english.name, copy.name);
+    assert.equal(english.categoryLabel, UI.en.category[score.category]);
+    assert.equal(localizeScore(score, 'ja').name, score.name);
+    assert.doesNotMatch(english.name, japanese);
+    assert.doesNotMatch(english.description, japanese);
+
+    if (isClassification(score) && isClassification(english)) {
+      for (const entry of score.entries) {
+        if (entry.group) {
+          assert.ok(copy.groups?.[entry.group], `${score.id} group ${entry.group}`);
+        }
+        if (entry.comment) {
+          assert.ok(copy.comments?.[entry.label], `${score.id} comment ${entry.label}`);
+        }
+      }
+      for (const entry of english.entries) {
+        if (entry.group) assert.doesNotMatch(entry.group, japanese);
+        if (entry.comment) assert.doesNotMatch(entry.comment, japanese);
+        if (entry.meaning) assert.doesNotMatch(entry.meaning, japanese);
+      }
+      for (const note of english.figures?.map((figure) => figure.note) ?? []) {
+        assert.doesNotMatch(note, japanese);
+      }
+    } else if (!isClassification(score) && !isClassification(english)) {
+      assert.ok(copy.fields);
+      for (const field of score.fields) {
+        const fieldCopy = copy.fields?.[field.id];
+        assert.ok(fieldCopy, `${score.id}.${field.id}`);
+        assert.equal(fieldCopy.options.length, field.options.length, `${score.id}.${field.id} options`);
+      }
+      for (const field of english.fields) {
+        assert.doesNotMatch(field.label, japanese, field.label);
+        if (field.description) assert.doesNotMatch(field.description, japanese, field.description);
+        for (const option of field.options) {
+          assert.doesNotMatch(option.label, japanese, option.label);
+          if (option.description) assert.doesNotMatch(option.description, japanese, option.description);
+        }
+      }
+    }
+  }
+});
+
+test('英語結果は解釈だけ訳し、点数は変えない', () => {
+  const japanese = computeBestJ({
+    warfarin: 0,
+    doac: 0,
+    p2y12: 0,
+    aspirin: 0,
+    cilostazol: 0,
+    dialysis: 0,
+    tumorSize: 0,
+    lowerThird: 0,
+    multiple: 0,
+  });
+  const english = localizeResult(japanese, 'en');
+  assert.equal(english.total, japanese.total);
+  assert.equal(english.severity, japanese.severity);
+  assert.equal(english.interpretation, 'Low risk');
+  assert.deepEqual(english.details, ['Delayed post-ESD bleeding rate 2.8%']);
+  assert.equal(localizeResult(japanese, 'ja').interpretation, '低リスク');
+
+  const bbps = localizeResult(computeBbps({ right: 2, transverse: 2, left: 2 }), 'en');
+  assert.equal(bbps.interpretation, 'Adequate');
+  assert.match(bbps.details?.[0] ?? '', /Right \(cecum\/ascending\) 2/);
+
+  const sekiguchi = localizeResult(
+    computeSekiguchi({ size: 0, depth: 0, histology: 0, ulcer: 0, lvi: 0 }),
+    'en',
+  );
+  assert.match(sekiguchi.details?.[0] ?? '', /derivation cohort/);
 });
 
 test('引用は PubMed へ行く', () => {

@@ -2,15 +2,18 @@ import { Link, Stack } from 'expo-router';
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
+import { useLocale } from '@/lib/i18n';
 
 export default function NotFoundScreen() {
+  const { t } = useLocale();
+
   return (
     <>
-      <Stack.Screen options={{ title: 'ページが見つかりません' }} />
+      <Stack.Screen options={{ title: t.notFoundTitle }} />
       <View style={styles.container}>
-        <Text style={styles.title}>この画面は存在しません。</Text>
+        <Text style={styles.title}>{t.notFoundBody}</Text>
         <Link href="/" style={styles.link}>
-          <Text style={styles.linkText}>スコア一覧へ戻る</Text>
+          <Text style={styles.linkText}>{t.notFoundLink}</Text>
         </Link>
       </View>
     </>

@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
+import { useLocale } from '@/lib/i18n';
 
 export default function AboutScreen() {
   const background = useThemeColor({}, 'background');
@@ -9,60 +10,40 @@ export default function AboutScreen() {
   const tint = useThemeColor({}, 'tint');
   const textSecondary = useThemeColor({}, 'textSecondary');
   const accent = useThemeColor({}, 'accent');
+  const { t } = useLocale();
 
   return (
     <ScrollView style={[styles.scroll, { backgroundColor: background }]} contentContainerStyle={styles.content}>
       <Text style={styles.title}>GI Calc / gicalc</Text>
-      <Text style={[styles.body, { color: textSecondary }]}>
-        消化管内視鏡臨床医向けのスコア・予測・内視鏡分類ツールです。ブラウザとPWAで利用でき、App
-        Storeは不要です。追加は data/scores/ に定義ファイルを足すだけです。
-      </Text>
+      <Text style={[styles.body, { color: textSecondary }]}>{t.about.intro}</Text>
 
-      <Text style={[styles.section, { color: tint }]}>収録ツール</Text>
+      <Text style={[styles.section, { color: tint }]}>{t.about.tools}</Text>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>食道</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          JES（Oyama 2017）: Type A / B1 / B2 / B3。原著の図と定義文。文献は PubMed に飛びます。
-        </Text>
+        <Text style={styles.cardTitle}>{t.about.esophagus}</Text>
+        <Text style={[styles.body, { color: textSecondary }]}>{t.about.esophagusBody}</Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>胃</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          木村–竹本（萎縮分類）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura / Sekiguchi（LNM）、BEST-J（ESD後出血）。
-        </Text>
+        <Text style={styles.cardTitle}>{t.about.stomach}</Text>
+        <Text style={[styles.body, { color: textSecondary }]}>{t.about.stomachBody}</Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>大腸</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          APCS（検診）、工藤–鶴田（pit pattern）、JNET（NBI拡大分類）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。
-        </Text>
+        <Text style={styles.cardTitle}>{t.about.colorectum}</Text>
+        <Text style={[styles.body, { color: textSecondary }]}>{t.about.colorectumBody}</Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>出血</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          上部は GBS（Blatchford 2000）、下部は NOBLADS（Aoki 2016）。
-        </Text>
+        <Text style={styles.cardTitle}>{t.about.bleeding}</Text>
+        <Text style={[styles.body, { color: textSecondary }]}>{t.about.bleedingBody}</Text>
       </View>
 
-      <Text style={[styles.section, { color: tint }]}>PWA インストール手順</Text>
-      <Text style={[styles.body, { color: textSecondary }]}>
-        iPhone / iPad（Safari）: 共有ボタン → 「ホーム画面に追加」
-      </Text>
-      <Text style={[styles.body, { color: textSecondary }]}>
-        Android（Chrome）: メニュー → 「アプリをインストール」または「ホーム画面に追加」
-      </Text>
-      <Text style={[styles.body, { color: textSecondary }]}>
-        対応ブラウザではホーム画面のインストールバナーからも追加できます。
-      </Text>
+      <Text style={[styles.section, { color: tint }]}>{t.about.pwaTitle}</Text>
+      <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaIos}</Text>
+      <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaAndroid}</Text>
+      <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaBanner}</Text>
 
-      <Text style={[styles.section, { color: accent }]}>免責事項</Text>
+      <Text style={[styles.section, { color: accent }]}>{t.about.disclaimer}</Text>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          本ツールは診断支援用であり、医師の臨床判断を代替するものではありません。
-        </Text>
-        <Text style={[styles.body, { color: textSecondary }]}>
-          スコア・ノモグラムの解釈は最新のJSCCR/JGESガイドラインと施設プロトコルに従ってください。
-        </Text>
+        <Text style={[styles.body, { color: textSecondary }]}>{t.about.disclaimerBody}</Text>
+        <Text style={[styles.body, { color: textSecondary }]}>{t.about.disclaimerGuide}</Text>
       </View>
     </ScrollView>
   );

@@ -2,6 +2,7 @@ import { Image, StyleSheet, View } from 'react-native';
 
 import { CitationLink } from '@/components/calculator/CitationLink';
 import { Text, useThemeColor } from '@/components/Themed';
+import { useLocale } from '@/lib/i18n';
 import { publicPath } from '@/lib/web/baseUrl';
 import type { ClassificationFigure as Figure } from '@/types/score';
 
@@ -13,6 +14,7 @@ export function ClassificationFigure({ figure }: Props) {
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
   const textSecondary = useThemeColor({}, 'textSecondary');
+  const { t } = useLocale();
 
   return (
     <View style={[styles.box, { backgroundColor: surface, borderColor: border }]}>
@@ -23,7 +25,7 @@ export function ClassificationFigure({ figure }: Props) {
         resizeMode="contain"
       />
       <Text style={styles.caption}>{figure.caption}</Text>
-      <CitationLink label={`出典: ${figure.source}`} pubmed={figure.pubmed} />
+      <CitationLink label={`${t.source}: ${figure.source}`} pubmed={figure.pubmed} />
       <Text style={[styles.note, { color: textSecondary }]}>{figure.note}</Text>
     </View>
   );

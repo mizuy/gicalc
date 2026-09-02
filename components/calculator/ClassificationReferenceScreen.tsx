@@ -4,6 +4,7 @@ import { ClassificationFigure } from '@/components/calculator/ClassificationFigu
 import { CitationLink } from '@/components/calculator/CitationLink';
 import { Text, useThemeColor } from '@/components/Themed';
 import { SeverityColors } from '@/constants/Colors';
+import { useLocale } from '@/lib/i18n';
 import type { ClassificationDefinition, ClassificationEntry } from '@/types/score';
 
 type Props = {
@@ -36,6 +37,7 @@ export function ClassificationReferenceScreen({ score }: Props) {
   const tint = useThemeColor({}, 'tint');
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
+  const { t } = useLocale();
   const groups = groupEntries(score.entries);
 
   return (
@@ -45,7 +47,7 @@ export function ClassificationReferenceScreen({ score }: Props) {
       <Text style={styles.title}>{score.name}</Text>
       {score.originalLead ? (
         <View style={styles.originalBlock}>
-          <Text style={[styles.originalLabel, { color: tint }]}>原著</Text>
+          <Text style={[styles.originalLabel, { color: tint }]}>{t.original}</Text>
           <Text style={[styles.originalLead, { color: tint }]}>{score.originalLead}</Text>
         </View>
       ) : null}
@@ -54,7 +56,7 @@ export function ClassificationReferenceScreen({ score }: Props) {
       ) : null}
       {score.reference ? (
         <View style={styles.reference}>
-          <CitationLink label={`文献: ${score.reference}`} pubmed={score.pubmed} />
+          <CitationLink label={`${t.reference}: ${score.reference}`} pubmed={score.pubmed} />
         </View>
       ) : null}
 
@@ -86,7 +88,9 @@ export function ClassificationReferenceScreen({ score }: Props) {
                   </View>
                 ))}
                 {entry.comment ? (
-                  <Text style={[styles.comment, { color: textSecondary }]}>注: {entry.comment}</Text>
+                  <Text style={[styles.comment, { color: textSecondary }]}>
+                    {t.note}: {entry.comment}
+                  </Text>
                 ) : null}
               </View>
             );
@@ -96,7 +100,7 @@ export function ClassificationReferenceScreen({ score }: Props) {
 
       <View style={[styles.footnoteBox, { borderColor: border }]}>
         <Text style={[styles.footnote, { color: textSecondary }]}>
-          診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。
+          {t.footnote}
         </Text>
       </View>
     </ScrollView>

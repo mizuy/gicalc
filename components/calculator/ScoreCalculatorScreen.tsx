@@ -5,6 +5,7 @@ import { CitationLink } from '@/components/calculator/CitationLink';
 import { ScoreFieldSelector } from '@/components/calculator/ScoreFieldSelector';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
 import { Text, useThemeColor } from '@/components/Themed';
+import { localizeResult, useLocale } from '@/lib/i18n';
 import type { CalculatorDefinition } from '@/types/score';
 
 type Props = {
@@ -19,12 +20,13 @@ export function ScoreCalculatorScreen({ score }: Props) {
   const accent = useThemeColor({}, 'accent');
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
+  const { locale, t } = useLocale();
 
   const allFieldsFilled = score.fields.every((field) => field.id in values);
   const result = useMemo(() => {
     if (!allFieldsFilled) return undefined;
-    return score.compute(values);
-  }, [allFieldsFilled, score, values]);
+    return localizeResult(score.compute(values), locale);
+  }, [allFieldsFilled, locale, score, values]);
 
   const handleSelect = (fieldId: string, value: number) => {
     setValues((current) => ({ ...current, [fieldId]: value }));
@@ -39,7 +41,7 @@ export function ScoreCalculatorScreen({ score }: Props) {
       <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
       {score.reference ? (
         <View style={styles.reference}>
-          <CitationLink label={`文献: ${score.reference}`} pubmed={score.pubmed} />
+          <CitationLink label={`${t.reference}: ${score.reference}`} pubmed={score.pubmed} />
         </View>
       ) : null}
 
@@ -65,12 +67,12 @@ export function ScoreCalculatorScreen({ score }: Props) {
             opacity: pressed ? 0.85 : 1,
           },
         ]}>
-        <Text style={[styles.resetText, { color: accent }]}>リセット</Text>
+        <Text style={[styles.resetText, { color: accent }]}>{t.reset}</Text>
       </Pressable>
 
       <View style={[styles.footnoteBox, { borderColor: border }]}>
         <Text style={[styles.footnote, { color: textSecondary }]}>
-          診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。
+          {t.footnote}
         </Text>
       </View>
     </ScrollView>

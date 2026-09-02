@@ -4,6 +4,7 @@ import { ScoreListItem } from '@/components/calculator/ScoreListItem';
 import { Text, useThemeColor } from '@/components/Themed';
 import { PwaInstallBanner } from '@/components/web/PwaInstallBanner';
 import { getScoresGroupedByOrgan } from '@/data/scores';
+import { localizeScore, useLocale } from '@/lib/i18n';
 
 export default function HomeScreen() {
   const background = useThemeColor({}, 'background');
@@ -11,6 +12,7 @@ export default function HomeScreen() {
   const textSecondary = useThemeColor({}, 'textSecondary');
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
+  const { locale, t } = useLocale();
   const groups = getScoresGroupedByOrgan();
 
   return (
@@ -22,23 +24,21 @@ export default function HomeScreen() {
           <Text style={[styles.slug, { color: tint }]}>gicalc</Text>
         </View>
       </View>
-      <Text style={[styles.lead, { color: textSecondary }]}>
-        消化管内視鏡向けのスコア、臨床尺度、内視鏡分類。食道、胃、大腸、出血の順です。
-      </Text>
+      <Text style={[styles.lead, { color: textSecondary }]}>{t.homeLead}</Text>
 
       <PwaInstallBanner />
 
       {groups.map((group) => (
         <View key={group.organ} style={styles.section}>
           <View style={styles.sectionHead}>
-            <Text style={[styles.sectionTitle, { color: tint }]}>{group.label}</Text>
+            <Text style={[styles.sectionTitle, { color: tint }]}>{t.organ[group.organ]}</Text>
             <Text style={[styles.sectionCount, { color: textSecondary }]}>{group.scores.length}</Text>
           </View>
           <View style={[styles.table, { backgroundColor: surface, borderColor: border }]}>
             {group.scores.map((score, index) => (
               <ScoreListItem
                 key={score.id}
-                score={score}
+                score={localizeScore(score, locale)}
                 last={index === group.scores.length - 1}
               />
             ))}

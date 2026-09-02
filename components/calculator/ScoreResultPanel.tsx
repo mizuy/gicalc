@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
 import { SeverityColors } from '@/constants/Colors';
+import { useLocale } from '@/lib/i18n';
 import type { ScoreResult } from '@/types/score';
 
 type Props = {
@@ -25,13 +26,12 @@ export function ScoreResultPanel({ result, ready }: Props) {
   const border = useThemeColor({}, 'border');
   const textSecondary = useThemeColor({}, 'textSecondary');
   const tint = useThemeColor({}, 'tint');
+  const { t } = useLocale();
 
   if (!ready || !result) {
     return (
       <View style={[styles.panel, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={[styles.placeholder, { color: textSecondary }]}>
-          すべての項目を選択すると結果が表示されます
-        </Text>
+        <Text style={[styles.placeholder, { color: textSecondary }]}>{t.resultPlaceholder}</Text>
       </View>
     );
   }
