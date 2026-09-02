@@ -102,7 +102,7 @@ export const UI: Record<Locale, UiStrings> = {
         '木村–竹本（萎縮分類）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura / Sekiguchi（LNM）、BEST-J（ESD後出血）。',
       colorectum: '大腸',
       colorectumBody:
-        'APCS（検診）、Paris（肉眼型）、LST（側方発育）、工藤–鶴田（pit pattern）、JNET（NBI拡大分類）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。',
+        'APCS（検診）、Paris（肉眼型）、LST（側方発育）、工藤–鶴田（pit pattern）、NICE（NBI非拡大）、JNET（NBI拡大）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。',
       bleeding: '出血',
       bleedingBody: '上部は GBS（Blatchford 2000）、下部は NOBLADS（Aoki 2016）。',
       pwaTitle: 'PWA インストール手順',
@@ -168,7 +168,7 @@ export const UI: Record<Locale, UiStrings> = {
         'Kimura–Takemoto (atrophy), Kyoto / modified Kyoto / EGGIM (gastritis risk), eCura / Sekiguchi (LNM), BEST-J (post-ESD bleeding).',
       colorectum: 'Colorectum',
       colorectumBody:
-        'APCS (screening), Paris (morphology), LST (laterally spreading), Kudo–Tsuruta (pit pattern), JNET (NBI magnifying), T1 Nomogram (Kajiwara), BBPS / Aronchick (bowel prep).',
+        'APCS (screening), Paris (morphology), LST (laterally spreading), Kudo–Tsuruta (pit pattern), NICE (NBI, non-magnifying), JNET (NBI magnifying), T1 Nomogram (Kajiwara), BBPS / Aronchick (bowel prep).',
       bleeding: 'Bleeding',
       bleedingBody: 'Upper GI: GBS (Blatchford 2000). Lower GI: NOBLADS (Aoki 2016).',
       pwaTitle: 'PWA install',

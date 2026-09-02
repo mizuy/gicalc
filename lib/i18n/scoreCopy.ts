@@ -436,6 +436,16 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: ['Types I–VN. Figure from Clin Endosc 2025 Fig. 4 (adapted from Tanaka 2004).'],
   },
+  nice: {
+    name: 'NICE classification (colorectal NBI, non-magnifying)',
+    description:
+      'NBI classification of colorectal tumors (Type 1 / 2 / 3). Used with or without optical magnification. Separate from JNET (magnifying 1 / 2A / 2B / 3). Does not include SSA/P.',
+    comments: {
+      'Type 1': 'SSA/P is not included in this classification (a limitation of the original paper).',
+      'Type 3': 'Deep SM invasion is ≥1000 μm. Consider additional surgery.',
+    },
+    figureNotes: ['Original Fig. 1. Used without magnification. Separate from JNET.'],
+  },
   jnet: {
     name: 'JNET classification (colorectal NBI magnifying)',
     description: 'NBI magnifying classification of colorectal tumors (Type 1 / 2A / 2B / 3).',

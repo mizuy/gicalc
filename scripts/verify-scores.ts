@@ -17,12 +17,13 @@ import { lowestFieldValues } from '../lib/scores/initialValues';
 import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
 import { KIMURA_1969_PUBMED } from '../data/scores/kimura-takemoto';
 import { LST_2008_PUBMED } from '../data/scores/lst';
+import { NICE_2013_PUBMED } from '../data/scores/nice';
 import { PARIS_2003_PUBMED } from '../data/scores/paris';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { isClassification } from '../types/score';
 
-test('登録スコアは18種で臓器順に並ぶ', () => {
+test('登録スコアは19種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -38,6 +39,7 @@ test('登録スコアは18種で臓器順に並ぶ', () => {
       'paris',
       'lst',
       'kudo-tsuruta',
+      'nice',
       'jnet',
       'kajiwara-nomogram',
       'bbps',
@@ -54,7 +56,7 @@ test('登録スコアは18種で臓器順に並ぶ', () => {
         'stomach',
         ['kimura-takemoto', 'kyoto', 'kyoto-modified', 'eggim', 'ecura-hatta', 'sekiguchi', 'best-j'],
       ],
-      ['colorectum', ['apcs', 'paris', 'lst', 'kudo-tsuruta', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
+      ['colorectum', ['apcs', 'paris', 'lst', 'kudo-tsuruta', 'nice', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
       ['bleeding', ['gbs', 'noblads']],
     ],
   );
@@ -533,7 +535,20 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(lst.originalLead ?? '', /at least 10 mm/);
   assert.equal(lst.pubmed, LST_2008_PUBMED);
 
-  for (const score of [jnet, kudo, jes, kimura, paris, lst]) {
+  const nice = getScoreById('nice');
+  assert.ok(nice && isClassification(nice));
+  assert.deepEqual(
+    nice.entries.map((entry) => entry.label),
+    ['Type 1', 'Type 2', 'Type 3'],
+  );
+  assert.equal(nice.entries[0]?.meaning, 'Hyperplastic');
+  assert.equal(nice.entries[2]?.meaning, 'Deep SM invasive cancer');
+  assert.match(nice.originalLead ?? '', /without optical \(zoom\) magnification/);
+  assert.match(nice.entries[1]?.rows.find((row) => row.heading === '***')?.text ?? '', /Vienna classification/);
+  assert.doesNotMatch(nice.entries.map((entry) => entry.label).join(' '), /2A|2B/);
+  assert.equal(nice.pubmed, NICE_2013_PUBMED);
+
+  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -599,6 +614,15 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(lst.figures?.[0]?.caption ?? '', /Fig\. 3/);
   assert.match(lst.figures?.[0]?.source ?? '', /Kudo S/);
   assert.equal(lst.pubmed, LST_2008_PUBMED);
+
+  const nice = getScoreById('nice');
+  assert.ok(nice && isClassification(nice));
+  assert.equal(nice.figures?.length, 1);
+  assert.match(nice.figures?.[0]?.src ?? '', /nice-hayashi2013-fig1/);
+  assert.match(nice.figures?.[0]?.caption ?? '', /Fig\. 1/);
+  assert.match(nice.figures?.[0]?.source ?? '', /Hayashi N/);
+  assert.equal(nice.pubmed, NICE_2013_PUBMED);
+  assert.equal(nice.figures?.[0]?.pubmed, NICE_2013_PUBMED);
 });
 
 test('英語コピーが全スコアの表示項目を覆う', () => {
