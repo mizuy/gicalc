@@ -4,10 +4,11 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { CitationLink } from '@/components/calculator/CitationLink';
 import { ScoreFieldSelector } from '@/components/calculator/ScoreFieldSelector';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
+import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
 import { Text, useThemeColor } from '@/components/Themed';
 import { localizeResult, useLocale } from '@/lib/i18n';
 import { lowestFieldValues } from '@/lib/scores/initialValues';
-import type { CalculatorDefinition } from '@/types/score';
+import { getToolKind, type CalculatorDefinition } from '@/types/score';
 
 type Props = {
   score: CalculatorDefinition;
@@ -38,7 +39,10 @@ export function ScoreCalculatorScreen({ score }: Props) {
       style={[styles.scroll, { backgroundColor: background }]}
       contentContainerStyle={styles.content}
       keyboardShouldPersistTaps="handled">
-      <Text style={styles.title}>{score.name}</Text>
+      <View style={styles.titleBlock}>
+        <ToolKindBadge kind={getToolKind(score)} />
+        <Text style={styles.title}>{score.name}</Text>
+      </View>
       <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
       {score.reference ? (
         <View style={styles.reference}>
@@ -91,10 +95,13 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 40,
   },
+  titleBlock: {
+    gap: 8,
+    marginBottom: 8,
+  },
   title: {
     fontSize: 22,
     fontWeight: '800',
-    marginBottom: 8,
   },
   description: {
     fontSize: 14,

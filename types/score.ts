@@ -9,6 +9,9 @@ export type ScoreCategory =
   | 'gastritis'
   | 'bleeding';
 
+/** ツールの性質。画面の小さなバッジ。JNET と MESDA-G は混ぜない */
+export type ToolKind = 'classification' | 'score' | 'prediction' | 'algorithm';
+
 export type ScoreOption = {
   value: number;
   label: string;
@@ -42,6 +45,8 @@ type ToolBase = {
   category: ScoreCategory;
   categoryLabel: string;
   description: string;
+  /** 省略時は分類→classification、計算→score */
+  toolKind?: ToolKind;
   reference?: string;
   /** PubMed PMID、または PubMed 上の URL（未収載論文は検索 URL） */
   pubmed?: string;
@@ -93,6 +98,19 @@ export type ScoreDefinition = CalculatorDefinition | ClassificationDefinition;
 export function isClassification(tool: ScoreDefinition): tool is ClassificationDefinition {
   return tool.kind === 'classification';
 }
+
+export function getToolKind(tool: ScoreDefinition): ToolKind {
+  if (tool.toolKind) return tool.toolKind;
+  if (isClassification(tool)) return 'classification';
+  return 'score';
+}
+
+export const TOOL_KIND_LABELS: Record<ToolKind, string> = {
+  classification: 'CLASSIFICATION',
+  score: 'SCORE',
+  prediction: 'PREDICTION MODEL',
+  algorithm: 'ALGORITHM',
+};
 
 export const ORGAN_LABELS: Record<ScoreOrgan, string> = {
   esophagus: '食道',

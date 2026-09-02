@@ -22,7 +22,7 @@ import { NICE_2013_PUBMED } from '../data/scores/nice';
 import { PARIS_2003_PUBMED } from '../data/scores/paris';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
-import { isClassification } from '../types/score';
+import { getToolKind, isClassification, TOOL_KIND_LABELS } from '../types/score';
 
 test('登録スコアは20種で臓器順に並ぶ', () => {
   assert.deepEqual(
@@ -71,6 +71,39 @@ test('登録スコアは20種で臓器順に並ぶ', () => {
       ['bleeding', ['gbs', 'noblads']],
     ],
   );
+});
+
+test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM のいずれか', () => {
+  const expected: Record<string, ReturnType<typeof getToolKind>> = {
+    jes: 'classification',
+    'kimura-takemoto': 'classification',
+    'mesda-g': 'algorithm',
+    kyoto: 'score',
+    'kyoto-modified': 'score',
+    eggim: 'score',
+    'ecura-hatta': 'score',
+    sekiguchi: 'score',
+    'best-j': 'score',
+    apcs: 'score',
+    paris: 'classification',
+    lst: 'classification',
+    'kudo-tsuruta': 'classification',
+    nice: 'classification',
+    jnet: 'classification',
+    'kajiwara-nomogram': 'prediction',
+    bbps: 'score',
+    aronchick: 'score',
+    gbs: 'score',
+    noblads: 'score',
+  };
+  assert.deepEqual(
+    Object.fromEntries(SCORES.map((score) => [score.id, getToolKind(score)])),
+    expected,
+  );
+  assert.equal(TOOL_KIND_LABELS.classification, 'CLASSIFICATION');
+  assert.equal(TOOL_KIND_LABELS.score, 'SCORE');
+  assert.equal(TOOL_KIND_LABELS.prediction, 'PREDICTION MODEL');
+  assert.equal(TOOL_KIND_LABELS.algorithm, 'ALGORITHM');
 });
 
 test('Kajiwara: 参照カテゴリは切片のみで約 0.3%', () => {

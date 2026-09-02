@@ -2,10 +2,11 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
 import { CitationLink } from '@/components/calculator/CitationLink';
+import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
 import { Text, useThemeColor } from '@/components/Themed';
 import { SeverityColors } from '@/constants/Colors';
 import { useLocale } from '@/lib/i18n';
-import type { ClassificationDefinition, ClassificationEntry } from '@/types/score';
+import { getToolKind, type ClassificationDefinition, type ClassificationEntry } from '@/types/score';
 
 type Props = {
   score: ClassificationDefinition;
@@ -44,7 +45,10 @@ export function ClassificationReferenceScreen({ score }: Props) {
     <ScrollView
       style={[styles.scroll, { backgroundColor: background }]}
       contentContainerStyle={styles.content}>
-      <Text style={styles.title}>{score.name}</Text>
+      <View style={styles.titleBlock}>
+        <ToolKindBadge kind={getToolKind(score)} />
+        <Text style={styles.title}>{score.name}</Text>
+      </View>
       {score.originalLead ? (
         <View style={styles.originalBlock}>
           <Text style={[styles.originalLabel, { color: tint }]}>{t.original}</Text>
@@ -118,10 +122,13 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 40,
   },
+  titleBlock: {
+    gap: 8,
+    marginBottom: 8,
+  },
   title: {
     fontSize: 22,
     fontWeight: '800',
-    marginBottom: 8,
   },
   originalBlock: {
     marginBottom: 8,

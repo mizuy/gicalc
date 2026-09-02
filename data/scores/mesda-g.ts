@@ -11,6 +11,7 @@ export const mesdaGScore: ClassificationDefinition = {
   organ: 'stomach',
   category: 'classification',
   categoryLabel: '内視鏡分類',
+  toolKind: 'algorithm',
   description:
     '早期胃癌の拡大内視鏡（M-NBI）簡易診断アルゴリズム。白光で疑わしい病変を見つけ、境界線（DL）の有無のあと、DL内の不整微小血管（IMVP）および／または不整微小表面（IMSP）で癌／非癌を判定する。大腸の JNET / NICE とは別。胃専用。',
   originalLead:

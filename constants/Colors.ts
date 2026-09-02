@@ -8,6 +8,13 @@ export const SeverityColors = {
   severe: '#E76F51',
 } as const;
 
+export const TOOL_KIND_COLORS = {
+  classification: { text: '#0D7377', background: '#0D73771A' },
+  score: { text: '#3D5A80', background: '#3D5A801A' },
+  prediction: { text: '#6B4C9A', background: '#6B4C9A1A' },
+  algorithm: { text: '#C45C42', background: '#E07A5F1A' },
+} as const;
+
 export default {
   light: {
     text: '#1A2A2B',

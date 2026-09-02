@@ -1,8 +1,9 @@
 import { Link } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
 import { Text, useThemeColor } from '@/components/Themed';
-import type { ScoreDefinition } from '@/types/score';
+import { getToolKind, type ScoreDefinition } from '@/types/score';
 
 type Props = {
   score: ScoreDefinition;
@@ -28,12 +29,17 @@ export function ScoreListItem({ score, last }: Props) {
             {score.shortName}
           </Text>
         </View>
-        <Text style={styles.name} numberOfLines={1}>
-          {score.name}
-        </Text>
-        <Text style={[styles.category, { color: textSecondary }]} numberOfLines={1}>
-          {score.categoryLabel}
-        </Text>
+        <View style={styles.body}>
+          <Text style={styles.name} numberOfLines={1}>
+            {score.name}
+          </Text>
+          <View style={styles.meta}>
+            <ToolKindBadge kind={getToolKind(score)} />
+            <Text style={[styles.category, { color: textSecondary }]} numberOfLines={1}>
+              {score.categoryLabel}
+            </Text>
+          </View>
+        </View>
       </Pressable>
     </Link>
   );
@@ -42,7 +48,7 @@ export function ScoreListItem({ score, last }: Props) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     gap: 10,
     paddingVertical: 11,
     paddingHorizontal: 12,
@@ -62,15 +68,23 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '700',
   },
-  name: {
+  body: {
     flex: 1,
+    minWidth: 0,
+    gap: 4,
+  },
+  name: {
     fontSize: 14,
     fontWeight: '600',
+  },
+  meta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   category: {
     fontSize: 11,
     fontWeight: '600',
-    maxWidth: 118,
-    textAlign: 'right',
+    flexShrink: 1,
   },
 });

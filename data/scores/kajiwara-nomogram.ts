@@ -12,6 +12,7 @@ export const kajiwaraNomogram: ScoreDefinition = {
   organ: 'colorectum',
   category: 't1-colorectal',
   categoryLabel: '大腸T1癌',
+  toolKind: 'prediction',
   description:
     '内視鏡治療後の大腸T1癌におけるリンパ節転移（LNM）確率を予測します。Kajiwara 2023（GIE; 開発 3080 例）の6因子多変量ロジスティックです。',
   reference: 'Kajiwara Y et al. Gastrointest Endosc 2023;97:1119-1128.e5',
