@@ -27,6 +27,19 @@ export const kajiwaraNomogram: ScoreDefinition = {
   officialUrl: 'https://nomogram.jsccr.jp/nomograms/lnm',
   officialLinkLabel: '公式計算機（JSCCR）',
   note: '公式サイトの表示と数値がややずれることがあります。本ツールは論文に記載された数値（実際のβ係数）を使って計算しています。',
+  figures: [
+    {
+      src: '/figures/kajiwara-2023-fig2.jpg',
+      alt: 'Nomogram for prediction of lymph node metastasis in T1 colorectal cancer (Kajiwara 2023 Fig. 2)',
+      caption: 'Fig. 2. Nomogram for prediction of lymph node metastasis in T1 colorectal cancer (Kajiwara et al. Gastrointest Endosc 2023)',
+      source:
+        'Kajiwara Y, Oka S, Tanaka S, et al. Nomogram as a novel predictive tool for lymph node metastasis in T1 colorectal cancer treated with endoscopic resection: a nationwide, multicenter study. Gastrointest Endosc. 2023;97:1119-1128.e5. Fig. 2. CC BY 4.0.',
+      doi: 'https://doi.org/10.1016/j.gie.2023.01.022',
+      pubmed: '36669574',
+      note: '原著 Fig. 2。CC BY 4.0。図をタップすると拡大します。',
+      aspectRatio: 2341 / 1388,
+    },
+  ],
   fields: [
     {
       id: 'sex',

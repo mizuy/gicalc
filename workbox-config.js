@@ -3,7 +3,7 @@ const baseUrl = !rawBaseUrl || rawBaseUrl === '/' ? '' : rawBaseUrl.replace(/\/$
 
 module.exports = {
   globDirectory: 'dist/',
-  globPatterns: ['**/*.{js,html,css,ttf,ico,png,json,svg,woff,woff2}'],
+  globPatterns: ['**/*.{js,html,css,ttf,ico,png,jpg,jpeg,json,svg,woff,woff2}'],
   swDest: 'dist/sw.js',
   clientsClaim: true,
   skipWaiting: true,

@@ -36,6 +36,17 @@ export type ScoreResult = {
   nomogramPoints?: number;
 };
 
+export type ClassificationFigure = {
+  src: string;
+  alt: string;
+  caption: string;
+  source: string;
+  doi?: string;
+  pubmed?: string;
+  note: string;
+  aspectRatio: number;
+};
+
 type ToolBase = {
   id: string;
   name: string;
@@ -52,6 +63,7 @@ type ToolBase = {
   officialLinkLabel?: string;
   /** 画面に出す注意。英語は SCORE_EN.note で上書き */
   note?: string;
+  figures?: ClassificationFigure[];
 };
 
 export type ClassificationRow = {
@@ -76,23 +88,11 @@ export type CalculatorDefinition = ToolBase & {
   compute: (values: Record<string, number>) => ScoreResult;
 };
 
-export type ClassificationFigure = {
-  src: string;
-  alt: string;
-  caption: string;
-  source: string;
-  doi?: string;
-  pubmed?: string;
-  note: string;
-  aspectRatio: number;
-};
-
 export type ClassificationDefinition = ToolBase & {
   kind: 'classification';
   /** 原著の定義文。画面では日本語コメントの前に出す */
   originalLead?: string;
   entries: ClassificationEntry[];
-  figures?: ClassificationFigure[];
 };
 
 export type ScoreDefinition = CalculatorDefinition | ClassificationDefinition;

@@ -84,6 +84,10 @@ export function localizeScore<T extends ScoreDefinition>(score: T, locale: Local
     officialLinkLabel: copy.officialLinkLabel ?? calculator.officialLinkLabel,
     note: copy.note ?? calculator.note,
     fields: localizeFields(calculator, locale),
+    figures: calculator.figures?.map((figure, index) => ({
+      ...figure,
+      note: copy.figureNotes?.[index] ?? figure.note,
+    })),
   };
   return localized as T;
 }

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { CitationLink } from '@/components/calculator/CitationLink';
+import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
 import { ScoreFieldSelector } from '@/components/calculator/ScoreFieldSelector';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
 import { Text, useThemeColor } from '@/components/Themed';
@@ -51,6 +52,10 @@ export function ScoreCalculatorScreen({ score }: Props) {
           ) : null}
         </View>
       ) : null}
+
+      {score.figures?.map((figure) => (
+        <ClassificationFigure key={figure.src} figure={figure} />
+      ))}
 
       <ScoreResultPanel result={result} ready={allFieldsFilled} />
 

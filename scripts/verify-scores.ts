@@ -224,11 +224,21 @@ test('Kajiwara: 部位は C A T D S RS Ra Rb で、同じ係数は同じ点数',
   );
   assert.equal(defined.officialUrl, 'https://nomogram.jsccr.jp/nomograms/lnm');
   assert.match(defined.note ?? '', /β係数/);
+  assert.equal(defined.figures?.length, 1);
+  assert.match(defined.figures?.[0]?.src ?? '', /kajiwara-2023-fig2/);
+  assert.match(defined.figures?.[0]?.caption ?? '', /Fig\. 2/);
+  assert.match(defined.figures?.[0]?.source ?? '', /Kajiwara Y/);
+  assert.match(defined.figures?.[0]?.doi ?? '', /10\.1016\/j\.gie\.2023\.01\.022/);
+  assert.equal(defined.figures?.[0]?.pubmed, '36669574');
+  assert.match(defined.figures?.[0]?.note ?? '', /CC BY 4\.0/);
   const english = localizeScore(defined, 'en');
   assert.equal(english.officialUrl, 'https://nomogram.jsccr.jp/nomograms/lnm');
   assert.equal(english.officialLinkLabel, 'Official calculator (JSCCR)');
   assert.match(english.note ?? '', /β coefficients/);
   assert.doesNotMatch(english.note ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+  assert.equal(english.figures?.[0]?.src, defined.figures?.[0]?.src);
+  assert.match(english.figures?.[0]?.note ?? '', /Tap the figure to enlarge/);
+  assert.doesNotMatch(english.figures?.[0]?.note ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
 });
 
 test('eCura: 0–1 低リスク / 2–4 中リスク / 5–7 高リスク', () => {
@@ -653,10 +663,13 @@ test('英語コピーが全スコアの表示項目を覆う', () => {
         if (entry.comment) assert.doesNotMatch(entry.comment, japanese);
         if (entry.meaning) assert.doesNotMatch(entry.meaning, japanese);
       }
-      for (const note of english.figures?.map((figure) => figure.note) ?? []) {
-        assert.doesNotMatch(note, japanese);
-      }
-    } else if (!isClassification(score) && !isClassification(english)) {
+    }
+
+    for (const note of english.figures?.map((figure) => figure.note) ?? []) {
+      assert.doesNotMatch(note, japanese);
+    }
+
+    if (!isClassification(score) && !isClassification(english)) {
       assert.ok(copy.fields);
       for (const field of score.fields) {
         const fieldCopy = copy.fields?.[field.id];
