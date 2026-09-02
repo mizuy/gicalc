@@ -16,11 +16,13 @@ import { computeSekiguchi } from '../lib/scores/sekiguchi';
 import { lowestFieldValues } from '../lib/scores/initialValues';
 import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
 import { KIMURA_1969_PUBMED } from '../data/scores/kimura-takemoto';
+import { LST_2008_PUBMED } from '../data/scores/lst';
+import { PARIS_2003_PUBMED } from '../data/scores/paris';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { isClassification } from '../types/score';
 
-test('登録スコアは16種で臓器順に並ぶ', () => {
+test('登録スコアは18種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -33,6 +35,8 @@ test('登録スコアは16種で臓器順に並ぶ', () => {
       'sekiguchi',
       'best-j',
       'apcs',
+      'paris',
+      'lst',
       'kudo-tsuruta',
       'jnet',
       'kajiwara-nomogram',
@@ -50,7 +54,7 @@ test('登録スコアは16種で臓器順に並ぶ', () => {
         'stomach',
         ['kimura-takemoto', 'kyoto', 'kyoto-modified', 'eggim', 'ecura-hatta', 'sekiguchi', 'best-j'],
       ],
-      ['colorectum', ['apcs', 'kudo-tsuruta', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
+      ['colorectum', ['apcs', 'paris', 'lst', 'kudo-tsuruta', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
       ['bleeding', ['gbs', 'noblads']],
     ],
   );
@@ -508,7 +512,28 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(kimura.entries[6]?.meaning, 'Open type');
   assert.match(kimura.entries[0]?.comment ?? '', /原著の6型にはない/);
 
-  for (const score of [jnet, kudo, jes, kimura]) {
+  const paris = getScoreById('paris');
+  assert.ok(paris && isClassification(paris));
+  assert.deepEqual(
+    paris.entries.map((entry) => entry.label),
+    ['0-Ip', '0-Is', '0-IIa', '0-IIb', '0-IIc', '0-IIc+IIa', '0-IIa+IIc', '0-III', '0-IIc+III', '0-III+IIc'],
+  );
+  assert.equal(paris.entries[0]?.meaning, 'Pedunculated');
+  assert.match(paris.originalLead ?? '', /Type 0 is divided into three categories/);
+  assert.doesNotMatch(paris.entries.map((entry) => entry.label).join(' '), /Isp/);
+  assert.equal(paris.pubmed, PARIS_2003_PUBMED);
+
+  const lst = getScoreById('lst');
+  assert.ok(lst && isClassification(lst));
+  assert.deepEqual(
+    lst.entries.map((entry) => entry.label),
+    ['LST-G homogeneous', 'LST-G mixed nodular', 'LST-NG flat elevated', 'LST-NG pseudodepressed'],
+  );
+  assert.equal(lst.entries[3]?.meaning, 'Basin-like depression');
+  assert.match(lst.originalLead ?? '', /at least 10 mm/);
+  assert.equal(lst.pubmed, LST_2008_PUBMED);
+
+  for (const score of [jnet, kudo, jes, kimura, paris, lst]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -558,6 +583,22 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(kimura.figures?.[0]?.src ?? '', /kimura-takemoto-1969/);
   assert.equal(kimura.pubmed, KIMURA_1969_PUBMED);
   assert.equal(kimura.figures?.[0]?.pubmed, '31327182');
+
+  const paris = getScoreById('paris');
+  assert.ok(paris && isClassification(paris));
+  assert.equal(paris.figures?.length, 1);
+  assert.match(paris.figures?.[0]?.src ?? '', /paris-ce2025-fig2/);
+  assert.match(paris.figures?.[0]?.caption ?? '', /Fig\. 2/);
+  assert.match(paris.figures?.[0]?.source ?? '', /Paris workshop/);
+  assert.equal(paris.pubmed, PARIS_2003_PUBMED);
+
+  const lst = getScoreById('lst');
+  assert.ok(lst && isClassification(lst));
+  assert.equal(lst.figures?.length, 1);
+  assert.match(lst.figures?.[0]?.src ?? '', /lst-ce2025-fig3/);
+  assert.match(lst.figures?.[0]?.caption ?? '', /Fig\. 3/);
+  assert.match(lst.figures?.[0]?.source ?? '', /Kudo S/);
+  assert.equal(lst.pubmed, LST_2008_PUBMED);
 });
 
 test('英語コピーが全スコアの表示項目を覆う', () => {

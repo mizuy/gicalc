@@ -13,7 +13,9 @@ import { kimuraTakemotoScore } from './kimura-takemoto';
 import { kudoTsurutaScore } from './kudo-tsuruta';
 import { kyotoScore } from './kyoto';
 import { kyotoModifiedScore } from './kyoto-modified';
+import { lstScore } from './lst';
 import { nobladsScore } from './noblads';
+import { parisScore } from './paris';
 import { sekiguchiScore } from './sekiguchi';
 
 /** 表示順: 食道 → 胃 → 大腸 → 出血。臓器内は分類→リスク→治療予測 */
@@ -27,6 +29,8 @@ export const SCORES: ScoreDefinition[] = [
   sekiguchiScore,
   bestJScore,
   apcsScore,
+  parisScore,
+  lstScore,
   kudoTsurutaScore,
   jnetScore,
   kajiwaraNomogram,

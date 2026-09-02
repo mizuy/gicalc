@@ -386,6 +386,46 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       },
     },
   },
+  paris: {
+    name: 'Paris classification (superficial morphology)',
+    description:
+      'Endoscopic Type 0 morphology of superficial neoplasia (mucosa to submucosa) in the esophagus, stomach, and colorectum: protruding (0-I), flat (0-II), and excavated (0-III). 0-Isp is not in the 2003/2005 Paris table.',
+    groups: {
+      隆起型: 'Protruding',
+      平坦型: 'Nonprotruding',
+      潰瘍型: 'Excavated',
+    },
+    comments: {
+      '0-Is': 'Sessile colorectal lesions have a relatively high SM-invasion rate (2005 Table 4: 34% for colorectal 0-Is).',
+      '0-IIb': 'Very rare in the colorectum.',
+      '0-IIc': 'Depressed lesions have a high SM-invasion risk (2005 Table 4: 61% for colorectal 0-IIc).',
+      '0-III': 'Almost never seen in the colorectum.',
+    },
+    figureNotes: [
+      '0-Isp in the figure is Japanese / later. The 2003/2005 Paris table lists 0-Ip and 0-Is. Figure from Clin Endosc 2025 Fig. 2 (adapted from Johnson 2023, CC).',
+    ],
+  },
+  lst: {
+    name: 'LST classification (laterally spreading tumor)',
+    description:
+      'Colorectal laterally spreading tumors: nonpolypoid lesions ≥10 mm that spread along the wall. Four subtypes — granular (homogeneous / mixed nodular) and nongranular (flat elevated / pseudodepressed). Separate from the Paris classification.',
+    groups: {
+      顆粒型: 'Granular',
+      非顆粒型: 'Nongranular',
+    },
+    comments: {
+      'LST-G homogeneous':
+        'Deep SM invasion is low. The 0.5% (CI 0.1–1.0%) on the figure is from the Bogie 2018 meta-analysis.',
+      'LST-G mixed nodular':
+        'Invasion often sits in the large nodule. The 10.5% (CI 5.9–15.1%) on the figure is from Bogie 2018.',
+      'LST-NG flat elevated': 'The 4.9% (CI 2.1–7.8%) on the figure is from Bogie 2018.',
+      'LST-NG pseudodepressed':
+        'Highest invasion risk of the four subtypes. The 31.6% (CI 19.8–43.4%) on the figure is from Bogie 2018. Consider en-bloc resection.',
+    },
+    figureNotes: [
+      'Four LST subtypes and deep-SMI rates (Bogie 2018 meta-analysis). Figure from Clin Endosc 2025 Fig. 3 (adapted from Castillo-Regalado 2022, CC).',
+    ],
+  },
   'kudo-tsuruta': {
     name: 'Kudo–Tsuruta classification (pit pattern)',
     description: 'Chromoendoscopic pit-pattern classification of colorectal neoplasia (I / II / IIIs / IIIL / IV / VI / VN).',
