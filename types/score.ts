@@ -47,6 +47,11 @@ type ToolBase = {
   reference?: string;
   /** PubMed PMID、または PubMed 上の URL（未収載論文は検索 URL） */
   pubmed?: string;
+  /** 公式計算機など、PubMed 以外の外部リンク */
+  officialUrl?: string;
+  officialLinkLabel?: string;
+  /** 画面に出す注意。英語は SCORE_EN.note で上書き */
+  note?: string;
 };
 
 export type ClassificationRow = {

@@ -222,6 +222,13 @@ test('Kajiwara: 部位は C A T D S RS Ra Rb で、同じ係数は同じ点数',
     }),
     37.8,
   );
+  assert.equal(defined.officialUrl, 'https://nomogram.jsccr.jp/nomograms/lnm');
+  assert.match(defined.note ?? '', /β係数/);
+  const english = localizeScore(defined, 'en');
+  assert.equal(english.officialUrl, 'https://nomogram.jsccr.jp/nomograms/lnm');
+  assert.equal(english.officialLinkLabel, 'Official calculator (JSCCR)');
+  assert.match(english.note ?? '', /β coefficients/);
+  assert.doesNotMatch(english.note ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
 });
 
 test('eCura: 0–1 低リスク / 2–4 中リスク / 5–7 高リスク', () => {

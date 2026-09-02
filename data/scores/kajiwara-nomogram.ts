@@ -24,6 +24,9 @@ export const kajiwaraNomogram: ScoreDefinition = {
     '内視鏡治療後の大腸T1癌におけるリンパ節転移（LNM）確率を予測します。Kajiwara 2023（GIE; 開発 3080 例）の6因子多変量ロジスティックです。合計点は SM≥2000 μm を 100 点とした nomogram 点です。',
   reference: 'Kajiwara Y et al. Gastrointest Endosc 2023;97:1119-1128.e5',
   pubmed: '36669574',
+  officialUrl: 'https://nomogram.jsccr.jp/nomograms/lnm',
+  officialLinkLabel: '公式計算機（JSCCR）',
+  note: '公式サイトの表示と数値がややずれることがあります。本ツールは論文に記載された数値（実際のβ係数）を使って計算しています。',
   fields: [
     {
       id: 'sex',

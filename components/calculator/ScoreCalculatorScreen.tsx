@@ -43,6 +43,12 @@ export function ScoreCalculatorScreen({ score }: Props) {
       {score.reference ? (
         <View style={styles.reference}>
           <CitationLink label={`${t.reference}: ${score.reference}`} pubmed={score.pubmed} />
+          {score.officialUrl ? (
+            <CitationLink label={score.officialLinkLabel ?? score.officialUrl} href={score.officialUrl} />
+          ) : null}
+          {score.note ? (
+            <Text style={[styles.note, { color: textSecondary }]}>{score.note}</Text>
+          ) : null}
         </View>
       ) : null}
 
@@ -103,6 +109,11 @@ const styles = StyleSheet.create({
   },
   reference: {
     marginBottom: 20,
+  },
+  note: {
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 8,
   },
   reset: {
     borderWidth: 1,

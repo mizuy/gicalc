@@ -7,6 +7,7 @@ import { pubmedUrl } from '@/lib/pubmed';
 type Props = {
   label: string;
   pubmed?: string;
+  href?: string;
 };
 
 type WebLinkProps = {
@@ -14,15 +15,14 @@ type WebLinkProps = {
   hrefAttrs: { target: string; rel: string };
 };
 
-export function CitationLink({ label, pubmed }: Props) {
+export function CitationLink({ label, pubmed, href }: Props) {
   const tint = useThemeColor({}, 'tint');
   const textSecondary = useThemeColor({}, 'textSecondary');
 
-  if (!pubmed) {
+  const url = href ?? (pubmed ? pubmedUrl(pubmed) : undefined);
+  if (!url) {
     return <Text style={[styles.text, { color: textSecondary }]}>{label}</Text>;
   }
-
-  const url = pubmedUrl(pubmed);
 
   if (Platform.OS === 'web') {
     const webProps: WebLinkProps = {
