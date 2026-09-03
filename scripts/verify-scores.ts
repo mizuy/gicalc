@@ -33,6 +33,7 @@ import { PRAGUE_2006_PUBMED } from '../data/scores/prague';
 import { WASP_2016_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
+import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { getToolKind, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
 test('登録スコアは26種で臓器順に並ぶ', () => {
@@ -1110,6 +1111,29 @@ test('既定言語は英語で、計算は最低点から始まる', () => {
   assert.ok(apcs && !isClassification(apcs));
   assert.deepEqual(lowestFieldValues(apcs.fields), { age: 0, sex: 0, family: 0, smoking: 0 });
   assert.equal(apcs.compute(lowestFieldValues(apcs.fields)).interpretation, '平均リスク（AR）');
+});
+
+test('PWA 更新バナーの文言と検知', () => {
+  const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
+  assert.equal(UI.ja.pwa.updateAvailable, '新しい版があります');
+  assert.equal(UI.ja.pwa.reload, '再読み込み');
+  assert.equal(UI.ja.pwa.later, '後で');
+  assert.match(UI.ja.about.pwaUpdate, /再読み込み/);
+  assert.equal(UI.en.pwa.updateAvailable, 'A new version is available');
+  assert.equal(UI.en.pwa.reload, 'Reload');
+  assert.equal(UI.en.pwa.later, 'Later');
+  assert.match(UI.en.about.pwaUpdate, /Reload/);
+  assert.doesNotMatch(UI.en.pwa.updateAvailable, japanese);
+  assert.doesNotMatch(UI.en.pwa.reload, japanese);
+  assert.doesNotMatch(UI.en.pwa.later, japanese);
+  assert.doesNotMatch(UI.en.about.pwaUpdate, japanese);
+
+  assert.equal(isPwaUpdateAvailable({ hasController: false, waiting: true }), false);
+  assert.equal(isPwaUpdateAvailable({ hasController: true, waiting: true }), true);
+  assert.equal(isPwaUpdateAvailable({ hasController: true, waiting: false, installingState: 'installing' }), false);
+  assert.equal(isPwaUpdateAvailable({ hasController: true, waiting: false, installingState: 'installed' }), true);
+  assert.equal(shouldOfferUpdateAfterControllerChange(false), false);
+  assert.equal(shouldOfferUpdateAfterControllerChange(true), true);
 });
 
 test('About は CC と非 CC を分けて書く', () => {
