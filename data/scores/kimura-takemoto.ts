@@ -1,8 +1,7 @@
 import type { ClassificationDefinition } from '../../types/score';
 
-/** 1969 年 Endoscopy は PubMed 未収載のため、書誌で検索する */
-export const KIMURA_1969_PUBMED =
-  'https://pubmed.ncbi.nlm.nih.gov/?term=Kimura+K%2C+Takemoto+T.+An+endoscopic+recognition+of+the+atrophic+border+and+its+significance+in+chronic+gastritis';
+/** Quach 2019 Clin Endosc。図と定義の出典。CC BY-NC 3.0。 */
+export const QUACH_2019_PUBMED = '31327182';
 
 export const kimuraTakemotoScore: ClassificationDefinition = {
   id: 'kimura-takemoto',
@@ -16,20 +15,22 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
   description: '内視鏡的萎縮境界による Closed / Open 分類。',
   originalLead:
     'The endoscopic atrophic border can be recognized by discriminating mucosal differences between the 2 sides: the gastric mucosa has a lower level and is pale in color on 1 side, while it has a higher level and is homogeneously reddish on the other side. Based on location of the endoscopic atrophic border, Kimura and Takemoto proposed closed type (C-1, C-2, C-3) and open type (O-1, O-2, O-3).',
-  reference: 'Kimura K, Takemoto T. Endoscopy 1969;1:87-97',
-  pubmed: KIMURA_1969_PUBMED,
+  reference: 'Quach DT, Hiyama T. Clin Endosc 2019;52:321-327',
+  pubmed: QUACH_2019_PUBMED,
+  license: 'CC BY-NC 3.0',
+  licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',
   figures: [
     {
       src: '/figures/kimura-takemoto-1969.png',
-      alt: 'Kimura–Takemoto classification C-1 to O-3',
-      caption: 'Fig. Kimura–Takemoto classification of the atrophic border (1969)',
+      alt: 'Kimura–Takemoto classification C-1 to O-3 (Quach 2019 Fig. 2)',
+      caption: 'Fig. 2. Kimura–Takemoto classification of the atrophic border (Quach and Hiyama, Clin Endosc 2019)',
       source:
-        'Kimura K, Takemoto T. An endoscopic recognition of the atrophic border and its significance in chronic gastritis. Endoscopy. 1969;1:87-97. Figure as published in Quach DT, Hiyama T. Clin Endosc. 2019;52:321-327, Fig. 2.',
+        'Quach DT, Hiyama T. Assessment of Endoscopic Gastric Atrophy according to the Kimura-Takemoto Classification and Its Potential Application in Daily Practice. Clin Endosc. 2019;52:321-327. Fig. 2.',
       doi: 'https://doi.org/10.5946/ce.2019.072',
-      pubmed: '31327182',
+      pubmed: QUACH_2019_PUBMED,
       license: 'CC BY-NC 3.0',
       licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',
-      note: 'C-1–C-3, O-1–O-3。図は Quach 2019 Clin Endosc Fig. 2。ライセンスは CC BY-NC 3.0。白地の原図をそのまま使う（黒背景にすると線が見えない）。',
+      note: 'C-1–C-3, O-1–O-3。Quach 2019 Clin Endosc Fig. 2。ライセンスは CC BY-NC 3.0。白地の原図をそのまま使う（黒背景にすると線が見えない）。',
       aspectRatio: 634 / 585,
     },
   ],
