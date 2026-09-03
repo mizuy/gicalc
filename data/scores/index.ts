@@ -27,6 +27,7 @@ import { nobladsScore } from './noblads';
 import { parisScore } from './paris';
 import { pragueScore } from './prague';
 import { sekiguchiScore } from './sekiguchi';
+import { siewertScore } from './siewert';
 import { spigelmanScore } from './spigelman';
 import { toyaScore } from './toya';
 import { viennaScore } from './vienna';
@@ -37,6 +38,7 @@ export const SCORES: ScoreDefinition[] = [
   jesScore,
   laScore,
   pragueScore,
+  siewertScore,
   erefsScore,
   kimuraTakemotoScore,
   hillScore,
