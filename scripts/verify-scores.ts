@@ -304,7 +304,9 @@ test('Kajiwara: 部位は C A T D S RS Ra Rb で、同じ係数は同じ点数',
   assert.equal(defined.officialUrl, 'https://nomogram.jsccr.jp/nomograms/lnm');
   assert.match(defined.note ?? '', /β係数/);
   assert.equal(defined.figures?.length, 1);
-  assert.match(defined.figures?.[0]?.src ?? '', /kajiwara-2023-fig2/);
+  assert.equal(defined.figures?.[0]?.src, undefined);
+  assert.match(defined.figures?.[0]?.href ?? '', /S0016510723000263-gr2_lrg\.jpg/);
+  assert.equal(defined.figures?.[0]?.hrefLabel, 'Fig. 2');
   assert.match(defined.figures?.[0]?.caption ?? '', /Fig\. 2/);
   assert.match(defined.figures?.[0]?.source ?? '', /Kajiwara Y/);
   assert.match(defined.figures?.[0]?.doi ?? '', /10\.1016\/j\.gie\.2023\.01\.022/);
@@ -316,8 +318,8 @@ test('Kajiwara: 部位は C A T D S RS Ra Rb で、同じ係数は同じ点数',
   assert.equal(english.officialLinkLabel, 'Official calculator (JSCCR)');
   assert.match(english.note ?? '', /β coefficients/);
   assert.doesNotMatch(english.note ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
-  assert.equal(english.figures?.[0]?.src, defined.figures?.[0]?.src);
-  assert.match(english.figures?.[0]?.note ?? '', /Tap the figure to enlarge/);
+  assert.equal(english.figures?.[0]?.href, defined.figures?.[0]?.href);
+  assert.match(english.figures?.[0]?.note ?? '', /not hosted/);
   assert.doesNotMatch(english.figures?.[0]?.note ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
 });
 
@@ -747,7 +749,9 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(jnet.figures?.length, 1);
   assert.match(jnet.figures?.[0]?.source ?? '', /Sano Y/);
   assert.match(jnet.figures?.[0]?.doi ?? '', /10\.1111\/den\.12644/);
-  assert.match(jnet.figures?.[0]?.src ?? '', /jnet-sano2016-fig7/);
+  assert.equal(jnet.figures?.[0]?.src, undefined);
+  assert.match(jnet.figures?.[0]?.href ?? '', /den12644-fig-0007/);
+  assert.equal(jnet.figures?.[0]?.hrefLabel, 'Fig. 7');
   assert.match(jnet.figures?.[0]?.caption ?? '', /Fig\. 7/);
   assert.equal(jnet.pubmed, '26927367');
   assert.equal(jnet.figures?.[0]?.pubmed, '26927367');
@@ -759,13 +763,15 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(kudo.figures?.length, 1);
   assert.match(kudo.figures?.[0]?.source ?? '', /Kudo S/);
   assert.match(kudo.figures?.[0]?.doi ?? '', /10\.5946\/ce\.2024\.263/);
-  assert.match(kudo.figures?.[0]?.src ?? '', /kudo-tsuruta-pit/);
+  assert.equal(kudo.figures?.[0]?.src, undefined);
+  assert.match(kudo.figures?.[0]?.href ?? '', /f4-ce-2024-263/);
+  assert.equal(kudo.figures?.[0]?.hrefLabel, 'Fig. 4');
   assert.match(kudo.figures?.[0]?.caption ?? '', /Fig\. 4/);
   assert.equal(kudo.pubmed, '8836710');
   assert.equal(kudo.figures?.[0]?.pubmed, '40336268');
-  assert.equal(kudo.figures?.[0]?.license, 'CC BY-NC 4.0');
+  assert.equal(kudo.figures?.[0]?.license, undefined);
   assert.match(kudo.figures?.[0]?.note ?? '', /Tanaka 2004/);
-  assert.match(kudo.figures?.[0]?.note ?? '', /CC ではなく/);
+  assert.match(kudo.figures?.[0]?.note ?? '', /CC ではない/);
 
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
@@ -814,7 +820,9 @@ test('分類は原著の図を出典付きで持つ', () => {
   const nice = getScoreById('nice');
   assert.ok(nice && isClassification(nice));
   assert.equal(nice.figures?.length, 1);
-  assert.match(nice.figures?.[0]?.src ?? '', /nice-hayashi2013-fig1/);
+  assert.equal(nice.figures?.[0]?.src, undefined);
+  assert.match(nice.figures?.[0]?.href ?? '', /S0016510713018531-gr1_lrg\.jpg/);
+  assert.equal(nice.figures?.[0]?.hrefLabel, 'Fig. 1');
   assert.match(nice.figures?.[0]?.caption ?? '', /Fig\. 1/);
   assert.match(nice.figures?.[0]?.source ?? '', /Hayashi N/);
   assert.equal(nice.pubmed, NICE_2013_PUBMED);
@@ -956,8 +964,10 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsNotCcBody, /JNET/);
   assert.match(UI.ja.about.citationsNotCcBody, /NICE/);
   assert.match(UI.ja.about.citationsNotCcBody, /Kajiwara/);
+  assert.match(UI.ja.about.citationsNotCcBody, /埋め込まず/);
   assert.match(UI.en.about.citationsCcBody, /CC BY-NC-ND 4\.0/);
   assert.match(UI.en.about.citationsNotCcBody, /not CC/);
+  assert.match(UI.en.about.citationsNotCcBody, /not hosted/);
 });
 
 test('引用は PubMed へ行く', () => {

@@ -40,7 +40,12 @@ export type ScoreResult = {
 };
 
 export type ClassificationFigure = {
-  src: string;
+  /** アプリ内に埋め込む CC 図。非 CC は置かず href だけにする */
+  src?: string;
+  /** 出版社の図そのもの、または図アンカー。クリックで図へ飛ぶ */
+  href?: string;
+  /** リンクボタンに出す短いラベル（例: Fig. 7） */
+  hrefLabel?: string;
   alt: string;
   caption: string;
   source: string;
@@ -50,8 +55,12 @@ export type ClassificationFigure = {
   license?: string;
   licenseUrl?: string;
   note: string;
-  aspectRatio: number;
+  aspectRatio?: number;
 };
+
+export function figureKey(figure: ClassificationFigure): string {
+  return figure.src ?? figure.href ?? figure.caption;
+}
 
 type ToolBase = {
   id: string;

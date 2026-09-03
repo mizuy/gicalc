@@ -10,7 +10,7 @@ import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
 import { Text, useThemeColor } from '@/components/Themed';
 import { localizeResult, useLocale } from '@/lib/i18n';
 import { lowestFieldValues } from '@/lib/scores/initialValues';
-import { getToolKind, isJapanDeveloped, type CalculatorDefinition } from '@/types/score';
+import { figureKey, getToolKind, isJapanDeveloped, type CalculatorDefinition } from '@/types/score';
 
 type Props = {
   score: CalculatorDefinition;
@@ -65,7 +65,7 @@ export function ScoreCalculatorScreen({ score }: Props) {
       ) : null}
 
       {score.figures?.map((figure) => (
-        <ClassificationFigure key={figure.src} figure={figure} />
+        <ClassificationFigure key={figureKey(figure)} figure={figure} />
       ))}
 
       <ScoreResultPanel result={result} ready={allFieldsFilled} />
