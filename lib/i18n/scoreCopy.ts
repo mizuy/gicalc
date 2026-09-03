@@ -940,6 +940,30 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Types I–VN. Tanaka 2004 Dig Endosc original is not CC, so the figure is not hosted. Link opens Clin Endosc 2025 Fig. 4 (permission reprint).',
     ],
   },
+  'colorectal-ec': {
+    name: 'Colorectal EC classification (endocytoscopy)',
+    shortName: 'EC',
+    description:
+      'Ultra-magnifying endocytoscopy (EC) of colorectal lesions: EC1a–EC3b after methylene blue staining (crypt and nuclear pattern), and EC-V1–V3 with EC-NBI (surface microvessels). Separate from pit pattern, NICE, and JNET.',
+    groups: {
+      'EC（染色）': 'EC (stained)',
+      'EC-V（EC-NBI）': 'EC-V (EC-NBI)',
+      Method: 'Method',
+    },
+    comments: {
+      EC1b: 'EC1b is a key discriminator between non-neoplastic (hyperplastic) and neoplastic lesions.',
+      EC2: 'Dysplasias are mainly EC2; depth is assessed with EC3 subtypes.',
+      EC3a: 'SMs = slightly invasive submucosal cancer (low nodal risk in Kudo SM classification).',
+      EC3b: 'SMm or deeper. Fine granular structures may reflect exposed desmoplastic reaction.',
+      'EC-V3': 'Predicts invasive cancer including SMm; faster workflow than methylene blue EC.',
+      Observation: 'GIF-H290EC / CF-H290ECI integrated scopes. Often combined with pit pattern and JNET for depth.',
+    },
+    figureNotes: [
+      'Clin Endosc 2021 Fig. 2 (CC BY-NC 3.0). Kudo 2011 Endoscopy original is not CC.',
+      'Clin Endosc 2021 Fig. 3 (CC BY-NC 3.0). Kudo 2015 GIE EC-V original is not CC.',
+    ],
+    note: 'EC uses methylene blue (or crystal violet double stain). EC-V uses EC-NBI without dye. EndoBRAIN is a separate AI decision-support device (PMDA-approved).',
+  },
   nice: {
     name: 'NICE classification (colorectal NBI, non-magnifying)',
     description:
