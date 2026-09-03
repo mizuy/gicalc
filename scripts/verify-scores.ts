@@ -31,6 +31,7 @@ import { NICE_2013_PUBMED } from '../data/scores/nice';
 import { PARIS_2003_PUBMED } from '../data/scores/paris';
 import { PRAGUE_2006_PUBMED } from '../data/scores/prague';
 import { DEKKER_2020_PUBMED, MCWHINNEY_2023_PUBMED } from '../data/scores/sps';
+import { KUDO_EC_2011_PUBMED, KUDO_ECV_2015_PUBMED, MAEDA_EC_REVIEW_2021_PUBMED } from '../data/scores/colorectal-ec';
 import { WASP_2016_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
@@ -42,7 +43,7 @@ import {
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
-test('登録スコアは27種で臓器順に並ぶ', () => {
+test('登録スコアは28種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -64,6 +65,7 @@ test('登録スコアは27種で臓器順に並ぶ', () => {
       'paris',
       'lst',
       'kudo-tsuruta',
+      'colorectal-ec',
       'nice',
       'wasp',
       'jnet',
@@ -95,7 +97,7 @@ test('登録スコアは27種で臓器順に並ぶ', () => {
       ],
       [
         'colorectum',
-        ['apcs', 'sps', 'paris', 'lst', 'kudo-tsuruta', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
+        ['apcs', 'sps', 'paris', 'lst', 'kudo-tsuruta', 'colorectal-ec', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
       ],
       ['bleeding', ['forrest', 'gbs', 'noblads']],
     ],
@@ -122,6 +124,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     paris: 'classification',
     lst: 'classification',
     'kudo-tsuruta': 'classification',
+    'colorectal-ec': 'classification',
     nice: 'classification',
     wasp: 'classification',
     jnet: 'classification',
@@ -154,6 +157,7 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'best-j',
     'lst',
     'kudo-tsuruta',
+    'colorectal-ec',
     'jnet',
     'kajiwara-nomogram',
     'noblads',
@@ -693,6 +697,17 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(kudo.originalLead ?? '', /Type V was later subdivided/);
   assert.match(kudo.entries[2]?.rows.find((row) => row.heading === 'Note')?.text ?? '', /small or short/);
 
+  const colorectalEc = getScoreById('colorectal-ec');
+  assert.ok(colorectalEc && isClassification(colorectalEc));
+  assert.deepEqual(
+    colorectalEc.entries.map((entry) => entry.label),
+    ['EC1a', 'EC1b', 'EC2', 'EC3a', 'EC3b', 'EC-V1', 'EC-V2', 'EC-V3', 'Observation'],
+  );
+  assert.equal(colorectalEc.developedInJapan, true);
+  assert.match(colorectalEc.originalLead ?? '', /EC-V1/);
+  assert.match(colorectalEc.originalLead ?? '', /methylene blue/);
+  assert.equal(colorectalEc.pubmed, KUDO_EC_2011_PUBMED);
+
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
   assert.deepEqual(
@@ -912,6 +927,17 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(kudo.figures?.[0]?.license, undefined);
   assert.match(kudo.figures?.[0]?.note ?? '', /Tanaka 2004/);
   assert.match(kudo.figures?.[0]?.note ?? '', /CC ではない/);
+
+  const colorectalEcFig = getScoreById('colorectal-ec');
+  assert.ok(colorectalEcFig && isClassification(colorectalEcFig));
+  assert.equal(colorectalEcFig.figures?.length, 2);
+  assert.match(colorectalEcFig.figures?.[0]?.src ?? '', /ec-maeda2021-fig2/);
+  assert.match(colorectalEcFig.figures?.[1]?.src ?? '', /ec-maeda2021-fig3/);
+  assert.equal(colorectalEcFig.figures?.[0]?.license, 'CC BY-NC 3.0');
+  assert.equal(colorectalEcFig.figures?.[0]?.pubmed, MAEDA_EC_REVIEW_2021_PUBMED);
+  assert.match(colorectalEcFig.figures?.[0]?.caption ?? '', /Fig\. 2/);
+  assert.match(colorectalEcFig.figures?.[1]?.caption ?? '', /Fig\. 3/);
+  assert.equal(colorectalEcFig.pubmed, KUDO_EC_2011_PUBMED);
 
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));

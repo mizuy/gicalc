@@ -3,6 +3,7 @@ import { apcsScore } from './apcs';
 import { aronchickScore } from './aronchick';
 import { bbpsScore } from './bbps';
 import { bestJScore } from './best-j';
+import { colorectalEcScore } from './colorectal-ec';
 import { ecuraHattaScore } from './ecura-hatta';
 import { eggimScore } from './eggim';
 import { erefsScore } from './erefs';
@@ -47,6 +48,7 @@ export const SCORES: ScoreDefinition[] = [
   parisScore,
   lstScore,
   kudoTsurutaScore,
+  colorectalEcScore,
   niceScore,
   waspScore,
   jnetScore,
