@@ -15,7 +15,7 @@ export function JapanMark({ compact = false }: Props) {
       accessibilityRole="text"
       accessibilityLabel={t.japanDeveloped}
       style={compact ? styles.compact : undefined}>
-      <Text style={styles.flag}>🇯🇵</Text>
+      <Text style={[styles.flag, compact ? styles.flagCompact : styles.flagTitle]}>🇯🇵</Text>
     </View>
   );
 }
@@ -25,7 +25,14 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   flag: {
+    fontWeight: '400',
+  },
+  flagCompact: {
     fontSize: 14,
     lineHeight: 18,
+  },
+  flagTitle: {
+    fontSize: 20,
+    lineHeight: 26,
   },
 });
