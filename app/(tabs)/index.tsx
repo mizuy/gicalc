@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 
 import { ScoreListItem } from '@/components/calculator/ScoreListItem';
 import { Text, useThemeColor } from '@/components/Themed';
@@ -18,7 +18,11 @@ export default function HomeScreen() {
   return (
     <ScrollView style={[styles.scroll, { backgroundColor: background }]} contentContainerStyle={styles.content}>
       <View style={styles.header}>
-        <Text style={styles.emoji}>🧮</Text>
+        <Image
+          accessibilityLabel="GI Calc"
+          source={require('../../assets/images/icon.png')}
+          style={styles.logo}
+        />
         <View>
           <Text style={styles.brand}>GI Calc</Text>
           <Text style={[styles.slug, { color: tint }]}>gicalc</Text>
@@ -66,8 +70,10 @@ const styles = StyleSheet.create({
     gap: 12,
     marginBottom: 8,
   },
-  emoji: {
-    fontSize: 36,
+  logo: {
+    width: 44,
+    height: 44,
+    borderRadius: 10,
   },
   brand: {
     fontSize: 28,
