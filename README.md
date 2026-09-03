@@ -18,9 +18,9 @@
 | 大腸 | APCS（Yeoh 2011） | 無症状アジア人の進行大腸腫瘍リスク | 点数 0–7 |
 | 大腸 | Paris（2003 / 2005） | 表在型腫瘍の肉眼型（Type 0） | 定義一覧（原著の図・文言） |
 | 大腸 | LST（Kudo 2008） | 側方発育型腫瘍の4亜型 | 定義一覧（原著の図・文言） |
-| 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（原著の図・文言） |
-| 大腸 | NICE（Hayashi 2013） | 大腸 NBI（非拡大） | 定義一覧（原著の図・文言） |
-| 大腸 | JNET（Sano 2016） | NBI 拡大 | 定義一覧（原著の図・文言） |
+| 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（文言。図は原著へリンク） |
+| 大腸 | NICE（Hayashi 2013） | 大腸 NBI（非拡大） | 定義一覧（文言。図は原著へリンク） |
+| 大腸 | JNET（Sano 2016） | NBI 拡大 | 定義一覧（文言。図は原著へリンク） |
 | 大腸 | T1 Nomogram（Kajiwara 2023） | 大腸T1癌の LNM 確率 | 確率（%）と nomogram 点 |
 | 大腸 | BBPS（Lai 2009） | 腸管前処置（洗浄後・3区域） | 点数 0–9 |
 | 大腸 | Aronchick | 腸管前処置（洗浄前・全体） | 5段階 |
@@ -83,9 +83,9 @@ npm run preview:pages
 
 **CC ではないソース**
 
-- JNET（Sano 2016, *Dig Endosc*）: Wiley 標準著作権。図は CC ではない
-- NICE（Hayashi 2013, *GIE*）: Elsevier 著作権。図は CC ではない
-- 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。*Clin Endosc* 2025 Fig. 4 は許諾のうえ再掲（記事自体は CC BY-NC）
+- JNET（Sano 2016, *Dig Endosc*）: Wiley 標準著作権。図は埋め込まず、原著 Fig. 7 へリンクする
+- NICE（Hayashi 2013, *GIE*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
+- 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。図は埋め込まず、*Clin Endosc* 2025 Fig. 4 へリンクする（記事自体は CC BY-NC、原図は許諾再掲）
 - 木村–竹本原著（1969, *Endoscopy* / Thieme）: CC ではない
 - Paris 原著（2003 *GIE* / 2005 *Endoscopy*）: CC ではない
 - LST 原著（Kudo 2008, *GIE*）: CC ではない
@@ -97,7 +97,7 @@ npm run preview:pages
 - BBPS（Lai 2009, *GIE*）: CC ではない
 - GBS（Blatchford 2000, *Lancet*）: CC ではない
 - NOBLADS（Aoki 2016, *CGH*）: CC ではない
-- T1 Nomogram（Kajiwara 2023, *GIE*）: CC ではない
+- T1 Nomogram（Kajiwara 2023, *GIE*）: CC ではない。図は埋め込まず、原著 Fig. 2 へリンクする
 
 ## 免責
 

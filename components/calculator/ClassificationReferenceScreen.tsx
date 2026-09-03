@@ -8,6 +8,7 @@ import { Text, useThemeColor } from '@/components/Themed';
 import { SeverityColors } from '@/constants/Colors';
 import { useLocale } from '@/lib/i18n';
 import {
+  figureKey,
   getToolKind,
   isJapanDeveloped,
   type ClassificationDefinition,
@@ -77,7 +78,7 @@ export function ClassificationReferenceScreen({ score }: Props) {
       ) : null}
 
       {score.figures?.map((figure) => (
-        <ClassificationFigure key={figure.src} figure={figure} />
+        <ClassificationFigure key={figureKey(figure)} figure={figure} />
       ))}
 
       {groups.map((group) => (

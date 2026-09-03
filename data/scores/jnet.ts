@@ -16,15 +16,15 @@ export const jnetScore: ClassificationDefinition = {
   pubmed: '26927367',
   figures: [
     {
-      src: '/figures/jnet-sano2016-fig7.jpg',
+      href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.12644#den12644-fig-0007',
+      hrefLabel: 'Fig. 7',
       alt: 'JNET classification Type 1, 2A, 2B, and 3 (Sano 2016 Fig. 7)',
       caption: 'Fig. 7. JNET classification (Sano et al. Dig Endosc 2016)',
       source:
         'Sano Y, Tanaka S, Kudo S-E, et al. Narrow-band imaging (NBI) magnifying endoscopic classification of colorectal tumors proposed by the Japan NBI Expert Team. Dig Endosc. 2016;28:526-533.',
       doi: 'https://doi.org/10.1111/den.12644',
       pubmed: '26927367',
-      note: '原著 Fig. 7。Wiley / JGES の標準著作権。CC ではない。',
-      aspectRatio: 1302 / 766,
+      note: '原著 Fig. 7。Wiley / JGES の標準著作権。CC ではないので画像は置かず、論文の Fig. 7 へリンクする。',
     },
   ],
   entries: [

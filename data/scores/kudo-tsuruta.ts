@@ -16,17 +16,15 @@ export const kudoTsurutaScore: ClassificationDefinition = {
   pubmed: '8836710',
   figures: [
     {
-      src: '/figures/kudo-tsuruta-pit.jpg',
+      href: 'https://www.e-ce.org/journal/view.php?doi=10.5946/ce.2024.263#f4-ce-2024-263',
+      hrefLabel: 'Fig. 4',
       alt: 'Kudo and Tsuruta pit pattern classification Types I, II, IIIs, IIIL, IV, VI, and VN',
       caption: 'Fig. 4. Kudo and Tsuruta pit pattern classification for colorectal neoplasia',
       source:
         'Kudo S, Tamura S, Nakajima T, et al. Diagnosis of colorectal tumorous lesions by magnifying endoscopy. Gastrointest Endosc. 1996;44:8-14. Figure as published in Kim OZ. Classification of image-enhanced endoscopy in colon tumors. Clin Endosc. 2025;58:337-351, Fig. 4 (adapted from Tanaka S et al. Dig Endosc. 2004;16:S161-S164).',
       doi: 'https://doi.org/10.5946/ce.2024.263',
       pubmed: '40336268',
-      license: 'CC BY-NC 4.0',
-      licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
-      note: 'Type I–VN。図は Clin Endosc 2025 Fig. 4（記事は CC BY-NC 4.0）。原図 Tanaka 2004 Dig Endosc は CC ではなく、Clin Endosc は著作権者の許諾を得て再掲。',
-      aspectRatio: 751 / 1122,
+      note: 'Type I–VN。原図 Tanaka 2004 Dig Endosc は CC ではないので画像は置かず、Clin Endosc 2025 Fig. 4（許諾再掲）へリンクする。',
     },
   ],
   entries: [

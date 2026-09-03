@@ -473,7 +473,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       癌: 'Carcinoma',
     },
     figureNotes: [
-      'Types I–VN. Figure from Clin Endosc 2025 Fig. 4 (article is CC BY-NC 4.0). The Tanaka 2004 Dig Endosc original is not CC; Clin Endosc reprinted it with permission.',
+      'Types I–VN. Tanaka 2004 Dig Endosc original is not CC, so the figure is not hosted. Link opens Clin Endosc 2025 Fig. 4 (permission reprint).',
     ],
   },
   nice: {
@@ -485,13 +485,15 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Type 3': 'Deep SM invasion is ≥1000 μm. Consider additional surgery.',
     },
     figureNotes: [
-      'Original Fig. 1. Elsevier / GIE copyright; not CC. Used without magnification. Separate from JNET.',
+      'Original Fig. 1. Elsevier / GIE copyright; not CC, so the figure is not hosted. Link opens the publisher Fig. 1 image. Used without magnification. Separate from JNET.',
     ],
   },
   jnet: {
     name: 'JNET classification (colorectal NBI magnifying)',
     description: 'NBI magnifying classification of colorectal tumors (Type 1 / 2A / 2B / 3).',
-    figureNotes: ['Original Fig. 7. Wiley / JGES standard copyright; not CC.'],
+    figureNotes: [
+      'Original Fig. 7. Wiley / JGES standard copyright; not CC, so the figure is not hosted. Link opens Fig. 7 in the paper.',
+    ],
   },
   'kajiwara-nomogram': {
     name: 'Colorectal T1 LNM nomogram (Kajiwara / JSCCR)',
@@ -499,7 +501,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Predicts lymph-node metastasis (LNM) probability after endoscopic treatment of colorectal T1 cancer. Six-factor multivariable logistic model from Kajiwara 2023 (GIE; derivation n=3080). Total points treat SM ≥2000 μm as 100 on the nomogram scale.',
     officialLinkLabel: 'Official calculator (JSCCR)',
     note: 'Values may differ slightly from the official site. GI Calc uses the published figures — the actual β coefficients — from the paper.',
-    figureNotes: ['Original Fig. 2. Elsevier / GIE copyright; not CC. Tap the figure to enlarge.'],
+    figureNotes: [
+      'Original Fig. 2. Elsevier / GIE copyright; not CC, so the figure is not hosted. Link opens the publisher Fig. 2 image.',
+    ],
     fields: {
       sex: {
         label: 'Sex',
