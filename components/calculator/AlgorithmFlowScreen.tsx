@@ -146,8 +146,8 @@ function FlowTree({
   const current = isMapNodeCurrent(node, walk);
   const isResult = Boolean(node.resultId && walk.result?.id === node.resultId);
   const canPress = Boolean(node.stepId && node.optionId);
-  const border = useThemeColor({}, 'border');
   const tint = useThemeColor({}, 'tint');
+  const connector = '#6B8A8C';
 
   return (
     <View style={styles.tree}>
@@ -160,21 +160,28 @@ function FlowTree({
       />
       {node.children?.length ? (
         <View style={styles.treeChildren}>
-          <View style={[styles.stem, { backgroundColor: onPath ? tint : border }]} />
+          <View style={[styles.stem, { backgroundColor: onPath ? tint : connector }]} />
+          {node.children.length > 1 ? (
+            <View style={styles.treeHBarTrack}>
+              <View
+                collapsable={false}
+                style={[
+                  styles.treeHBar,
+                  {
+                    backgroundColor: connector,
+                    borderTopColor: connector,
+                    width: `${((node.children.length - 1) / node.children.length) * 100}%`,
+                  },
+                ]}
+              />
+            </View>
+          ) : null}
           <View style={styles.treeRow}>
-            {node.children.map((child, index) => {
+            {node.children.map((child) => {
               const childOnPath = isMapNodeOnPath(child, walk, answers);
-              const line = childOnPath ? tint : border;
-              const first = index === 0;
-              const last = index === node.children!.length - 1;
               return (
                 <View key={child.id} style={styles.treeBranch}>
-                  <View style={styles.treeRail}>
-                    <View style={[styles.treeRailArm, { backgroundColor: first ? 'transparent' : border }]} />
-                    <View style={[styles.treeRailHub, { backgroundColor: line }]} />
-                    <View style={[styles.treeRailArm, { backgroundColor: last ? 'transparent' : border }]} />
-                  </View>
-                  <View style={[styles.stem, { backgroundColor: line }]} />
+                  <View style={[styles.stem, { backgroundColor: childOnPath ? tint : connector }]} />
                   <FlowTree node={child} flow={flow} answers={answers} onChoose={onChoose} />
                 </View>
               );
@@ -425,24 +432,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     minWidth: 96,
   },
-  treeRail: {
-    flexDirection: 'row',
+  treeHBarTrack: {
+    width: '100%',
+    height: 3,
     alignItems: 'center',
-    alignSelf: 'stretch',
-    height: 2,
+    justifyContent: 'center',
   },
-  treeRailArm: {
-    flex: 1,
-    height: 2,
-    minHeight: 2,
-  },
-  treeRailHub: {
-    width: 2,
-    height: 2,
+  treeHBar: {
+    height: 3,
+    minHeight: 3,
+    borderTopWidth: 3,
   },
   stem: {
-    width: 2,
-    height: 14,
+    width: 3,
+    height: 16,
   },
   chip: {
     borderRadius: 10,
