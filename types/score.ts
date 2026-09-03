@@ -110,17 +110,62 @@ export type CalculatorDefinition = ToolBase & {
   compute: (values: Record<string, number>) => ScoreResult;
 };
 
+export type AlgorithmOption = {
+  id: string;
+  label: string;
+  /** 次のステップ id、または結果 id */
+  next: string;
+};
+
+export type AlgorithmStep = {
+  id: string;
+  prompt: string;
+  hint?: string;
+  options: AlgorithmOption[];
+};
+
+export type AlgorithmResult = {
+  id: string;
+  /** 対応する ClassificationEntry.label */
+  entryLabel: string;
+};
+
+export type AlgorithmMapNode = {
+  id: string;
+  label: string;
+  children?: AlgorithmMapNode[];
+  stepId?: string;
+  optionId?: string;
+  resultId?: string;
+};
+
+export type AlgorithmFlow = {
+  title: string;
+  start: string;
+  steps: Record<string, AlgorithmStep>;
+  results: Record<string, AlgorithmResult>;
+  map: AlgorithmMapNode;
+};
+
 export type ClassificationDefinition = ToolBase & {
   kind: 'classification';
   /** 原著の定義文。画面では日本語コメントの前に出す */
   originalLead?: string;
   entries: ClassificationEntry[];
+  /** WASP / MESDA-G のような手順付きアルゴリズムだけ付ける */
+  flow?: AlgorithmFlow;
 };
 
 export type ScoreDefinition = CalculatorDefinition | ClassificationDefinition;
 
 export function isClassification(tool: ScoreDefinition): tool is ClassificationDefinition {
   return tool.kind === 'classification';
+}
+
+export function hasAlgorithmFlow(
+  tool: ScoreDefinition,
+): tool is ClassificationDefinition & { flow: AlgorithmFlow } {
+  return isClassification(tool) && tool.flow != null;
 }
 
 export function getToolKind(tool: ScoreDefinition): ToolKind {

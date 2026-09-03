@@ -213,4 +213,82 @@ export const mesdaGScore: ClassificationDefinition = {
       ],
     },
   ],
+  flow: {
+    title: 'アルゴリズム',
+    start: 'dl',
+    steps: {
+      dl: {
+        id: 'dl',
+        prompt: '境界線（DL）はありますか',
+        hint: '病変と背景粘膜のあいだで、微小血管または微小表面が急に変わる線。なければ非癌。あれば DL 内を次にみる。',
+        options: [
+          { id: 'absent', label: 'なし', next: 'noncancer-dl' },
+          { id: 'present', label: 'あり', next: 'mvms' },
+        ],
+      },
+      mvms: {
+        id: 'mvms',
+        prompt: 'DL 内の微小血管（MV）と微小表面（MS）はどうですか',
+        hint: '両方 regular なら非癌。不整 MV および／または不整 MS があれば早期胃癌（EGC）。',
+        options: [
+          { id: 'regular', label: '両方 regular', next: 'noncancer-regular' },
+          { id: 'irregular', label: '不整 MV および／または MS', next: 'egc' },
+        ],
+      },
+    },
+    results: {
+      'noncancer-dl': { id: 'noncancer-dl', entryLabel: 'DL absent' },
+      'noncancer-regular': { id: 'noncancer-regular', entryLabel: 'Regular MV and MS within DL' },
+      egc: { id: 'egc', entryLabel: 'Irregular MV and/or MS within DL' },
+    },
+    map: {
+      id: 'start',
+      label: '白光で疑わしい病変',
+      children: [
+        {
+          id: 'dl-gate',
+          label: '境界線（DL）',
+          stepId: 'dl',
+          children: [
+            {
+              id: 'absent',
+              label: 'なし',
+              stepId: 'dl',
+              optionId: 'absent',
+              children: [{ id: 'noncancer-dl', label: '非癌', resultId: 'noncancer-dl' }],
+            },
+            {
+              id: 'present',
+              label: 'あり',
+              stepId: 'dl',
+              optionId: 'present',
+              children: [
+                {
+                  id: 'mvms-gate',
+                  label: 'DL 内の MV / MS',
+                  stepId: 'mvms',
+                  children: [
+                    {
+                      id: 'regular',
+                      label: '両方 regular',
+                      stepId: 'mvms',
+                      optionId: 'regular',
+                      children: [{ id: 'noncancer-regular', label: '非癌', resultId: 'noncancer-regular' }],
+                    },
+                    {
+                      id: 'irregular',
+                      label: '不整',
+                      stepId: 'mvms',
+                      optionId: 'irregular',
+                      children: [{ id: 'egc', label: '早期胃癌', resultId: 'egc' }],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
 };

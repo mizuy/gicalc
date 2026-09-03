@@ -103,4 +103,114 @@ export const waspScore: ClassificationDefinition = {
       ],
     },
   ],
+  flow: {
+    title: 'アルゴリズム',
+    start: 'nice',
+    steps: {
+      nice: {
+        id: 'nice',
+        prompt: 'NICE は Type 1 と Type 2 のどちらですか',
+        hint: 'Type 2 所見: (1) 周囲粘膜より暗い、(2) 目立つ褐色血管、(3) 楕円・管状・分枝の表面構造。どれかが当てはまれば Type 2。なければ Type 1。',
+        options: [
+          { id: 'type1', label: 'Type 1', next: 'ssl1' },
+          { id: 'type2', label: 'Type 2', next: 'ssl2' },
+        ],
+      },
+      ssl1: {
+        id: 'ssl1',
+        prompt: 'Hazewinkel の SSL 所見はいくつありますか',
+        hint: '(1) 雲状の表面、(2) 不明瞭な辺縁、(3) 不整な形、(4) 腺窩内の暗点。2つ以上あれば SSA/P。',
+        options: [
+          { id: 'lt2', label: '<2 所見', next: 'hp' },
+          { id: 'gte2', label: '≥2 所見', next: 'ssap1' },
+        ],
+      },
+      ssl2: {
+        id: 'ssl2',
+        prompt: 'Hazewinkel の SSL 所見はいくつありますか',
+        hint: '(1) 雲状の表面、(2) 不明瞭な辺縁、(3) 不整な形、(4) 腺窩内の暗点。2つ以上あれば SSA/P。',
+        options: [
+          { id: 'lt2', label: '<2 所見', next: 'adenoma' },
+          { id: 'gte2', label: '≥2 所見', next: 'ssap2' },
+        ],
+      },
+    },
+    results: {
+      hp: { id: 'hp', entryLabel: 'Type 1 + <2 SSL features' },
+      ssap1: { id: 'ssap1', entryLabel: 'Type 1 + ≥2 SSL features' },
+      adenoma: { id: 'adenoma', entryLabel: 'Type 2 + <2 SSL features' },
+      ssap2: { id: 'ssap2', entryLabel: 'Type 2 + ≥2 SSL features' },
+    },
+    map: {
+      id: 'start',
+      label: '10 mm 未満のポリープ',
+      children: [
+        {
+          id: 'nice-gate',
+          label: 'NICE',
+          stepId: 'nice',
+          children: [
+            {
+              id: 'type1',
+              label: 'Type 1',
+              stepId: 'nice',
+              optionId: 'type1',
+              children: [
+                {
+                  id: 'ssl-1',
+                  label: 'SSL 所見',
+                  stepId: 'ssl1',
+                  children: [
+                    {
+                      id: 'hp-opt',
+                      label: '<2',
+                      stepId: 'ssl1',
+                      optionId: 'lt2',
+                      children: [{ id: 'hp', label: '過形成', resultId: 'hp' }],
+                    },
+                    {
+                      id: 'ssap1-opt',
+                      label: '≥2',
+                      stepId: 'ssl1',
+                      optionId: 'gte2',
+                      children: [{ id: 'ssap1', label: 'SSA/P', resultId: 'ssap1' }],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              id: 'type2',
+              label: 'Type 2',
+              stepId: 'nice',
+              optionId: 'type2',
+              children: [
+                {
+                  id: 'ssl-2',
+                  label: 'SSL 所見',
+                  stepId: 'ssl2',
+                  children: [
+                    {
+                      id: 'adenoma-opt',
+                      label: '<2',
+                      stepId: 'ssl2',
+                      optionId: 'lt2',
+                      children: [{ id: 'adenoma', label: '腺腫', resultId: 'adenoma' }],
+                    },
+                    {
+                      id: 'ssap2-opt',
+                      label: '≥2',
+                      stepId: 'ssl2',
+                      optionId: 'gte2',
+                      children: [{ id: 'ssap2', label: 'SSA/P', resultId: 'ssap2' }],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
 };

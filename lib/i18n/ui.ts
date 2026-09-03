@@ -11,6 +11,10 @@ export type UiStrings = {
   original: string;
   note: string;
   reset: string;
+  algorithmFlow: string;
+  algorithmNext: string;
+  algorithmDiagnosis: string;
+  algorithmHint: string;
   totalPoints: string;
   enlargeHint: string;
   openFigure: string;
@@ -72,6 +76,10 @@ export const UI: Record<Locale, UiStrings> = {
     original: '原著',
     note: '注',
     reset: 'リセット',
+    algorithmFlow: 'アルゴリズム',
+    algorithmNext: '次の判定',
+    algorithmDiagnosis: '診断',
+    algorithmHint: '選択すると経路が強調され、次の判定が出ます。すべて選ぶと診断が出ます。',
     totalPoints: '合計点',
     enlargeHint: 'タップして拡大',
     openFigure: '図を開く',
@@ -153,6 +161,10 @@ export const UI: Record<Locale, UiStrings> = {
     original: 'Original',
     note: 'Note',
     reset: 'Reset',
+    algorithmFlow: 'Algorithm',
+    algorithmNext: 'Next step',
+    algorithmDiagnosis: 'Diagnosis',
+    algorithmHint: 'Tap a choice to highlight the path and see the next step. The diagnosis appears after every step is chosen.',
     totalPoints: 'Total points',
     enlargeHint: 'Tap to enlarge',
     openFigure: 'Open figure',

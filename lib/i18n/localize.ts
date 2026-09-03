@@ -1,4 +1,6 @@
 import type {
+  AlgorithmFlow,
+  AlgorithmMapNode,
   CalculatorDefinition,
   ClassificationDefinition,
   ScoreDefinition,
@@ -7,9 +9,43 @@ import type {
 } from '../../types/score';
 import { isClassification } from '../../types/score';
 import { localizeResult as localizeComputedResult } from './results';
-import { SCORE_EN } from './scoreCopy';
+import { SCORE_EN, type FlowCopy } from './scoreCopy';
 import { UI } from './ui';
 import type { Locale } from './types';
+
+function localizeMapNode(node: AlgorithmMapNode, labels?: Record<string, string>): AlgorithmMapNode {
+  return {
+    ...node,
+    label: labels?.[node.id] ?? node.label,
+    children: node.children?.map((child) => localizeMapNode(child, labels)),
+  };
+}
+
+function localizeFlow(flow: AlgorithmFlow, copy?: FlowCopy): AlgorithmFlow {
+  if (!copy) return flow;
+  return {
+    ...flow,
+    title: copy.title,
+    steps: Object.fromEntries(
+      Object.entries(flow.steps).map(([id, step]) => {
+        const stepCopy = copy.steps[id];
+        return [
+          id,
+          {
+            ...step,
+            prompt: stepCopy?.prompt ?? step.prompt,
+            hint: stepCopy?.hint ?? step.hint,
+            options: step.options.map((option) => ({
+              ...option,
+              label: stepCopy?.options[option.id] ?? option.label,
+            })),
+          },
+        ];
+      }),
+    ),
+    map: localizeMapNode(flow.map, copy.map),
+  };
+}
 
 export function localizeResult(result: ScoreResult, locale: Locale): ScoreResult {
   return localizeComputedResult(result, locale);
@@ -70,6 +106,7 @@ export function localizeScore<T extends ScoreDefinition>(score: T, locale: Local
         ...figure,
         note: copy.figureNotes?.[index] ?? figure.note,
       })),
+      flow: score.flow ? localizeFlow(score.flow, copy.flow) : score.flow,
     };
     return localized as T;
   }

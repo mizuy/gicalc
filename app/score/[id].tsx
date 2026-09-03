@@ -1,11 +1,12 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
 
+import { AlgorithmFlowScreen } from '@/components/calculator/AlgorithmFlowScreen';
 import { ClassificationReferenceScreen } from '@/components/calculator/ClassificationReferenceScreen';
 import { ScoreCalculatorScreen } from '@/components/calculator/ScoreCalculatorScreen';
 import { Text, View } from '@/components/Themed';
 import { SCORES, getScoreById } from '@/data/scores';
 import { localizeScore, useLocale } from '@/lib/i18n';
-import { isClassification } from '@/types/score';
+import { hasAlgorithmFlow, isClassification } from '@/types/score';
 
 export function generateStaticParams() {
   return SCORES.map((score) => ({ id: score.id }));
@@ -30,7 +31,9 @@ export default function ScoreScreen() {
   return (
     <>
       <Stack.Screen options={{ title: localized.shortName, headerBackTitle: t.back }} />
-      {isClassification(localized) ? (
+      {hasAlgorithmFlow(localized) ? (
+        <AlgorithmFlowScreen key={localized.id} score={localized} />
+      ) : isClassification(localized) ? (
         <ClassificationReferenceScreen score={localized} />
       ) : (
         <ScoreCalculatorScreen key={localized.id} score={localized} />

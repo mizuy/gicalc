@@ -11,6 +11,12 @@ export type FieldCopy = {
   options: Array<{ label: string; description?: string }>;
 };
 
+export type FlowCopy = {
+  title: string;
+  steps: Record<string, { prompt: string; hint?: string; options: Record<string, string> }>;
+  map: Record<string, string>;
+};
+
 export type ScoreCopy = {
   name: string;
   shortName?: string;
@@ -22,6 +28,7 @@ export type ScoreCopy = {
   figureNotes?: string[];
   officialLinkLabel?: string;
   note?: string;
+  flow?: FlowCopy;
 };
 
 const pts = (n: number, plus = true): string => {
@@ -160,6 +167,36 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Original Fig. 1. Wiley / JGES Open Access, CC BY-NC-ND 4.0. Magnifying algorithm for the stomach. Separate from JNET / NICE.',
       'Original Fig. 13. Wiley / JGES Open Access, CC BY-NC-ND 4.0. Microvascular (V) and microsurface (S) patterns as regular / irregular / absent. Arrows mark the demarcation line (DL).',
     ],
+    flow: {
+      title: 'Algorithm',
+      steps: {
+        dl: {
+          prompt: 'Is a demarcation line (DL) present?',
+          hint: 'A border between the lesion and background mucosa, seen as an abrupt change in MV and/or MS. If absent, diagnose non-cancer. If present, look inside the DL next.',
+          options: { absent: 'Absent', present: 'Present' },
+        },
+        mvms: {
+          prompt: 'What are the microvascular (MV) and microsurface (MS) patterns inside the DL?',
+          hint: 'Both regular → non-cancer. Irregular MV and/or irregular MS → early gastric cancer (EGC).',
+          options: {
+            regular: 'Both regular',
+            irregular: 'Irregular MV and/or MS',
+          },
+        },
+      },
+      map: {
+        start: 'Suspicious lesion on WLI',
+        'dl-gate': 'Demarcation line (DL)',
+        absent: 'Absent',
+        present: 'Present',
+        'noncancer-dl': 'Non-cancer',
+        'mvms-gate': 'MV / MS inside DL',
+        regular: 'Both regular',
+        irregular: 'Irregular',
+        'noncancer-regular': 'Non-cancer',
+        egc: 'EGC',
+      },
+    },
   },
   kyoto: {
     name: 'Kyoto classification risk score (original 0–8)',
@@ -572,6 +609,42 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     figureNotes: [
       'Original Fig. 1. BMJ / Gut copyright; not CC, so the figure is not hosted. Link opens Fig. 1 in the paper. Separate from both NICE and JNET.',
     ],
+    flow: {
+      title: 'Algorithm',
+      steps: {
+        nice: {
+          prompt: 'Is this NICE Type 1 or Type 2?',
+          hint: 'Type 2 features: (1) darker than the surrounding mucosa, (2) prominent brown vessels, or (3) an oval, tubular, or branched surface pattern. Any of these → Type 2. None → Type 1.',
+          options: { type1: 'Type 1', type2: 'Type 2' },
+        },
+        ssl1: {
+          prompt: 'How many Hazewinkel SSL features are present?',
+          hint: '(1) clouded surface, (2) indistinctive borders, (3) irregular shape, (4) dark spots inside the crypts. Two or more → SSA/P.',
+          options: { lt2: '<2 features', gte2: '≥2 features' },
+        },
+        ssl2: {
+          prompt: 'How many Hazewinkel SSL features are present?',
+          hint: '(1) clouded surface, (2) indistinctive borders, (3) irregular shape, (4) dark spots inside the crypts. Two or more → SSA/P.',
+          options: { lt2: '<2 features', gte2: '≥2 features' },
+        },
+      },
+      map: {
+        start: 'Polyp <10 mm',
+        'nice-gate': 'NICE',
+        type1: 'Type 1',
+        type2: 'Type 2',
+        'ssl-1': 'SSL features',
+        'ssl-2': 'SSL features',
+        'hp-opt': '<2',
+        'ssap1-opt': '≥2',
+        'adenoma-opt': '<2',
+        'ssap2-opt': '≥2',
+        hp: 'Hyperplastic',
+        ssap1: 'SSA/P',
+        adenoma: 'Adenoma',
+        ssap2: 'SSA/P',
+      },
+    },
   },
   jnet: {
     name: 'JNET classification (colorectal NBI magnifying)',

@@ -33,7 +33,12 @@ import { PRAGUE_2006_PUBMED } from '../data/scores/prague';
 import { WASP_2016_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
-import { getToolKind, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
+import {
+  applyAlgorithmAnswer,
+  findEntryForResult,
+  walkAlgorithmFlow,
+} from '../lib/scores/algorithmFlow';
+import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
 test('登録スコアは26種で臓器順に並ぶ', () => {
   assert.deepEqual(
@@ -832,6 +837,12 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(wasp.pubmed, WASP_2016_PUBMED);
   assert.equal(wasp.organ, 'colorectum');
 
+  assert.ok(hasAlgorithmFlow(wasp));
+  assert.ok(hasAlgorithmFlow(mesda));
+  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, la, prague, erefs, hill, forrest]) {
+    assert.equal(hasAlgorithmFlow(score), false, score.id);
+  }
+
   for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, mesda, la, prague, erefs, hill, forrest, wasp]) {
     for (const entry of score.entries) {
       assert.ok(
@@ -1035,6 +1046,27 @@ test('英語コピーが全スコアの表示項目を覆う', () => {
         if (entry.comment) assert.doesNotMatch(entry.comment, japanese);
         if (entry.meaning) assert.doesNotMatch(entry.meaning, japanese);
       }
+      if (hasAlgorithmFlow(score)) {
+        assert.ok(copy.flow, `${score.id} flow copy`);
+        assert.ok(hasAlgorithmFlow(english));
+        assert.doesNotMatch(english.flow.title, japanese);
+        for (const step of Object.values(english.flow.steps)) {
+          assert.doesNotMatch(step.prompt, japanese, step.prompt);
+          if (step.hint) assert.doesNotMatch(step.hint, japanese, step.hint);
+          for (const option of step.options) {
+            assert.doesNotMatch(option.label, japanese, option.label);
+          }
+        }
+        const mapNodes = [english.flow.map];
+        while (mapNodes.length) {
+          const node = mapNodes.pop()!;
+          assert.ok(copy.flow?.map[node.id], `${score.id} map ${node.id}`);
+          assert.doesNotMatch(node.label, japanese, node.label);
+          mapNodes.push(...(node.children ?? []));
+        }
+      } else if (isClassification(score)) {
+        assert.equal(score.flow, undefined, score.id);
+      }
     }
 
     for (const note of english.figures?.map((figure) => figure.note) ?? []) {
@@ -1110,6 +1142,61 @@ test('既定言語は英語で、計算は最低点から始まる', () => {
   assert.ok(apcs && !isClassification(apcs));
   assert.deepEqual(lowestFieldValues(apcs.fields), { age: 0, sex: 0, family: 0, smoking: 0 });
   assert.equal(apcs.compute(lowestFieldValues(apcs.fields)).interpretation, '平均リスク（AR）');
+});
+
+test('WASP / MESDA-G のフローは選択すると診断まで進む', () => {
+  const wasp = getScoreById('wasp');
+  const mesda = getScoreById('mesda-g');
+  assert.ok(hasAlgorithmFlow(wasp));
+  assert.ok(hasAlgorithmFlow(mesda));
+
+  const waspHp = walkAlgorithmFlow(wasp.flow, { nice: 'type1', ssl1: 'lt2' });
+  assert.equal(waspHp.result?.entryLabel, 'Type 1 + <2 SSL features');
+  assert.equal(findEntryForResult(wasp.entries, waspHp.result)?.meaning, 'Hyperplastic polyp');
+
+  const waspSsap = walkAlgorithmFlow(wasp.flow, { nice: 'type1', ssl1: 'gte2' });
+  assert.equal(waspSsap.result?.entryLabel, 'Type 1 + ≥2 SSL features');
+  assert.equal(findEntryForResult(wasp.entries, waspSsap.result)?.meaning, 'SSA/P');
+
+  const waspAdenoma = walkAlgorithmFlow(wasp.flow, { nice: 'type2', ssl2: 'lt2' });
+  assert.equal(waspAdenoma.result?.entryLabel, 'Type 2 + <2 SSL features');
+  assert.equal(findEntryForResult(wasp.entries, waspAdenoma.result)?.meaning, 'Adenoma');
+
+  const waspSsap2 = walkAlgorithmFlow(wasp.flow, { nice: 'type2', ssl2: 'gte2' });
+  assert.equal(findEntryForResult(wasp.entries, waspSsap2.result)?.meaning, 'SSA/P');
+
+  const afterNice = walkAlgorithmFlow(wasp.flow, { nice: 'type1' });
+  assert.equal(afterNice.currentStep?.id, 'ssl1');
+  assert.equal(afterNice.result, null);
+
+  const switched = applyAlgorithmAnswer(wasp.flow, { nice: 'type1', ssl1: 'lt2' }, 'nice', 'type2');
+  assert.deepEqual(switched, { nice: 'type2' });
+  assert.equal(walkAlgorithmFlow(wasp.flow, switched).currentStep?.id, 'ssl2');
+
+  const mesdaNoncancer = walkAlgorithmFlow(mesda.flow, { dl: 'absent' });
+  assert.equal(findEntryForResult(mesda.entries, mesdaNoncancer.result)?.meaning, 'Non-cancer');
+  assert.equal(mesdaNoncancer.currentStep, null);
+
+  const afterDl = walkAlgorithmFlow(mesda.flow, { dl: 'present' });
+  assert.equal(afterDl.currentStep?.id, 'mvms');
+  assert.equal(afterDl.result, null);
+
+  const mesdaEgc = walkAlgorithmFlow(mesda.flow, { dl: 'present', mvms: 'irregular' });
+  assert.equal(findEntryForResult(mesda.entries, mesdaEgc.result)?.meaning, 'EGC');
+
+  const mesdaRegular = walkAlgorithmFlow(mesda.flow, { dl: 'present', mvms: 'regular' });
+  assert.equal(findEntryForResult(mesda.entries, mesdaRegular.result)?.meaning, 'Non-cancer');
+
+  const dropped = applyAlgorithmAnswer(mesda.flow, { dl: 'present', mvms: 'irregular' }, 'dl', 'absent');
+  assert.deepEqual(dropped, { dl: 'absent' });
+
+  const englishWasp = localizeScore(wasp, 'en');
+  assert.ok(hasAlgorithmFlow(englishWasp));
+  assert.equal(englishWasp.flow.steps.nice.prompt, 'Is this NICE Type 1 or Type 2?');
+  assert.equal(englishWasp.flow.map.label, 'Polyp <10 mm');
+  const englishMesda = localizeScore(mesda, 'en');
+  assert.ok(hasAlgorithmFlow(englishMesda));
+  assert.equal(englishMesda.flow.steps.dl.options[0]?.label, 'Absent');
 });
 
 test('About は CC と非 CC を分けて書く', () => {
