@@ -26,15 +26,15 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   flagCompact: {
-    width: 18,
-    height: 12,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#D0D0D0',
+    width: 24,
+    height: 16,
+    borderWidth: 1,
+    borderColor: '#C8C8C8',
   },
   flagTitle: {
-    width: 27,
-    height: 18,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#D0D0D0',
+    width: 36,
+    height: 24,
+    borderWidth: 1,
+    borderColor: '#C8C8C8',
   },
 });
