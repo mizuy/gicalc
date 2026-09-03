@@ -5,6 +5,117 @@ export const JGES_GASTRIC_ESD_2020_PUBMED = '32216137';
 
 export type GastricEsdCurabilityGrade = 'eCuraA' | 'eCuraB' | 'eCuraC-1' | 'eCuraC-2';
 
+/** JGES Fig. 2 相当テーブルのセル・注釈行 ID */
+export type GastricEsdCurabilityCellId =
+  | 'cell-diff-pt1a-ul0'
+  | 'cell-diff-pt1a-ul1'
+  | 'cell-diff-pt1b-sm1'
+  | 'cell-undiff-pt1a-ul0'
+  | 'cell-undiff-pt1a-ul1'
+  | 'cell-undiff-pt1b-sm1'
+  | 'row-c1'
+  | 'row-c2'
+  | 'row-fig6-undiff-size'
+  | 'row-fig6-undiff-sm';
+
+export type GastricEsdCurabilityHighlight = {
+  cells: GastricEsdCurabilityCellId[];
+  /** 腫瘍因子のみ入力済み（薄いハイライト） */
+  partial: boolean;
+  /** 全必須項目入力済み（確定ハイライト） */
+  complete: boolean;
+};
+
+const TUMOR_FACTOR_FIELDS = ['histology', 'depth', 'ul', 'size'] as const;
+
+export function getGastricEsdCurabilityRequiredFields(
+  values: Record<string, number | undefined>,
+): string[] {
+  const required = ['enBloc', 'histology', 'size', 'depth', 'ul', 'hm', 'vm', 'ly', 'v'];
+  if (values.histology === 1) {
+    required.push('undiffSize');
+    if (values.depth === 1) {
+      required.push('undiffInSm');
+    }
+  }
+  return required;
+}
+
+export function isGastricEsdCurabilityComplete(values: Record<string, number | undefined>): boolean {
+  return getGastricEsdCurabilityRequiredFields(values).every((id) => values[id] !== undefined);
+}
+
+function isTumorFactorsReady(values: Record<string, number | undefined>): boolean {
+  return TUMOR_FACTOR_FIELDS.every((id) => values[id] !== undefined);
+}
+
+function tumorFactorCell(values: Record<string, number>): GastricEsdCurabilityCellId | null {
+  const { histology, depth, ul } = values;
+  const isDiff = histology === 0 || histology === 1;
+
+  if (depth === 0) {
+    if (ul === 0) return isDiff ? 'cell-diff-pt1a-ul0' : 'cell-undiff-pt1a-ul0';
+    return isDiff ? 'cell-diff-pt1a-ul1' : 'cell-undiff-pt1a-ul1';
+  }
+  if (depth === 1) {
+    return isDiff ? 'cell-diff-pt1b-sm1' : 'cell-undiff-pt1b-sm1';
+  }
+  if (depth === 2) {
+    if (isDiff) return ul === 0 ? 'cell-diff-pt1a-ul0' : 'cell-diff-pt1a-ul1';
+    return ul === 0 ? 'cell-undiff-pt1a-ul0' : 'cell-undiff-pt1a-ul1';
+  }
+  return null;
+}
+
+function uniqueCells(cells: GastricEsdCurabilityCellId[]): GastricEsdCurabilityCellId[] {
+  return [...new Set(cells)];
+}
+
+/** 入力状態から Fig. 2 相当テーブルのハイライト対象を返す */
+export function resolveGastricEsdCurabilityHighlight(
+  values: Record<string, number | undefined>,
+): GastricEsdCurabilityHighlight {
+  if (!isTumorFactorsReady(values)) {
+    return { cells: [], partial: false, complete: false };
+  }
+
+  const filled = Object.fromEntries(
+    Object.entries(values).filter(([, value]) => value !== undefined),
+  ) as Record<string, number>;
+  const cell = tumorFactorCell(filled);
+  const baseCells = cell ? [cell] : [];
+
+  if (!isGastricEsdCurabilityComplete(values)) {
+    return { cells: baseCells, partial: true, complete: false };
+  }
+
+  if (filled.histology === 1 && filled.undiffSize === 1 && filled.depth === 0) {
+    return {
+      cells: uniqueCells([...baseCells, 'row-fig6-undiff-size', 'row-c2']),
+      partial: false,
+      complete: true,
+    };
+  }
+
+  if (filled.histology === 1 && filled.undiffInSm === 1 && filled.depth === 1) {
+    return {
+      cells: uniqueCells([...baseCells, 'row-fig6-undiff-sm', 'row-c2']),
+      partial: false,
+      complete: true,
+    };
+  }
+
+  const result = computeGastricEsdCurability(filled);
+
+  if (result.interpretation.startsWith('eCuraA') || result.interpretation.startsWith('eCuraB')) {
+    return { cells: baseCells, partial: false, complete: true };
+  }
+  if (result.interpretation.startsWith('eCuraC-1')) {
+    return { cells: uniqueCells([...baseCells, 'row-c1']), partial: false, complete: true };
+  }
+  return { cells: uniqueCells([...baseCells, 'row-c2']), partial: false, complete: true };
+}
+
 function isDifferentiatedDominant(histology: number): boolean {
   return histology === 0 || histology === 1;
 }

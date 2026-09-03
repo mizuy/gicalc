@@ -2,6 +2,7 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 
 import { AlgorithmFlowScreen } from '@/components/calculator/AlgorithmFlowScreen';
 import { ClassificationReferenceScreen } from '@/components/calculator/ClassificationReferenceScreen';
+import { GastricEsdCurabilityScreen } from '@/components/calculator/GastricEsdCurabilityScreen';
 import { ScoreCalculatorScreen } from '@/components/calculator/ScoreCalculatorScreen';
 import { Text, View } from '@/components/Themed';
 import { SCORES, getScoreById } from '@/data/scores';
@@ -35,6 +36,8 @@ export default function ScoreScreen() {
         <AlgorithmFlowScreen key={localized.id} score={localized} />
       ) : isClassification(localized) ? (
         <ClassificationReferenceScreen score={localized} />
+      ) : localized.id === 'gastric-esd-curability' ? (
+        <GastricEsdCurabilityScreen key={localized.id} score={localized} />
       ) : (
         <ScoreCalculatorScreen key={localized.id} score={localized} />
       )}

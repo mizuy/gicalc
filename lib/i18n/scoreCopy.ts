@@ -422,7 +422,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     description:
       'Determines endoscopic curability (eCuraA / B / C-1 / C-2) from post-ESD/EMR pathology. Notes from the JGES gastric ESD/EMR guideline (2nd ed.) and JGCA gastric cancer treatment guideline (6th ed.) are shown together.',
     officialLinkLabel: 'JGCA gastric cancer treatment guideline 6th ed. (endoscopic resection)',
-    note: 'Curability per JGES ESD/EMR guideline (2020) and JGCA 6th ed. For LNM scoring after non-curative resection, see the separate eCura score page (Hatta 2017). Figures 2–3 and 6 link to the paper.',
+    note: 'Fig. 2-style table at the top; pathology inputs highlight the matching cell. JGCA 6th-ed. notes included. For LNM scoring after non-curative resection, see the separate eCura score page (Hatta 2017). Figures 3 and 6 link to the paper.',
     figureNotes: [
       'Tumor-factor curability chart. Same logic as the on-screen form. Links to Fig. 2.',
       'Post-ESD/EMR treatment flowchart, including exceptions where additional surgery is generally indicated for eCuraC-1.',

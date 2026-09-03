@@ -20,7 +20,7 @@ export const gastricEsdCurabilityScore: ScoreDefinition = {
   officialUrl: 'https://www.jgca.jp/guideline/sixth/002_02.html',
   officialLinkLabel: '胃癌治療ガイドライン 第6版（内視鏡的切除）',
   note:
-    'JGES 胃癌 ESD/EMR ガイドライン第2版（2020）の eCura 判定と治療方針、JGCA 第6版の記載を併記。非治癒切除後の LNM 点数化は別ページの eCura スコア（Hatta 2017）を参照。Figure 2–3（治療フロー）・Figure 6（未分化成分計測）は原著へリンク。',
+    'JGES 胃癌 ESD/EMR ガイドライン第2版（2020）の Fig. 2 相当テーブルを画面上部に表示し、病理所見を入力すると該当セルがハイライトされます。治療方針は JGCA 第6版の記載も併記。非治癒切除後の LNM 点数化は別ページの eCura スコア（Hatta 2017）を参照。Figure 3（治療フロー）・Figure 6（未分化成分計測）は原著へリンク。',
   figures: [
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.13883#den13883-fig-0002',

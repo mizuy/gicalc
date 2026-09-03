@@ -9,7 +9,7 @@ import {
 } from '../lib/nomogram/kajiwara';
 import { computeBestJ } from '../lib/scores/best-j';
 import { computeEcura, ECURA_LNM_BY_SCORE } from '../lib/scores/ecura';
-import { computeGastricEsdCurability } from '../lib/scores/gastric-esd-curability';
+import { computeGastricEsdCurability, resolveGastricEsdCurabilityHighlight } from '../lib/scores/gastric-esd-curability';
 import { computeEggim } from '../lib/scores/eggim';
 import { computeGbs } from '../lib/scores/gbs';
 import { computeKyoto } from '../lib/scores/kyoto';
@@ -591,6 +591,34 @@ test('各スコア定義の compute がフィールド経由で動く', () => {
     computeGastricEsdCurability({ ...baseA, ly: 1 }).interpretation,
     'eCuraC-2（非治癒切除）',
   );
+
+  const highlightA = resolveGastricEsdCurabilityHighlight(baseA);
+  assert.equal(highlightA.complete, true);
+  assert.deepEqual(highlightA.cells, ['cell-diff-pt1a-ul0']);
+
+  const highlightC1 = resolveGastricEsdCurabilityHighlight({ ...baseA, enBloc: 1 });
+  assert.equal(highlightC1.complete, true);
+  assert.ok(highlightC1.cells.includes('cell-diff-pt1a-ul0'));
+  assert.ok(highlightC1.cells.includes('row-c1'));
+
+  const highlightFig6 = resolveGastricEsdCurabilityHighlight({
+    ...baseA,
+    histology: 1,
+    undiffSize: 1,
+  });
+  assert.equal(highlightFig6.complete, true);
+  assert.ok(highlightFig6.cells.includes('row-fig6-undiff-size'));
+  assert.ok(highlightFig6.cells.includes('row-c2'));
+
+  const highlightPartial = resolveGastricEsdCurabilityHighlight({
+    histology: 0,
+    depth: 0,
+    ul: 0,
+    size: 1,
+  });
+  assert.equal(highlightPartial.partial, true);
+  assert.equal(highlightPartial.complete, false);
+  assert.deepEqual(highlightPartial.cells, ['cell-diff-pt1a-ul0']);
 
   const bestJ = getScoreById('best-j');
   assert.ok(bestJ);
