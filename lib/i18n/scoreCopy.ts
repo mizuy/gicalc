@@ -928,6 +928,29 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Four LST subtypes and deep-SMI rates (Bogie 2018 meta-analysis). Figure from Clin Endosc 2025 Fig. 3 (CC BY-NC 4.0). Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
     ],
   },
+  'appendiceal-orifice': {
+    name: 'Appendiceal orifice lesion classification (Toyonaga type)',
+    shortName: 'AO Type',
+    description:
+      'Superficial cecal lesions near the appendiceal orifice classified by contact and depth of extension into the appendix (Toyonaga classification). Guides ESD difficulty and en-bloc resection feasibility. Type 3a is deep invasion after appendectomy (Oung 2019).',
+    groups: {
+      虫垂切除後: 'After appendectomy',
+    },
+    comments: {
+      'Type 0':
+        'Not shown in the figure (Oung 2020 included contact lesions only). Often managed like routine cecal ESD.',
+      'Type 1': 'Strategy A (incise the appendiceal side first) is usual; switch to Strategy B if fibrosis limits access.',
+      'Type 2':
+        'En-bloc ESD rates of 83.3–100% are often reported. Strategy B is primary; Strategy A if submucosal lift is good.',
+      'Type 3':
+        'Surgery is usually preferred. ESD series report high perforation rates (54.5% in Oung 2020). Jacob 2016 excluded Type 3 without prior appendectomy.',
+      'Type 3a':
+        'Short residual stump favors en-bloc resection. Included with Type 3 in Oung 2020 DCT-ESD series; traction helps.',
+    },
+    figureNotes: [
+      'Types 1–3 and 3a only (Oung 2020 Fig. 2, CC BY-NC-ND 4.0). Type 0 is defined in text per Jacob 2016. The Endoscopy 2016 original is not CC.',
+    ],
+  },
   'esd-fibrosis': {
     name: 'ESD submucosal fibrosis classification (F0–F2)',
     shortName: 'ESD-F',

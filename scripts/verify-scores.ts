@@ -26,6 +26,7 @@ import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
 import { ISHII_2021_PUBMED } from '../data/scores/ishii';
 import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
 import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
+import { APPENDICEAL_ORIFICE_2016_PUBMED, OUNG_2020_PUBMED } from '../data/scores/appendiceal-orifice';
 import { LST_2008_PUBMED } from '../data/scores/lst';
 import { MESDA_G_2016_PUBMED } from '../data/scores/mesda-g';
 import { ESD_FIBROSIS_2010_PUBMED, ESD_FIBROSIS_2016_PUBMED } from '../data/scores/esd-fibrosis';
@@ -56,7 +57,7 @@ import {
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
-test('登録スコアは38種で臓器順に並ぶ', () => {
+test('登録スコアは39種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -86,6 +87,7 @@ test('登録スコアは38種で臓器順に並ぶ', () => {
       'vienna',
       'paris',
       'lst',
+      'appendiceal-orifice',
       'kudo-tsuruta',
       'esd-fibrosis',
       'colorectal-ec',
@@ -125,7 +127,7 @@ test('登録スコアは38種で臓器順に並ぶ', () => {
       ],
       [
         'colorectum',
-        ['apcs', 'sps', 'vienna', 'paris', 'lst', 'kudo-tsuruta', 'esd-fibrosis', 'colorectal-ec', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
+        ['apcs', 'sps', 'vienna', 'paris', 'lst', 'appendiceal-orifice', 'kudo-tsuruta', 'esd-fibrosis', 'colorectal-ec', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
       ],
       ['bleeding', ['forrest', 'gbs', 'noblads']],
     ],
@@ -160,6 +162,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     vienna: 'classification',
     paris: 'classification',
     lst: 'classification',
+    'appendiceal-orifice': 'classification',
     'kudo-tsuruta': 'classification',
     'esd-fibrosis': 'classification',
     'colorectal-ec': 'classification',
@@ -198,6 +201,7 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'kakushima',
     'toya',
     'lst',
+    'appendiceal-orifice',
     'kudo-tsuruta',
     'esd-fibrosis',
     'colorectal-ec',
@@ -879,6 +883,22 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(lst.originalLead ?? '', /at least 10 mm/);
   assert.equal(lst.pubmed, LST_2008_PUBMED);
 
+  const appendicealOrifice = getScoreById('appendiceal-orifice');
+  assert.ok(appendicealOrifice && isClassification(appendicealOrifice));
+  assert.deepEqual(
+    appendicealOrifice.entries.map((entry) => entry.label),
+    ['Type 0', 'Type 1', 'Type 2', 'Type 3', 'Type 3a'],
+  );
+  assert.equal(appendicealOrifice.entries[2]?.meaning, 'Partial invasion, edge visible');
+  assert.match(appendicealOrifice.originalLead ?? '', /Type 3a denotes deep invasion/);
+  assert.equal(appendicealOrifice.pubmed, APPENDICEAL_ORIFICE_2016_PUBMED);
+  assert.equal(appendicealOrifice.developedInJapan, true);
+  assert.equal(appendicealOrifice.figures?.length, 1);
+  assert.match(appendicealOrifice.figures?.[0]?.src ?? '', /oung2020-fig2/);
+  assert.equal(appendicealOrifice.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.equal(appendicealOrifice.figures?.[0]?.pubmed, OUNG_2020_PUBMED);
+  assert.match(appendicealOrifice.figures?.[0]?.note ?? '', /Type 0/);
+
   const nice = getScoreById('nice');
   assert.ok(nice && isClassification(nice));
   assert.deepEqual(
@@ -1179,6 +1199,16 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(lst.pubmed, LST_2008_PUBMED);
   assert.equal(lst.figures?.[0]?.license, 'CC BY-NC 4.0');
   assert.match(lst.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
+
+  const appendicealOrificeFig = getScoreById('appendiceal-orifice');
+  assert.ok(appendicealOrificeFig && isClassification(appendicealOrificeFig));
+  assert.equal(appendicealOrificeFig.figures?.length, 1);
+  assert.match(appendicealOrificeFig.figures?.[0]?.src ?? '', /oung2020-fig2/);
+  assert.match(appendicealOrificeFig.figures?.[0]?.caption ?? '', /Fig\. 2/);
+  assert.match(appendicealOrificeFig.figures?.[0]?.source ?? '', /Oung B/);
+  assert.equal(appendicealOrificeFig.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.match(appendicealOrificeFig.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
+  assert.match(appendicealOrificeFig.figures?.[0]?.note ?? '', /Type 0/);
 
   const nice = getScoreById('nice');
   assert.ok(nice && isClassification(nice));

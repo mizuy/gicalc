@@ -1,4 +1,5 @@
 import { ORGAN_LABELS, ORGAN_ORDER, type ScoreOrgan, type ScoreDefinition } from '../../types/score';
+import { appendicealOrificeScore } from './appendiceal-orifice';
 import { apcsScore } from './apcs';
 import { aronchickScore } from './aronchick';
 import { bbpsScore } from './bbps';
@@ -66,6 +67,7 @@ export const SCORES: ScoreDefinition[] = [
   viennaScore,
   parisScore,
   lstScore,
+  appendicealOrificeScore,
   kudoTsurutaScore,
   esdFibrosisScore,
   colorectalEcScore,
