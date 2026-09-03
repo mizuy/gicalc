@@ -416,6 +416,78 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       },
     },
   },
+  'gastric-esd-curability': {
+    name: 'Early gastric cancer endoscopic curability after ESD (eCura)',
+    shortName: 'eCura grade',
+    description:
+      'Determines endoscopic curability (eCuraA / B / C-1 / C-2) from post-ESD/EMR pathology. Notes from the JGES gastric ESD/EMR guideline (2nd ed.) and JGCA gastric cancer treatment guideline (6th ed.) are shown together.',
+    officialLinkLabel: 'JGCA gastric cancer treatment guideline 6th ed. (endoscopic resection)',
+    note: 'Curability per JGES ESD/EMR guideline (2020) and JGCA 6th ed. For LNM scoring after non-curative resection, see the separate eCura score page (Hatta 2017). Figures 2–3 and 6 link to the paper.',
+    figureNotes: [
+      'Tumor-factor curability chart. Same logic as the on-screen form. Links to Fig. 2.',
+      'Post-ESD/EMR treatment flowchart, including exceptions where additional surgery is generally indicated for eCuraC-1.',
+      'Mapping and measurement of undifferentiated components. >2 cm or undifferentiated in the SM layer → eCuraC-2.',
+    ],
+    fields: {
+      enBloc: {
+        label: 'Resection method',
+        description: 'En bloc vs piecemeal resection',
+        options: [{ label: 'En bloc' }, { label: 'Piecemeal' }],
+      },
+      histology: {
+        label: 'Histologic type (predominant)',
+        description: 'Predominant type per Japanese classification',
+        options: [
+          { label: 'Differentiated-dominant (no / immeasurable undifferentiated component)' },
+          { label: 'Differentiated-dominant with undifferentiated component (mixed)' },
+          { label: 'Undifferentiated-dominant' },
+        ],
+      },
+      size: {
+        label: 'Long diameter (on reconstruction)',
+        description: 'Maximum diameter on mapped fixed specimen (Figs 5–6)',
+        options: [{ label: '≤20 mm' }, { label: '21–30 mm' }, { label: '>30 mm' }],
+      },
+      depth: {
+        label: 'Depth of invasion',
+        options: [
+          { label: 'pT1a (M) intramucosal' },
+          { label: 'pT1b (SM1) <500 μm' },
+          { label: 'pT1b (SM2) or deeper' },
+        ],
+      },
+      ul: {
+        label: 'Ulcer / ulcer scar (UL)',
+        options: [{ label: 'UL0 (absent)' }, { label: 'UL1 (present)' }],
+      },
+      hm: {
+        label: 'Horizontal margin (HM)',
+        options: [{ label: 'HM0 (negative)' }, { label: 'HM1 (positive)' }],
+      },
+      vm: {
+        label: 'Vertical margin (VM)',
+        options: [{ label: 'VM0 (negative)' }, { label: 'VM1 (positive)' }],
+      },
+      ly: {
+        label: 'Lymphatic invasion (Ly)',
+        options: [{ label: 'Ly0' }, { label: 'Ly1' }],
+      },
+      v: {
+        label: 'Venous invasion (V)',
+        options: [{ label: 'V0' }, { label: 'V1' }],
+      },
+      undiffSize: {
+        label: 'Total long diameter of undifferentiated component',
+        description: 'Only when differentiated-dominant with undifferentiated component (Fig. 6)',
+        options: [{ label: '≤20 mm or not applicable' }, { label: '>20 mm' }],
+      },
+      undiffInSm: {
+        label: 'Undifferentiated component in SM-invasive part',
+        description: 'Differentiated-dominant with undifferentiated component and pT1b (SM1)',
+        options: [{ label: 'Absent / not applicable' }, { label: 'Present' }],
+      },
+    },
+  },
   'ecura-hatta': {
     name: 'eCura scoring system (early gastric cancer LNM)',
     description:
