@@ -74,6 +74,12 @@ export function ClassificationReferenceScreen({ score }: Props) {
           {score.license ? (
             <CitationLink label={`${t.license}: ${score.license}`} href={score.licenseUrl} />
           ) : null}
+          {score.officialUrl ? (
+            <CitationLink label={score.officialLinkLabel ?? score.officialUrl} href={score.officialUrl} />
+          ) : null}
+          {score.note ? (
+            <Text style={[styles.note, { color: textSecondary }]}>{score.note}</Text>
+          ) : null}
         </View>
       ) : null}
 
@@ -170,6 +176,11 @@ const styles = StyleSheet.create({
   },
   reference: {
     marginBottom: 16,
+  },
+  note: {
+    fontSize: 13,
+    lineHeight: 20,
+    marginTop: 8,
   },
   group: {
     marginBottom: 8,

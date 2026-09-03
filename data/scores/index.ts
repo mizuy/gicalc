@@ -24,6 +24,7 @@ import { nobladsScore } from './noblads';
 import { parisScore } from './paris';
 import { pragueScore } from './prague';
 import { sekiguchiScore } from './sekiguchi';
+import { siewertScore } from './siewert';
 import { waspScore } from './wasp';
 
 /** 表示順: 食道 → 胃 → 大腸 → 出血。臓器内は分類→リスク→治療予測 */
@@ -31,6 +32,7 @@ export const SCORES: ScoreDefinition[] = [
   jesScore,
   laScore,
   pragueScore,
+  siewertScore,
   erefsScore,
   kimuraTakemotoScore,
   hillScore,

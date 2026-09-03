@@ -30,6 +30,7 @@ import { LA_1999_PUBMED } from '../data/scores/la';
 import { NICE_2013_PUBMED } from '../data/scores/nice';
 import { PARIS_2003_PUBMED } from '../data/scores/paris';
 import { PRAGUE_2006_PUBMED } from '../data/scores/prague';
+import { JCE_11_PART2_PUBMED, SIEWERT_1998_PUBMED } from '../data/scores/siewert';
 import { WASP_2016_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
@@ -41,13 +42,14 @@ import {
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
-test('登録スコアは26種で臓器順に並ぶ', () => {
+test('登録スコアは27種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
       'jes',
       'la',
       'prague',
+      'siewert',
       'erefs',
       'kimura-takemoto',
       'hill',
@@ -76,7 +78,7 @@ test('登録スコアは26種で臓器順に並ぶ', () => {
   assert.deepEqual(
     getScoresGroupedByOrgan().map((group) => [group.organ, group.scores.map((score) => score.id)]),
     [
-      ['esophagus', ['jes', 'la', 'prague', 'erefs']],
+      ['esophagus', ['jes', 'la', 'prague', 'siewert', 'erefs']],
       [
         'stomach',
         [
@@ -105,6 +107,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     jes: 'classification',
     la: 'classification',
     prague: 'classification',
+    siewert: 'classification',
     erefs: 'classification',
     'kimura-takemoto': 'classification',
     hill: 'classification',
@@ -158,6 +161,7 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
   const international = [
     'la',
     'prague',
+    'siewert',
     'erefs',
     'hill',
     'eggim',
@@ -791,6 +795,24 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(prague.originalLead ?? '', /tops of the gastric mucosal folds/);
   assert.equal(prague.pubmed, PRAGUE_2006_PUBMED);
 
+  const siewert = getScoreById('siewert');
+  assert.ok(siewert && isClassification(siewert));
+  assert.deepEqual(
+    siewert.entries.map((entry) => entry.label),
+    ['EGJ', 'Type I', 'Type II', 'Type III', 'Nishi EGJ carcinoma', 'E', 'EG', 'E=G', 'GE', 'G', 'JGCA / JES guideline'],
+  );
+  assert.equal(siewert.entries[1]?.meaning, 'Distal esophageal adenocarcinoma');
+  assert.equal(siewert.entries[2]?.meaning, 'True cardia carcinoma');
+  assert.match(siewert.originalLead ?? '', /proximal end of the longitudinal gastric mucosal folds/);
+  assert.match(siewert.entries[4]?.rows.find((row) => row.heading === 'Definition')?.text ?? '', /2 cm proximal/);
+  assert.match(siewert.entries[4]?.rows.find((row) => row.heading === 'Scope')?.text ?? '', /Siewert Type II/);
+  assert.match(siewert.note ?? '', /西分類/);
+  assert.match(siewert.description, /西分類/);
+  assert.equal(siewert.pubmed, SIEWERT_1998_PUBMED);
+  assert.equal(siewert.organ, 'esophagus');
+  assert.equal(siewert.developedInJapan, undefined);
+  assert.doesNotMatch(siewert.entries.map((entry) => entry.label).join(' '), /JNET|NICE|WASP/);
+
   const erefs = getScoreById('erefs');
   assert.ok(erefs && isClassification(erefs));
   assert.deepEqual(
@@ -840,11 +862,11 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
 
   assert.ok(hasAlgorithmFlow(wasp));
   assert.ok(hasAlgorithmFlow(mesda));
-  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, la, prague, erefs, hill, forrest]) {
+  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, la, prague, siewert, erefs, hill, forrest]) {
     assert.equal(hasAlgorithmFlow(score), false, score.id);
   }
 
-  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, mesda, la, prague, erefs, hill, forrest, wasp]) {
+  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, mesda, la, prague, siewert, erefs, hill, forrest, wasp]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -997,6 +1019,22 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(pragueFig.figures?.[0]?.license, undefined);
   assert.match(pragueFig.figures?.[0]?.note ?? '', /CC ではない/);
   assert.equal(pragueFig.pubmed, PRAGUE_2006_PUBMED);
+
+  const siewertFig = getScoreById('siewert');
+  assert.ok(siewertFig && isClassification(siewertFig));
+  assert.equal(siewertFig.figures?.length, 4);
+  assert.match(siewertFig.figures?.[0]?.src ?? '', /siewert-jce2017-fig2-6/);
+  assert.match(siewertFig.figures?.[0]?.caption ?? '', /Fig\. 2-6/);
+  assert.equal(siewertFig.figures?.[0]?.license, 'CC BY 4.0');
+  assert.match(siewertFig.figures?.[1]?.src ?? '', /siewert-jce2017-fig2-5/);
+  assert.match(siewertFig.figures?.[2]?.src ?? '', /siewert-jce2017-fig2-7/);
+  assert.equal(siewertFig.figures?.[3]?.src, undefined);
+  assert.match(siewertFig.figures?.[3]?.href ?? '', /10\.1046\/j\.1365-2168\.1998\.00940\.x/);
+  assert.equal(siewertFig.figures?.[3]?.hrefLabel, '1998 paper');
+  assert.match(siewertFig.figures?.[3]?.note ?? '', /CC ではない/);
+  assert.equal(siewertFig.pubmed, SIEWERT_1998_PUBMED);
+  assert.equal(siewertFig.figures?.[0]?.pubmed, JCE_11_PART2_PUBMED);
+  assert.match(siewertFig.officialUrl ?? '', /jgca\.jp\/guideline\/sixth/);
 
   const laFig = getScoreById('la');
   assert.ok(laFig && isClassification(laFig));
@@ -1261,6 +1299,11 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsNotCcBody, /Prague/);
   assert.match(UI.ja.about.citationsNotCcBody, /Kajiwara/);
   assert.match(UI.ja.about.citationsNotCcBody, /埋め込まず/);
+  assert.match(UI.ja.about.esophagusBody, /Siewert/);
+  assert.match(UI.ja.about.esophagusBody, /西分類/);
+  assert.match(UI.en.about.esophagusBody, /Siewert/);
+  assert.match(UI.ja.about.citationsCcBody, /西分類/);
+  assert.match(UI.ja.about.citationsNotCcBody, /Siewert 1998/);
   assert.match(UI.ja.about.citationsCcBody, /Quach 2019/);
   assert.match(UI.ja.about.citationsCcBody, /Fig\. 13/);
   assert.match(UI.ja.about.citationsCcBody, /埋め込まず/);

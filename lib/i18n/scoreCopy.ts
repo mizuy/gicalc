@@ -82,6 +82,38 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Original Fig. 3 (C2M5 schematic). Elsevier / Gastroenterology copyright; not CC, so the figure is not hosted. Link opens the publisher Fig. 3 image.',
     ],
   },
+  siewert: {
+    name: 'Siewert classification (EGJ adenocarcinoma)',
+    shortName: 'Siewert',
+    description:
+      'Splits adenocarcinoma whose center lies within 5 cm of the EGJ into Type I / II / III. Japanese rules and guidelines use the Nishi definition (center within 2 cm of the EGJ, any histology). That zone roughly matches Siewert Type II.',
+    officialLinkLabel: 'JGCA gastric cancer guideline, 6th ed. (EGJ cancer)',
+    note: 'Siewert is a German surgical classification (no Japan mark). The Japan Esophageal Society and JGCA adopt Nishi. Siewert’s zero point is the top of the gastric folds, as in Prague. Japanese endoscopy prefers the lower end of the palisade vessels, and uses the fold tops only when those vessels are unclear. The Z-line (SCJ) may not coincide with the EGJ.',
+    groups: {
+      ランドマーク: 'Landmark',
+      Siewert: 'Siewert',
+      西分類: 'Nishi',
+      日本ガイドライン: 'Japanese guidelines',
+    },
+    comments: {
+      EGJ: 'Siewert / Prague use the top of the gastric folds. Japanese rules prefer the lower end of the palisade vessels. In Barrett esophagus or hiatal hernia, use the fold tops as the EGJ.',
+      'Type I':
+        'Usually outside the Nishi EGJ zone (±2 cm). In Japan this is treated as esophageal (Barrett) adenocarcinoma. Siewert applies to adenocarcinoma only.',
+      'Type II': 'Roughly the same as Nishi EGJ carcinoma. This is what Japanese guidelines mean by EGJ cancer.',
+      'Type III':
+        'If the center is 2–5 cm on the gastric side but the esophagus is not involved, it is gastric cancer, not Type III. It lies outside the Nishi ±2 cm zone.',
+      'Nishi EGJ carcinoma':
+        'Current rules have no size limit (older editions required diameter ≤4 cm). This is not the same as Siewert’s AEG field (adenocarcinoma within ±5 cm).',
+      'JGCA / JES guideline':
+        'The JGCA 6th edition and the esophageal-society EGJ algorithm are shared. Approach is chosen by esophageal invasion length, not by Siewert type. Newer analyses measure invasion on the resected specimen rather than by endoscopy alone.',
+    },
+    figureNotes: [
+      'Japanese Classification of Esophageal Cancer, 11th ed., English Fig. 2-6. Springer Open. License: CC BY 4.0. The Siewert 1998 BJS original figure is not CC.',
+      '11th ed. Fig. 2-5. EGJ zone = 2 cm oral (abdominal esophagus, Ae) and 2 cm anal. License: CC BY 4.0.',
+      '11th ed. Fig. 2-7. Occupation labels. License: CC BY 4.0.',
+      'Original 1998 paper. Wiley / BJS copyright; not CC, so the figure is not hosted. Link opens the paper.',
+    ],
+  },
   erefs: {
     name: 'EREFS (eosinophilic esophagitis)',
     shortName: 'EREFS',
