@@ -82,6 +82,63 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Original Fig. 3 (C2M5 schematic). Elsevier / Gastroenterology copyright; not CC, so the figure is not hosted. Link opens the publisher Fig. 3 image.',
     ],
   },
+  'jsph-varices': {
+    name: 'Esophagogastric varices (JSPH rules)',
+    shortName: 'JSPH varices',
+    description:
+      'Japan Society for Portal Hypertension rules for recording esophageal and gastric varices: location (L / Lg), form (F), color (C), then red color signs (RC). The international gastric scheme is Sarin (GOV / IGV), on a separate page.',
+    officialLinkLabel: 'JSGE/JSH cirrhosis guideline 2020 (EG varices)',
+    note: 'Proposed in 1980, revised in 1991, English 2nd edition in 2010. The current Japanese portal-hypertension rules use the same axes. Record in the order L, F, C, RC, bleeding signs, mucosal findings. Gastric varices use Sarin internationally. Western small / large roughly match F1 and F2/F3.',
+    groups: {
+      部位: 'Location',
+      形態: 'Form',
+      色調: 'Color',
+      発赤所見: 'Red color signs',
+      '出血・粘膜': 'Bleeding and mucosa',
+      日本ガイドライン: 'Japanese guidelines',
+    },
+    comments: {
+      L: 'When more than one portion is involved, record all of them (Ls,m or Lm,i).',
+      Lg: 'The 2010 edition lists the stomach separately from the esophagus. Ectopic varices (body, antrum, duodenum) have no Lg letter — record them as Sarin IGV2.',
+      F1: 'F1 with RC is an indication for prophylaxis in Western guidelines. Do not ignore it in Japan either.',
+      F2: 'F2 / F3, or any RC-positive varix, is the usual target for prophylactic endoscopy in Japan.',
+      Cw: 'If mixed, write the predominant color first (Cw-b / Cb-w). Add Th for thrombosis (Cw-Th).',
+      RC: 'Gastric varices in the 2010 edition are only RC0 / RC1 (absent / present). RC is the strongest endoscopic predictor of bleeding.',
+      'RC type': 'Record both type and grade, e.g. RC3 (RWM, CRS). HCS carries a high bleeding risk.',
+      Guideline:
+        'Example: Ls, F3, Cb, RC3 (RWM, CRS). Record the stomach separately, e.g. Lg-f, F2, Cb, RC0. Sarin is on the gastric page.',
+    },
+    figureNotes: [
+      'Nagashima 2022 Fig. 2 (A CRS and RWM; B HCS). MDPI Healthcare. License: CC BY 4.0. The Tajiri 2010 Digestive Endoscopy original figures are not CC.',
+      'Original 2010 rules paper. Wiley / Digestive Endoscopy copyright; not CC, so the figure is not hosted. Link opens the paper.',
+    ],
+  },
+  sarin: {
+    name: 'Sarin classification (gastric varices)',
+    shortName: 'Sarin',
+    description:
+      'Splits gastric varices by continuity with esophageal varices and by site into GOV1 / GOV2 / IGV1 / IGV2. Japanese recording letters Lg-c / Lg-cf / Lg-f roughly match GOV1 / GOV2 / IGV1.',
+    officialLinkLabel: 'JSGE/JSH cirrhosis guideline 2020 (gastric varices)',
+    note: 'Sarin is an international classification (no Japan mark). Japanese recording uses JSPH Lg letters (cardiac Lg-c, cardiofundal Lg-cf, fundal Lg-f). Form, color, and red color signs use the same F / C / RC as the esophagus. Hashizume 1990 is an older Japanese gastric scheme; current rules use Lg + F.',
+    groups: {
+      Sarin: 'Sarin',
+      記載基準: 'JSPH letters',
+      日本ガイドライン: 'Japanese guidelines',
+    },
+    comments: {
+      GOV1: 'Roughly Lg-c. Vascular anatomy matches esophageal varices. Treat like the esophagus (EVL).',
+      GOV2: 'Roughly Lg-cf. Often has a gastrorenal shunt. Prefer cyanoacrylate or BRTO over banding.',
+      IGV1:
+        'Roughly Lg-f. Exclude splenic-vein occlusion (left-sided portal hypertension). Japanese guidelines suggest BRTO to prevent rebleeding.',
+      IGV2: 'No Lg letter. In Japan these are recorded as ectopic varices.',
+      Lg: 'Form is F0–F3, color is Cw / Cb, and gastric RC is only RC0 / RC1. Full definitions are on the esophageal JSPH page.',
+      Guideline:
+        'ESGE also recommends recording gastric varices with Sarin. The West uses NSBB for primary prophylaxis and CA / TIPS for bleeding. Japan has more BRTO experience.',
+    },
+    figureNotes: [
+      'Original 1992 paper. Wiley / Hepatology copyright; not CC, so the figure is not hosted. Link opens the paper.',
+    ],
+  },
   erefs: {
     name: 'EREFS (eosinophilic esophagitis)',
     shortName: 'EREFS',
