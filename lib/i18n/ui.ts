@@ -37,6 +37,9 @@ export type UiStrings = {
     manualHint: string;
     install: string;
     close: string;
+    updateAvailable: string;
+    reload: string;
+    later: string;
   };
   about: {
     intro: string;
@@ -53,6 +56,7 @@ export type UiStrings = {
     pwaIos: string;
     pwaAndroid: string;
     pwaBanner: string;
+    pwaUpdate: string;
     citationsTitle: string;
     citationsIntro: string;
     citationsCc: string;
@@ -116,6 +120,9 @@ export const UI: Record<Locale, UiStrings> = {
         'Safari: 共有 → 「ホーム画面に追加」 / Chrome: メニュー → 「アプリをインストール」または「ホーム画面に追加」',
       install: 'インストール',
       close: '閉じる',
+      updateAvailable: '新しい版があります',
+      reload: '再読み込み',
+      later: '後で',
     },
     about: {
       intro:
@@ -136,6 +143,7 @@ export const UI: Record<Locale, UiStrings> = {
       pwaIos: 'iPhone / iPad（Safari）: 共有ボタン → 「ホーム画面に追加」',
       pwaAndroid: 'Android（Chrome）: メニュー → 「アプリをインストール」または「ホーム画面に追加」',
       pwaBanner: '対応ブラウザではホーム画面のインストールバナーからも追加できます。',
+      pwaUpdate: '新しい版があるときは画面上部にバナーが出ます。「再読み込み」を押すと最新になります。',
       citationsTitle: '引用とライセンス',
       citationsIntro:
         '図と原著のライセンスは、出版社ページと Crossref の表記で確認した。Creative Commons のものは下に書き、そうでないものはリストにした。',
@@ -201,6 +209,9 @@ export const UI: Record<Locale, UiStrings> = {
         'Safari: Share → Add to Home Screen / Chrome: Menu → Install app or Add to Home Screen',
       install: 'Install',
       close: 'Close',
+      updateAvailable: 'A new version is available',
+      reload: 'Reload',
+      later: 'Later',
     },
     about: {
       intro:
@@ -222,6 +233,7 @@ export const UI: Record<Locale, UiStrings> = {
       pwaIos: 'iPhone / iPad (Safari): Share → Add to Home Screen',
       pwaAndroid: 'Android (Chrome): Menu → Install app or Add to Home Screen',
       pwaBanner: 'Supported browsers may also show an install banner on the home screen.',
+      pwaUpdate: 'When a new version is available, a banner appears at the top. Tap Reload to apply it.',
       citationsTitle: 'Citations and licenses',
       citationsIntro:
         'Figure and paper licenses were checked against publisher pages and Crossref. Creative Commons sources are listed first; sources that are not CC follow.',

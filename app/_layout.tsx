@@ -2,10 +2,12 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { View } from 'react-native';
 import 'react-native-reanimated';
 
 import { LanguageToggle } from '@/components/LanguageToggle';
 import { useColorScheme } from '@/components/useColorScheme';
+import { PwaUpdateBanner } from '@/components/web/PwaUpdateBanner';
 import Colors from '@/constants/Colors';
 import { LocaleProvider, useLocale } from '@/lib/i18n';
 
@@ -73,13 +75,16 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkNavTheme : LightNavTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="score/[id]"
-          options={{ headerBackTitle: t.back, headerRight: () => <LanguageToggle /> }}
-        />
-      </Stack>
+      <View style={{ flex: 1, position: 'relative' }}>
+        <PwaUpdateBanner />
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="score/[id]"
+            options={{ headerBackTitle: t.back, headerRight: () => <LanguageToggle /> }}
+          />
+        </Stack>
+      </View>
     </ThemeProvider>
   );
 }

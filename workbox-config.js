@@ -6,7 +6,7 @@ module.exports = {
   globPatterns: ['**/*.{js,html,css,ttf,ico,png,jpg,jpeg,json,svg,woff,woff2}'],
   swDest: 'dist/sw.js',
   clientsClaim: true,
-  skipWaiting: true,
+  skipWaiting: false,
   ...(baseUrl
     ? {
         modifyURLPrefix: {

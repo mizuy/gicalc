@@ -58,6 +58,7 @@ export default function AboutScreen() {
       <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaIos}</Text>
       <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaAndroid}</Text>
       <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaBanner}</Text>
+      <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaUpdate}</Text>
 
       <Text style={[styles.section, { color: accent }]}>{t.about.disclaimer}</Text>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>

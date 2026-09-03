@@ -38,6 +38,7 @@ import {
   findEntryForResult,
   walkAlgorithmFlow,
 } from '../lib/scores/algorithmFlow';
+import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
 test('登録スコアは26種で臓器順に並ぶ', () => {
@@ -1197,6 +1198,35 @@ test('WASP / MESDA-G のフローは選択すると診断まで進む', () => {
   const englishMesda = localizeScore(mesda, 'en');
   assert.ok(hasAlgorithmFlow(englishMesda));
   assert.equal(englishMesda.flow.steps.dl.options[0]?.label, 'Absent');
+});
+
+test('PWA 更新はユーザー操作まで waiting のままにする', () => {
+  const workbox = require('../workbox-config.js') as { skipWaiting: boolean; clientsClaim: boolean };
+  assert.equal(workbox.skipWaiting, false);
+  assert.equal(workbox.clientsClaim, true);
+});
+
+test('PWA 更新バナーの文言と検知', () => {
+  const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
+  assert.equal(UI.ja.pwa.updateAvailable, '新しい版があります');
+  assert.equal(UI.ja.pwa.reload, '再読み込み');
+  assert.equal(UI.ja.pwa.later, '後で');
+  assert.match(UI.ja.about.pwaUpdate, /再読み込み/);
+  assert.equal(UI.en.pwa.updateAvailable, 'A new version is available');
+  assert.equal(UI.en.pwa.reload, 'Reload');
+  assert.equal(UI.en.pwa.later, 'Later');
+  assert.match(UI.en.about.pwaUpdate, /Reload/);
+  assert.doesNotMatch(UI.en.pwa.updateAvailable, japanese);
+  assert.doesNotMatch(UI.en.pwa.reload, japanese);
+  assert.doesNotMatch(UI.en.pwa.later, japanese);
+  assert.doesNotMatch(UI.en.about.pwaUpdate, japanese);
+
+  assert.equal(isPwaUpdateAvailable({ hasController: false, waiting: true }), false);
+  assert.equal(isPwaUpdateAvailable({ hasController: true, waiting: true }), true);
+  assert.equal(isPwaUpdateAvailable({ hasController: true, waiting: false, installingState: 'installing' }), false);
+  assert.equal(isPwaUpdateAvailable({ hasController: true, waiting: false, installingState: 'installed' }), true);
+  assert.equal(shouldOfferUpdateAfterControllerChange(false), false);
+  assert.equal(shouldOfferUpdateAfterControllerChange(true), true);
 });
 
 test('About は CC と非 CC を分けて書く', () => {
