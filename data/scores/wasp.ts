@@ -143,7 +143,7 @@ export const waspScore: ClassificationDefinition = {
     },
     map: {
       id: 'start',
-      label: '10 mm 未満のポリープ',
+      label: 'Polyp <10 mm',
       children: [
         {
           id: 'nice-gate',
@@ -158,7 +158,7 @@ export const waspScore: ClassificationDefinition = {
               children: [
                 {
                   id: 'ssl-1',
-                  label: 'SSL 所見',
+                  label: 'SSA/P-like features',
                   stepId: 'ssl1',
                   children: [
                     {
@@ -166,7 +166,7 @@ export const waspScore: ClassificationDefinition = {
                       label: '<2',
                       stepId: 'ssl1',
                       optionId: 'lt2',
-                      children: [{ id: 'hp', label: '過形成', resultId: 'hp' }],
+                      children: [{ id: 'hp', label: 'Hyperplastic polyp', resultId: 'hp' }],
                     },
                     {
                       id: 'ssap1-opt',
@@ -187,7 +187,7 @@ export const waspScore: ClassificationDefinition = {
               children: [
                 {
                   id: 'ssl-2',
-                  label: 'SSL 所見',
+                  label: 'SSA/P-like features',
                   stepId: 'ssl2',
                   children: [
                     {
@@ -195,7 +195,7 @@ export const waspScore: ClassificationDefinition = {
                       label: '<2',
                       stepId: 'ssl2',
                       optionId: 'lt2',
-                      children: [{ id: 'adenoma', label: '腺腫', resultId: 'adenoma' }],
+                      children: [{ id: 'adenoma', label: 'Adenoma', resultId: 'adenoma' }],
                     },
                     {
                       id: 'ssap2-opt',

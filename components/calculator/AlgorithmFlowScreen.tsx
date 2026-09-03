@@ -162,12 +162,23 @@ function FlowTree({
         <View style={styles.treeChildren}>
           <View style={[styles.stem, { backgroundColor: onPath ? tint : border }]} />
           <View style={styles.treeRow}>
-            {node.children.map((child) => (
-              <View key={child.id} style={styles.treeBranch}>
-                <View style={[styles.stem, { backgroundColor: isMapNodeOnPath(child, walk, answers) ? tint : border }]} />
-                <FlowTree node={child} flow={flow} answers={answers} onChoose={onChoose} />
-              </View>
-            ))}
+            {node.children.map((child, index) => {
+              const childOnPath = isMapNodeOnPath(child, walk, answers);
+              const line = childOnPath ? tint : border;
+              const first = index === 0;
+              const last = index === node.children!.length - 1;
+              return (
+                <View key={child.id} style={styles.treeBranch}>
+                  <View style={styles.treeRail}>
+                    <View style={[styles.treeRailArm, { backgroundColor: first ? 'transparent' : border }]} />
+                    <View style={[styles.treeRailHub, { backgroundColor: line }]} />
+                    <View style={[styles.treeRailArm, { backgroundColor: last ? 'transparent' : border }]} />
+                  </View>
+                  <View style={[styles.stem, { backgroundColor: line }]} />
+                  <FlowTree node={child} flow={flow} answers={answers} onChoose={onChoose} />
+                </View>
+              );
+            })}
           </View>
         </View>
       ) : null}
@@ -390,28 +401,48 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   mapInner: {
-    minWidth: 520,
+    minWidth: 560,
+    width: '100%',
     paddingHorizontal: 12,
-    alignItems: 'center',
+    alignItems: 'stretch',
   },
   tree: {
     alignItems: 'center',
+    width: '100%',
   },
   treeChildren: {
     alignItems: 'center',
+    width: '100%',
   },
   treeRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-start',
+    width: '100%',
   },
   treeBranch: {
+    flex: 1,
     alignItems: 'center',
-    paddingHorizontal: 4,
+    minWidth: 96,
+  },
+  treeRail: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    height: 2,
+  },
+  treeRailArm: {
+    flex: 1,
+    height: 2,
+    minHeight: 2,
+  },
+  treeRailHub: {
+    width: 2,
+    height: 2,
   },
   stem: {
     width: 2,
-    height: 12,
+    height: 14,
   },
   chip: {
     borderRadius: 10,
