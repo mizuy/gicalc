@@ -63,7 +63,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'O-3': 'Kyoto atrophy +2 points (O-1–O-3).',
     },
     figureNotes: [
-      'C-1–C-3, O-1–O-3. Figure from Quach 2019 Clin Endosc Fig. 2, CC BY-NC 3.0. The 1969 original (Endoscopy / Thieme) is not CC.',
+      'C-1–C-3, O-1–O-3. Figure from Quach 2019 Clin Endosc Fig. 2, CC BY-NC 3.0. The original white-background figure is used as-is (a black background hides the lines).',
     ],
   },
   'mesda-g': {

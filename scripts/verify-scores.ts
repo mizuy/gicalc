@@ -784,11 +784,12 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.ok(kimura && isClassification(kimura));
   assert.match(kimura.figures?.[0]?.source ?? '', /Kimura K/);
   assert.match(kimura.figures?.[0]?.doi ?? '', /10\.5946\/ce\.2019\.072/);
-  assert.match(kimura.figures?.[0]?.src ?? '', /kimura-takemoto-1969/);
+  assert.match(kimura.figures?.[0]?.src ?? '', /kimura-takemoto-1969\.png/);
   assert.equal(kimura.pubmed, KIMURA_1969_PUBMED);
   assert.equal(kimura.figures?.[0]?.pubmed, '31327182');
   assert.equal(kimura.figures?.[0]?.license, 'CC BY-NC 3.0');
   assert.match(kimura.figures?.[0]?.note ?? '', /CC BY-NC 3\.0/);
+  assert.match(kimura.figures?.[0]?.note ?? '', /白地/);
 
   const paris = getScoreById('paris');
   assert.ok(paris && isClassification(paris));

@@ -20,7 +20,7 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
   pubmed: KIMURA_1969_PUBMED,
   figures: [
     {
-      src: '/figures/kimura-takemoto-1969.jpg',
+      src: '/figures/kimura-takemoto-1969.png',
       alt: 'Kimura–Takemoto classification C-1 to O-3',
       caption: 'Fig. Kimura–Takemoto classification of the atrophic border (1969)',
       source:
@@ -29,8 +29,8 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
       pubmed: '31327182',
       license: 'CC BY-NC 3.0',
       licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',
-      note: 'C-1–C-3, O-1–O-3。図は Quach 2019 Clin Endosc Fig. 2。ライセンスは CC BY-NC 3.0。1969 年の原著（Endoscopy / Thieme）は CC ではない。',
-      aspectRatio: 966 / 876,
+      note: 'C-1–C-3, O-1–O-3。図は Quach 2019 Clin Endosc Fig. 2。ライセンスは CC BY-NC 3.0。白地の原図をそのまま使う（黒背景にすると線が見えない）。',
+      aspectRatio: 634 / 585,
     },
   ],
   entries: [
