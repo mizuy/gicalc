@@ -23,7 +23,8 @@ export const mesdaGScore: ClassificationDefinition = {
   licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
   figures: [
     {
-      src: '/figures/mesda-g-muto2016-fig1.jpg',
+      href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.12638#den12638-fig-0001',
+      hrefLabel: 'Fig. 1',
       alt: 'MESDA-G algorithm: suspicious lesion, demarcation line, then irregular MV and/or MS (Muto 2016 Fig. 1)',
       caption: 'Fig. 1. Magnifying Endoscopy Simple Diagnostic Algorithm for Gastric cancer (MESDA-G)',
       source:
@@ -32,8 +33,7 @@ export const mesdaGScore: ClassificationDefinition = {
       pubmed: MESDA_G_2016_PUBMED,
       license: 'CC BY-NC-ND 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
-      note: '原著 Fig. 1。Wiley / JGES の Open Access。ライセンスは CC BY-NC-ND 4.0。胃の拡大診断アルゴリズム。JNET / NICE とは別。',
-      aspectRatio: 1120 / 1180,
+      note: '画面のフローチャートと同じ手順なので埋め込まず、原著 Fig. 1 へリンクする。Wiley / JGES の Open Access。ライセンスは CC BY-NC-ND 4.0。胃の拡大診断アルゴリズム。JNET / NICE とは別。',
     },
     {
       src: '/figures/mesda-g-muto2016-fig13.jpg',
@@ -243,44 +243,44 @@ export const mesdaGScore: ClassificationDefinition = {
     },
     map: {
       id: 'start',
-      label: '白光で疑わしい病変',
+      label: 'Suspicious lesion',
       children: [
         {
           id: 'dl-gate',
-          label: '境界線（DL）',
+          label: 'DL',
           stepId: 'dl',
           children: [
             {
               id: 'absent',
-              label: 'なし',
+              label: 'Absent',
               stepId: 'dl',
               optionId: 'absent',
-              children: [{ id: 'noncancer-dl', label: '非癌', resultId: 'noncancer-dl' }],
+              children: [{ id: 'noncancer-dl', label: 'Non-cancer', resultId: 'noncancer-dl' }],
             },
             {
               id: 'present',
-              label: 'あり',
+              label: 'Present',
               stepId: 'dl',
               optionId: 'present',
               children: [
                 {
                   id: 'mvms-gate',
-                  label: 'DL 内の MV / MS',
+                  label: 'IMVP and/or IMSP',
                   stepId: 'mvms',
                   children: [
                     {
                       id: 'regular',
-                      label: '両方 regular',
+                      label: 'Absent',
                       stepId: 'mvms',
                       optionId: 'regular',
-                      children: [{ id: 'noncancer-regular', label: '非癌', resultId: 'noncancer-regular' }],
+                      children: [{ id: 'noncancer-regular', label: 'Non-cancer', resultId: 'noncancer-regular' }],
                     },
                     {
                       id: 'irregular',
-                      label: '不整',
+                      label: 'Present',
                       stepId: 'mvms',
                       optionId: 'irregular',
-                      children: [{ id: 'egc', label: '早期胃癌', resultId: 'egc' }],
+                      children: [{ id: 'egc', label: 'EGC', resultId: 'egc' }],
                     },
                   ],
                 },

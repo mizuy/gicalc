@@ -950,9 +950,12 @@ test('分類は原著の図を出典付きで持つ', () => {
   const mesda = getScoreById('mesda-g');
   assert.ok(mesda && isClassification(mesda));
   assert.equal(mesda.figures?.length, 2);
-  assert.match(mesda.figures?.[0]?.src ?? '', /mesda-g-muto2016-fig1/);
+  assert.equal(mesda.figures?.[0]?.src, undefined);
+  assert.match(mesda.figures?.[0]?.href ?? '', /den12638-fig-0001/);
+  assert.equal(mesda.figures?.[0]?.hrefLabel, 'Fig. 1');
   assert.match(mesda.figures?.[0]?.caption ?? '', /Fig\. 1/);
   assert.match(mesda.figures?.[0]?.source ?? '', /Muto M/);
+  assert.match(mesda.figures?.[0]?.note ?? '', /埋め込まず/);
   assert.match(mesda.figures?.[1]?.src ?? '', /mesda-g-muto2016-fig13/);
   assert.match(mesda.figures?.[1]?.caption ?? '', /Fig\. 13/);
   assert.equal(mesda.pubmed, MESDA_G_2016_PUBMED);
@@ -1191,6 +1194,21 @@ test('WASP / MESDA-G のフローは選択すると診断まで進む', () => {
   const dropped = applyAlgorithmAnswer(mesda.flow, { dl: 'present', mvms: 'irregular' }, 'dl', 'absent');
   assert.deepEqual(dropped, { dl: 'absent' });
 
+  const mapJapanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
+  const mapLabels = (node: { label: string; children?: unknown[] }): string[] => [
+    node.label,
+    ...(node.children ?? []).flatMap((child) => mapLabels(child as { label: string; children?: unknown[] })),
+  ];
+  for (const label of [...mapLabels(wasp.flow.map), ...mapLabels(mesda.flow.map)]) {
+    assert.doesNotMatch(label, mapJapanese, label);
+  }
+  assert.equal(wasp.flow.map.label, 'Polyp <10 mm');
+  assert.ok(mapLabels(wasp.flow.map).includes('SSA/P-like features'));
+  assert.ok(mapLabels(wasp.flow.map).includes('Hyperplastic polyp'));
+  assert.equal(mesda.flow.map.label, 'Suspicious lesion');
+  assert.ok(mapLabels(mesda.flow.map).includes('IMVP and/or IMSP'));
+  assert.ok(mapLabels(mesda.flow.map).includes('EGC'));
+
   const englishWasp = localizeScore(wasp, 'en');
   assert.ok(hasAlgorithmFlow(englishWasp));
   assert.equal(englishWasp.flow.steps.nice.prompt, 'Is this NICE Type 1 or Type 2?');
@@ -1198,6 +1216,9 @@ test('WASP / MESDA-G のフローは選択すると診断まで進む', () => {
   const englishMesda = localizeScore(mesda, 'en');
   assert.ok(hasAlgorithmFlow(englishMesda));
   assert.equal(englishMesda.flow.steps.dl.options[0]?.label, 'Absent');
+  assert.equal(englishMesda.flow.map.label, 'Suspicious lesion');
+  assert.equal(englishMesda.figures?.[0]?.src, undefined);
+  assert.match(englishMesda.figures?.[0]?.note ?? '', /not hosted/);
 });
 
 test('PWA 更新はユーザー操作まで waiting のままにする', () => {
@@ -1241,8 +1262,11 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsNotCcBody, /Kajiwara/);
   assert.match(UI.ja.about.citationsNotCcBody, /埋め込まず/);
   assert.match(UI.ja.about.citationsCcBody, /Quach 2019/);
+  assert.match(UI.ja.about.citationsCcBody, /Fig\. 13/);
+  assert.match(UI.ja.about.citationsCcBody, /埋め込まず/);
   assert.doesNotMatch(UI.ja.about.citationsNotCcBody, /1969/);
   assert.match(UI.en.about.citationsCcBody, /CC BY-NC-ND 4\.0/);
+  assert.match(UI.en.about.citationsCcBody, /Fig\. 13/);
   assert.match(UI.en.about.citationsNotCcBody, /not CC/);
   assert.match(UI.en.about.citationsNotCcBody, /not hosted/);
   assert.doesNotMatch(UI.en.about.citationsNotCcBody, /1969/);

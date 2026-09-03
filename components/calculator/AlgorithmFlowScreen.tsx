@@ -146,8 +146,8 @@ function FlowTree({
   const current = isMapNodeCurrent(node, walk);
   const isResult = Boolean(node.resultId && walk.result?.id === node.resultId);
   const canPress = Boolean(node.stepId && node.optionId);
-  const border = useThemeColor({}, 'border');
   const tint = useThemeColor({}, 'tint');
+  const connector = '#6B8A8C';
 
   return (
     <View style={styles.tree}>
@@ -160,14 +160,32 @@ function FlowTree({
       />
       {node.children?.length ? (
         <View style={styles.treeChildren}>
-          <View style={[styles.stem, { backgroundColor: onPath ? tint : border }]} />
+          <View style={[styles.stem, { backgroundColor: onPath ? tint : connector }]} />
+          {node.children.length > 1 ? (
+            <View style={styles.treeHBarTrack}>
+              <View
+                collapsable={false}
+                style={[
+                  styles.treeHBar,
+                  {
+                    backgroundColor: connector,
+                    borderTopColor: connector,
+                    width: `${((node.children.length - 1) / node.children.length) * 100}%`,
+                  },
+                ]}
+              />
+            </View>
+          ) : null}
           <View style={styles.treeRow}>
-            {node.children.map((child) => (
-              <View key={child.id} style={styles.treeBranch}>
-                <View style={[styles.stem, { backgroundColor: isMapNodeOnPath(child, walk, answers) ? tint : border }]} />
-                <FlowTree node={child} flow={flow} answers={answers} onChoose={onChoose} />
-              </View>
-            ))}
+            {node.children.map((child) => {
+              const childOnPath = isMapNodeOnPath(child, walk, answers);
+              return (
+                <View key={child.id} style={styles.treeBranch}>
+                  <View style={[styles.stem, { backgroundColor: childOnPath ? tint : connector }]} />
+                  <FlowTree node={child} flow={flow} answers={answers} onChoose={onChoose} />
+                </View>
+              );
+            })}
           </View>
         </View>
       ) : null}
@@ -390,28 +408,44 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   mapInner: {
-    minWidth: 520,
+    minWidth: 560,
+    width: '100%',
     paddingHorizontal: 12,
-    alignItems: 'center',
+    alignItems: 'stretch',
   },
   tree: {
     alignItems: 'center',
+    width: '100%',
   },
   treeChildren: {
     alignItems: 'center',
+    width: '100%',
   },
   treeRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-start',
+    width: '100%',
   },
   treeBranch: {
+    flex: 1,
     alignItems: 'center',
-    paddingHorizontal: 4,
+    minWidth: 96,
+  },
+  treeHBarTrack: {
+    width: '100%',
+    height: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  treeHBar: {
+    height: 3,
+    minHeight: 3,
+    borderTopWidth: 3,
   },
   stem: {
-    width: 2,
-    height: 12,
+    width: 3,
+    height: 16,
   },
   chip: {
     borderRadius: 10,
