@@ -28,8 +28,8 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Type B2': 'Esophageal SM1 is ≤200 μm.',
     },
     figureNotes: [
-      'Top left Fig. 1 Type A; top right Fig. 2 Type B1; bottom left Fig. 3 Type B2; bottom right Fig. 4 Type B3.',
-      'AVA-small / middle / large.',
+      'Top left Fig. 1 Type A; top right Fig. 2 Type B1; bottom left Fig. 3 Type B2; bottom right Fig. 4 Type B3. Springer Open. License: CC BY 4.0.',
+      'AVA-small / middle / large. Springer Open. License: CC BY 4.0.',
     ],
   },
   'kimura-takemoto': {
@@ -53,7 +53,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'O-2': 'Kyoto atrophy +2 points (O-1–O-3).',
       'O-3': 'Kyoto atrophy +2 points (O-1–O-3).',
     },
-    figureNotes: ['C-1–C-3, O-1–O-3. Figure reprinted in Quach 2019.'],
+    figureNotes: [
+      'C-1–C-3, O-1–O-3. Figure from Quach 2019 Clin Endosc Fig. 2, CC BY-NC 3.0. The 1969 original (Endoscopy / Thieme) is not CC.',
+    ],
   },
   'mesda-g': {
     name: 'MESDA-G (early gastric cancer, magnifying)',
@@ -78,8 +80,8 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         'When white opaque substance (WOS) hides vessels, use WOS morphology as an alternative marker of the microsurface pattern.',
     },
     figureNotes: [
-      'Original Fig. 1. Magnifying algorithm for the stomach. Separate from JNET / NICE.',
-      'Original Fig. 13. Microvascular (V) and microsurface (S) patterns as regular / irregular / absent. Arrows mark the demarcation line (DL).',
+      'Original Fig. 1. Wiley / JGES Open Access, CC BY-NC-ND 4.0. Magnifying algorithm for the stomach. Separate from JNET / NICE.',
+      'Original Fig. 13. Wiley / JGES Open Access, CC BY-NC-ND 4.0. Microvascular (V) and microsurface (S) patterns as regular / irregular / absent. Arrows mark the demarcation line (DL).',
     ],
   },
   kyoto: {
@@ -429,7 +431,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       '0-III': 'Almost never seen in the colorectum.',
     },
     figureNotes: [
-      '0-Isp in the figure is Japanese / later. The 2003/2005 Paris table lists 0-Ip and 0-Is. Figure from Clin Endosc 2025 Fig. 2 (adapted from Johnson 2023, CC).',
+      '0-Isp in the figure is Japanese / later. The 2003/2005 Paris table lists 0-Ip and 0-Is. Figure from Clin Endosc 2025 Fig. 2 (CC BY-NC 4.0). Johnson 2023 Can J Surg is CC BY-NC-ND 4.0. The 2003/2005 originals are not CC.',
     ],
   },
   lst: {
@@ -450,7 +452,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         'Highest invasion risk of the four subtypes. The 31.6% (CI 19.8–43.4%) on the figure is from Bogie 2018. Consider en-bloc resection.',
     },
     figureNotes: [
-      'Four LST subtypes and deep-SMI rates (Bogie 2018 meta-analysis). Figure from Clin Endosc 2025 Fig. 3 (adapted from Castillo-Regalado 2022, CC).',
+      'Four LST subtypes and deep-SMI rates (Bogie 2018 meta-analysis). Figure from Clin Endosc 2025 Fig. 3 (CC BY-NC 4.0). Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
     ],
   },
   'kudo-tsuruta': {
@@ -461,7 +463,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       腺腫: 'Adenoma',
       癌: 'Carcinoma',
     },
-    figureNotes: ['Types I–VN. Figure from Clin Endosc 2025 Fig. 4 (adapted from Tanaka 2004).'],
+    figureNotes: [
+      'Types I–VN. Figure from Clin Endosc 2025 Fig. 4 (article is CC BY-NC 4.0). The Tanaka 2004 Dig Endosc original is not CC; Clin Endosc reprinted it with permission.',
+    ],
   },
   nice: {
     name: 'NICE classification (colorectal NBI, non-magnifying)',
@@ -471,12 +475,14 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Type 1': 'SSA/P is not included in this classification (a limitation of the original paper).',
       'Type 3': 'Deep SM invasion is ≥1000 μm. Consider additional surgery.',
     },
-    figureNotes: ['Original Fig. 1. Used without magnification. Separate from JNET.'],
+    figureNotes: [
+      'Original Fig. 1. Elsevier / GIE copyright; not CC. Used without magnification. Separate from JNET.',
+    ],
   },
   jnet: {
     name: 'JNET classification (colorectal NBI magnifying)',
     description: 'NBI magnifying classification of colorectal tumors (Type 1 / 2A / 2B / 3).',
-    figureNotes: ['Original Fig. 7.'],
+    figureNotes: ['Original Fig. 7. Wiley / JGES standard copyright; not CC.'],
   },
   'kajiwara-nomogram': {
     name: 'Colorectal T1 LNM nomogram (Kajiwara / JSCCR)',

@@ -12,6 +12,8 @@ export const aronchickScore: ScoreDefinition = {
     '大腸全体の前処置を洗浄前に5段階で評価します。区域点はありません。',
   reference: 'Aronchick CA et al. Gastrointest Endosc 2000;52:346-352',
   pubmed: '10968848',
+  license: 'CC BY-NC-ND 4.0',
+  licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
   fields: [
     {
       id: 'grade',

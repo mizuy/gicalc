@@ -19,6 +19,8 @@ export const mesdaGScore: ClassificationDefinition = {
     'To diagnose EGC, one has to identify any suspicious lesion that is potentially a neoplasm. To recognize such a lesion, we carefully observe the color change (whitish or reddish) or morphological change (elevated, flat, or depressed) on the gastric mucosal surface. If we detect a suspicious lesion, identification of a demarcation line (DL) between the lesion and the background mucosa is the first step in distinguishing EGC from a non-cancerous lesion. If a DL is absent, the diagnosis of a benign lesion may be made. If a DL is present, the subsequent presence of an irregular microvascular (MV) pattern and an irregular microsurface (MS) pattern should be determined. If irregular MV and/or MS patterns are present within the demarcation line, the diagnosis of EGC can be made.',
   reference: 'Muto M et al. Dig Endosc 2016;28:379-393',
   pubmed: MESDA_G_2016_PUBMED,
+  license: 'CC BY-NC-ND 4.0',
+  licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
   figures: [
     {
       src: '/figures/mesda-g-muto2016-fig1.jpg',
@@ -28,7 +30,9 @@ export const mesdaGScore: ClassificationDefinition = {
         'Muto M, Yao K, Kaise M, Kato M, Uedo N, Yagi K, Tajiri H. Magnifying endoscopy simple diagnostic algorithm for early gastric cancer (MESDA-G). Dig Endosc. 2016;28:379-393. Fig. 1.',
       doi: 'https://doi.org/10.1111/den.12638',
       pubmed: MESDA_G_2016_PUBMED,
-      note: '原著 Fig. 1。胃の拡大診断アルゴリズム。JNET / NICE とは別。',
+      license: 'CC BY-NC-ND 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
+      note: '原著 Fig. 1。Wiley / JGES の Open Access。ライセンスは CC BY-NC-ND 4.0。胃の拡大診断アルゴリズム。JNET / NICE とは別。',
       aspectRatio: 1120 / 1180,
     },
     {
@@ -38,7 +42,9 @@ export const mesdaGScore: ClassificationDefinition = {
       source: 'Muto M, Yao K, Kaise M, et al. Dig Endosc. 2016;28:379-393. Fig. 13.',
       doi: 'https://doi.org/10.1111/den.12638',
       pubmed: MESDA_G_2016_PUBMED,
-      note: '原著 Fig. 13。微小血管（V）と微小表面（S）を regular / irregular / absent に分ける。矢印は境界線（DL）。',
+      license: 'CC BY-NC-ND 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
+      note: '原著 Fig. 13。Wiley / JGES の Open Access。ライセンスは CC BY-NC-ND 4.0。微小血管（V）と微小表面（S）を regular / irregular / absent に分ける。矢印は境界線（DL）。',
       aspectRatio: 2280 / 1550,
     },
   ],

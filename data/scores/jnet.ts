@@ -23,7 +23,7 @@ export const jnetScore: ClassificationDefinition = {
         'Sano Y, Tanaka S, Kudo S-E, et al. Narrow-band imaging (NBI) magnifying endoscopic classification of colorectal tumors proposed by the Japan NBI Expert Team. Dig Endosc. 2016;28:526-533.',
       doi: 'https://doi.org/10.1111/den.12644',
       pubmed: '26927367',
-      note: '原著 Fig. 7。',
+      note: '原著 Fig. 7。Wiley / JGES の標準著作権。CC ではない。',
       aspectRatio: 1302 / 766,
     },
   ],

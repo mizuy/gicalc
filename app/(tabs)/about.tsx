@@ -35,6 +35,25 @@ export default function AboutScreen() {
         <Text style={[styles.body, { color: textSecondary }]}>{t.about.bleedingBody}</Text>
       </View>
 
+      <Text style={[styles.section, { color: tint }]}>{t.about.citationsTitle}</Text>
+      <Text style={[styles.body, { color: textSecondary }]}>{t.about.citationsIntro}</Text>
+      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
+        <Text style={styles.cardTitle}>{t.about.citationsCc}</Text>
+        {t.about.citationsCcBody.split('\n').map((line) => (
+          <Text key={line} style={[styles.body, { color: textSecondary }]}>
+            {line}
+          </Text>
+        ))}
+      </View>
+      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
+        <Text style={styles.cardTitle}>{t.about.citationsNotCc}</Text>
+        {t.about.citationsNotCcBody.split('\n').map((line) => (
+          <Text key={line} style={[styles.body, { color: textSecondary }]}>
+            {line}
+          </Text>
+        ))}
+      </View>
+
       <Text style={[styles.section, { color: tint }]}>{t.about.pwaTitle}</Text>
       <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaIos}</Text>
       <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaAndroid}</Text>

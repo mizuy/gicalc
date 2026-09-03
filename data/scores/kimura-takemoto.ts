@@ -25,9 +25,11 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
       caption: 'Fig. Kimura–Takemoto classification of the atrophic border (1969)',
       source:
         'Kimura K, Takemoto T. An endoscopic recognition of the atrophic border and its significance in chronic gastritis. Endoscopy. 1969;1:87-97. Figure as published in Quach DT, Hiyama T. Clin Endosc. 2019;52:321-327, Fig. 2.',
-      doi: 'https://doi.org/10.1055/s-0028-1098086',
+      doi: 'https://doi.org/10.5946/ce.2019.072',
       pubmed: '31327182',
-      note: 'C-1–C-3, O-1–O-3。図は Quach 2019 再掲。',
+      license: 'CC BY-NC 3.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',
+      note: 'C-1–C-3, O-1–O-3。図は Quach 2019 Clin Endosc Fig. 2。ライセンスは CC BY-NC 3.0。1969 年の原著（Endoscopy / Thieme）は CC ではない。',
       aspectRatio: 966 / 876,
     },
   ],

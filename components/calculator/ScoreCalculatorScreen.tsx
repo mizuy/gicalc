@@ -51,6 +51,9 @@ export function ScoreCalculatorScreen({ score }: Props) {
       {score.reference ? (
         <View style={styles.reference}>
           <CitationLink label={`${t.reference}: ${score.reference}`} pubmed={score.pubmed} />
+          {score.license ? (
+            <CitationLink label={`${t.license}: ${score.license}`} href={score.licenseUrl} />
+          ) : null}
         </View>
       ) : null}
 

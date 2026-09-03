@@ -19,6 +19,8 @@ export const bestJScore: ScoreDefinition = {
     'Bleeding after ESD Trend from Japan。早期胃癌ESD後の遅発性出血リスクを予測します。',
   reference: 'Hatta W et al. Gut 2021;70:476-484',
   pubmed: '32499390',
+  license: 'CC BY-NC 4.0',
+  licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
   fields: [
     {
       id: 'warfarin',

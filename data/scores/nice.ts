@@ -26,7 +26,7 @@ export const niceScore: ClassificationDefinition = {
         'Hayashi N, Tanaka S, Hewett DG, et al. Endoscopic prediction of deep submucosal invasive carcinoma: validation of the Narrow-Band Imaging International Colorectal Endoscopic (NICE) classification. Gastrointest Endosc. 2013;78:625-632. Fig. 1.',
       doi: 'https://doi.org/10.1016/j.gie.2013.04.185',
       pubmed: NICE_2013_PUBMED,
-      note: '原著 Fig. 1。拡大なしでも使う。JNET とは別分類。',
+      note: '原著 Fig. 1。Elsevier / GIE の著作権。CC ではない。拡大なしでも使う。JNET とは別分類。',
       aspectRatio: 2354 / 2294,
     },
   ],

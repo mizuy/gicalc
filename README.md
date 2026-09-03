@@ -67,6 +67,38 @@ npm run preview:pages
 
 `/score/{id}` は expo-router の動的ルートで自動的に開きます。
 
+## 引用とライセンス
+
+図と原著のライセンスは出版社ページと Crossref で確認した。
+
+**Creative Commons**
+
+- JES（Oyama 2017, *Esophagus*）の図: **CC BY 4.0**
+- MESDA-G（Muto 2016, *Dig Endosc*）の図: **CC BY-NC-ND 4.0**
+- 木村–竹本の図（Quach 2019, *Clin Endosc* Fig. 2）: **CC BY-NC 3.0**
+- Paris の図（Kim 2025, *Clin Endosc* Fig. 2）: **CC BY-NC 4.0**（Johnson 2023 *Can J Surg* は CC BY-NC-ND 4.0）
+- LST の図（Kim 2025, *Clin Endosc* Fig. 3）: **CC BY-NC 4.0**（Castillo-Regalado 2022 *WJGE* は CC BY-NC 4.0）
+- BEST-J（Hatta 2021, *Gut*）: **CC BY-NC 4.0**
+- Aronchick（2000, *GIE*）: Crossref 上の Version of Record は **CC BY-NC-ND 4.0**（遅延公開）
+
+**CC ではないソース**
+
+- JNET（Sano 2016, *Dig Endosc*）: Wiley 標準著作権。図は CC ではない
+- NICE（Hayashi 2013, *GIE*）: Elsevier 著作権。図は CC ではない
+- 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。*Clin Endosc* 2025 Fig. 4 は許諾のうえ再掲（記事自体は CC BY-NC）
+- 木村–竹本原著（1969, *Endoscopy* / Thieme）: CC ではない
+- Paris 原著（2003 *GIE* / 2005 *Endoscopy*）: CC ではない
+- LST 原著（Kudo 2008, *GIE*）: CC ではない
+- 京都（Shichijo 2017）/ 改変京都（Kawamura 2021）: Wiley、CC ではない
+- EGGIM（Pimentel-Nunes 2016, *Endoscopy* / Thieme）: CC ではない
+- eCura（Hatta 2017, *AJG*）: CC ではない
+- Sekiguchi（2016, *J Gastroenterol*）: CC ではない
+- APCS（Yeoh 2011, *Gut*）: CC ではない
+- BBPS（Lai 2009, *GIE*）: CC ではない
+- GBS（Blatchford 2000, *Lancet*）: CC ではない
+- NOBLADS（Aoki 2016, *CGH*）: CC ではない
+- T1 Nomogram（Kajiwara 2023, *GIE*）: CC ではない
+
 ## 免責
 
 本ツールは診断支援用であり、医師の臨床判断を代替するものではありません。スコア・ノモグラムの解釈は最新の JSCCR / JGES ガイドラインと施設プロトコルに従ってください。

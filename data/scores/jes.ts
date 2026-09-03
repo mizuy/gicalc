@@ -14,6 +14,8 @@ export const jesScore: ClassificationDefinition = {
     'The microvascular irregularity is evaluated for weaving (tortuosity), dilatation, irregular caliber, and different shape. Microvessels are classified as type A if they have three or fewer factors and type B if they have all four. Type A microvessels correspond to noncancerous lesions and lack severe irregularity; type B, to cancerous lesions, and exhibit severe irregularity. Type B vessels were subclassified into B1, B2, and B3.',
   reference: 'Oyama T et al. Esophagus 2017;14:105-112',
   pubmed: '28386209',
+  license: 'CC BY 4.0',
+  licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
   figures: [
     {
       src: '/figures/jes-oyama2017-fig1-4.jpg',
@@ -23,7 +25,9 @@ export const jesScore: ClassificationDefinition = {
         'Oyama T, Inoue H, Arima M, et al. Prediction of the invasion depth of superficial squamous cell carcinoma based on microvessel morphology: magnifying endoscopic classification of the Japan Esophageal Society. Esophagus. 2017;14:105-112.',
       doi: 'https://doi.org/10.1007/s10388-016-0527-7',
       pubmed: '28386209',
-      note: '上段左 Fig. 1 Type A、上段右 Fig. 2 Type B1、下段左 Fig. 3 Type B2、下段右 Fig. 4 Type B3。',
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: '上段左 Fig. 1 Type A、上段右 Fig. 2 Type B1、下段左 Fig. 3 Type B2、下段右 Fig. 4 Type B3。Springer Open。ライセンスは CC BY 4.0。',
       aspectRatio: 1200 / 523,
     },
     {
@@ -33,7 +37,9 @@ export const jesScore: ClassificationDefinition = {
       source: 'Oyama T, Inoue H, Arima M, et al. Esophagus. 2017;14:105-112.',
       doi: 'https://doi.org/10.1007/s10388-016-0527-7',
       pubmed: '28386209',
-      note: 'AVA-small / middle / large。',
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: 'AVA-small / middle / large。Springer Open。ライセンスは CC BY 4.0。',
       aspectRatio: 709 / 203,
     },
   ],

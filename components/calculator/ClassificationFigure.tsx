@@ -26,6 +26,9 @@ export function ClassificationFigure({ figure }: Props) {
       />
       <Text style={styles.caption}>{figure.caption}</Text>
       <CitationLink label={`${t.source}: ${figure.source}`} pubmed={figure.pubmed} />
+      {figure.license ? (
+        <CitationLink label={`${t.license}: ${figure.license}`} href={figure.licenseUrl} />
+      ) : null}
       <Text style={[styles.note, { color: textSecondary }]}>{figure.note}</Text>
     </View>
   );

@@ -673,6 +673,8 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(jnet.figures?.[0]?.caption ?? '', /Fig\. 7/);
   assert.equal(jnet.pubmed, '26927367');
   assert.equal(jnet.figures?.[0]?.pubmed, '26927367');
+  assert.equal(jnet.figures?.[0]?.license, undefined);
+  assert.match(jnet.figures?.[0]?.note ?? '', /CC ではない/);
 
   const kudo = getScoreById('kudo-tsuruta');
   assert.ok(kudo && isClassification(kudo));
@@ -683,6 +685,9 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(kudo.figures?.[0]?.caption ?? '', /Fig\. 4/);
   assert.equal(kudo.pubmed, '8836710');
   assert.equal(kudo.figures?.[0]?.pubmed, '40336268');
+  assert.equal(kudo.figures?.[0]?.license, 'CC BY-NC 4.0');
+  assert.match(kudo.figures?.[0]?.note ?? '', /Tanaka 2004/);
+  assert.match(kudo.figures?.[0]?.note ?? '', /CC ではなく/);
 
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
@@ -692,14 +697,20 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(jes.figures?.[0]?.src ?? '', /jes-oyama2017-fig1-4/);
   assert.match(jes.figures?.[1]?.src ?? '', /jes-oyama2017-fig5/);
   assert.equal(jes.pubmed, '28386209');
+  assert.equal(jes.license, 'CC BY 4.0');
+  assert.equal(jes.figures?.[0]?.license, 'CC BY 4.0');
+  assert.equal(jes.figures?.[1]?.license, 'CC BY 4.0');
+  assert.match(jes.figures?.[0]?.note ?? '', /CC BY 4\.0/);
 
   const kimura = getScoreById('kimura-takemoto');
   assert.ok(kimura && isClassification(kimura));
   assert.match(kimura.figures?.[0]?.source ?? '', /Kimura K/);
-  assert.match(kimura.figures?.[0]?.doi ?? '', /10\.1055\/s-0028-1098086/);
+  assert.match(kimura.figures?.[0]?.doi ?? '', /10\.5946\/ce\.2019\.072/);
   assert.match(kimura.figures?.[0]?.src ?? '', /kimura-takemoto-1969/);
   assert.equal(kimura.pubmed, KIMURA_1969_PUBMED);
   assert.equal(kimura.figures?.[0]?.pubmed, '31327182');
+  assert.equal(kimura.figures?.[0]?.license, 'CC BY-NC 3.0');
+  assert.match(kimura.figures?.[0]?.note ?? '', /CC BY-NC 3\.0/);
 
   const paris = getScoreById('paris');
   assert.ok(paris && isClassification(paris));
@@ -708,6 +719,9 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(paris.figures?.[0]?.caption ?? '', /Fig\. 2/);
   assert.match(paris.figures?.[0]?.source ?? '', /Paris workshop/);
   assert.equal(paris.pubmed, PARIS_2003_PUBMED);
+  assert.equal(paris.figures?.[0]?.license, 'CC BY-NC 4.0');
+  assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
+  assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
 
   const lst = getScoreById('lst');
   assert.ok(lst && isClassification(lst));
@@ -716,6 +730,8 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(lst.figures?.[0]?.caption ?? '', /Fig\. 3/);
   assert.match(lst.figures?.[0]?.source ?? '', /Kudo S/);
   assert.equal(lst.pubmed, LST_2008_PUBMED);
+  assert.equal(lst.figures?.[0]?.license, 'CC BY-NC 4.0');
+  assert.match(lst.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
 
   const nice = getScoreById('nice');
   assert.ok(nice && isClassification(nice));
@@ -725,6 +741,8 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(nice.figures?.[0]?.source ?? '', /Hayashi N/);
   assert.equal(nice.pubmed, NICE_2013_PUBMED);
   assert.equal(nice.figures?.[0]?.pubmed, NICE_2013_PUBMED);
+  assert.equal(nice.figures?.[0]?.license, undefined);
+  assert.match(nice.figures?.[0]?.note ?? '', /CC ではない/);
 
   const mesda = getScoreById('mesda-g');
   assert.ok(mesda && isClassification(mesda));
@@ -737,6 +755,18 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(mesda.pubmed, MESDA_G_2016_PUBMED);
   assert.equal(mesda.figures?.[0]?.pubmed, MESDA_G_2016_PUBMED);
   assert.equal(mesda.figures?.[1]?.pubmed, MESDA_G_2016_PUBMED);
+  assert.equal(mesda.license, 'CC BY-NC-ND 4.0');
+  assert.equal(mesda.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.equal(mesda.figures?.[1]?.license, 'CC BY-NC-ND 4.0');
+  assert.match(mesda.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
+
+  const bestJ = getScoreById('best-j');
+  assert.ok(bestJ);
+  assert.equal(bestJ.license, 'CC BY-NC 4.0');
+
+  const aronchick = getScoreById('aronchick');
+  assert.ok(aronchick);
+  assert.equal(aronchick.license, 'CC BY-NC-ND 4.0');
 });
 
 test('英語コピーが全スコアの表示項目を覆う', () => {
@@ -837,6 +867,16 @@ test('既定言語は英語で、計算は最低点から始まる', () => {
   assert.ok(apcs && !isClassification(apcs));
   assert.deepEqual(lowestFieldValues(apcs.fields), { age: 0, sex: 0, family: 0, smoking: 0 });
   assert.equal(apcs.compute(lowestFieldValues(apcs.fields)).interpretation, '平均リスク（AR）');
+});
+
+test('About は CC と非 CC を分けて書く', () => {
+  assert.match(UI.ja.about.citationsCcBody, /CC BY-NC-ND 4\.0/);
+  assert.match(UI.ja.about.citationsCcBody, /CC BY 4\.0/);
+  assert.match(UI.ja.about.citationsNotCcBody, /JNET/);
+  assert.match(UI.ja.about.citationsNotCcBody, /NICE/);
+  assert.match(UI.ja.about.citationsNotCcBody, /Kajiwara/);
+  assert.match(UI.en.about.citationsCcBody, /CC BY-NC-ND 4\.0/);
+  assert.match(UI.en.about.citationsNotCcBody, /not CC/);
 });
 
 test('引用は PubMed へ行く', () => {

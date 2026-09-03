@@ -52,6 +52,9 @@ type ToolBase = {
   reference?: string;
   /** PubMed PMID、または PubMed 上の URL（未収載論文は検索 URL） */
   pubmed?: string;
+  /** Creative Commons など、確認できた再利用ライセンス */
+  license?: string;
+  licenseUrl?: string;
 };
 
 export type ClassificationRow = {
@@ -83,6 +86,9 @@ export type ClassificationFigure = {
   source: string;
   doi?: string;
   pubmed?: string;
+  /** 図の再利用ライセンス（CC のときだけ書く） */
+  license?: string;
+  licenseUrl?: string;
   note: string;
   aspectRatio: number;
 };
