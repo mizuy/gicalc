@@ -12,6 +12,7 @@ import { hillScore } from './hill';
 import { ishiiScore } from './ishii';
 import { jesScore } from './jes';
 import { jnetScore } from './jnet';
+import { jsphVaricesScore } from './jsph-varices';
 import { kajiwaraNomogram } from './kajiwara-nomogram';
 import { kakushimaScore } from './kakushima';
 import { kimuraTakemotoScore } from './kimura-takemoto';
@@ -26,6 +27,7 @@ import { niceScore } from './nice';
 import { nobladsScore } from './noblads';
 import { parisScore } from './paris';
 import { pragueScore } from './prague';
+import { sarinScore } from './sarin';
 import { sekiguchiScore } from './sekiguchi';
 import { siewertScore } from './siewert';
 import { spigelmanScore } from './spigelman';
@@ -40,8 +42,10 @@ export const SCORES: ScoreDefinition[] = [
   pragueScore,
   siewertScore,
   erefsScore,
+  jsphVaricesScore,
   kimuraTakemotoScore,
   hillScore,
+  sarinScore,
   mesdaGScore,
   kyotoScore,
   kyotoModifiedScore,
