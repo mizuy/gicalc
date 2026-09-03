@@ -41,6 +41,74 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'AVA-small / middle / large. Springer Open. License: CC BY 4.0.',
     ],
   },
+  la: {
+    name: 'Los Angeles classification (reflux esophagitis)',
+    shortName: 'LA',
+    description:
+      'Grades A–D of reflux esophagitis by the extent of mucosal breaks. So-called minimal changes are not included.',
+    groups: {
+      軽症: 'Mild',
+      重症: 'Severe',
+    },
+    comments: {
+      'Grade C': 'Many guidelines treat A/B as mild and C/D as severe.',
+    },
+    figureNotes: [
+      'VideoGIE 2013 is a CC BY-NC-ND 4.0 video. No complete A–D still-image teaching panel was confirmed as CC, so the figure is not hosted. Link opens the video article. The Lundell 1999 Gut original is not CC.',
+    ],
+  },
+  prague: {
+    name: 'Prague C & M (Barrett esophagus)',
+    shortName: 'Prague',
+    description:
+      'Records the endoscopic extent of Barrett esophagus as circumferential (C) and maximum (M) length from the gastroesophageal junction.',
+    groups: {
+      ランドマーク: 'Landmarks',
+      計測: 'Measurement',
+      記載例: 'Examples',
+    },
+    comments: {
+      M: 'A common error is to take M as the tongue length only. M is the maximum (circumferential segment plus tongue).',
+      C0M1: 'Recognition below 1 cm is unreliable (original RC 0.22).',
+    },
+    figureNotes: [
+      'Original Fig. 3 (C2M5 schematic). Elsevier / Gastroenterology copyright; not CC, so the figure is not hosted. Link opens the publisher Fig. 3 image.',
+    ],
+  },
+  erefs: {
+    name: 'EREFS (eosinophilic esophagitis)',
+    shortName: 'EREFS',
+    description:
+      'Endoscopic findings of eosinophilic esophagitis (Edema / Rings / Exudates / Furrows / Stricture). Original total 0–8. Not a substitute for biopsy.',
+    groups: {
+      炎症: 'Inflammatory',
+      線維狭窄: 'Fibrostenotic',
+      合計: 'Total',
+    },
+    comments: {
+      Furrows: 'Later modifications sometimes grade furrows as 0 / mild / severe. This page uses the 2013 original 0–1.',
+      Total: 'Biopsies from the distal and mid esophagus are still required. EREFS alone does not confirm the diagnosis.',
+    },
+    figureNotes: [
+      'Abe 2022 Fig. 2 (a edema, b rings, c exudates, d furrows, e stricture, f narrow-caliber). MDPI Diagnostics. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
+    ],
+  },
+  hill: {
+    name: 'Hill classification (gastroesophageal flap valve)',
+    shortName: 'Hill',
+    description:
+      'Retroflexed grades I–IV of the gastroesophageal flap valve. Endoscopic assessment of the antireflux barrier.',
+    groups: {
+      正常寄り: 'More competent',
+      異常: 'Abnormal',
+    },
+    comments: {
+      'Grade III': 'Grades III–IV are more often associated with reflux and hiatal hernia.',
+    },
+    figureNotes: [
+      'Ge 2023 Fig. 1 (sample images I–IV). Annals of Medicine. License: CC BY-NC 4.0. The Hill 1996 GIE original is not CC.',
+    ],
+  },
   'kimura-takemoto': {
     name: 'Kimura–Takemoto classification (gastric atrophy)',
     shortName: 'Kimura',
@@ -488,6 +556,23 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Original Fig. 1. Elsevier / GIE copyright; not CC, so the figure is not hosted. Link opens the publisher Fig. 1 image. Used without magnification. Separate from JNET.',
     ],
   },
+  wasp: {
+    name: 'WASP classification (HP / SSL / adenoma)',
+    shortName: 'WASP',
+    description:
+      'Separates hyperplastic polyps, SSL, and adenomas <10 mm by NICE first, then Hazewinkel SSL features. Separate from both NICE and JNET.',
+    groups: {
+      手順: 'Steps',
+      判定: 'Diagnosis',
+    },
+    comments: {
+      'Step 1 · NICE':
+        'A separate classification from NICE itself. It addresses the limitation that NICE Type 1 does not include SSL.',
+    },
+    figureNotes: [
+      'Original Fig. 1. BMJ / Gut copyright; not CC, so the figure is not hosted. Link opens Fig. 1 in the paper. Separate from both NICE and JNET.',
+    ],
+  },
   jnet: {
     name: 'JNET classification (colorectal NBI magnifying)',
     description: 'NBI magnifying classification of colorectal tumors (Type 1 / 2A / 2B / 3).',
@@ -628,6 +713,26 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         ],
       },
     },
+  },
+  forrest: {
+    name: 'Forrest classification (peptic ulcer bleeding)',
+    shortName: 'Forrest',
+    description:
+      'Endoscopic stigmata of peptic ulcer bleeding (Ia–III). Shared language for rebleeding risk and whether endoscopic therapy is needed.',
+    groups: {
+      活動性出血: 'Active hemorrhage',
+      最近の出血兆候: 'Signs of recent hemorrhage',
+      出血兆候なし: 'No stigmata',
+    },
+    comments: {
+      Ia: 'Indication for endoscopic hemostasis.',
+      Ib: 'Indication for endoscopic hemostasis.',
+      IIa: 'Indication for endoscopic hemostasis.',
+      IIc: 'IIc / III are usually observed without endoscopic therapy for the stigma itself.',
+    },
+    figureNotes: [
+      'Zhou 2025 Fig. 1 (A Ia spurting, B Ib oozing, C IIa visible vessel, D IIb adherent clot, E IIc black base, F III clean base). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+    ],
   },
   gbs: {
     name: 'Glasgow-Blatchford Score (upper GI bleeding)',

@@ -23,18 +23,28 @@ import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
 import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
 import { LST_2008_PUBMED } from '../data/scores/lst';
 import { MESDA_G_2016_PUBMED } from '../data/scores/mesda-g';
+import { EREFS_2013_PUBMED } from '../data/scores/erefs';
+import { FORREST_1974_PUBMED } from '../data/scores/forrest';
+import { HILL_1996_PUBMED } from '../data/scores/hill';
+import { LA_1999_PUBMED } from '../data/scores/la';
 import { NICE_2013_PUBMED } from '../data/scores/nice';
 import { PARIS_2003_PUBMED } from '../data/scores/paris';
+import { PRAGUE_2006_PUBMED } from '../data/scores/prague';
+import { WASP_2016_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { getToolKind, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
-test('登録スコアは20種で臓器順に並ぶ', () => {
+test('登録スコアは26種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
       'jes',
+      'la',
+      'prague',
+      'erefs',
       'kimura-takemoto',
+      'hill',
       'mesda-g',
       'kyoto',
       'kyoto-modified',
@@ -47,10 +57,12 @@ test('登録スコアは20種で臓器順に並ぶ', () => {
       'lst',
       'kudo-tsuruta',
       'nice',
+      'wasp',
       'jnet',
       'kajiwara-nomogram',
       'bbps',
       'aronchick',
+      'forrest',
       'gbs',
       'noblads',
     ],
@@ -58,11 +70,12 @@ test('登録スコアは20種で臓器順に並ぶ', () => {
   assert.deepEqual(
     getScoresGroupedByOrgan().map((group) => [group.organ, group.scores.map((score) => score.id)]),
     [
-      ['esophagus', ['jes']],
+      ['esophagus', ['jes', 'la', 'prague', 'erefs']],
       [
         'stomach',
         [
           'kimura-takemoto',
+          'hill',
           'mesda-g',
           'kyoto',
           'kyoto-modified',
@@ -72,8 +85,11 @@ test('登録スコアは20種で臓器順に並ぶ', () => {
           'best-j',
         ],
       ],
-      ['colorectum', ['apcs', 'paris', 'lst', 'kudo-tsuruta', 'nice', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick']],
-      ['bleeding', ['gbs', 'noblads']],
+      [
+        'colorectum',
+        ['apcs', 'paris', 'lst', 'kudo-tsuruta', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
+      ],
+      ['bleeding', ['forrest', 'gbs', 'noblads']],
     ],
   );
 });
@@ -81,7 +97,11 @@ test('登録スコアは20種で臓器順に並ぶ', () => {
 test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM のいずれか', () => {
   const expected: Record<string, ReturnType<typeof getToolKind>> = {
     jes: 'classification',
+    la: 'classification',
+    prague: 'classification',
+    erefs: 'classification',
     'kimura-takemoto': 'classification',
+    hill: 'classification',
     'mesda-g': 'algorithm',
     kyoto: 'score',
     'kyoto-modified': 'score',
@@ -94,10 +114,12 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     lst: 'classification',
     'kudo-tsuruta': 'classification',
     nice: 'classification',
+    wasp: 'classification',
     jnet: 'classification',
     'kajiwara-nomogram': 'prediction',
     bbps: 'score',
     aronchick: 'score',
+    forrest: 'classification',
     gbs: 'score',
     noblads: 'score',
   };
@@ -127,7 +149,21 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'kajiwara-nomogram',
     'noblads',
   ];
-  const international = ['eggim', 'apcs', 'paris', 'nice', 'bbps', 'aronchick', 'gbs'];
+  const international = [
+    'la',
+    'prague',
+    'erefs',
+    'hill',
+    'eggim',
+    'apcs',
+    'paris',
+    'nice',
+    'wasp',
+    'bbps',
+    'aronchick',
+    'forrest',
+    'gbs',
+  ];
   assert.deepEqual(
     SCORES.filter((score) => isJapanDeveloped(score)).map((score) => score.id),
     japan,
@@ -730,7 +766,73 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(mesda.pubmed, MESDA_G_2016_PUBMED);
   assert.equal(mesda.organ, 'stomach');
 
-  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, mesda]) {
+  const la = getScoreById('la');
+  assert.ok(la && isClassification(la));
+  assert.deepEqual(
+    la.entries.map((entry) => entry.label),
+    ['Grade A', 'Grade B', 'Grade C', 'Grade D'],
+  );
+  assert.match(la.originalLead ?? '', /mucosal break no longer than 5 mm/);
+  assert.equal(la.pubmed, LA_1999_PUBMED);
+  assert.equal(la.organ, 'esophagus');
+
+  const prague = getScoreById('prague');
+  assert.ok(prague && isClassification(prague));
+  assert.deepEqual(
+    prague.entries.map((entry) => entry.label),
+    ['GEJ', 'C', 'M', 'C2M5', 'C0M1', 'C2M2'],
+  );
+  assert.match(prague.originalLead ?? '', /tops of the gastric mucosal folds/);
+  assert.equal(prague.pubmed, PRAGUE_2006_PUBMED);
+
+  const erefs = getScoreById('erefs');
+  assert.ok(erefs && isClassification(erefs));
+  assert.deepEqual(
+    erefs.entries.map((entry) => entry.label),
+    ['Edema', 'Rings', 'Exudates', 'Furrows', 'Stricture', 'Total'],
+  );
+  assert.match(erefs.originalLead ?? '', /not a substitute for esophageal biopsies/);
+  assert.equal(erefs.pubmed, EREFS_2013_PUBMED);
+
+  const hill = getScoreById('hill');
+  assert.ok(hill && isClassification(hill));
+  assert.deepEqual(
+    hill.entries.map((entry) => entry.label),
+    ['Grade I', 'Grade II', 'Grade III', 'Grade IV'],
+  );
+  assert.match(hill.originalLead ?? '', /closely apposed to the endoscope/);
+  assert.equal(hill.pubmed, HILL_1996_PUBMED);
+  assert.equal(hill.organ, 'stomach');
+
+  const forrest = getScoreById('forrest');
+  assert.ok(forrest && isClassification(forrest));
+  assert.deepEqual(
+    forrest.entries.map((entry) => entry.label),
+    ['Ia', 'Ib', 'IIa', 'IIb', 'IIc', 'III'],
+  );
+  assert.match(forrest.originalLead ?? '', /spurting hemorrhage/);
+  assert.equal(forrest.pubmed, FORREST_1974_PUBMED);
+  assert.equal(forrest.organ, 'bleeding');
+
+  const wasp = getScoreById('wasp');
+  assert.ok(wasp && isClassification(wasp));
+  assert.deepEqual(
+    wasp.entries.map((entry) => entry.label),
+    [
+      'Step 1 · NICE',
+      'Step 2 · SSL features',
+      'Type 1 + <2 SSL features',
+      'Type 1 + ≥2 SSL features',
+      'Type 2 + <2 SSL features',
+      'Type 2 + ≥2 SSL features',
+    ],
+  );
+  assert.match(wasp.originalLead ?? '', /at least two SSA\/P-like features/);
+  assert.doesNotMatch(wasp.entries.map((entry) => entry.label).join(' '), /2A|2B|JNET/);
+  assert.equal(wasp.pubmed, WASP_2016_PUBMED);
+  assert.equal(wasp.organ, 'colorectum');
+
+  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, mesda, la, prague, erefs, hill, forrest, wasp]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -849,6 +951,55 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(mesda.figures?.[1]?.license, 'CC BY-NC-ND 4.0');
   assert.match(mesda.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
 
+  const erefsFig = getScoreById('erefs');
+  assert.ok(erefsFig && isClassification(erefsFig));
+  assert.equal(erefsFig.figures?.length, 1);
+  assert.match(erefsFig.figures?.[0]?.src ?? '', /erefs-abe2022-fig2/);
+  assert.match(erefsFig.figures?.[0]?.source ?? '', /Abe Y/);
+  assert.equal(erefsFig.figures?.[0]?.license, 'CC BY 4.0');
+  assert.match(erefsFig.figures?.[0]?.note ?? '', /CC BY 4\.0/);
+  assert.equal(erefsFig.pubmed, EREFS_2013_PUBMED);
+
+  const hillFig = getScoreById('hill');
+  assert.ok(hillFig && isClassification(hillFig));
+  assert.match(hillFig.figures?.[0]?.src ?? '', /hill-ge2023-fig1/);
+  assert.match(hillFig.figures?.[0]?.source ?? '', /Hill LD/);
+  assert.equal(hillFig.figures?.[0]?.license, 'CC BY-NC 4.0');
+  assert.equal(hillFig.pubmed, HILL_1996_PUBMED);
+
+  const forrestFig = getScoreById('forrest');
+  assert.ok(forrestFig && isClassification(forrestFig));
+  assert.match(forrestFig.figures?.[0]?.src ?? '', /forrest-jsmu2025-fig1/);
+  assert.match(forrestFig.figures?.[0]?.source ?? '', /Forrest JA/);
+  assert.equal(forrestFig.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.equal(forrestFig.pubmed, FORREST_1974_PUBMED);
+
+  const pragueFig = getScoreById('prague');
+  assert.ok(pragueFig && isClassification(pragueFig));
+  assert.equal(pragueFig.figures?.[0]?.src, undefined);
+  assert.match(pragueFig.figures?.[0]?.href ?? '', /S0016508506017914-gr3\.jpg/);
+  assert.equal(pragueFig.figures?.[0]?.hrefLabel, 'Fig. 3');
+  assert.equal(pragueFig.figures?.[0]?.license, undefined);
+  assert.match(pragueFig.figures?.[0]?.note ?? '', /CC ではない/);
+  assert.equal(pragueFig.pubmed, PRAGUE_2006_PUBMED);
+
+  const laFig = getScoreById('la');
+  assert.ok(laFig && isClassification(laFig));
+  assert.equal(laFig.figures?.[0]?.src, undefined);
+  assert.match(laFig.figures?.[0]?.href ?? '', /S2212-0971\(13\)70046-3/);
+  assert.equal(laFig.figures?.[0]?.license, undefined);
+  assert.match(laFig.figures?.[0]?.note ?? '', /CC ではない/);
+  assert.equal(laFig.pubmed, LA_1999_PUBMED);
+
+  const waspFig = getScoreById('wasp');
+  assert.ok(waspFig && isClassification(waspFig));
+  assert.equal(waspFig.figures?.[0]?.src, undefined);
+  assert.match(waspFig.figures?.[0]?.href ?? '', /65\/6\/963#F1/);
+  assert.equal(waspFig.figures?.[0]?.hrefLabel, 'Fig. 1');
+  assert.equal(waspFig.figures?.[0]?.license, undefined);
+  assert.match(waspFig.figures?.[0]?.note ?? '', /CC ではない/);
+  assert.equal(waspFig.pubmed, WASP_2016_PUBMED);
+
   const bestJ = getScoreById('best-j');
   assert.ok(bestJ);
   assert.equal(bestJ.license, 'CC BY-NC 4.0');
@@ -964,8 +1115,12 @@ test('既定言語は英語で、計算は最低点から始まる', () => {
 test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsCcBody, /CC BY-NC-ND 4\.0/);
   assert.match(UI.ja.about.citationsCcBody, /CC BY 4\.0/);
+  assert.match(UI.ja.about.citationsCcBody, /Abe 2022/);
+  assert.match(UI.ja.about.citationsCcBody, /Ge 2023/);
   assert.match(UI.ja.about.citationsNotCcBody, /JNET/);
   assert.match(UI.ja.about.citationsNotCcBody, /NICE/);
+  assert.match(UI.ja.about.citationsNotCcBody, /WASP/);
+  assert.match(UI.ja.about.citationsNotCcBody, /Prague/);
   assert.match(UI.ja.about.citationsNotCcBody, /Kajiwara/);
   assert.match(UI.ja.about.citationsNotCcBody, /埋め込まず/);
   assert.match(UI.ja.about.citationsCcBody, /Quach 2019/);

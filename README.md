@@ -7,7 +7,11 @@
 | 臓器 | ツール | 対象 | 出力 |
 |------|--------|------|------|
 | 食道 | JES（Oyama 2017） | 扁平上皮の拡大（IPCL） | 定義一覧（原著の図・文言） |
+| 食道 | LA（Lundell 1999） | 逆流性食道炎 A–D | 定義一覧（文言。図は VideoGIE へリンク） |
+| 食道 | Prague C & M（Sharma 2006） | Barrett の C / M | 定義一覧（文言。図は原著へリンク） |
+| 食道 | EREFS（Hirano 2013） | 好酸球性食道炎の所見 | 定義一覧（Abe 2022 の図・文言） |
 | 胃 | 木村–竹本（Quach 2019） | 内視鏡的萎縮 | 定義一覧（Quach 2019 の図・文言） |
+| 胃 | Hill（1996） | 胃食道フラップ弁 I–IV | 定義一覧（Ge 2023 の図・文言） |
 | 胃 | MESDA-G（Muto 2016） | 早期胃癌の拡大（M-NBI） | 定義一覧（原著の図・文言） |
 | 胃 | 京都分類（原法） | 胃炎・胃癌リスク | 点数 0–8 |
 | 胃 | 改変京都（Kawamura 2021） | 胃炎・胃癌リスク | 点数 0–5 |
@@ -20,10 +24,12 @@
 | 大腸 | LST（Kudo 2008） | 側方発育型腫瘍の4亜型 | 定義一覧（原著の図・文言） |
 | 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（文言。図は原著へリンク） |
 | 大腸 | NICE（Hayashi 2013） | 大腸 NBI（非拡大） | 定義一覧（文言。図は原著へリンク） |
+| 大腸 | WASP（IJspeert 2016） | HP / SSL / 腺腫（<10 mm） | 定義一覧（文言。図は原著へリンク） |
 | 大腸 | JNET（Sano 2016） | NBI 拡大 | 定義一覧（文言。図は原著へリンク） |
 | 大腸 | T1 Nomogram（Kajiwara 2023） | 大腸T1癌の LNM 確率 | 確率（%）と nomogram 点 |
 | 大腸 | BBPS（Lai 2009） | 腸管前処置（洗浄後・3区域） | 点数 0–9 |
 | 大腸 | Aronchick | 腸管前処置（洗浄前・全体） | 5段階 |
+| 出血 | Forrest（1974） | 消化性潰瘍出血の所見 | 定義一覧（Zhou 2025 の図・文言） |
 | 出血 | GBS（Blatchford 2000） | 上部消化管出血 | 点数 0–23 |
 | 出血 | NOBLADS（Aoki 2016） | 急性下部消化管出血 | 点数 0–8 |
 
@@ -74,6 +80,9 @@ npm run preview:pages
 **Creative Commons**
 
 - JES（Oyama 2017, *Esophagus*）の図: **CC BY 4.0**
+- EREFS の図（Abe 2022, *Diagnostics* Fig. 2）: **CC BY 4.0**
+- Hill の図（Ge 2023, *Ann Med* Fig. 1）: **CC BY-NC 4.0**
+- Forrest の図（Zhou 2025, *J South Med Univ* Fig. 1）: **CC BY-NC-ND 4.0**
 - MESDA-G（Muto 2016, *Dig Endosc*）の図: **CC BY-NC-ND 4.0**
 - 木村–竹本の図（Quach 2019, *Clin Endosc* Fig. 2）: **CC BY-NC 3.0**
 - Paris の図（Kim 2025, *Clin Endosc* Fig. 2）: **CC BY-NC 4.0**（Johnson 2023 *Can J Surg* は CC BY-NC-ND 4.0）
@@ -85,6 +94,9 @@ npm run preview:pages
 
 - JNET（Sano 2016, *Dig Endosc*）: Wiley 標準著作権。図は埋め込まず、原著 Fig. 7 へリンクする
 - NICE（Hayashi 2013, *GIE*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
+- WASP（IJspeert 2016, *Gut*）: BMJ 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
+- Prague（Sharma 2006, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 3 へリンクする
+- LA 原著（Lundell 1999, *Gut*）: CC ではない。A–D 揃いの静止画は置かず、VideoGIE 2013（CC BY-NC-ND 4.0 の動画）へリンクする
 - 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。図は埋め込まず、*Clin Endosc* 2025 Fig. 4 へリンクする（記事自体は CC BY-NC、原図は許諾再掲）
 - Paris 原著（2003 *GIE* / 2005 *Endoscopy*）: CC ではない
 - LST 原著（Kudo 2008, *GIE*）: CC ではない

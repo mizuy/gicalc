@@ -5,7 +5,10 @@ import { bbpsScore } from './bbps';
 import { bestJScore } from './best-j';
 import { ecuraHattaScore } from './ecura-hatta';
 import { eggimScore } from './eggim';
+import { erefsScore } from './erefs';
+import { forrestScore } from './forrest';
 import { gbsScore } from './gbs';
+import { hillScore } from './hill';
 import { jesScore } from './jes';
 import { jnetScore } from './jnet';
 import { kajiwaraNomogram } from './kajiwara-nomogram';
@@ -13,17 +16,24 @@ import { kimuraTakemotoScore } from './kimura-takemoto';
 import { kudoTsurutaScore } from './kudo-tsuruta';
 import { kyotoScore } from './kyoto';
 import { kyotoModifiedScore } from './kyoto-modified';
+import { laScore } from './la';
 import { lstScore } from './lst';
 import { mesdaGScore } from './mesda-g';
 import { niceScore } from './nice';
 import { nobladsScore } from './noblads';
 import { parisScore } from './paris';
+import { pragueScore } from './prague';
 import { sekiguchiScore } from './sekiguchi';
+import { waspScore } from './wasp';
 
 /** 表示順: 食道 → 胃 → 大腸 → 出血。臓器内は分類→リスク→治療予測 */
 export const SCORES: ScoreDefinition[] = [
   jesScore,
+  laScore,
+  pragueScore,
+  erefsScore,
   kimuraTakemotoScore,
+  hillScore,
   mesdaGScore,
   kyotoScore,
   kyotoModifiedScore,
@@ -36,10 +46,12 @@ export const SCORES: ScoreDefinition[] = [
   lstScore,
   kudoTsurutaScore,
   niceScore,
+  waspScore,
   jnetScore,
   kajiwaraNomogram,
   bbpsScore,
   aronchickScore,
+  forrestScore,
   gbsScore,
   nobladsScore,
 ];
