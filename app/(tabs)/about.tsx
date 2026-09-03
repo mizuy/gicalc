@@ -27,6 +27,10 @@ export default function AboutScreen() {
         <Text style={[styles.body, { color: textSecondary }]}>{t.about.stomachBody}</Text>
       </View>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
+        <Text style={styles.cardTitle}>{t.about.duodenum}</Text>
+        <Text style={[styles.body, { color: textSecondary }]}>{t.about.duodenumBody}</Text>
+      </View>
+      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
         <Text style={styles.cardTitle}>{t.about.colorectum}</Text>
         <Text style={[styles.body, { color: textSecondary }]}>{t.about.colorectumBody}</Text>
       </View>

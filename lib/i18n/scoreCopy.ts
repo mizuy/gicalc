@@ -491,6 +491,231 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       },
     },
   },
+  spigelman: {
+    name: 'Spigelman classification (FAP duodenal adenomas)',
+    shortName: 'Spigelman',
+    description:
+      'Stages duodenal adenomas in familial adenomatous polyposis (FAP) by number, max size, histology, and dysplasia (0–12 points, Stage 0–IV). 1989 original (mild / moderate / severe). Use Modified Spigelman for Vienna LGD/HGD.',
+    note: 'Surveillance intervals follow ESGE 2019 polyposis (van Leerdam). Assess the papilla separately. Current pathology often uses Vienna (LGD/HGD) — see Modified Spigelman.',
+    figureNotes: [
+      'The 1989 Lancet original is not CC. Link opens GeneReviews Table 5 (public summary of the points table).',
+    ],
+    fields: {
+      number: {
+        label: 'Polyp number',
+        options: [
+          { label: '0', description: pts(0, false) },
+          { label: '1–4', description: pts(1) },
+          { label: '5–20', description: pts(2) },
+          { label: '>20', description: pts(3) },
+        ],
+      },
+      size: {
+        label: 'Largest size',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: '1–4 mm', description: pts(1) },
+          { label: '5–10 mm', description: pts(2) },
+          { label: '>10 mm', description: pts(3) },
+        ],
+      },
+      histology: {
+        label: 'Histology',
+        options: [
+          { label: 'No adenoma', description: pts(0, false) },
+          { label: 'Tubular', description: pts(1) },
+          { label: 'Tubulovillous', description: pts(2) },
+          { label: 'Villous', description: pts(3) },
+        ],
+      },
+      dysplasia: {
+        label: 'Dysplasia (1989)',
+        description: 'Mild / moderate / severe. For Vienna LGD/HGD use Modified Spigelman',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'Mild', description: pts(1) },
+          { label: 'Moderate', description: pts(2) },
+          { label: 'Severe', description: pts(3) },
+        ],
+      },
+    },
+  },
+  'modified-spigelman': {
+    name: 'Modified Spigelman (FAP duodenal adenomas)',
+    shortName: 'Mod. Spigelman',
+    description:
+      'Saurin 2004 adaptation of Spigelman 1989 to the Vienna classification. Number, size, and histology are unchanged. Dysplasia is LGD = 1 point, HGD = 3 points (no 2-point moderate).',
+    note: 'Many centers after ESGE 2019 use this two-tier dysplasia score. The 1989 three-tier original is on the Spigelman page. Assess the papilla separately.',
+    figureNotes: ['Saurin 2004 JCO original. ASCO copyright; not CC — link to the paper.'],
+    fields: {
+      number: {
+        label: 'Polyp number',
+        options: [
+          { label: '0', description: pts(0, false) },
+          { label: '1–4', description: pts(1) },
+          { label: '5–20', description: pts(2) },
+          { label: '>20', description: pts(3) },
+        ],
+      },
+      size: {
+        label: 'Largest size',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: '1–4 mm', description: pts(1) },
+          { label: '5–10 mm', description: pts(2) },
+          { label: '>10 mm', description: pts(3) },
+        ],
+      },
+      histology: {
+        label: 'Histology',
+        options: [
+          { label: 'No adenoma', description: pts(0, false) },
+          { label: 'Tubular', description: pts(1) },
+          { label: 'Tubulovillous', description: pts(2) },
+          { label: 'Villous', description: pts(3) },
+        ],
+      },
+      dysplasia: {
+        label: 'Dysplasia (Vienna)',
+        description: 'LGD 1 point, HGD 3 points. No 2-point moderate grade',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'LGD', description: pts(1) },
+          { label: 'HGD', description: pts(3) },
+        ],
+      },
+    },
+  },
+  ishii: {
+    name: 'Ishii score (SNADET C3 vs C4/5)',
+    shortName: 'Ishii',
+    description:
+      '0–5 points to separate Vienna C3 (LGA) from C4/5 (HGA/cancer) in SNADET. Color and size on WLI; surface and vessels on magnifying NBI. ≥3 points suggests C4/5.',
+    note: 'Separate from the Kakushima WLI-only score. Single-center retrospective derivation. For optical diagnosis before biopsy.',
+    figureNotes: ['Original paper. Wiley / Digestive Endoscopy copyright; not CC — link to the paper.'],
+    fields: {
+      color: {
+        label: 'Color (WLI)',
+        options: [
+          { label: 'White / isochromatic', description: pts(0, false) },
+          { label: 'Red', description: pts(1) },
+        ],
+      },
+      size: {
+        label: 'Tumor size',
+        options: [
+          { label: '<10 mm', description: pts(0, false) },
+          { label: '10–19 mm', description: pts(1) },
+          { label: '≥20 mm', description: pts(2) },
+        ],
+      },
+      surface: {
+        label: 'Irregular surface (ME-NBI)',
+        options: [
+          { label: 'Absent', description: pts(0, false) },
+          { label: 'Present', description: pts(1) },
+        ],
+      },
+      vessels: {
+        label: 'Irregular vessels (ME-NBI)',
+        options: [
+          { label: 'Absent', description: pts(0, false) },
+          { label: 'Present', description: pts(1) },
+        ],
+      },
+    },
+  },
+  kakushima: {
+    name: 'Kakushima WLI score (SNADET LGA vs HGA/cancer)',
+    shortName: 'Kakushima WLI',
+    description:
+      '0–5 points using white-light imaging (± indigo carmine) only to separate Vienna C3 from C4 or higher in SNADET. Size, color, morphology, nodularity. ≥3 points suggests C4 or higher. Separate from Ishii (which adds ME-NBI).',
+    note: 'If mixed colors, take the higher points. Biopsy-induced redness or depression can inflate the score. Validation accuracy 86%.',
+    figureNotes: [
+      'Endosc Int Open Table 2. License: CC BY-NC-ND 4.0. HTML table — link opens Table 2, not an embedded image.',
+    ],
+    fields: {
+      diameter: {
+        label: 'Tumor size',
+        options: [
+          { label: '<10 mm', description: pts(0, false) },
+          { label: '≥10 mm', description: pts(1) },
+        ],
+      },
+      color: {
+        label: 'Color',
+        description: 'If mixed, use the higher score',
+        options: [
+          { label: 'White', description: pts(0, false) },
+          { label: 'Isochromatic', description: pts(1) },
+          { label: 'Red', description: pts(2) },
+        ],
+      },
+      macro: {
+        label: 'Macroscopic type',
+        options: [
+          { label: 'Is / Ip / IIa (no depression)', description: pts(0, false) },
+          { label: 'Any type with depression or mixed', description: pts(1) },
+        ],
+      },
+      nodularity: {
+        label: 'Nodularity',
+        options: [
+          { label: 'Uniform', description: pts(0, false) },
+          { label: 'Heterogeneous or none', description: pts(1) },
+        ],
+      },
+    },
+  },
+  toya: {
+    name: 'Toya classification (SNADET, ME-CV)',
+    shortName: 'Toya ME-CV',
+    description:
+      'ME-CV algorithm (Toya 2020) for SNADET. Monotype vs mixed surface, then pinecone / irregular / monotonous, to separate Vienna C3 from C4/5. ME-NBI algorithm is Kikuchi 2014.',
+    note: 'Toya’s published algorithm is crystal-violet magnifying endoscopy (ME-CV), not NBI. Kikuchi 2014 is the ME-NBI algorithm. Duodenal WOS often hides vessels, so surface pattern is prioritized.',
+    groups: {
+      表面: 'Surface',
+      判定: 'Diagnosis',
+    },
+    comments: {
+      'Mixed type': 'Multiple surface patterns → C4/5.',
+      Pinecone: 'Pinecone monotype is C4/5 even when single.',
+      Monotonous: 'Regular single pattern other than pinecone → C3.',
+    },
+    figureNotes: [
+      'Toya 2020 ME-CV original. Wiley / Digestive Endoscopy copyright; not CC — link to the paper.',
+      'Kikuchi 2014 ME-NBI algorithm. Mixed type and unclassified vessels → C4/5. Not CC — link to the paper.',
+    ],
+    flow: {
+      title: 'Algorithm',
+      steps: {
+        type: {
+          prompt: 'Is the surface pattern single or multiple?',
+          hint: 'ME-CV. Single = monotype. Multiple = mixed / multiplicity.',
+          options: { mixed: 'Multiple (mixed)', mono: 'Single (monotype)' },
+        },
+        pattern: {
+          prompt: 'Which monotype pattern?',
+          hint: 'Pinecone or irregular → C4/5. Other regular monotype (convoluted / leaf-like / reticular) → C3.',
+          options: { pinecone: 'Pinecone', irregular: 'Irregular', monotonous: 'Monotonous (regular)' },
+        },
+      },
+      map: {
+        start: 'SNADET · ME-CV',
+        'type-gate': 'Surface type',
+        mixed: 'Mixed',
+        'c45-mixed': 'C4/5',
+        mono: 'Monotype',
+        'pattern-gate': 'Pattern',
+        'pine-opt': 'Pinecone',
+        'c45-pine': 'C4/5',
+        'irr-opt': 'Irregular',
+        'c45-irr': 'C4/5',
+        'mono-opt': 'Monotonous',
+        c3: 'C3',
+      },
+    },
+  },
   apcs: {
     name: 'Asia-Pacific Colorectal Screening Score (APCS)',
     description:
@@ -528,6 +753,22 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         ],
       },
     },
+  },
+  vienna: {
+    name: 'Vienna classification (GI epithelial neoplasia)',
+    shortName: 'Vienna',
+    description:
+      'International pathological classification of epithelial neoplasia in the esophagus, stomach, and colorectum (2000). Bridges Western (invasion-first) and Japanese (cytology-first) terminology. SNADET papers use revised Vienna C3 / C4 / C5.',
+    note: 'The 2002 revision moves intramucosal carcinoma to 4.4 and limits Category 5 to submucosal or deeper. SNADET C4 often includes HGA plus intramucosal carcinoma; C5 is SM or deeper.',
+    groups: {
+      非腫瘍: 'Non-neoplastic',
+      腫瘍: 'Neoplastic',
+    },
+    comments: {
+      'Category 4': 'Revised Vienna 4.4 is intramucosal carcinoma. SNADET C4 usually includes this.',
+      'Category 5': 'The 2000 original also put intramucosal carcinoma in Category 5. After revision, Category 5 is SM or deeper only.',
+    },
+    figureNotes: ['Original 2000 Gut paper. BMJ copyright; not CC — link to the paper.'],
   },
   paris: {
     name: 'Paris classification (superficial morphology)',

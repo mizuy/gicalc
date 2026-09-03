@@ -1,4 +1,4 @@
-export type ScoreOrgan = 'esophagus' | 'stomach' | 'colorectum' | 'bleeding';
+export type ScoreOrgan = 'esophagus' | 'stomach' | 'duodenum' | 'colorectum' | 'bleeding';
 
 export type ScoreCategory =
   | 'screening'
@@ -188,11 +188,12 @@ export function isJapanDeveloped(tool: ScoreDefinition): boolean {
 export const ORGAN_LABELS: Record<ScoreOrgan, string> = {
   esophagus: '食道',
   stomach: '胃',
+  duodenum: '十二指腸',
   colorectum: '大腸',
   bleeding: '出血',
 };
 
-export const ORGAN_ORDER: ScoreOrgan[] = ['esophagus', 'stomach', 'colorectum', 'bleeding'];
+export const ORGAN_ORDER: ScoreOrgan[] = ['esophagus', 'stomach', 'duodenum', 'colorectum', 'bleeding'];
 
 export const CATEGORY_LABELS: Record<ScoreCategory, string> = {
   screening: '大腸がん検診',

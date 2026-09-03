@@ -18,8 +18,13 @@ import { computeApcs } from '../lib/scores/apcs';
 import { computeAronchick } from '../lib/scores/aronchick';
 import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
+import { computeIshii } from '../lib/scores/ishii';
+import { computeKakushima } from '../lib/scores/kakushima';
+import { computeModifiedSpigelman, computeSpigelman } from '../lib/scores/spigelman';
 import { lowestFieldValues } from '../lib/scores/initialValues';
 import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
+import { ISHII_2021_PUBMED } from '../data/scores/ishii';
+import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
 import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
 import { LST_2008_PUBMED } from '../data/scores/lst';
 import { MESDA_G_2016_PUBMED } from '../data/scores/mesda-g';
@@ -27,9 +32,13 @@ import { EREFS_2013_PUBMED } from '../data/scores/erefs';
 import { FORREST_1974_PUBMED } from '../data/scores/forrest';
 import { HILL_1996_PUBMED } from '../data/scores/hill';
 import { LA_1999_PUBMED } from '../data/scores/la';
+import { SAURIN_2004_PUBMED } from '../data/scores/modified-spigelman';
 import { NICE_2013_PUBMED } from '../data/scores/nice';
 import { PARIS_2003_PUBMED } from '../data/scores/paris';
 import { PRAGUE_2006_PUBMED } from '../data/scores/prague';
+import { SPIGELMAN_1989_PUBMED } from '../data/scores/spigelman';
+import { KIKUCHI_2014_PUBMED, TOYA_2020_PUBMED } from '../data/scores/toya';
+import { VIENNA_2000_PUBMED } from '../data/scores/vienna';
 import { WASP_2016_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
@@ -41,7 +50,7 @@ import {
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
-test('登録スコアは26種で臓器順に並ぶ', () => {
+test('登録スコアは32種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -58,7 +67,13 @@ test('登録スコアは26種で臓器順に並ぶ', () => {
       'ecura-hatta',
       'sekiguchi',
       'best-j',
+      'spigelman',
+      'modified-spigelman',
+      'ishii',
+      'kakushima',
+      'toya',
       'apcs',
+      'vienna',
       'paris',
       'lst',
       'kudo-tsuruta',
@@ -92,8 +107,12 @@ test('登録スコアは26種で臓器順に並ぶ', () => {
         ],
       ],
       [
+        'duodenum',
+        ['spigelman', 'modified-spigelman', 'ishii', 'kakushima', 'toya'],
+      ],
+      [
         'colorectum',
-        ['apcs', 'paris', 'lst', 'kudo-tsuruta', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
+        ['apcs', 'vienna', 'paris', 'lst', 'kudo-tsuruta', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
       ],
       ['bleeding', ['forrest', 'gbs', 'noblads']],
     ],
@@ -115,7 +134,13 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     'ecura-hatta': 'score',
     sekiguchi: 'score',
     'best-j': 'score',
+    spigelman: 'score',
+    'modified-spigelman': 'score',
+    ishii: 'prediction',
+    kakushima: 'prediction',
+    toya: 'algorithm',
     apcs: 'score',
+    vienna: 'classification',
     paris: 'classification',
     lst: 'classification',
     'kudo-tsuruta': 'classification',
@@ -149,6 +174,9 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'ecura-hatta',
     'sekiguchi',
     'best-j',
+    'ishii',
+    'kakushima',
+    'toya',
     'lst',
     'kudo-tsuruta',
     'jnet',
@@ -161,7 +189,10 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'erefs',
     'hill',
     'eggim',
+    'spigelman',
+    'modified-spigelman',
     'apcs',
+    'vienna',
     'paris',
     'nice',
     'wasp',
@@ -435,6 +466,53 @@ test('BEST-J: 抗血栓は継続が満点、休薬は満点-1', () => {
   assert.equal(veryHigh.total, 11);
   assert.equal(veryHigh.severity, 'severe');
   assert.equal(veryHigh.interpretation, '超高リスク');
+});
+
+test('Spigelman / Modified: 0 点は Stage 0、12 点は Stage IV', () => {
+  const zero = computeSpigelman({ number: 0, size: 0, histology: 0, dysplasia: 0 });
+  assert.equal(zero.total, 0);
+  assert.equal(zero.maxScore, 12);
+  assert.equal(zero.interpretation, 'Stage 0');
+  assert.match(zero.details?.[1] ?? '', /5年ごと/);
+
+  const stageIv = computeSpigelman({ number: 3, size: 3, histology: 3, dysplasia: 3 });
+  assert.equal(stageIv.total, 12);
+  assert.equal(stageIv.interpretation, 'Stage IV');
+  assert.match(stageIv.details?.[1] ?? '', /6–12か月/);
+
+  const stageIii = computeSpigelman({ number: 2, size: 2, histology: 2, dysplasia: 2 });
+  assert.equal(stageIii.total, 8);
+  assert.equal(stageIii.interpretation, 'Stage III');
+
+  const modified = computeModifiedSpigelman({ number: 2, size: 2, histology: 1, dysplasia: 3 });
+  assert.equal(modified.total, 8);
+  assert.equal(modified.interpretation, 'Stage III');
+  assert.match(modified.details?.[0] ?? '', /LGD 1 点 \/ HGD 3 点/);
+});
+
+test('Ishii / Kakushima: ≥3 点で C4/5、未満は C3', () => {
+  const ishiiLow = computeIshii({ color: 0, size: 0, surface: 0, vessels: 0 });
+  assert.equal(ishiiLow.total, 0);
+  assert.equal(ishiiLow.maxScore, 5);
+  assert.equal(ishiiLow.interpretation, 'VCL C3（LGA）を疑う');
+
+  const ishiiCut = computeIshii({ color: 1, size: 1, surface: 1, vessels: 0 });
+  assert.equal(ishiiCut.total, 3);
+  assert.equal(ishiiCut.interpretation, 'VCL C4/5（HGA / 癌）を疑う');
+
+  const ishiiMax = computeIshii({ color: 1, size: 2, surface: 1, vessels: 1 });
+  assert.equal(ishiiMax.total, 5);
+
+  const kakuLow = computeKakushima({ diameter: 0, color: 0, macro: 0, nodularity: 0 });
+  assert.equal(kakuLow.total, 0);
+  assert.equal(kakuLow.interpretation, 'VCL 3（LGA）を疑う');
+
+  const kakuCut = computeKakushima({ diameter: 1, color: 1, macro: 1, nodularity: 0 });
+  assert.equal(kakuCut.total, 3);
+  assert.equal(kakuCut.interpretation, 'VCL 4 以上（HGA / 癌）を疑う');
+
+  const kakuMax = computeKakushima({ diameter: 1, color: 2, macro: 1, nodularity: 1 });
+  assert.equal(kakuMax.total, 5);
 });
 
 test('各スコア定義の compute がフィールド経由で動く', () => {
@@ -838,13 +916,36 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(wasp.pubmed, WASP_2016_PUBMED);
   assert.equal(wasp.organ, 'colorectum');
 
+  const toya = getScoreById('toya');
+  assert.ok(toya && isClassification(toya));
+  assert.deepEqual(
+    toya.entries.map((entry) => entry.label),
+    ['Monotype', 'Mixed type', 'Pinecone', 'Irregular', 'Monotonous'],
+  );
+  assert.equal(toya.entries[4]?.meaning, 'Regular monotype (not pinecone)');
+  assert.match(toya.originalLead ?? '', /crystal violet staining/);
+  assert.equal(toya.pubmed, TOYA_2020_PUBMED);
+  assert.equal(toya.organ, 'duodenum');
+
+  const vienna = getScoreById('vienna');
+  assert.ok(vienna && isClassification(vienna));
+  assert.deepEqual(
+    vienna.entries.map((entry) => entry.label),
+    ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'],
+  );
+  assert.equal(vienna.entries[2]?.meaning, 'Non-invasive low-grade neoplasia');
+  assert.match(vienna.originalLead ?? '', /negative for neoplasia\/dysplasia/);
+  assert.equal(vienna.pubmed, VIENNA_2000_PUBMED);
+  assert.equal(vienna.organ, 'colorectum');
+
   assert.ok(hasAlgorithmFlow(wasp));
   assert.ok(hasAlgorithmFlow(mesda));
-  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, la, prague, erefs, hill, forrest]) {
+  assert.ok(hasAlgorithmFlow(toya));
+  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, la, prague, erefs, hill, forrest, vienna]) {
     assert.equal(hasAlgorithmFlow(score), false, score.id);
   }
 
-  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, mesda, la, prague, erefs, hill, forrest, wasp]) {
+  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, mesda, la, prague, erefs, hill, forrest, wasp, toya, vienna]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -1015,6 +1116,55 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(waspFig.figures?.[0]?.note ?? '', /CC ではない/);
   assert.equal(waspFig.pubmed, WASP_2016_PUBMED);
 
+  const toyaFig = getScoreById('toya');
+  assert.ok(toyaFig && isClassification(toyaFig));
+  assert.equal(toyaFig.figures?.length, 2);
+  assert.equal(toyaFig.figures?.[0]?.src, undefined);
+  assert.match(toyaFig.figures?.[0]?.href ?? '', /den\.13640/);
+  assert.equal(toyaFig.figures?.[0]?.hrefLabel, 'Toya 2020');
+  assert.equal(toyaFig.figures?.[0]?.pubmed, TOYA_2020_PUBMED);
+  assert.equal(toyaFig.figures?.[0]?.license, undefined);
+  assert.match(toyaFig.figures?.[0]?.note ?? '', /CC ではない/);
+  assert.equal(toyaFig.figures?.[1]?.src, undefined);
+  assert.match(toyaFig.figures?.[1]?.href ?? '', /den\.12282/);
+  assert.equal(toyaFig.figures?.[1]?.hrefLabel, 'Kikuchi 2014');
+  assert.equal(toyaFig.figures?.[1]?.pubmed, KIKUCHI_2014_PUBMED);
+
+  const viennaFig = getScoreById('vienna');
+  assert.ok(viennaFig && isClassification(viennaFig));
+  assert.equal(viennaFig.figures?.[0]?.src, undefined);
+  assert.match(viennaFig.figures?.[0]?.href ?? '', /gut\.bmj\.com\/content\/47\/2\/251/);
+  assert.equal(viennaFig.figures?.[0]?.hrefLabel, '2000 paper');
+  assert.equal(viennaFig.figures?.[0]?.pubmed, VIENNA_2000_PUBMED);
+  assert.equal(viennaFig.figures?.[0]?.license, undefined);
+  assert.match(viennaFig.figures?.[0]?.note ?? '', /CC ではない/);
+
+  const spigelman = getScoreById('spigelman');
+  assert.ok(spigelman);
+  assert.equal(spigelman.pubmed, SPIGELMAN_1989_PUBMED);
+  assert.equal(spigelman.figures?.[0]?.src, undefined);
+  assert.match(spigelman.figures?.[0]?.href ?? '', /fap\.T\.spigelman/);
+  assert.equal(spigelman.figures?.[0]?.hrefLabel, 'Table 5');
+
+  const modified = getScoreById('modified-spigelman');
+  assert.ok(modified);
+  assert.equal(modified.pubmed, SAURIN_2004_PUBMED);
+  assert.equal(modified.figures?.[0]?.src, undefined);
+
+  const ishii = getScoreById('ishii');
+  assert.ok(ishii);
+  assert.equal(ishii.pubmed, ISHII_2021_PUBMED);
+  assert.equal(ishii.figures?.[0]?.src, undefined);
+
+  const kakushima = getScoreById('kakushima');
+  assert.ok(kakushima);
+  assert.equal(kakushima.pubmed, KAKUSHIMA_2017_PUBMED);
+  assert.equal(kakushima.license, 'CC BY-NC-ND 4.0');
+  assert.equal(kakushima.figures?.[0]?.src, undefined);
+  assert.match(kakushima.figures?.[0]?.href ?? '', /table-2/);
+  assert.equal(kakushima.figures?.[0]?.hrefLabel, 'Table 2');
+  assert.equal(kakushima.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+
   const bestJ = getScoreById('best-j');
   assert.ok(bestJ);
   assert.equal(bestJ.license, 'CC BY-NC 4.0');
@@ -1129,6 +1279,26 @@ test('英語結果は解釈だけ訳し、点数は変えない', () => {
   assert.equal(ecura.interpretation, 'Low risk');
   assert.match(ecura.details?.[0] ?? '', /LNM rate at this score 1\.6%/);
   assert.doesNotMatch(ecura.details?.join(' ') ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+
+  const japaneseChars = /[\u3040-\u30ff\u4e00-\u9faf]/;
+  const spigelmanEn = localizeResult(
+    computeSpigelman({ number: 3, size: 3, histology: 3, dysplasia: 3 }),
+    'en',
+  );
+  assert.equal(spigelmanEn.interpretation, 'Stage IV');
+  assert.match(spigelmanEn.details?.[1] ?? '', /every 6–12 months/);
+  assert.doesNotMatch(spigelmanEn.details?.join(' ') ?? '', japaneseChars);
+
+  const ishiiEn = localizeResult(computeIshii({ color: 1, size: 2, surface: 1, vessels: 1 }), 'en');
+  assert.equal(ishiiEn.interpretation, 'Suggests VCL C4/5 (HGA / cancer)');
+  assert.doesNotMatch(ishiiEn.details?.join(' ') ?? '', japaneseChars);
+
+  const kakushimaEn = localizeResult(
+    computeKakushima({ diameter: 0, color: 0, macro: 0, nodularity: 0 }),
+    'en',
+  );
+  assert.equal(kakushimaEn.interpretation, 'Suggests VCL 3 (LGA)');
+  assert.doesNotMatch(kakushimaEn.details?.join(' ') ?? '', japaneseChars);
 });
 
 test('既定言語は英語で、計算は最低点から始まる', () => {
@@ -1146,13 +1316,38 @@ test('既定言語は英語で、計算は最低点から始まる', () => {
   assert.ok(apcs && !isClassification(apcs));
   assert.deepEqual(lowestFieldValues(apcs.fields), { age: 0, sex: 0, family: 0, smoking: 0 });
   assert.equal(apcs.compute(lowestFieldValues(apcs.fields)).interpretation, '平均リスク（AR）');
+
+  const spigelman = getScoreById('spigelman');
+  assert.ok(spigelman && !isClassification(spigelman));
+  assert.deepEqual(lowestFieldValues(spigelman.fields), {
+    number: 0,
+    size: 0,
+    histology: 0,
+    dysplasia: 0,
+  });
+  assert.equal(spigelman.compute(lowestFieldValues(spigelman.fields)).interpretation, 'Stage 0');
+
+  const ishii = getScoreById('ishii');
+  assert.ok(ishii && !isClassification(ishii));
+  assert.deepEqual(lowestFieldValues(ishii.fields), { color: 0, size: 0, surface: 0, vessels: 0 });
+
+  const kakushima = getScoreById('kakushima');
+  assert.ok(kakushima && !isClassification(kakushima));
+  assert.deepEqual(lowestFieldValues(kakushima.fields), {
+    diameter: 0,
+    color: 0,
+    macro: 0,
+    nodularity: 0,
+  });
 });
 
-test('WASP / MESDA-G のフローは選択すると診断まで進む', () => {
+test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', () => {
   const wasp = getScoreById('wasp');
   const mesda = getScoreById('mesda-g');
+  const toya = getScoreById('toya');
   assert.ok(hasAlgorithmFlow(wasp));
   assert.ok(hasAlgorithmFlow(mesda));
+  assert.ok(hasAlgorithmFlow(toya));
 
   const waspHp = walkAlgorithmFlow(wasp.flow, { nice: 'type1', ssl1: 'lt2' });
   assert.equal(waspHp.result?.entryLabel, 'Type 1 + <2 SSL features');
@@ -1199,7 +1394,11 @@ test('WASP / MESDA-G のフローは選択すると診断まで進む', () => {
     node.label,
     ...(node.children ?? []).flatMap((child) => mapLabels(child as { label: string; children?: unknown[] })),
   ];
-  for (const label of [...mapLabels(wasp.flow.map), ...mapLabels(mesda.flow.map)]) {
+  for (const label of [
+    ...mapLabels(wasp.flow.map),
+    ...mapLabels(mesda.flow.map),
+    ...mapLabels(toya.flow.map),
+  ]) {
     assert.doesNotMatch(label, mapJapanese, label);
   }
   assert.equal(wasp.flow.map.label, 'Polyp <10 mm');
@@ -1219,6 +1418,27 @@ test('WASP / MESDA-G のフローは選択すると診断まで進む', () => {
   assert.equal(englishMesda.flow.map.label, 'Suspicious lesion');
   assert.equal(englishMesda.figures?.[0]?.src, undefined);
   assert.match(englishMesda.figures?.[0]?.note ?? '', /not hosted/);
+
+  const toyaMixed = walkAlgorithmFlow(toya.flow, { type: 'mixed' });
+  assert.equal(findEntryForResult(toya.entries, toyaMixed.result)?.meaning, 'Multiple surface patterns');
+  assert.equal(toyaMixed.currentStep, null);
+
+  const afterMono = walkAlgorithmFlow(toya.flow, { type: 'mono' });
+  assert.equal(afterMono.currentStep?.id, 'pattern');
+  assert.equal(afterMono.result, null);
+
+  const toyaPine = walkAlgorithmFlow(toya.flow, { type: 'mono', pattern: 'pinecone' });
+  assert.equal(findEntryForResult(toya.entries, toyaPine.result)?.label, 'Pinecone');
+
+  const toyaC3 = walkAlgorithmFlow(toya.flow, { type: 'mono', pattern: 'monotonous' });
+  assert.equal(findEntryForResult(toya.entries, toyaC3.result)?.meaning, 'Regular monotype (not pinecone)');
+
+  const englishToya = localizeScore(toya, 'en');
+  assert.ok(hasAlgorithmFlow(englishToya));
+  assert.equal(englishToya.flow.steps.type.prompt, 'Is the surface pattern single or multiple?');
+  assert.equal(englishToya.flow.map.label, 'SNADET · ME-CV');
+  assert.equal(englishToya.figures?.[0]?.src, undefined);
+  assert.match(englishToya.figures?.[0]?.note ?? '', /not CC/);
 });
 
 test('PWA 更新はユーザー操作まで waiting のままにする', () => {
@@ -1270,6 +1490,11 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.en.about.citationsNotCcBody, /not CC/);
   assert.match(UI.en.about.citationsNotCcBody, /not hosted/);
   assert.doesNotMatch(UI.en.about.citationsNotCcBody, /1969/);
+  assert.match(UI.ja.about.citationsCcBody, /Kakushima/);
+  assert.match(UI.ja.about.citationsNotCcBody, /Spigelman/);
+  assert.match(UI.ja.about.citationsNotCcBody, /Vienna/);
+  assert.match(UI.en.about.duodenumBody, /Spigelman/);
+  assert.match(UI.en.about.colorectumBody, /Vienna/);
 });
 
 test('引用は PubMed へ行く', () => {
