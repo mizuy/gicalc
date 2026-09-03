@@ -1,6 +1,5 @@
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
-import { Text } from '@/components/Themed';
 import { useLocale } from '@/lib/i18n';
 
 type Props = {
@@ -11,28 +10,31 @@ export function JapanMark({ compact = false }: Props) {
   const { t } = useLocale();
 
   return (
-    <View
-      accessibilityRole="text"
-      accessibilityLabel={t.japanDeveloped}
-      style={compact ? styles.compact : undefined}>
-      <Text style={[styles.flag, compact ? styles.flagCompact : styles.flagTitle]}>🇯🇵</Text>
+    <View style={compact ? styles.compact : undefined}>
+      <Image
+        accessibilityLabel={t.japanDeveloped}
+        source={require('../../assets/images/japan-flag.png')}
+        style={compact ? styles.flagCompact : styles.flagTitle}
+        resizeMode="contain"
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   compact: {
-    marginTop: 1,
-  },
-  flag: {
-    fontWeight: '400',
+    marginTop: 2,
   },
   flagCompact: {
-    fontSize: 14,
-    lineHeight: 18,
+    width: 18,
+    height: 12,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#D0D0D0',
   },
   flagTitle: {
-    fontSize: 20,
-    lineHeight: 26,
+    width: 27,
+    height: 18,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#D0D0D0',
   },
 });
