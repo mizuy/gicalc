@@ -928,6 +928,22 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Four LST subtypes and deep-SMI rates (Bogie 2018 meta-analysis). Figure from Clin Endosc 2025 Fig. 3 (CC BY-NC 4.0). Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
     ],
   },
+  'esd-fibrosis': {
+    name: 'ESD submucosal fibrosis classification (F0–F2)',
+    shortName: 'ESD-F',
+    description:
+      'Intraoperative grading of submucosal fibrosis during colorectal ESD after indigo carmine submucosal injection (F0 / F1 / F2). Separate from pit pattern, NICE, and JNET.',
+    groups: {
+      判定: 'Assessment',
+    },
+    comments: {
+      F2: 'Hook knife and ST hood are often useful. Consider an experienced endoscopist or surgical resection given incomplete resection and additional-surgery risk.',
+    },
+    figureNotes: [
+      'Original Fig. 1. Intest Res copyright; not CC, so the figure is not hosted. Link opens Fig. 1 in the paper. The colorectal F classification was first described by Matsumoto 2010 (Scand J Gastroenterol).',
+    ],
+    note: 'Graded during ESD after indigo carmine submucosal injection. Preoperative EUS-F0/F1/F2 is a separate system. The same F definitions are used in gastric ESD, but this page focuses on colorectal ESD. JGES colorectal ESD guidelines list biopsy- or prolapse-related fibrosis as an indication but do not define F0–F2 in the guideline text.',
+  },
   'kudo-tsuruta': {
     name: 'Kudo–Tsuruta classification (pit pattern)',
     description: 'Chromoendoscopic pit-pattern classification of colorectal neoplasia (I / II / IIIs / IIIL / IV / VI / VN).',

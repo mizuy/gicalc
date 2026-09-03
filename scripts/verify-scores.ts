@@ -28,6 +28,7 @@ import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
 import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
 import { LST_2008_PUBMED } from '../data/scores/lst';
 import { MESDA_G_2016_PUBMED } from '../data/scores/mesda-g';
+import { ESD_FIBROSIS_2010_PUBMED, ESD_FIBROSIS_2016_PUBMED } from '../data/scores/esd-fibrosis';
 import { EREFS_2013_PUBMED } from '../data/scores/erefs';
 import { FORREST_1974_PUBMED } from '../data/scores/forrest';
 import { HILL_1996_PUBMED } from '../data/scores/hill';
@@ -55,7 +56,7 @@ import {
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
-test('登録スコアは37種で臓器順に並ぶ', () => {
+test('登録スコアは38種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -86,6 +87,7 @@ test('登録スコアは37種で臓器順に並ぶ', () => {
       'paris',
       'lst',
       'kudo-tsuruta',
+      'esd-fibrosis',
       'colorectal-ec',
       'nice',
       'wasp',
@@ -123,7 +125,7 @@ test('登録スコアは37種で臓器順に並ぶ', () => {
       ],
       [
         'colorectum',
-        ['apcs', 'sps', 'vienna', 'paris', 'lst', 'kudo-tsuruta', 'colorectal-ec', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
+        ['apcs', 'sps', 'vienna', 'paris', 'lst', 'kudo-tsuruta', 'esd-fibrosis', 'colorectal-ec', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
       ],
       ['bleeding', ['forrest', 'gbs', 'noblads']],
     ],
@@ -159,6 +161,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     paris: 'classification',
     lst: 'classification',
     'kudo-tsuruta': 'classification',
+    'esd-fibrosis': 'classification',
     'colorectal-ec': 'classification',
     nice: 'classification',
     wasp: 'classification',
@@ -196,6 +199,7 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'toya',
     'lst',
     'kudo-tsuruta',
+    'esd-fibrosis',
     'colorectal-ec',
     'jnet',
     'kajiwara-nomogram',
@@ -788,6 +792,19 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(kudo.originalLead ?? '', /Type V was later subdivided/);
   assert.match(kudo.entries[2]?.rows.find((row) => row.heading === 'Note')?.text ?? '', /small or short/);
 
+  const esdFibrosis = getScoreById('esd-fibrosis');
+  assert.ok(esdFibrosis && isClassification(esdFibrosis));
+  assert.deepEqual(
+    esdFibrosis.entries.map((entry) => entry.label),
+    ['F0', 'F1', 'F2', 'Assessment'],
+  );
+  assert.equal(esdFibrosis.entries[2]?.meaning, 'Severe fibrosis');
+  assert.match(esdFibrosis.originalLead ?? '', /white muscular-like structure/);
+  assert.equal(esdFibrosis.developedInJapan, true);
+  assert.equal(esdFibrosis.pubmed, ESD_FIBROSIS_2010_PUBMED);
+  assert.match(esdFibrosis.description, /pit pattern/);
+  assert.match(esdFibrosis.description, /とは別の分類/);
+
   const colorectalEc = getScoreById('colorectal-ec');
   assert.ok(colorectalEc && isClassification(colorectalEc));
   assert.deepEqual(
@@ -1047,11 +1064,11 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.ok(hasAlgorithmFlow(wasp));
   assert.ok(hasAlgorithmFlow(mesda));
   assert.ok(hasAlgorithmFlow(toya));
-  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna, sps, colorectalEc]) {
+  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna, sps, colorectalEc]) {
     assert.equal(hasAlgorithmFlow(score), false, score.id);
   }
 
-  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, vienna, sps, colorectalEc]) {
+  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, vienna, sps, colorectalEc]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -1175,6 +1192,19 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(nice.figures?.[0]?.pubmed, NICE_2013_PUBMED);
   assert.equal(nice.figures?.[0]?.license, undefined);
   assert.match(nice.figures?.[0]?.note ?? '', /CC ではない/);
+
+  const esdFibrosisFig = getScoreById('esd-fibrosis');
+  assert.ok(esdFibrosisFig && isClassification(esdFibrosisFig));
+  assert.equal(esdFibrosisFig.figures?.length, 1);
+  assert.equal(esdFibrosisFig.figures?.[0]?.src, undefined);
+  assert.match(esdFibrosisFig.figures?.[0]?.href ?? '', /irjournal\.org/);
+  assert.equal(esdFibrosisFig.figures?.[0]?.hrefLabel, 'Fig. 1');
+  assert.match(esdFibrosisFig.figures?.[0]?.caption ?? '', /Fig\. 1/);
+  assert.match(esdFibrosisFig.figures?.[0]?.source ?? '', /Matsumoto A/);
+  assert.equal(esdFibrosisFig.pubmed, ESD_FIBROSIS_2010_PUBMED);
+  assert.equal(esdFibrosisFig.figures?.[0]?.pubmed, ESD_FIBROSIS_2016_PUBMED);
+  assert.equal(esdFibrosisFig.figures?.[0]?.license, undefined);
+  assert.match(esdFibrosisFig.figures?.[0]?.note ?? '', /CC ではない/);
 
   const mesda = getScoreById('mesda-g');
   assert.ok(mesda && isClassification(mesda));
@@ -1677,7 +1707,9 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.en.about.colorectumBody, /Vienna/);
   assert.match(UI.en.about.colorectumBody, /SPS/);
   assert.match(UI.en.about.colorectumBody, /EC/);
-  assert.match(UI.ja.about.citationsCcBody, /McWhinney 2023/);
+  assert.match(UI.en.about.colorectumBody, /ESD-F/);
+  assert.match(UI.ja.about.colorectumBody, /ESD-F/);
+  assert.match(UI.ja.about.citationsNotCcBody, /ESD-F/);
   assert.match(UI.ja.about.citationsNotCcBody, /Dekker 2020/);
   assert.match(UI.ja.about.citationsCcBody, /Misawa 2021/);
   assert.match(UI.ja.about.citationsNotCcBody, /Kudo 2011/);
