@@ -2,7 +2,7 @@
 
 消化管内視鏡向けスコア・予測・内視鏡分類ツール（Web / PWA）。既定は英語です。ヘッダーの **JA / EN** で日本語と英語を切り替えられ、選んだ言語はブラウザに保存されます。計算は各項目の最低点から始まります。
 
-食道、胃、大腸、出血の順です。
+食道、胃、十二指腸、大腸、出血の順です。
 
 | 臓器 | ツール | 対象 | 出力 |
 |------|--------|------|------|
@@ -19,7 +19,13 @@
 | 胃 | eCura（Hatta 2017） | 早期胃癌・非治癒切除後 LNM | 点数 0–7 |
 | 胃 | Sekiguchi（2016） | 早期胃癌 LNM（混合型を区別） | 点数 0–11 |
 | 胃 | BEST-J（Hatta 2021） | 早期胃癌 ESD 後出血 | 点数 |
+| 十二指腸 | Spigelman（1989） | FAP 十二指腸腺腫 | 点数 0–12 / Stage 0–IV |
+| 十二指腸 | Modified Spigelman（Saurin 2004） | FAP 十二指腸腺腫（Vienna 異型度） | 点数 0–12 / Stage 0–IV |
+| 十二指腸 | Ishii（2021） | SNADET C3 vs C4/5 | 点数 0–5 |
+| 十二指腸 | Kakushima WLI（2017） | SNADET LGA vs HGA/癌 | 点数 0–5 |
+| 十二指腸 | Toya ME-CV（2020） | SNADET（ME-CV。ME-NBI は Kikuchi 2014） | アルゴリズム（C3 / C4/5） |
 | 大腸 | APCS（Yeoh 2011） | 無症状アジア人の進行大腸腫瘍リスク | 点数 0–7 |
+| 大腸 | Vienna（Schlemper 2000） | 消化管上皮性腫瘍の病理分類 | 定義一覧（C1–C5） |
 | 大腸 | Paris（2003 / 2005） | 表在型腫瘍の肉眼型（Type 0） | 定義一覧（原著の図・文言） |
 | 大腸 | LST（Kudo 2008） | 側方発育型腫瘍の4亜型 | 定義一覧（原著の図・文言） |
 | 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（文言。図は原著へリンク） |
@@ -89,6 +95,7 @@ npm run preview:pages
 - LST の図（Kim 2025, *Clin Endosc* Fig. 3）: **CC BY-NC 4.0**（Castillo-Regalado 2022 *WJGE* は CC BY-NC 4.0）
 - BEST-J（Hatta 2021, *Gut*）: **CC BY-NC 4.0**
 - Aronchick（2000, *GIE*）: Crossref 上の Version of Record は **CC BY-NC-ND 4.0**（遅延公開）
+- Kakushima WLI スコア（Kakushima 2017, *Endosc Int Open* Table 2）: **CC BY-NC-ND 4.0**（表は HTML のため埋め込まず Table 2 へリンク）
 
 **CC ではないソース**
 
@@ -109,6 +116,11 @@ npm run preview:pages
 - GBS（Blatchford 2000, *Lancet*）: CC ではない
 - NOBLADS（Aoki 2016, *CGH*）: CC ではない
 - T1 Nomogram（Kajiwara 2023, *GIE*）: CC ではない。図は埋め込まず、原著 Fig. 2 へリンクする
+- Spigelman（Spigelman 1989, *Lancet*）: CC ではない。点数表は GeneReviews Table 5 へリンクする
+- Modified Spigelman（Saurin 2004, *JCO*）: CC ではない。論文へリンクする
+- Ishii スコア（Ishii 2021, *Dig Endosc*）: CC ではない。論文へリンクする
+- Toya ME-CV / Kikuchi ME-NBI（Toya 2020 / Kikuchi 2014, *Dig Endosc*）: CC ではない。論文へリンクする
+- Vienna 分類（Schlemper 2000, *Gut*）: CC ではない。論文へリンクする
 
 ## 免責
 

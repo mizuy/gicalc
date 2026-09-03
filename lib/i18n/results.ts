@@ -16,6 +16,15 @@ const INTERPRETATION_EN: Record<string, string> = {
   '平均リスク（AR）': 'Average risk (AR)',
   '中等度リスク（MR）': 'Moderate risk (MR)',
   '高リスク（HR）': 'High risk (HR)',
+  'Stage 0': 'Stage 0',
+  'Stage I': 'Stage I',
+  'Stage II': 'Stage II',
+  'Stage III': 'Stage III',
+  'Stage IV': 'Stage IV',
+  'VCL C4/5（HGA / 癌）を疑う': 'Suggests VCL C4/5 (HGA / cancer)',
+  'VCL C3（LGA）を疑う': 'Suggests VCL C3 (LGA)',
+  'VCL 4 以上（HGA / 癌）を疑う': 'Suggests VCL 4 or higher (HGA / cancer)',
+  'VCL 3（LGA）を疑う': 'Suggests VCL 3 (LGA)',
   'Excellent（優）': 'Excellent',
   'Good（良）': 'Good',
   'Fair（可）': 'Fair',
@@ -72,6 +81,18 @@ const DETAIL_EXACT_EN: Record<string, string> = {
   '検証コホートの進行腫瘍有病率 5.2%（平均リスクの 4.3 倍）。':
     'Advanced-neoplasia prevalence 5.2% in the validation cohort (4.3× average risk).',
   '大腸内視鏡検診の優先対象です。': 'A priority for colonoscopy screening.',
+  'カットオフ ≥3 点。導出コホートの正診率 92%、感度 95%、特異度 93%。':
+    'Cutoff ≥3. Derivation-cohort accuracy 92%, sensitivity 95%, specificity 93%.',
+  '色調は白光、表面・血管は NBI 拡大で評価する。': 'Score color on WLI; surface and vessels on magnifying NBI.',
+  'カットオフ <3 点。低異型度腺腫の見込み。': 'Cutoff <3. Favors low-grade adenoma.',
+  'カットオフ ≥3 点。検証コホートの感度 88%、特異度 79%、正診率 86%。':
+    'Cutoff ≥3. Validation sensitivity 88%, specificity 79%, accuracy 86%.',
+  '白光（必要ならインジゴカルミン）のみ。混在色調は高い点を採用。':
+    'WLI only (± indigo carmine). If mixed colors, take the higher points.',
+  '乳頭部は別評価。Stage IV は十二指腸・乳頭部癌リスクが高い。':
+    'Assess the papilla separately. Stage IV has a high risk of duodenal and papillary cancer.',
+  '1989 原法の軽度・中等度・高度は使わない。乳頭部は別評価。':
+    'Do not use the 1989 mild / moderate / severe grades. Assess the papilla separately.',
   '透明な少量の液体。粘膜の 95% 超が見える。': 'Small amount of clear fluid. >95% of mucosa visible.',
   'adequate。洗浄前に全体を評価します。': 'Adequate. Score the whole colon before washing.',
   '透明な液体が多めでも、粘膜の 90% 超が見える。':
@@ -127,6 +148,27 @@ const DETAIL_PATTERNS: Array<{ re: RegExp; to: (...args: string[]) => string }> 
   {
     re: /^重症 LGIB 率 (.+)$/,
     to: (rate) => `Severe LGIB rate ${rate}`,
+  },
+  {
+    re: /^Spigelman stage (.+)（0–12 点）。$/,
+    to: (stage) => `Spigelman stage ${stage} (0–12 points).`,
+  },
+  {
+    re: /^Modified Spigelman stage (.+)（Vienna: LGD 1 点 \/ HGD 3 点）。$/,
+    to: (stage) => `Modified Spigelman stage ${stage} (Vienna: LGD 1 point / HGD 3 points).`,
+  },
+  {
+    re: /^ESGE 2019 の十二指腸サーベイランス目安: (.+)。$/,
+    to: (interval) => {
+      const intervals: Record<string, string> = {
+        '5年ごと': 'every 5 years',
+        '3年ごと': 'every 3 years',
+        '1年ごと': 'every 1 year',
+        '6–12か月。膵温存十二指腸切除も検討':
+          'every 6–12 months; consider pancreas-preserving duodenectomy',
+      };
+      return `ESGE 2019 duodenal surveillance guide: ${intervals[interval] ?? interval}.`;
+    },
   },
 ];
 
