@@ -9,6 +9,7 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
   kind: 'classification',
   name: '木村–竹本分類（胃萎縮）',
   shortName: '木村–竹本',
+  developedInJapan: true,
   organ: 'stomach',
   category: 'classification',
   categoryLabel: '内視鏡分類',

@@ -5,6 +5,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
   kind: 'classification',
   name: '工藤–鶴田分類（pit pattern）',
   shortName: 'pit pattern',
+  developedInJapan: true,
   organ: 'colorectum',
   category: 'classification',
   categoryLabel: '内視鏡分類',

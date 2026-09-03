@@ -19,6 +19,7 @@ export type UiStrings = {
   notFoundLink: string;
   languageJa: string;
   languageEn: string;
+  japanDeveloped: string;
   organ: Record<ScoreOrgan, string>;
   category: Record<ScoreCategory, string>;
   pwa: {
@@ -68,6 +69,7 @@ export const UI: Record<Locale, UiStrings> = {
     notFoundLink: 'スコア一覧へ戻る',
     languageJa: '日本語',
     languageEn: 'English',
+    japanDeveloped: '日本で開発',
     organ: {
       esophagus: '食道',
       stomach: '胃',
@@ -133,6 +135,7 @@ export const UI: Record<Locale, UiStrings> = {
     notFoundLink: 'Back to scores',
     languageJa: '日本語',
     languageEn: 'English',
+    japanDeveloped: 'Japan-developed',
     organ: {
       esophagus: 'Esophagus',
       stomach: 'Stomach',

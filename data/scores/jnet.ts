@@ -5,6 +5,7 @@ export const jnetScore: ClassificationDefinition = {
   kind: 'classification',
   name: 'JNET分類（大腸 NBI 拡大）',
   shortName: 'JNET',
+  developedInJapan: true,
   organ: 'colorectum',
   category: 'classification',
   categoryLabel: '内視鏡分類',

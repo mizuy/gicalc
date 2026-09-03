@@ -4,11 +4,12 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { CitationLink } from '@/components/calculator/CitationLink';
 import { ScoreFieldSelector } from '@/components/calculator/ScoreFieldSelector';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
+import { JapanMark } from '@/components/calculator/JapanMark';
 import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
 import { Text, useThemeColor } from '@/components/Themed';
 import { localizeResult, useLocale } from '@/lib/i18n';
 import { lowestFieldValues } from '@/lib/scores/initialValues';
-import { getToolKind, type CalculatorDefinition } from '@/types/score';
+import { getToolKind, isJapanDeveloped, type CalculatorDefinition } from '@/types/score';
 
 type Props = {
   score: CalculatorDefinition;
@@ -41,7 +42,10 @@ export function ScoreCalculatorScreen({ score }: Props) {
       keyboardShouldPersistTaps="handled">
       <View style={styles.titleBlock}>
         <ToolKindBadge kind={getToolKind(score)} />
-        <Text style={styles.title}>{score.name}</Text>
+        <View style={styles.titleRow}>
+          <Text style={styles.title}>{score.name}</Text>
+          {isJapanDeveloped(score) ? <JapanMark /> : null}
+        </View>
       </View>
       <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
       {score.reference ? (
@@ -99,9 +103,16 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
   title: {
     fontSize: 22,
     fontWeight: '800',
+    flexShrink: 1,
   },
   description: {
     fontSize: 14,

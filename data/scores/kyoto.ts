@@ -5,6 +5,7 @@ export const kyotoScore: ScoreDefinition = {
   id: 'kyoto',
   name: '京都分類リスクスコア（原法 0–8）',
   shortName: '京都分類',
+  developedInJapan: true,
   organ: 'stomach',
   category: 'gastritis',
   categoryLabel: '胃炎・胃癌リスク',

@@ -1,9 +1,10 @@
 import { Link } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { JapanMark } from '@/components/calculator/JapanMark';
 import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
 import { Text, useThemeColor } from '@/components/Themed';
-import { getToolKind, type ScoreDefinition } from '@/types/score';
+import { getToolKind, isJapanDeveloped, type ScoreDefinition } from '@/types/score';
 
 type Props = {
   score: ScoreDefinition;
@@ -30,9 +31,12 @@ export function ScoreListItem({ score, last }: Props) {
           </Text>
         </View>
         <View style={styles.body}>
-          <Text style={styles.name} numberOfLines={1}>
-            {score.name}
-          </Text>
+          <View style={styles.nameRow}>
+            <Text style={styles.name} numberOfLines={1}>
+              {score.name}
+            </Text>
+            {isJapanDeveloped(score) ? <JapanMark compact /> : null}
+          </View>
           <View style={styles.meta}>
             <ToolKindBadge kind={getToolKind(score)} />
             <Text style={[styles.category, { color: textSecondary }]} numberOfLines={1}>
@@ -73,7 +77,13 @@ const styles = StyleSheet.create({
     minWidth: 0,
     gap: 4,
   },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
   name: {
+    flexShrink: 1,
     fontSize: 14,
     fontWeight: '600',
   },

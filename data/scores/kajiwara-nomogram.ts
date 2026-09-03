@@ -9,6 +9,7 @@ export const kajiwaraNomogram: ScoreDefinition = {
   id: 'kajiwara-nomogram',
   name: '大腸T1リンパ節転移予測ノモグラム（Kajiwara / JSCCR）',
   shortName: 'T1 Nomogram',
+  developedInJapan: true,
   organ: 'colorectum',
   category: 't1-colorectal',
   categoryLabel: '大腸T1癌',

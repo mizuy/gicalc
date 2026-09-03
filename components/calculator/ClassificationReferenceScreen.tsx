@@ -2,11 +2,17 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
 import { CitationLink } from '@/components/calculator/CitationLink';
+import { JapanMark } from '@/components/calculator/JapanMark';
 import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
 import { Text, useThemeColor } from '@/components/Themed';
 import { SeverityColors } from '@/constants/Colors';
 import { useLocale } from '@/lib/i18n';
-import { getToolKind, type ClassificationDefinition, type ClassificationEntry } from '@/types/score';
+import {
+  getToolKind,
+  isJapanDeveloped,
+  type ClassificationDefinition,
+  type ClassificationEntry,
+} from '@/types/score';
 
 type Props = {
   score: ClassificationDefinition;
@@ -47,7 +53,10 @@ export function ClassificationReferenceScreen({ score }: Props) {
       contentContainerStyle={styles.content}>
       <View style={styles.titleBlock}>
         <ToolKindBadge kind={getToolKind(score)} />
-        <Text style={styles.title}>{score.name}</Text>
+        <View style={styles.titleRow}>
+          <Text style={styles.title}>{score.name}</Text>
+          {isJapanDeveloped(score) ? <JapanMark /> : null}
+        </View>
       </View>
       {score.originalLead ? (
         <View style={styles.originalBlock}>
@@ -126,9 +135,16 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
   title: {
     fontSize: 22,
     fontWeight: '800',
+    flexShrink: 1,
   },
   originalBlock: {
     marginBottom: 8,

@@ -5,6 +5,7 @@ export const kyotoModifiedScore: ScoreDefinition = {
   id: 'kyoto-modified',
   name: '改変京都分類リスクスコア（0–5）',
   shortName: '改変京都',
+  developedInJapan: true,
   organ: 'stomach',
   category: 'gastritis',
   categoryLabel: '胃炎・胃癌リスク',

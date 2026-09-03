@@ -47,6 +47,8 @@ type ToolBase = {
   description: string;
   /** 省略時は分類→classification、計算→score */
   toolKind?: ToolKind;
+  /** 日本で考案・策定されたツール。国際分類（Paris / NICE など）には付けない */
+  developedInJapan?: boolean;
   reference?: string;
   /** PubMed PMID、または PubMed 上の URL（未収載論文は検索 URL） */
   pubmed?: string;
@@ -111,6 +113,10 @@ export const TOOL_KIND_LABELS: Record<ToolKind, string> = {
   prediction: 'PREDICTION MODEL',
   algorithm: 'ALGORITHM',
 };
+
+export function isJapanDeveloped(tool: ScoreDefinition): boolean {
+  return tool.developedInJapan === true;
+}
 
 export const ORGAN_LABELS: Record<ScoreOrgan, string> = {
   esophagus: '食道',

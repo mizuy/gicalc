@@ -8,6 +8,7 @@ export const mesdaGScore: ClassificationDefinition = {
   kind: 'classification',
   name: 'MESDA-G（早期胃癌・拡大内視鏡）',
   shortName: 'MESDA-G',
+  developedInJapan: true,
   organ: 'stomach',
   category: 'classification',
   categoryLabel: '内視鏡分類',

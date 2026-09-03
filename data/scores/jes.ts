@@ -5,6 +5,7 @@ export const jesScore: ClassificationDefinition = {
   kind: 'classification',
   name: 'JES分類（食道扁平上皮・拡大）',
   shortName: 'JES',
+  developedInJapan: true,
   organ: 'esophagus',
   category: 'classification',
   categoryLabel: '内視鏡分類',

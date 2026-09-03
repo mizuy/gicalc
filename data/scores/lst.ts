@@ -8,6 +8,7 @@ export const lstScore: ClassificationDefinition = {
   kind: 'classification',
   name: 'LST分類（側方発育型腫瘍）',
   shortName: 'LST',
+  developedInJapan: true,
   organ: 'colorectum',
   category: 'classification',
   categoryLabel: '内視鏡分類',

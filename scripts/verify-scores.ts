@@ -22,7 +22,7 @@ import { NICE_2013_PUBMED } from '../data/scores/nice';
 import { PARIS_2003_PUBMED } from '../data/scores/paris';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
-import { getToolKind, isClassification, TOOL_KIND_LABELS } from '../types/score';
+import { getToolKind, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
 test('登録スコアは20種で臓器順に並ぶ', () => {
   assert.deepEqual(
@@ -104,6 +104,35 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
   assert.equal(TOOL_KIND_LABELS.score, 'SCORE');
   assert.equal(TOOL_KIND_LABELS.prediction, 'PREDICTION MODEL');
   assert.equal(TOOL_KIND_LABELS.algorithm, 'ALGORITHM');
+});
+
+test('日本で開発されたツールだけに日本マークを付ける', () => {
+  const japan = [
+    'jes',
+    'kimura-takemoto',
+    'mesda-g',
+    'kyoto',
+    'kyoto-modified',
+    'ecura-hatta',
+    'sekiguchi',
+    'best-j',
+    'lst',
+    'kudo-tsuruta',
+    'jnet',
+    'kajiwara-nomogram',
+    'noblads',
+  ];
+  const international = ['eggim', 'apcs', 'paris', 'nice', 'bbps', 'aronchick', 'gbs'];
+  assert.deepEqual(
+    SCORES.filter((score) => isJapanDeveloped(score)).map((score) => score.id),
+    japan,
+  );
+  assert.deepEqual(
+    SCORES.filter((score) => !isJapanDeveloped(score)).map((score) => score.id),
+    international,
+  );
+  assert.equal(UI.en.japanDeveloped, 'Japan-developed');
+  assert.doesNotMatch(UI.en.japanDeveloped, /[\u3040-\u30ff\u4e00-\u9faf]/);
 });
 
 test('Kajiwara: 参照カテゴリは切片のみで約 0.3%', () => {
