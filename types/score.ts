@@ -35,6 +35,22 @@ export type ScoreResult = {
   details?: string[];
   displayMode?: 'points' | 'probability';
   probability?: number;
+  /** Kajiwara nomogram の合計点（SM≥2000 = 100） */
+  nomogramPoints?: number;
+};
+
+export type ClassificationFigure = {
+  src: string;
+  alt: string;
+  caption: string;
+  source: string;
+  doi?: string;
+  pubmed?: string;
+  /** 図の再利用ライセンス（CC のときだけ書く） */
+  license?: string;
+  licenseUrl?: string;
+  note: string;
+  aspectRatio: number;
 };
 
 type ToolBase = {
@@ -55,6 +71,12 @@ type ToolBase = {
   /** Creative Commons など、確認できた再利用ライセンス */
   license?: string;
   licenseUrl?: string;
+  /** 公式計算機など、PubMed 以外の外部リンク */
+  officialUrl?: string;
+  officialLinkLabel?: string;
+  /** 画面に出す注意。英語は SCORE_EN.note で上書き */
+  note?: string;
+  figures?: ClassificationFigure[];
 };
 
 export type ClassificationRow = {
@@ -79,26 +101,11 @@ export type CalculatorDefinition = ToolBase & {
   compute: (values: Record<string, number>) => ScoreResult;
 };
 
-export type ClassificationFigure = {
-  src: string;
-  alt: string;
-  caption: string;
-  source: string;
-  doi?: string;
-  pubmed?: string;
-  /** 図の再利用ライセンス（CC のときだけ書く） */
-  license?: string;
-  licenseUrl?: string;
-  note: string;
-  aspectRatio: number;
-};
-
 export type ClassificationDefinition = ToolBase & {
   kind: 'classification';
   /** 原著の定義文。画面では日本語コメントの前に出す */
   originalLead?: string;
   entries: ClassificationEntry[];
-  figures?: ClassificationFigure[];
 };
 
 export type ScoreDefinition = CalculatorDefinition | ClassificationDefinition;

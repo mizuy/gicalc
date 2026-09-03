@@ -1,9 +1,17 @@
 import {
+  formatAddedPoints,
   interpretLnmProbability,
+  NOMOGRAM_ITEM_POINTS,
+  nomogramTotalPoints,
   predictLnmProbability,
   valuesToNomogramInput,
 } from '../../lib/nomogram/kajiwara';
 import type { ScoreDefinition } from '../../types/score';
+
+const pts = (points: number, note?: string): string => {
+  const score = formatAddedPoints(points, 'ja');
+  return note ? `${score}。${note}` : score;
+};
 
 export const kajiwaraNomogram: ScoreDefinition = {
   id: 'kajiwara-nomogram',
@@ -15,26 +23,47 @@ export const kajiwaraNomogram: ScoreDefinition = {
   categoryLabel: '大腸T1癌',
   toolKind: 'prediction',
   description:
-    '内視鏡治療後の大腸T1癌におけるリンパ節転移（LNM）確率を予測します。Kajiwara 2023（GIE; 開発 3080 例）の6因子多変量ロジスティックです。',
+    '内視鏡治療後の大腸T1癌におけるリンパ節転移（LNM）確率を予測します。Kajiwara 2023（GIE; 開発 3080 例）の6因子多変量ロジスティックです。合計点は SM≥2000 μm を 100 点とした nomogram 点です。',
   reference: 'Kajiwara Y et al. Gastrointest Endosc 2023;97:1119-1128.e5',
   pubmed: '36669574',
+  officialUrl: 'https://nomogram.jsccr.jp/nomograms/lnm',
+  officialLinkLabel: '公式計算機（JSCCR）',
+  note: '公式サイトの表示と数値がややずれることがあります。本ツールは論文に記載された数値（実際のβ係数）を使って計算しています。',
+  figures: [
+    {
+      src: '/figures/kajiwara-2023-fig2.jpg',
+      alt: 'Nomogram for prediction of lymph node metastasis in T1 colorectal cancer (Kajiwara 2023 Fig. 2)',
+      caption: 'Fig. 2. Nomogram for prediction of lymph node metastasis in T1 colorectal cancer (Kajiwara et al. Gastrointest Endosc 2023)',
+      source:
+        'Kajiwara Y, Oka S, Tanaka S, et al. Nomogram as a novel predictive tool for lymph node metastasis in T1 colorectal cancer treated with endoscopic resection: a nationwide, multicenter study. Gastrointest Endosc. 2023;97:1119-1128.e5. Fig. 2.',
+      doi: 'https://doi.org/10.1016/j.gie.2023.01.022',
+      pubmed: '36669574',
+      note: '原著 Fig. 2。Elsevier / GIE の著作権。CC ではない。図をタップすると拡大します。',
+      aspectRatio: 2341 / 1388,
+    },
+  ],
   fields: [
     {
       id: 'sex',
       label: '性別',
       options: [
-        { value: 0, label: '男性' },
-        { value: 1, label: '女性' },
+        { value: 0, label: '男性', description: pts(NOMOGRAM_ITEM_POINTS.sexMale) },
+        { value: 1, label: '女性', description: pts(NOMOGRAM_ITEM_POINTS.sexFemale) },
       ],
     },
     {
       id: 'location',
       label: '腫瘍部位',
+      description: '盲腸から下部直腸の順。同じ点数の部位は同じ係数です。',
       options: [
-        { value: 0, label: '横行結腸T', description: '横行結腸' },
-        { value: 1, label: 'A/C/D', description: '上行結腸・盲腸・下行結腸' },
-        { value: 2, label: 'S/Rb', description: 'S状結腸・下部直腸' },
-        { value: 3, label: 'RS/Ra', description: '直腸S状部・上部直腸' },
+        { value: 1, label: 'C', description: pts(NOMOGRAM_ITEM_POINTS.locationAcD, '盲腸') },
+        { value: 2, label: 'A', description: pts(NOMOGRAM_ITEM_POINTS.locationAcD, '上行結腸') },
+        { value: 0, label: 'T', description: pts(NOMOGRAM_ITEM_POINTS.locationT, '横行結腸') },
+        { value: 3, label: 'D', description: pts(NOMOGRAM_ITEM_POINTS.locationAcD, '下行結腸') },
+        { value: 4, label: 'S', description: pts(NOMOGRAM_ITEM_POINTS.locationSRb, 'S状結腸') },
+        { value: 5, label: 'RS', description: pts(NOMOGRAM_ITEM_POINTS.locationRsRa, '直腸S状部') },
+        { value: 6, label: 'Ra', description: pts(NOMOGRAM_ITEM_POINTS.locationRsRa, '上部直腸') },
+        { value: 7, label: 'Rb', description: pts(NOMOGRAM_ITEM_POINTS.locationSRb, '下部直腸') },
       ],
     },
     {
@@ -42,9 +71,9 @@ export const kajiwaraNomogram: ScoreDefinition = {
       label: '組織型',
       description: '優位組織型。G1=乳頭腺癌・高分化管状腺癌、G2=中分化、G3=低分化・粘液癌・印環細胞癌',
       options: [
-        { value: 0, label: 'G1', description: '乳頭腺癌・高分化管状腺癌' },
-        { value: 1, label: 'G2', description: '中分化管状腺癌' },
-        { value: 2, label: 'G3', description: '低分化腺癌・粘液癌・印環細胞癌' },
+        { value: 0, label: 'G1', description: pts(NOMOGRAM_ITEM_POINTS.gradeG1, '乳頭腺癌・高分化管状腺癌') },
+        { value: 1, label: 'G2', description: pts(NOMOGRAM_ITEM_POINTS.gradeG2, '中分化管状腺癌') },
+        { value: 2, label: 'G3', description: pts(NOMOGRAM_ITEM_POINTS.gradeG3, '低分化腺癌・粘液癌・印環細胞癌') },
       ],
     },
     {
@@ -52,8 +81,8 @@ export const kajiwaraNomogram: ScoreDefinition = {
       label: '脈管侵襲',
       description: 'リンパ管侵襲または静脈侵襲',
       options: [
-        { value: 0, label: 'なし' },
-        { value: 1, label: 'あり' },
+        { value: 0, label: 'なし', description: pts(NOMOGRAM_ITEM_POINTS.lviNegative) },
+        { value: 1, label: 'あり', description: pts(NOMOGRAM_ITEM_POINTS.lviPositive) },
       ],
     },
     {
@@ -61,9 +90,9 @@ export const kajiwaraNomogram: ScoreDefinition = {
       label: 'SM浸潤深度',
       description: 'JSCCR絶対計測。MM下縁から、または有茎性はhead/stalk境界から',
       options: [
-        { value: 0, label: '<1000μm' },
-        { value: 1, label: '1000–1999μm' },
-        { value: 2, label: '≥2000μm' },
+        { value: 0, label: '<1000μm', description: pts(NOMOGRAM_ITEM_POINTS.smLt1000) },
+        { value: 1, label: '1000–1999μm', description: pts(NOMOGRAM_ITEM_POINTS.sm1000to1999) },
+        { value: 2, label: '≥2000μm', description: pts(NOMOGRAM_ITEM_POINTS.sm2000plus) },
       ],
     },
     {
@@ -71,18 +100,20 @@ export const kajiwaraNomogram: ScoreDefinition = {
       label: '簇出',
       description: '20倍視野（0.785 mm²）hotspot。モデルでは BD2 と BD3 を同一係数',
       options: [
-        { value: 0, label: 'BD1', description: '<5個' },
-        { value: 1, label: 'BD2/3', description: 'BD2: 5–9個、BD3: ≥10個' },
+        { value: 0, label: 'BD1', description: pts(NOMOGRAM_ITEM_POINTS.buddingBd1, '<5個') },
+        { value: 1, label: 'BD2/3', description: pts(NOMOGRAM_ITEM_POINTS.buddingBd23, 'BD2: 5–9個、BD3: ≥10個') },
       ],
     },
   ],
   compute: (values) => {
-    const probability = predictLnmProbability(valuesToNomogramInput(values));
+    const input = valuesToNomogramInput(values);
+    const probability = predictLnmProbability(input);
     const interpretation = interpretLnmProbability(probability);
     return {
       total: probability,
       displayMode: 'probability',
       probability,
+      nomogramPoints: nomogramTotalPoints(input),
       ...interpretation,
     };
   },

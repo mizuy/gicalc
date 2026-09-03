@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { CitationLink } from '@/components/calculator/CitationLink';
+import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
 import { ScoreFieldSelector } from '@/components/calculator/ScoreFieldSelector';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
 import { JapanMark } from '@/components/calculator/JapanMark';
@@ -54,8 +55,18 @@ export function ScoreCalculatorScreen({ score }: Props) {
           {score.license ? (
             <CitationLink label={`${t.license}: ${score.license}`} href={score.licenseUrl} />
           ) : null}
+          {score.officialUrl ? (
+            <CitationLink label={score.officialLinkLabel ?? score.officialUrl} href={score.officialUrl} />
+          ) : null}
+          {score.note ? (
+            <Text style={[styles.note, { color: textSecondary }]}>{score.note}</Text>
+          ) : null}
         </View>
       ) : null}
+
+      {score.figures?.map((figure) => (
+        <ClassificationFigure key={figure.src} figure={figure} />
+      ))}
 
       <ScoreResultPanel result={result} ready={allFieldsFilled} />
 
@@ -124,6 +135,11 @@ const styles = StyleSheet.create({
   },
   reference: {
     marginBottom: 20,
+  },
+  note: {
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 8,
   },
   reset: {
     borderWidth: 1,

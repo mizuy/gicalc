@@ -35,6 +35,39 @@ export const COEFFICIENTS = {
   buddingBd23: 0.659015203,
 } as const;
 
+/** 渡された計算機と同じ。SM≥2000 を 100 点にした nomogram 点。 */
+export function scaleToNomogramPoints(coefficient: number): number {
+  return Number(((coefficient * 100) / COEFFICIENTS.sm2000plus).toFixed(1));
+}
+
+export const NOMOGRAM_ITEM_POINTS = {
+  sexMale: 0,
+  sexFemale: scaleToNomogramPoints(COEFFICIENTS.sexFemale),
+  locationT: 0,
+  locationAcD: scaleToNomogramPoints(COEFFICIENTS.locationAcD),
+  locationSRb: scaleToNomogramPoints(COEFFICIENTS.locationSRb),
+  locationRsRa: scaleToNomogramPoints(COEFFICIENTS.locationRsRa),
+  gradeG1: 0,
+  gradeG2: scaleToNomogramPoints(COEFFICIENTS.gradeG2),
+  gradeG3: scaleToNomogramPoints(COEFFICIENTS.gradeG3),
+  lviNegative: 0,
+  lviPositive: scaleToNomogramPoints(COEFFICIENTS.lviPositive),
+  smLt1000: 0,
+  sm1000to1999: scaleToNomogramPoints(COEFFICIENTS.sm1000to1999),
+  sm2000plus: scaleToNomogramPoints(COEFFICIENTS.sm2000plus),
+  buddingBd1: 0,
+  buddingBd23: scaleToNomogramPoints(COEFFICIENTS.buddingBd23),
+} as const;
+
+export function formatAddedPoints(points: number, locale: 'ja' | 'en' = 'ja'): string {
+  const signed = points === 0 ? '0' : `+${points.toFixed(1)}`;
+  return locale === 'ja' ? `${signed}点` : `${signed} points`;
+}
+
+export function nomogramTotalPoints(input: NomogramInput): number {
+  return scaleToNomogramPoints(nomogramLogit(input) - INTERCEPT);
+}
+
 export function nomogramLogit(input: NomogramInput): number {
   let logit = INTERCEPT;
 
@@ -93,7 +126,17 @@ export function interpretLnmProbability(probability: number): {
 }
 
 const SEX_BY_VALUE: NomogramSex[] = ['male', 'female'];
-const LOCATION_BY_VALUE: NomogramLocation[] = ['transverse', 'acd', 'srb', 'rsra'];
+/** C=1, A=2, T=0, D=3, S=4, RS=5, Ra=6, Rb=7 */
+const LOCATION_BY_VALUE: Record<number, NomogramLocation> = {
+  0: 'transverse',
+  1: 'acd',
+  2: 'acd',
+  3: 'acd',
+  4: 'srb',
+  5: 'rsra',
+  6: 'rsra',
+  7: 'srb',
+};
 const GRADE_BY_VALUE: NomogramGrade[] = ['g1', 'g2', 'g3'];
 const LVI_BY_VALUE: NomogramLvi[] = ['negative', 'positive'];
 const SM_BY_VALUE: NomogramSmDepth[] = ['lt1000', 'sm1000to1999', 'sm2000plus'];

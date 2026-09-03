@@ -58,6 +58,8 @@ export function localizeScore<T extends ScoreDefinition>(score: T, locale: Local
       shortName: copy.shortName ?? score.shortName,
       description: copy.description,
       categoryLabel,
+      officialLinkLabel: copy.officialLinkLabel ?? score.officialLinkLabel,
+      note: copy.note ?? score.note,
       entries: score.entries.map((entry) => ({
         ...entry,
         meaning: copy.meanings?.[entry.label] ?? entry.meaning,
@@ -79,7 +81,13 @@ export function localizeScore<T extends ScoreDefinition>(score: T, locale: Local
     shortName: copy.shortName ?? calculator.shortName,
     description: copy.description,
     categoryLabel,
+    officialLinkLabel: copy.officialLinkLabel ?? calculator.officialLinkLabel,
+    note: copy.note ?? calculator.note,
     fields: localizeFields(calculator, locale),
+    figures: calculator.figures?.map((figure, index) => ({
+      ...figure,
+      note: copy.figureNotes?.[index] ?? figure.note,
+    })),
   };
   return localized as T;
 }
