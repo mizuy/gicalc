@@ -20,7 +20,7 @@ import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
 import { lowestFieldValues } from '../lib/scores/initialValues';
 import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
-import { KIMURA_1969_PUBMED } from '../data/scores/kimura-takemoto';
+import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
 import { LST_2008_PUBMED } from '../data/scores/lst';
 import { MESDA_G_2016_PUBMED } from '../data/scores/mesda-g';
 import { NICE_2013_PUBMED } from '../data/scores/nice';
@@ -782,13 +782,15 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const kimura = getScoreById('kimura-takemoto');
   assert.ok(kimura && isClassification(kimura));
-  assert.match(kimura.figures?.[0]?.source ?? '', /Kimura K/);
+  assert.match(kimura.figures?.[0]?.source ?? '', /Quach DT/);
   assert.match(kimura.figures?.[0]?.doi ?? '', /10\.5946\/ce\.2019\.072/);
   assert.match(kimura.figures?.[0]?.src ?? '', /kimura-takemoto-1969/);
-  assert.equal(kimura.pubmed, KIMURA_1969_PUBMED);
-  assert.equal(kimura.figures?.[0]?.pubmed, '31327182');
+  assert.equal(kimura.pubmed, QUACH_2019_PUBMED);
+  assert.equal(kimura.license, 'CC BY-NC 3.0');
+  assert.equal(kimura.figures?.[0]?.pubmed, QUACH_2019_PUBMED);
   assert.equal(kimura.figures?.[0]?.license, 'CC BY-NC 3.0');
   assert.match(kimura.figures?.[0]?.note ?? '', /CC BY-NC 3\.0/);
+  assert.doesNotMatch(kimura.figures?.[0]?.note ?? '', /1969/);
 
   const paris = getScoreById('paris');
   assert.ok(paris && isClassification(paris));
@@ -956,13 +958,16 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsNotCcBody, /JNET/);
   assert.match(UI.ja.about.citationsNotCcBody, /NICE/);
   assert.match(UI.ja.about.citationsNotCcBody, /Kajiwara/);
+  assert.match(UI.ja.about.citationsCcBody, /Quach 2019/);
+  assert.doesNotMatch(UI.ja.about.citationsNotCcBody, /1969/);
   assert.match(UI.en.about.citationsCcBody, /CC BY-NC-ND 4\.0/);
   assert.match(UI.en.about.citationsNotCcBody, /not CC/);
+  assert.doesNotMatch(UI.en.about.citationsNotCcBody, /1969/);
 });
 
 test('引用は PubMed へ行く', () => {
   assert.equal(pubmedUrl('26927367'), 'https://pubmed.ncbi.nlm.nih.gov/26927367/');
-  assert.equal(pubmedUrl(KIMURA_1969_PUBMED), KIMURA_1969_PUBMED);
+  assert.equal(pubmedUrl(QUACH_2019_PUBMED), 'https://pubmed.ncbi.nlm.nih.gov/31327182/');
   for (const score of SCORES) {
     assert.ok(score.pubmed, score.id);
     assert.match(pubmedUrl(score.pubmed!), /^https:\/\/pubmed\.ncbi\.nlm\.nih\.gov\//);

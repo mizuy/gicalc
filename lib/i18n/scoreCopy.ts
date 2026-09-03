@@ -62,9 +62,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'O-2': 'Kyoto atrophy +2 points (O-1–O-3).',
       'O-3': 'Kyoto atrophy +2 points (O-1–O-3).',
     },
-    figureNotes: [
-      'C-1–C-3, O-1–O-3. Figure from Quach 2019 Clin Endosc Fig. 2, CC BY-NC 3.0. The 1969 original (Endoscopy / Thieme) is not CC.',
-    ],
+    figureNotes: ['C-1–C-3, O-1–O-3. Quach 2019 Clin Endosc Fig. 2. License: CC BY-NC 3.0.'],
   },
   'mesda-g': {
     name: 'MESDA-G (early gastric cancer, magnifying)',

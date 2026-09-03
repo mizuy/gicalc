@@ -7,7 +7,7 @@
 | 臓器 | ツール | 対象 | 出力 |
 |------|--------|------|------|
 | 食道 | JES（Oyama 2017） | 扁平上皮の拡大（IPCL） | 定義一覧（原著の図・文言） |
-| 胃 | 木村–竹本（1969） | 内視鏡的萎縮 | 定義一覧（原著の図・文言） |
+| 胃 | 木村–竹本（Quach 2019） | 内視鏡的萎縮 | 定義一覧（Quach 2019 の図・文言） |
 | 胃 | MESDA-G（Muto 2016） | 早期胃癌の拡大（M-NBI） | 定義一覧（原著の図・文言） |
 | 胃 | 京都分類（原法） | 胃炎・胃癌リスク | 点数 0–8 |
 | 胃 | 改変京都（Kawamura 2021） | 胃炎・胃癌リスク | 点数 0–5 |
@@ -86,7 +86,6 @@ npm run preview:pages
 - JNET（Sano 2016, *Dig Endosc*）: Wiley 標準著作権。図は CC ではない
 - NICE（Hayashi 2013, *GIE*）: Elsevier 著作権。図は CC ではない
 - 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。*Clin Endosc* 2025 Fig. 4 は許諾のうえ再掲（記事自体は CC BY-NC）
-- 木村–竹本原著（1969, *Endoscopy* / Thieme）: CC ではない
 - Paris 原著（2003 *GIE* / 2005 *Endoscopy*）: CC ではない
 - LST 原著（Kudo 2008, *GIE*）: CC ではない
 - 京都（Shichijo 2017）/ 改変京都（Kawamura 2021）: Wiley、CC ではない
