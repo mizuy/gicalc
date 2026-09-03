@@ -954,14 +954,17 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.ok(jsphVarices && isClassification(jsphVarices));
   assert.deepEqual(
     jsphVarices.entries.map((entry) => entry.label),
-    ['L', 'Lg', 'F0', 'F1', 'F2', 'F3', 'Cw', 'Cb', 'RC', 'RC type', 'Bleeding', 'Mucosa', 'Guideline'],
+    ['F / L / C', 'Ls', 'Lm', 'Li', 'Lg', 'F0', 'F1', 'F2', 'F3', 'Cw', 'Cb', 'RC', 'RC type', 'Bleeding', 'Mucosa', 'Guideline'],
   );
-  assert.equal(jsphVarices.entries[3]?.meaning, 'Straight, small-caliber');
-  assert.equal(jsphVarices.entries[5]?.meaning, 'Nodular or tumor-shaped');
+  assert.equal(jsphVarices.name, '門脈圧亢進症学会分類（F / L / C）');
+  assert.equal(jsphVarices.shortName, 'F / L / C');
+  assert.equal(jsphVarices.entries[6]?.meaning, 'Straight, small-caliber');
+  assert.equal(jsphVarices.entries[8]?.meaning, 'Nodular or tumor-shaped');
   assert.match(jsphVarices.originalLead ?? '', /straight, small-caliber varices/);
-  assert.match(jsphVarices.entries[1]?.rows.find((row) => row.heading === 'Lg-c')?.text ?? '', /Sarin GOV1/);
+  assert.match(jsphVarices.entries[4]?.rows.find((row) => row.heading === 'Lg-c')?.text ?? '', /Sarin GOV1/);
   assert.match(jsphVarices.note ?? '', /Sarin/);
   assert.match(jsphVarices.description, /Sarin/);
+  assert.match(jsphVarices.description, /門脈圧亢進症学会/);
   assert.equal(jsphVarices.pubmed, JSPH_VARICES_2010_PUBMED);
   assert.equal(jsphVarices.organ, 'esophagus');
   assert.equal(jsphVarices.developedInJapan, true);
@@ -1644,9 +1647,11 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsCcBody, /Abe 2022/);
   assert.match(UI.ja.about.citationsCcBody, /Nagashima 2022/);
   assert.match(UI.ja.about.citationsCcBody, /Ge 2023/);
-  assert.match(UI.ja.about.esophagusBody, /記載基準/);
+  assert.match(UI.ja.about.esophagusBody, /門脈圧亢進症学会/);
+  assert.match(UI.ja.about.esophagusBody, /F \/ L \/ C/);
   assert.match(UI.ja.about.stomachBody, /Sarin/);
   assert.match(UI.en.about.esophagusBody, /varices/);
+  assert.match(UI.en.about.esophagusBody, /JSPH/);
   assert.match(UI.en.about.stomachBody, /Sarin/);
   assert.match(UI.ja.about.citationsNotCcBody, /Tajiri 2010/);
   assert.match(UI.ja.about.citationsNotCcBody, /Sarin 1992/);

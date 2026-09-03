@@ -122,7 +122,7 @@ export const sarinScore: ClassificationDefinition = {
           text: 'Fundus only, away from the cardia ≈ IGV1',
         },
       ],
-      comment: '形態は F0–F3、色調は Cw / Cb、発赤は胃では RC0 / RC1。詳しい定義は食道の記載基準ページ。',
+      comment: '形態は F0–F3、色調は Cw / Cb、発赤は胃では RC0 / RC1。詳しい定義は門脈圧亢進症学会分類（F / L / C）のページ。',
     },
     {
       label: 'Guideline',

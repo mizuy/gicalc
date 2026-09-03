@@ -115,13 +115,14 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     ],
   },
   'jsph-varices': {
-    name: 'Esophagogastric varices (JSPH rules)',
-    shortName: 'JSPH varices',
+    name: 'JSPH classification (F / L / C)',
+    shortName: 'F / L / C',
     description:
-      'Japan Society for Portal Hypertension rules for recording esophageal and gastric varices: location (L / Lg), form (F), color (C), then red color signs (RC). The international gastric scheme is Sarin (GOV / IGV), on a separate page.',
+      'Japan Society for Portal Hypertension rules for recording esophageal and gastric varices. Daily axes are form (F), location (L / Lg), and color (C), then red color signs (RC). The international gastric scheme is Sarin (GOV / IGV), on a separate page.',
     officialLinkLabel: 'JSGE/JSH cirrhosis guideline 2020 (EG varices)',
-    note: 'Proposed in 1980, revised in 1991, English 2nd edition in 2010. The current Japanese portal-hypertension rules use the same axes. Record in the order L, F, C, RC, bleeding signs, mucosal findings. Gastric varices use Sarin internationally. Western small / large roughly match F1 and F2/F3.',
+    note: 'Proposed in 1980, revised in 1991, English 2nd edition in 2010. The current General Rules for the Study of Portal Hypertension (4th ed., 2022) use the same axes. Record in the order L, F, C, RC, bleeding signs, mucosal findings. Gastric varices use Sarin internationally. Western small / large roughly match F1 and F2/F3.',
     groups: {
+      記載基準: 'Recording axes',
       部位: 'Location',
       形態: 'Form',
       色調: 'Color',
@@ -130,7 +131,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       日本ガイドライン: 'Japanese guidelines',
     },
     comments: {
-      L: 'When more than one portion is involved, record all of them (Ls,m or Lm,i).',
+      'F / L / C':
+        'Axes of the JSPH General Rules. Clinicians call them F / L / C. Example: Lm, F2, Cb, RC1 (RWM).',
+      Ls: 'When more than one portion is involved, record all of them (Ls,m or Lm,i).',
       Lg: 'The 2010 edition lists the stomach separately from the esophagus. Ectopic varices (body, antrum, duodenum) have no Lg letter — record them as Sarin IGV2.',
       F1: 'F1 with RC is an indication for prophylaxis in Western guidelines. Do not ignore it in Japan either.',
       F2: 'F2 / F3, or any RC-positive varix, is the usual target for prophylactic endoscopy in Japan.',
@@ -163,7 +166,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       IGV1:
         'Roughly Lg-f. Exclude splenic-vein occlusion (left-sided portal hypertension). Japanese guidelines suggest BRTO to prevent rebleeding.',
       IGV2: 'No Lg letter. In Japan these are recorded as ectopic varices.',
-      Lg: 'Form is F0–F3, color is Cw / Cb, and gastric RC is only RC0 / RC1. Full definitions are on the esophageal JSPH page.',
+      Lg: 'Form is F0–F3, color is Cw / Cb, and gastric RC is only RC0 / RC1. Full definitions are on the JSPH F / L / C page.',
       Guideline:
         'ESGE also recommends recording gastric varices with Sarin. The West uses NSBB for primary prophylaxis and CA / TIPS for bleeding. Japan has more BRTO experience.',
     },
