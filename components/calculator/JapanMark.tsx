@@ -10,31 +10,37 @@ export function JapanMark({ compact = false }: Props) {
   const { t } = useLocale();
 
   return (
-    <View style={compact ? styles.compact : undefined}>
+    <View
+      accessibilityLabel={t.japanDeveloped}
+      style={[styles.frame, compact ? styles.frameCompact : styles.frameTitle]}>
       <Image
-        accessibilityLabel={t.japanDeveloped}
+        accessibilityIgnoresInvertColors
         source={require('../../assets/images/japan-flag.png')}
-        style={compact ? styles.flagCompact : styles.flagTitle}
-        resizeMode="contain"
+        style={styles.image}
+        resizeMode="cover"
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  compact: {
-    marginTop: 2,
-  },
-  flagCompact: {
-    width: 24,
-    height: 16,
+  frame: {
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#C8C8C8',
+    borderColor: '#8A8A8A',
+    overflow: 'hidden',
   },
-  flagTitle: {
-    width: 36,
-    height: 24,
-    borderWidth: 1,
-    borderColor: '#C8C8C8',
+  frameCompact: {
+    width: 26,
+    height: 17,
+    marginTop: 1,
+  },
+  frameTitle: {
+    width: 38,
+    height: 25,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
 });
