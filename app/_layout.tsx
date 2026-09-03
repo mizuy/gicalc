@@ -75,7 +75,7 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkNavTheme : LightNavTheme}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, position: 'relative' }}>
         <PwaUpdateBanner />
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

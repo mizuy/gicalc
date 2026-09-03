@@ -1113,6 +1113,12 @@ test('既定言語は英語で、計算は最低点から始まる', () => {
   assert.equal(apcs.compute(lowestFieldValues(apcs.fields)).interpretation, '平均リスク（AR）');
 });
 
+test('PWA 更新はユーザー操作まで waiting のままにする', () => {
+  const workbox = require('../workbox-config.js') as { skipWaiting: boolean; clientsClaim: boolean };
+  assert.equal(workbox.skipWaiting, false);
+  assert.equal(workbox.clientsClaim, true);
+});
+
 test('PWA 更新バナーの文言と検知', () => {
   const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
   assert.equal(UI.ja.pwa.updateAvailable, '新しい版があります');

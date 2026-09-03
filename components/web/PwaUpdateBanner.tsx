@@ -11,6 +11,7 @@ import {
 } from '@/lib/web/pwaUpdate';
 
 const DISMISS_KEY = 'gicalc.pwaUpdate.dismissed';
+const UPDATE_POLL_MS = 20_000;
 
 function readDismissed(): boolean {
   if (typeof window === 'undefined') return false;
@@ -43,13 +44,13 @@ function applyIncomingWorker(
     markAvailable();
   }
 
-  const incoming = registration.installing;
+  const incoming = registration.installing ?? registration.waiting;
   if (!incoming) return;
   incoming.addEventListener('statechange', () => {
     if (
       isPwaUpdateAvailable({
         hasController: Boolean(navigator.serviceWorker.controller),
-        waiting: Boolean(registration.waiting),
+        waiting: Boolean(registration.waiting) || incoming.state === 'installed',
         installingState: incoming.state,
       })
     ) {
@@ -83,21 +84,28 @@ export function PwaUpdateBanner() {
       if (!cancelled) setAvailable(true);
     };
 
-    const checkRegistration = (registration: ServiceWorkerRegistration) => {
-      registrationRef.current = registration;
-      applyIncomingWorker(registration, markAvailable);
-    };
-
     const onUpdateFound = () => {
       const registration = registrationRef.current;
       if (registration) applyIncomingWorker(registration, markAvailable);
     };
 
+    const requestUpdate = () => {
+      const registration = registrationRef.current;
+      if (!registration) return;
+      registration
+        .update()
+        .then(() => {
+          if (!cancelled) applyIncomingWorker(registration, markAvailable);
+        })
+        .catch(() => {});
+    };
+
     navigator.serviceWorker.ready.then((registration) => {
       if (cancelled) return;
-      checkRegistration(registration);
+      registrationRef.current = registration;
       registration.addEventListener('updatefound', onUpdateFound);
-      registration.update().catch(() => {});
+      applyIncomingWorker(registration, markAvailable);
+      requestUpdate();
     });
 
     const onControllerChange = () => {
@@ -109,17 +117,16 @@ export function PwaUpdateBanner() {
     };
     navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
 
-    const requestUpdate = () => {
-      registrationRef.current?.update().catch(() => {});
-    };
     const onVisibility = () => {
       if (document.visibilityState === 'visible') requestUpdate();
     };
     document.addEventListener('visibilitychange', onVisibility);
     window.addEventListener('focus', requestUpdate);
+    const poll = window.setInterval(requestUpdate, UPDATE_POLL_MS);
 
     return () => {
       cancelled = true;
+      window.clearInterval(poll);
       registrationRef.current?.removeEventListener('updatefound', onUpdateFound);
       navigator.serviceWorker.removeEventListener('controllerchange', onControllerChange);
       document.removeEventListener('visibilitychange', onVisibility);
@@ -129,7 +136,14 @@ export function PwaUpdateBanner() {
 
   useEffect(() => {
     if (Platform.OS !== 'web') return;
-    registrationRef.current?.update().catch(() => {});
+    const registration = registrationRef.current;
+    if (!registration) return;
+    registration
+      .update()
+      .then(() => {
+        applyIncomingWorker(registration, () => setAvailable(true));
+      })
+      .catch(() => {});
   }, [pathname]);
 
   if (Platform.OS !== 'web' || !available || dismissed) {
@@ -139,7 +153,16 @@ export function PwaUpdateBanner() {
   const reload = () => {
     const waiting = registrationRef.current?.waiting;
     if (waiting) {
+      let reloaded = false;
+      const doReload = () => {
+        if (reloaded) return;
+        reloaded = true;
+        window.location.reload();
+      };
+      navigator.serviceWorker.addEventListener('controllerchange', doReload);
       waiting.postMessage(SKIP_WAITING_MESSAGE);
+      window.setTimeout(doReload, 400);
+      return;
     }
     window.location.reload();
   };
@@ -152,27 +175,37 @@ export function PwaUpdateBanner() {
   return (
     <View
       accessibilityRole="alert"
-      style={[styles.bar, { backgroundColor: surface, borderBottomColor: border }]}>
-      <Text style={styles.title}>{t.pwa.updateAvailable}</Text>
-      <View style={styles.actions}>
-        <Pressable
-          accessibilityRole="button"
-          onPress={reload}
-          style={({ pressed }) => [styles.button, { backgroundColor: tint, opacity: pressed ? 0.85 : 1 }]}>
-          <Text style={styles.buttonText}>{t.pwa.reload}</Text>
-        </Pressable>
-        <Pressable
-          accessibilityRole="button"
-          onPress={later}
-          style={({ pressed }) => [styles.later, { opacity: pressed ? 0.7 : 1 }]}>
-          <Text style={[styles.laterText, { color: textSecondary }]}>{t.pwa.later}</Text>
-        </Pressable>
+      pointerEvents="box-none"
+      style={styles.overlay}>
+      <View style={[styles.bar, { backgroundColor: surface, borderBottomColor: border }]}>
+        <Text style={styles.title}>{t.pwa.updateAvailable}</Text>
+        <View style={styles.actions}>
+          <Pressable
+            accessibilityRole="button"
+            onPress={reload}
+            style={({ pressed }) => [styles.button, { backgroundColor: tint, opacity: pressed ? 0.85 : 1 }]}>
+            <Text style={styles.buttonText}>{t.pwa.reload}</Text>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            onPress={later}
+            style={({ pressed }) => [styles.later, { opacity: pressed ? 0.7 : 1 }]}>
+            <Text style={[styles.laterText, { color: textSecondary }]}>{t.pwa.later}</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10000,
+  },
   bar: {
     borderBottomWidth: 1,
     paddingHorizontal: 16,
