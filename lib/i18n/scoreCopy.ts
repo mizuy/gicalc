@@ -805,6 +805,35 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       },
     },
   },
+  sps: {
+    name: 'SPS diagnostic criteria (serrated polyposis syndrome)',
+    shortName: 'SPS',
+    description:
+      'WHO 2019 diagnostic criteria for serrated polyposis syndrome (formerly hyperplastic polyposis). Includes 2010 criteria for reference, counting rules, and surveillance pointers. Separate from the WASP SSL morphology classification.',
+    groups: {
+      'WHO 2019': 'WHO 2019',
+      'WHO 2010': 'WHO 2010',
+      'Serrated polyp types': 'Serrated polyp types',
+      Application: 'Application',
+    },
+    comments: {
+      'Criterion I':
+        'Expanded from 2010 Type 1: now proximal to the rectum (includes sigmoid); all qualifying polyps must be ≥5 mm. Proximal-predominant phenotype.',
+      'Criterion II':
+        'Corresponds to 2010 Type 3 with an added requirement of ≥5 polyps proximal to the rectum. Pancolonic phenotype.',
+      'Type 2': 'Removed in WHO 2019. Family history is handled in genetic-counseling context.',
+      'Type 1': '2019 Criterion I predecessor. Kept for reference when reading older literature.',
+      'Type 3': '2019 Criterion II adds ≥5 proximal polyps to the 2010 Type 3 definition.',
+      SSL: 'WHO 2019 term is SSL; pathology and endoscopy reports may still use SSA/P.',
+      'Counting rules': 'Cumulative over a lifetime and multiple procedures. Conventional adenomas do not count.',
+      Surveillance: 'Follow ESGE 2019 polyposis and US MSTF 2020 (Gupta GIE 2020); use local protocols.',
+    },
+    figureNotes: [
+      'McWhinney 2023 Table 1 (2010 vs 2019). Thieme Endoscopy International Open. License: CC BY-NC-ND 4.0. The table is HTML — link opens Table 1, not an embedded image.',
+      'Dekker 2020 Gastroenterology commentary on WHO 2019. Elsevier copyright; not CC — link to the paper.',
+    ],
+    note: 'Either 2019 criterion suffices. The 2010 family-history criterion (Type 2) was removed. Proximal to the rectum = orad to rectosigmoid (2010 used proximal to sigmoid). See ESGE 2019 and US MSTF 2020 for surveillance.',
+  },
   apcs: {
     name: 'Asia-Pacific Colorectal Screening Score (APCS)',
     description:

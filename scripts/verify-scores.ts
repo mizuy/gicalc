@@ -40,6 +40,7 @@ import { JSPH_VARICES_2010_PUBMED, NAGASHIMA_2022_PUBMED } from '../data/scores/
 import { SARIN_1992_PUBMED } from '../data/scores/sarin';
 import { JCE_11_PART2_PUBMED, SIEWERT_1998_PUBMED } from '../data/scores/siewert';
 import { SPIGELMAN_1989_PUBMED } from '../data/scores/spigelman';
+import { DEKKER_2020_PUBMED, MCWHINNEY_2023_PUBMED } from '../data/scores/sps';
 import { KIKUCHI_2014_PUBMED, TOYA_2020_PUBMED } from '../data/scores/toya';
 import { VIENNA_2000_PUBMED } from '../data/scores/vienna';
 import { WASP_2016_PUBMED } from '../data/scores/wasp';
@@ -53,7 +54,7 @@ import {
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
-test('登録スコアは35種で臓器順に並ぶ', () => {
+test('登録スコアは36種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -79,6 +80,7 @@ test('登録スコアは35種で臓器順に並ぶ', () => {
       'kakushima',
       'toya',
       'apcs',
+      'sps',
       'vienna',
       'paris',
       'lst',
@@ -119,7 +121,7 @@ test('登録スコアは35種で臓器順に並ぶ', () => {
       ],
       [
         'colorectum',
-        ['apcs', 'vienna', 'paris', 'lst', 'kudo-tsuruta', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
+        ['apcs', 'sps', 'vienna', 'paris', 'lst', 'kudo-tsuruta', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
       ],
       ['bleeding', ['forrest', 'gbs', 'noblads']],
     ],
@@ -150,6 +152,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     kakushima: 'prediction',
     toya: 'algorithm',
     apcs: 'score',
+    sps: 'classification',
     vienna: 'classification',
     paris: 'classification',
     lst: 'classification',
@@ -205,6 +208,7 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'spigelman',
     'modified-spigelman',
     'apcs',
+    'sps',
     'vienna',
     'paris',
     'nice',
@@ -811,6 +815,28 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.doesNotMatch(paris.entries.map((entry) => entry.label).join(' '), /Isp/);
   assert.equal(paris.pubmed, PARIS_2003_PUBMED);
 
+  const sps = getScoreById('sps');
+  assert.ok(sps && isClassification(sps));
+  assert.deepEqual(
+    sps.entries.map((entry) => entry.label),
+    [
+      'Criterion I',
+      'Criterion II',
+      'Type 1',
+      'Type 2',
+      'Type 3',
+      'HP',
+      'SSL',
+      'TSA',
+      'Counting rules',
+      'Surveillance',
+    ],
+  );
+  assert.match(sps.originalLead ?? '', /Criterion I/);
+  assert.match(sps.originalLead ?? '', /cumulative over a lifetime/);
+  assert.equal(sps.pubmed, DEKKER_2020_PUBMED);
+  assert.equal(sps.developedInJapan, undefined);
+
   const lst = getScoreById('lst');
   assert.ok(lst && isClassification(lst));
   assert.deepEqual(
@@ -1006,11 +1032,11 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.ok(hasAlgorithmFlow(wasp));
   assert.ok(hasAlgorithmFlow(mesda));
   assert.ok(hasAlgorithmFlow(toya));
-  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna]) {
+  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna, sps]) {
     assert.equal(hasAlgorithmFlow(score), false, score.id);
   }
 
-  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, vienna]) {
+  for (const score of [jnet, kudo, jes, kimura, paris, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, vienna, sps]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -1089,6 +1115,17 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(paris.figures?.[0]?.license, 'CC BY-NC 4.0');
   assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
   assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
+
+  const spsFig = getScoreById('sps');
+  assert.ok(spsFig && isClassification(spsFig));
+  assert.equal(spsFig.figures?.length, 2);
+  assert.equal(spsFig.figures?.[0]?.src, undefined);
+  assert.match(spsFig.figures?.[0]?.href ?? '', /10\.1055\/a-2157-4125/);
+  assert.equal(spsFig.figures?.[0]?.hrefLabel, 'Table 1');
+  assert.equal(spsFig.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.equal(spsFig.figures?.[0]?.pubmed, MCWHINNEY_2023_PUBMED);
+  assert.match(spsFig.figures?.[1]?.href ?? '', /10\.1053\/j\.gastro\.2019\.11\.310/);
+  assert.equal(spsFig.figures?.[1]?.pubmed, DEKKER_2020_PUBMED);
 
   const lst = getScoreById('lst');
   assert.ok(lst && isClassification(lst));
@@ -1612,6 +1649,9 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsNotCcBody, /Vienna/);
   assert.match(UI.en.about.duodenumBody, /Spigelman/);
   assert.match(UI.en.about.colorectumBody, /Vienna/);
+  assert.match(UI.en.about.colorectumBody, /SPS/);
+  assert.match(UI.ja.about.citationsCcBody, /McWhinney 2023/);
+  assert.match(UI.ja.about.citationsNotCcBody, /Dekker 2020/);
 });
 
 test('引用は PubMed へ行く', () => {

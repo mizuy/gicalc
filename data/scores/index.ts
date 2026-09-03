@@ -31,6 +31,7 @@ import { sarinScore } from './sarin';
 import { sekiguchiScore } from './sekiguchi';
 import { siewertScore } from './siewert';
 import { spigelmanScore } from './spigelman';
+import { spsScore } from './sps';
 import { toyaScore } from './toya';
 import { viennaScore } from './vienna';
 import { waspScore } from './wasp';
@@ -59,6 +60,7 @@ export const SCORES: ScoreDefinition[] = [
   kakushimaScore,
   toyaScore,
   apcsScore,
+  spsScore,
   viennaScore,
   parisScore,
   lstScore,
