@@ -1241,7 +1241,8 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Type 3': 'Deep SM invasion is ≥1000 μm. Consider additional surgery.',
     },
     figureNotes: [
-      'Original Fig. 1. Elsevier / GIE copyright; not CC, so the figure is not hosted. Link opens the publisher Fig. 1 image. Used without magnification. Separate from JNET.',
+      'Hamada 2021 BMC Gastroenterol Fig. 1 (CC BY 4.0). Teaching images for NICE Types 1–3. Non-magnifying NBI. Separate from JNET.',
+      'Hayashi 2013 original Fig. 1. Elsevier / GIE copyright; not CC — link opens the publisher Fig. 1 image.',
     ],
   },
   wasp: {
@@ -1388,6 +1389,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     name: 'Boston Bowel Preparation Scale (BBPS)',
     description:
       'Scores bowel preparation in 3 segments (0–3 each, total 0–9). Assign during withdrawal after washing and suction.',
+    figureNotes: [
+      'Kim 2024 Sci Rep Fig. 1 (CC BY 4.0). Examples of segment scores 0–3. Scored after washing and suction. Lai 2009 original Fig. 1 is Elsevier copyright and is not hosted.',
+    ],
     fields: {
       right: {
         label: 'Right colon',
@@ -1423,17 +1427,20 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
   },
   aronchick: {
     name: 'Aronchick scale (bowel preparation)',
-    description: 'Rates whole-colon preparation in 5 grades before washing. No segmental scores.',
+    description:
+      'Rates whole-colon preparation in 5 grades before washing. No segmental scores. Recommended in JGES 2020 CQ6 (Table 11).',
+    note:
+      'Five-grade definitions follow JGES 2020 Colonoscopy Screening and Surveillance Guidelines CQ6 / Table 11 (Aronchick bowel preparation scale, modified to Japanese). Score the entire colon before washing or suction. Timing differs from BBPS.',
     fields: {
       grade: {
         label: 'Preparation grade',
-        description: 'Score the entire colon before washing or suction',
+        description: 'Score the entire colon before washing or suction (JGES Table 11)',
         options: [
-          { label: 'Excellent', description: 'Small amount of clear fluid. Mucosa >95%' },
-          { label: 'Good', description: 'Larger volume of clear fluid. Mucosa >90%' },
-          { label: 'Fair', description: 'Semisolid stool suctionable. Mucosa >90%' },
-          { label: 'Poor', description: 'Not suctionable. Mucosa <90%' },
-          { label: 'Inadequate', description: 'Repeat preparation required' },
+          { label: 'Excellent', description: 'Small amount of clear fluid. Mucosa ≥95% visible' },
+          { label: 'Good', description: 'Small amount of fluid that does not hinder the exam. Mucosa ≥90% visible' },
+          { label: 'Fair', description: 'Small amount of stool, suctionable. Mucosa ≥90% visible' },
+          { label: 'Poor', description: 'Non-suctionable stool retained. Mucosa <90% visible' },
+          { label: 'Inadequate', description: 'Large stool burden; exam not feasible. Repeat bowel prep required' },
         ],
       },
     },

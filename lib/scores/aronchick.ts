@@ -7,30 +7,41 @@ const GRADES: Record<
   1: {
     interpretation: 'Excellent（優）',
     severity: 'none',
-    details: ['透明な少量の液体。粘膜の 95% 超が見える。', 'adequate。洗浄前に全体を評価します。'],
+    details: [
+      '少量の透明な便汁で、粘膜の 95% 以上が観察可能（JGES 2020 Table 11）。',
+      'adequate。洗浄前に大腸全体を評価します。',
+    ],
   },
   2: {
     interpretation: 'Good（良）',
     severity: 'none',
-    details: ['透明な液体が多めでも、粘膜の 90% 超が見える。', 'adequate。洗浄前に全体を評価します。'],
+    details: [
+      '検査に支障がない程度の少量便汁で、粘膜の 90% 以上が観察可能（JGES 2020 Table 11）。',
+      'adequate。洗浄前に大腸全体を評価します。',
+    ],
   },
   3: {
     interpretation: 'Fair（可）',
     severity: 'moderate',
     details: [
-      '半固形便があるが吸引・洗浄で除去でき、粘膜の 90% 超が見える。',
+      '少量の便はあるが吸引可能で、粘膜の 90% 以上が観察可能（JGES 2020 Table 11）。',
       '施設により adequate に含めることがあります。',
     ],
   },
   4: {
     interpretation: 'Poor（不良）',
     severity: 'severe',
-    details: ['半固形便を吸引できず、粘膜の 90% 未満しか見えない。', 'inadequate。再検査を検討してください。'],
+    details: [
+      '吸引不能な便が貯留し、粘膜の 90% 未満しか観察できない（JGES 2020 Table 11）。',
+      'inadequate。再検査を検討してください。',
+    ],
   },
   5: {
     interpretation: 'Inadequate（不適）',
     severity: 'severe',
-    details: ['残渣が多く検査を完遂できない。再前処置が必要です。'],
+    details: [
+      '大量の便塊のため精密検査が不可能。再度腸管洗浄が必要（JGES 2020 Table 11）。',
+    ],
   },
 };
 
