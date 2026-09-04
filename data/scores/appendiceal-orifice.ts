@@ -43,6 +43,21 @@ export const appendicealOrificeScore: ClassificationDefinition = {
   reference:
     'Jacob H, Toyonaga T, Ohara Y, et al. Endoscopy 2016;48:829-836. Type 3a: Oung B, et al. Endosc Int Open 2020;8:E388-E395',
   pubmed: APPENDICEAL_ORIFICE_2016_PUBMED,
+  figures: [
+    {
+      href: 'https://www.thieme-connect.com/products/ejournals/html/10.1055/a-1072-4830',
+      hrefLabel: 'Fig. 2',
+      alt: 'Toyonaga appendiceal orifice lesion classification Types 0–3a (Oung 2020 Fig. 2)',
+      caption:
+        'Fig. 2. Lesion classification according to Toyonaga’s classification with additional type 3a in case of previous appendectomy',
+      source: OUNG_SOURCE,
+      doi: OUNG_DOI,
+      pubmed: OUNG_2020_PUBMED,
+      license: 'CC BY-NC-ND 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
+      note: '各型カードに切り抜きを掲載。原図は埋め込まず Oung 2020 Fig. 2 へリンクする。ライセンスは CC BY-NC-ND 4.0。Jacob 2016 Endoscopy 原著は CC ではない。',
+    },
+  ],
   entries: [
     {
       label: 'Type 0',

@@ -50,6 +50,32 @@ export const colorectalEcScore: ClassificationDefinition = {
     'Kudo SE et al. Endoscopy 2011;43:869-875. Kudo SE et al. Gastrointest Endosc 2015;82:912-923',
   pubmed: KUDO_EC_2011_PUBMED,
   note: 'EC 分類はメチレンブルー（またはクリスタルバイオレット併用）染色後の観察。EC-V は EC-NBI で染色不要。SMs＝粘膜下層軽度浸潤、SMm＝高度浸潤（リンパ節転移リスク）。EndoBRAIN は EC/EC-NBI 画像の診断支援（薬機承認）で、本ページの分類表とは別製品。',
+  figures: [
+    {
+      href: 'https://www.e-ce.org/journal/view.php?doi=10.5946/ce.2021.165#f2-ce-2021-165',
+      hrefLabel: 'Fig. 2',
+      alt: 'Endocytoscopic classification for colorectal lesions EC1a EC1b EC2 EC3a EC3b',
+      caption: 'Fig. 2. Endocytoscopic classification for colorectal lesions (Kudo et al.)',
+      source: MISAWA_SOURCE_FIG2,
+      doi: MISAWA_DOI,
+      pubmed: MAEDA_EC_REVIEW_2021_PUBMED,
+      license: 'CC BY-NC 3.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',
+      note: 'EC1a–EC3b カードに切り抜きを掲載。原図は埋め込まず Clin Endosc 2021 Fig. 2 へリンクする。ライセンスは CC BY-NC 3.0。Kudo 2011 Endoscopy 原著は CC ではない。',
+    },
+    {
+      href: 'https://www.e-ce.org/journal/view.php?doi=10.5946/ce.2021.165#f3-ce-2021-165',
+      hrefLabel: 'Fig. 3',
+      alt: 'Endocytoscopic vascular EC-V classification EC-V1 EC-V2 EC-V3 with NBI',
+      caption: 'Fig. 3. Endocytoscopic classification based on narrow-band imaging (EC-V)',
+      source: MISAWA_SOURCE_FIG3,
+      doi: MISAWA_DOI,
+      pubmed: MAEDA_EC_REVIEW_2021_PUBMED,
+      license: 'CC BY-NC 3.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',
+      note: 'EC-V カードに切り抜きを掲載。原図は埋め込まず Clin Endosc 2021 Fig. 3 へリンクする。ライセンスは CC BY-NC 3.0。Kudo 2015 GIE 原著は CC ではない。',
+    },
+  ],
   entries: [
     {
       label: 'EC1a',

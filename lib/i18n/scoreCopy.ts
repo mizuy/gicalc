@@ -45,6 +45,10 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     comments: {
       'Type B2': 'Esophageal SM1 is ≤200 μm.',
     },
+    figureNotes: [
+      'Crops are on each type card. The original plate is not hosted — link to PMC Fig. 1. License: CC BY 4.0.',
+      'Crops are on the AVA card. The original plate is not hosted — link to PMC Fig. 5. License: CC BY 4.0.',
+    ],
     entryFigureNotes: {
       'Type A': ['Cropped from original Fig. 1 (a / b). Springer Open. License: CC BY 4.0.'],
       'Type B1': ['Cropped from original Fig. 2 (a / b). Springer Open. License: CC BY 4.0.'],
@@ -199,6 +203,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       Furrows: 'Later modifications sometimes grade furrows as 0 / mild / severe. This page uses the 2013 original 0–1.',
       Total: 'Biopsies from the distal and mid esophagus are still required. EREFS alone does not confirm the diagnosis.',
     },
+    figureNotes: [
+      'Crops are on each finding card. The original plate is not hosted — link to PMC Fig. 2. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
+    ],
     entryFigureNotes: {
       Edema: [
         'Cropped from original Fig. 2a (edema). MDPI Diagnostics. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
@@ -263,6 +270,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     comments: {
       'Grade III': 'Grades III–IV are more often associated with reflux and hiatal hernia.',
     },
+    figureNotes: [
+      'Crops are on each grade card. The original plate is not hosted — link to PMC Fig. 1. License: CC BY-NC 4.0. The Hill 1996 GIE original is not CC.',
+    ],
     entryFigureNotes: {
       'Grade I': [
         'Cropped from original Fig. 1 (Grade I). Annals of Medicine. License: CC BY-NC 4.0. The Hill 1996 GIE original is not CC.',
@@ -1119,6 +1129,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'LST-NG pseudodepressed':
         'Highest invasion risk of the four subtypes. The 31.6% (CI 19.8–43.4%) on the figure is from Bogie 2018. Consider en-bloc resection.',
     },
+    figureNotes: [
+      'Crops are on each subtype card. The original plate is not hosted — link to Clin Endosc 2025 Fig. 3. License: CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+    ],
     entryFigureNotes: {
       'LST-G homogeneous': [
         'Cropped from original Fig. 3 (LST-G homogeneous). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
@@ -1153,6 +1166,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Type 3a':
         'Short residual stump favors en-bloc resection. Included with Type 3 in Oung 2020 DCT-ESD series; traction helps.',
     },
+    figureNotes: [
+      'Crops are on each type card. The original plate is not hosted — link to Oung 2020 Fig. 2. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
+    ],
     entryFigureNotes: {
       'Type 0': [
         'Cropped from original Fig. 2 (Type 0). Endosc Int Open. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
@@ -1277,6 +1293,10 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'EC-V3': 'Predicts invasive cancer including SMm; faster workflow than methylene blue EC.',
       Observation: 'GIF-H290EC / CF-H290ECI integrated scopes. Often combined with pit pattern and JNET for depth.',
     },
+    figureNotes: [
+      'Crops are on the EC1a–EC3b cards. The original plate is not hosted — link to Clin Endosc 2021 Fig. 2. License: CC BY-NC 3.0. The Kudo 2011 Endoscopy original is not CC.',
+      'Crops are on the EC-V cards. The original plate is not hosted — link to Clin Endosc 2021 Fig. 3. License: CC BY-NC 3.0. The Kudo 2015 GIE original is not CC.',
+    ],
     entryFigureNotes: {
       EC1a: [
         'Cropped from original Fig. 2 (EC1a). Clin Endosc 2021. License: CC BY-NC 3.0. The Kudo 2011 Endoscopy original is not CC.',
@@ -1534,6 +1554,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       IIa: 'Indication for endoscopic hemostasis.',
       IIc: 'IIc / III are usually observed without endoscopic therapy for the stigma itself.',
     },
+    figureNotes: [
+      'Crops are on each type card. The original plate is not hosted — link to Zhou 2025 Fig. 1. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+    ],
     entryFigureNotes: {
       Ia: [
         'Cropped from original Fig. 1A (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',

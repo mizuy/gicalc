@@ -13,8 +13,26 @@ import {
   getToolKind,
   isClassification,
   isJapanDeveloped,
+  type ClassificationFigure,
   type ScoreDefinition,
 } from '@/types/score';
+
+function pageLevelFigures(score: ScoreDefinition): ClassificationFigure[] {
+  const figures = score.figures ?? [];
+  if (!isClassification(score)) return figures;
+  const hasCrops = score.entries.some((entry) => entry.figures?.some((figure) => figure.src));
+  if (!hasCrops) return figures;
+  return figures.map((figure) => {
+    if (!figure.src) return figure;
+    const href = figure.href ?? figure.doi;
+    return {
+      ...figure,
+      src: undefined,
+      href,
+      hrefLabel: figure.hrefLabel ?? figure.caption,
+    };
+  });
+}
 
 type Props = {
   score: ScoreDefinition;
@@ -69,7 +87,7 @@ function ScorePageFooter({ score }: { score: ScoreDefinition }) {
 
   return (
     <View style={[styles.footer, { borderColor: border }]}>
-      {score.figures?.map((figure) => (
+      {pageLevelFigures(score).map((figure) => (
         <ClassificationFigure key={figureKey(figure)} figure={figure} />
       ))}
 
