@@ -20,7 +20,7 @@ export default function HomeScreen() {
       <View style={styles.header}>
         <Image
           accessibilityLabel="GI Calc"
-          source={require('../../assets/images/icon.png')}
+          source={require('../../assets/images/icon-home.png')}
           style={styles.logo}
         />
         <View>

@@ -23,6 +23,7 @@ export default function Root({ children }: { children: ReactNode }) {
           content="Scoring, prediction, and endoscopic classification tools for GI endoscopy (T1 Nomogram / eCura / BEST-J)"
         />
         <link rel="manifest" href={manifestHref} />
+        <link rel="preload" href={iconHref} as="image" />
         <link rel="apple-touch-icon" href={iconHref} />
         <link rel="icon" href={iconHref} />
         <ScrollViewStyleReset />

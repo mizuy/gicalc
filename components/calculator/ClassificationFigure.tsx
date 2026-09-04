@@ -1,6 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Linking from 'expo-linking';
-import { Image, Modal, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Modal,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+  type ImageStyle,
+  type StyleProp,
+} from 'react-native';
 
 import { CitationLink } from '@/components/calculator/CitationLink';
 import { Text, useThemeColor } from '@/components/Themed';
@@ -18,6 +29,63 @@ type WebLinkProps = {
   href: string;
   hrefAttrs: { target: string; rel: string };
 };
+
+type FigureImageProps = {
+  uri: string;
+  alt: string;
+  aspectRatio: number;
+  compact: boolean;
+  imageStyle?: StyleProp<ImageStyle>;
+  lazy?: boolean;
+};
+
+function FigureImage({ uri, alt, aspectRatio, compact, imageStyle, lazy = false }: FigureImageProps) {
+  const border = useThemeColor({}, 'border');
+  const textSecondary = useThemeColor({}, 'textSecondary');
+  const tint = useThemeColor({}, 'tint');
+  const { t } = useLocale();
+  const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    setLoaded(false);
+    setFailed(false);
+  }, [uri]);
+
+  const webLazyProps =
+    Platform.OS === 'web' && lazy
+      ? ({ loading: 'lazy' } as Record<string, string>)
+      : {};
+
+  return (
+    <View style={[styles.imageShell, { aspectRatio }]}>
+      {!loaded && !failed ? (
+        <View style={[styles.placeholder, { borderColor: border, backgroundColor: '#FFFFFF' }]}>
+          <ActivityIndicator color={tint} size="small" />
+        </View>
+      ) : null}
+      {failed ? (
+        <View style={[styles.placeholder, styles.placeholderFailed, { borderColor: border }]}>
+          <Text style={[styles.placeholderText, { color: textSecondary }]}>{t.figureLoadError}</Text>
+        </View>
+      ) : (
+        <Image
+          accessibilityLabel={alt}
+          source={{ uri }}
+          style={[
+            styles.image,
+            imageStyle,
+            { aspectRatio, opacity: loaded ? 1 : 0 },
+          ]}
+          resizeMode="contain"
+          onLoad={() => setLoaded(true)}
+          onError={() => setFailed(true)}
+          {...webLazyProps}
+        />
+      )}
+    </View>
+  );
+}
 
 export function ClassificationFigure({ figure, compact = false }: Props) {
   const [open, setOpen] = useState(false);
@@ -42,12 +110,7 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
           accessibilityLabel={`${figure.alt}. ${t.enlargeHint}`}
           onPress={() => setOpen(true)}
           style={({ pressed }) => [styles.thumbWrap, pressed ? styles.thumbPressed : null]}>
-          <Image
-            accessibilityLabel={figure.alt}
-            source={{ uri }}
-            style={[styles.image, { aspectRatio }]}
-            resizeMode="contain"
-          />
+          <FigureImage uri={uri} alt={figure.alt} aspectRatio={aspectRatio} compact={compact} lazy />
           <View style={[styles.enlargeBadge, compact ? styles.enlargeBadgeCompact : null, { backgroundColor: tint }]}>
             <Text style={styles.enlargeBadgeText}>{t.enlargeHint}</Text>
           </View>
@@ -89,11 +152,12 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
                 bounces={false}
                 showsHorizontalScrollIndicator
                 contentContainerStyle={styles.lightboxHContent}>
-                <Image
-                  accessibilityLabel={figure.alt}
-                  source={{ uri }}
-                  style={[styles.lightboxImage, { aspectRatio }]}
-                  resizeMode="contain"
+                <FigureImage
+                  uri={uri}
+                  alt={figure.alt}
+                  aspectRatio={aspectRatio}
+                  compact={false}
+                  imageStyle={styles.lightboxImage}
                 />
               </ScrollView>
             </ScrollView>
@@ -154,6 +218,25 @@ const styles = StyleSheet.create({
   },
   thumbPressed: {
     opacity: 0.88,
+  },
+  imageShell: {
+    width: '100%',
+    position: 'relative',
+  },
+  placeholder: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  placeholderFailed: {
+    position: 'relative',
+    minHeight: 72,
+  },
+  placeholderText: {
+    fontSize: 12,
+    fontWeight: '600',
   },
   image: {
     width: '100%',
@@ -232,8 +315,6 @@ const styles = StyleSheet.create({
   lightboxImage: {
     width: 1000,
     maxWidth: 1000,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
   },
   closeButton: {
     position: 'absolute',
