@@ -176,10 +176,11 @@ function HistologyTable({
         {section.rows.map((row) => (
           <View key={row.baseKey} style={styles.row}>
             <LabelCell text={row.depthUl} style={styles.colDepthUl} />
-            {row.cells.map((cell, sizeIndex) => {
+            {row.cells.map((cell, colIndex) => {
+              const colKey = section.sizeColKeys[colIndex];
               const id = gastricCurabilityCellId(
                 `${section.prefix}-${row.baseKey}` as Parameters<typeof gastricCurabilityCellId>[0],
-                sizeIndex as 0 | 1 | 2,
+                colKey,
               );
               return (
                 <GradeCell

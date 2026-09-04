@@ -8,15 +8,28 @@ export type GastricEsdCurabilityGradeCell = {
 export type GastricEsdCurabilityTableRow = {
   depthUl: string;
   baseKey: string;
-  cells: [GastricEsdCurabilityGradeCell, GastricEsdCurabilityGradeCell, GastricEsdCurabilityGradeCell];
+  cells: [GastricEsdCurabilityGradeCell, GastricEsdCurabilityGradeCell];
 };
 
-export type GastricEsdCurabilityTableSection = {
-  title: string;
-  prefix: 'diff' | 'undiff';
-  sizeHeaders: [string, string, string];
-  rows: GastricEsdCurabilityTableRow[];
-};
+export type DiffSizeColKey = 'le30' | 'gt30';
+export type UndiffSizeColKey = 'le20' | 'gt20';
+export type GastricEsdCurabilitySizeColKey = DiffSizeColKey | UndiffSizeColKey;
+
+export type GastricEsdCurabilityTableSection =
+  | {
+      title: string;
+      prefix: 'diff';
+      sizeHeaders: [string, string];
+      sizeColKeys: [DiffSizeColKey, DiffSizeColKey];
+      rows: GastricEsdCurabilityTableRow[];
+    }
+  | {
+      title: string;
+      prefix: 'undiff';
+      sizeHeaders: [string, string];
+      sizeColKeys: [UndiffSizeColKey, UndiffSizeColKey];
+      rows: GastricEsdCurabilityTableRow[];
+    };
 
 export type GastricEsdCurabilityTableCopy = {
   title: string;
@@ -57,44 +70,46 @@ export const GASTRIC_ESD_CURABILITY_TABLE: Record<Locale, GastricEsdCurabilityTa
       {
         title: '分化型優位',
         prefix: 'diff',
-        sizeHeaders: ['≤20 mm', '21–30 mm', '>30 mm'],
+        sizeHeaders: ['≤30 mm', '>30 mm'],
+        sizeColKeys: ['le30', 'gt30'],
         rows: [
           {
             depthUl: 'pT1a (M)\nUL0',
             baseKey: 'pt1a-ul0',
-            cells: [A('(i)'), A('(i)'), A('(i)')],
+            cells: [A('(i)'), A('(i)')],
           },
           {
             depthUl: 'pT1a (M)\nUL1',
             baseKey: 'pt1a-ul1',
-            cells: [A('(iii)'), A('(iii)'), C2()],
+            cells: [A('(iii)'), C2()],
           },
           {
             depthUl: 'pT1b (SM1)',
             baseKey: 'pt1b-sm1',
-            cells: [B(), B(), C2()],
+            cells: [B(), C2()],
           },
         ],
       },
       {
         title: '未分化型優位',
         prefix: 'undiff',
-        sizeHeaders: ['≤20 mm', '21–30 mm', '>30 mm'],
+        sizeHeaders: ['≤20 mm', '>20 mm'],
+        sizeColKeys: ['le20', 'gt20'],
         rows: [
           {
             depthUl: 'pT1a (M)\nUL0',
             baseKey: 'pt1a-ul0',
-            cells: [A('(ii)'), C2(), C2()],
+            cells: [A('(ii)'), C2()],
           },
           {
             depthUl: 'pT1a (M)\nUL1',
             baseKey: 'pt1a-ul1',
-            cells: [C2(), C2(), C2()],
+            cells: [C2(), C2()],
           },
           {
             depthUl: 'pT1b (SM1)',
             baseKey: 'pt1b-sm1',
-            cells: [C2(), C2(), C2()],
+            cells: [C2(), C2()],
           },
         ],
       },
@@ -123,44 +138,46 @@ export const GASTRIC_ESD_CURABILITY_TABLE: Record<Locale, GastricEsdCurabilityTa
       {
         title: 'Differentiated-dominant',
         prefix: 'diff',
-        sizeHeaders: ['≤20 mm', '21–30 mm', '>30 mm'],
+        sizeHeaders: ['≤30 mm', '>30 mm'],
+        sizeColKeys: ['le30', 'gt30'],
         rows: [
           {
             depthUl: 'pT1a (M)\nUL0',
             baseKey: 'pt1a-ul0',
-            cells: [A('(i)'), A('(i)'), A('(i)')],
+            cells: [A('(i)'), A('(i)')],
           },
           {
             depthUl: 'pT1a (M)\nUL1',
             baseKey: 'pt1a-ul1',
-            cells: [A('(iii)'), A('(iii)'), C2()],
+            cells: [A('(iii)'), C2()],
           },
           {
             depthUl: 'pT1b (SM1)',
             baseKey: 'pt1b-sm1',
-            cells: [B(), B(), C2()],
+            cells: [B(), C2()],
           },
         ],
       },
       {
         title: 'Undifferentiated-dominant',
         prefix: 'undiff',
-        sizeHeaders: ['≤20 mm', '21–30 mm', '>30 mm'],
+        sizeHeaders: ['≤20 mm', '>20 mm'],
+        sizeColKeys: ['le20', 'gt20'],
         rows: [
           {
             depthUl: 'pT1a (M)\nUL0',
             baseKey: 'pt1a-ul0',
-            cells: [A('(ii)'), C2(), C2()],
+            cells: [A('(ii)'), C2()],
           },
           {
             depthUl: 'pT1a (M)\nUL1',
             baseKey: 'pt1a-ul1',
-            cells: [C2(), C2(), C2()],
+            cells: [C2(), C2()],
           },
           {
             depthUl: 'pT1b (SM1)',
             baseKey: 'pt1b-sm1',
-            cells: [C2(), C2(), C2()],
+            cells: [C2(), C2()],
           },
         ],
       },

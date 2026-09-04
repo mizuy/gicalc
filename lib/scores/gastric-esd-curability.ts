@@ -14,26 +14,23 @@ export type GastricEsdCurabilityBaseKey =
   | 'undiff-pt1a-ul1'
   | 'undiff-pt1b-sm1';
 
-/** サイズ列付きセル ID（s0=≤20 mm, s1=21–30 mm, s2=>30 mm） */
+/** サイズ列（分化型 ≤30 / >30 mm、未分化型 ≤20 / >20 mm） */
+export type GastricEsdCurabilitySizeCol = 'le30' | 'gt30' | 'le20' | 'gt20';
+
+/** サイズ列付きセル ID */
 export type GastricEsdCurabilitySizedCellId =
-  | 'cell-diff-pt1a-ul0-s0'
-  | 'cell-diff-pt1a-ul0-s1'
-  | 'cell-diff-pt1a-ul0-s2'
-  | 'cell-diff-pt1a-ul1-s0'
-  | 'cell-diff-pt1a-ul1-s1'
-  | 'cell-diff-pt1a-ul1-s2'
-  | 'cell-diff-pt1b-sm1-s0'
-  | 'cell-diff-pt1b-sm1-s1'
-  | 'cell-diff-pt1b-sm1-s2'
-  | 'cell-undiff-pt1a-ul0-s0'
-  | 'cell-undiff-pt1a-ul0-s1'
-  | 'cell-undiff-pt1a-ul0-s2'
-  | 'cell-undiff-pt1a-ul1-s0'
-  | 'cell-undiff-pt1a-ul1-s1'
-  | 'cell-undiff-pt1a-ul1-s2'
-  | 'cell-undiff-pt1b-sm1-s0'
-  | 'cell-undiff-pt1b-sm1-s1'
-  | 'cell-undiff-pt1b-sm1-s2';
+  | 'cell-diff-pt1a-ul0-le30'
+  | 'cell-diff-pt1a-ul0-gt30'
+  | 'cell-diff-pt1a-ul1-le30'
+  | 'cell-diff-pt1a-ul1-gt30'
+  | 'cell-diff-pt1b-sm1-le30'
+  | 'cell-diff-pt1b-sm1-gt30'
+  | 'cell-undiff-pt1a-ul0-le20'
+  | 'cell-undiff-pt1a-ul0-gt20'
+  | 'cell-undiff-pt1a-ul1-le20'
+  | 'cell-undiff-pt1a-ul1-gt20'
+  | 'cell-undiff-pt1b-sm1-le20'
+  | 'cell-undiff-pt1b-sm1-gt20';
 
 export type GastricEsdCurabilityCellId =
   | GastricEsdCurabilitySizedCellId
@@ -54,19 +51,30 @@ const ROW_FACTOR_FIELDS = ['histology', 'depth', 'ul'] as const;
 
 export function gastricCurabilityCellId(
   base: GastricEsdCurabilityBaseKey,
-  sizeIndex: 0 | 1 | 2,
+  col: GastricEsdCurabilitySizeCol,
 ): GastricEsdCurabilitySizedCellId {
-  return `cell-${base}-s${sizeIndex}` as GastricEsdCurabilitySizedCellId;
+  return `cell-${base}-${col}` as GastricEsdCurabilitySizedCellId;
+}
+
+function sizeColsForBase(
+  base: GastricEsdCurabilityBaseKey,
+  size?: number,
+): GastricEsdCurabilitySizeCol[] {
+  const isDiff = base.startsWith('diff-');
+  if (size === undefined) {
+    return isDiff ? ['le30', 'gt30'] : ['le20', 'gt20'];
+  }
+  if (isDiff) {
+    return size === 2 ? ['gt30'] : ['le30'];
+  }
+  return size === 0 ? ['le20'] : ['gt20'];
 }
 
 function sizedCells(
   base: GastricEsdCurabilityBaseKey,
   size?: number,
 ): GastricEsdCurabilityCellId[] {
-  if (size === undefined) {
-    return [0, 1, 2].map((s) => gastricCurabilityCellId(base, s as 0 | 1 | 2));
-  }
-  return [gastricCurabilityCellId(base, size as 0 | 1 | 2)];
+  return sizeColsForBase(base, size).map((col) => gastricCurabilityCellId(base, col));
 }
 
 export function getGastricEsdCurabilityRequiredFields(
