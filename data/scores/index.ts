@@ -7,6 +7,7 @@ import { bestJScore } from './best-j';
 import { colorectalEcScore } from './colorectal-ec';
 import { ecuraHattaScore } from './ecura-hatta';
 import { esdFibrosisScore } from './esd-fibrosis';
+import { gastricEsdCurabilityScore } from './gastric-esd-curability';
 import { eggimScore } from './eggim';
 import { erefsScore } from './erefs';
 import { forrestScore } from './forrest';
@@ -54,6 +55,7 @@ export const SCORES: ScoreDefinition[] = [
   kyotoScore,
   kyotoModifiedScore,
   eggimScore,
+  gastricEsdCurabilityScore,
   ecuraHattaScore,
   sekiguchiScore,
   bestJScore,

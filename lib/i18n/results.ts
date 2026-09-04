@@ -31,7 +31,10 @@ const INTERPRETATION_EN: Record<string, string> = {
   'Poor（不良）': 'Poor',
   'Inadequate（不適）': 'Inadequate',
   '良好（adequate）': 'Excellent (adequate)',
-  adequate: 'Adequate',
+  'eCuraA（治癒切除）': 'eCuraA (curative resection)',
+  'eCuraB（治癒切除）': 'eCuraB (curative resection)',
+  'eCuraC-1（非治癒切除）': 'eCuraC-1 (non-curative resection)',
+  'eCuraC-2（非治癒切除）': 'eCuraC-2 (non-curative resection)',
   '不十分（inadequate）': 'Inadequate',
 };
 
@@ -121,9 +124,92 @@ const DETAIL_EXACT_EN: Record<string, string> = {
     'Strongly consider additional bowel resection with lymphadenectomy.',
   '追加胃切除は個別判断してください。': 'Decide additional gastrectomy case by case.',
   '胃切除＋リンパ節郭清を強く検討してください。': 'Strongly consider gastrectomy with lymphadenectomy.',
+  'JGES 胃癌 ESD/EMR ガイドライン第2版・胃癌治療ガイドライン第6版に基づく内視鏡的根治度です。':
+    'Endoscopic curability per the JGES gastric ESD/EMR guideline (2nd ed.) and JGCA gastric cancer treatment guideline (6th ed.).',
+  '病理診断（p 診）に基づき判定します。適応決定は c 診、治癒判定は p 診です（ESD ガイドライン）。':
+    'Judged from pathological (p) findings. Indications use clinical (c) diagnosis; curability uses p diagnosis (ESD guideline).',
+  '治癒切除に相当します。外科的胃切除と同等の長期成績が得られるとされています。':
+    'Equivalent to curative resection. Long-term outcomes are considered equal to surgical gastrectomy.',
+  '【ESD ガイドライン】eCuraA 後は異時性胃癌検出を主目的に EGD を年 1–2 回（推奨 1）。':
+    '[ESD guideline] After eCuraA, EGD once or twice yearly primarily to detect metachronous gastric cancer (grade 1).',
+  '【ESD ガイドライン】H. pylori 陽性例では除菌を推奨（A, 2）。除菌後も EGD フォローは継続。':
+    '[ESD guideline] Eradicate H. pylori when positive (A, 2). Continue EGD surveillance after eradication.',
+  '【治療 GL 第6版】治癒切除後は H. pylori 検査・除菌、年 1–2 回の内視鏡経過観察。':
+    '[Treatment GL 6th ed.] After curative resection: test/eradicate H. pylori; endoscopic follow-up once or twice yearly.',
+  '治癒切除に相当します（適応拡大）。十分な長期成績は限られますが、根治が期待されます。':
+    'Equivalent to curative resection (expanded indication). Limited long-term data, but cure is expected.',
+  '【ESD ガイドライン】eCuraB 後は EGD に加え、転移検索のため US または CT も望ましい（C, 2）。':
+    '[ESD guideline] After eCuraB, add US or CT for metastasis detection in addition to EGD (C, 2).',
+  '【ESD ガイドライン】H. pylori 陽性例では除菌を推奨。':
+    '[ESD guideline] Eradicate H. pylori when positive.',
+  '【治療 GL 第6版】SM1（<500 µm）、長径 ≤3 cm、分化型、pT1b（SM1）の条件に該当。':
+    '[Treatment GL 6th ed.] Meets SM1 (<500 µm), long diameter ≤3 cm, differentiated type, pT1b (SM1).',
+  '非治癒切除（eCuraC）ですが、転移リスクは eCuraC-2 より低いとされます。':
+    'Non-curative resection (eCuraC), but metastasis risk is considered lower than eCuraC-2.',
+  '【ESD ガイドライン】追加外科切除に加え、再 ESD・焼灼・経過観察も施設方針と同意のもと選択可（C）。':
+    '[ESD guideline] Besides additional surgery, repeat ESD, ablation, or observation may be chosen per institutional policy and consent (C).',
+  '【ESD ガイドライン】原則追加外科切除：① 長径 ≤3 cm・分化型・pT1a・UL1、② 長径 ≤3 cm・分化型・pT1b（SM1）で、内視鏡的遺残＋標本内癌の合計 >30 mm、または SM 浸潤部の分割切除・断端陽性（Fig. 2–3）。':
+    '[ESD guideline] Additional surgery generally indicated: (1) ≤3 cm, differentiated, pT1a, UL1; (2) ≤3 cm, differentiated, pT1b (SM1) with endoscopic remnant plus specimen tumor >30 mm, or piecemeal/positive margin in the SM-invasive part (Figs 2–3).',
+  '【ESD ガイドライン】追加切除せず経過観察を選ぶ場合は EGD 慎重フォロー（C, 2）。HM 陽性 ≥6 mm や長径 ≥2 cm では局所再発リスク上昇。':
+    '[ESD guideline] If observation without additional resection is chosen, careful EGD follow-up (C, 2). Local recurrence risk rises with HM ≥6 mm or long diameter ≥2 cm.',
+  '【治療 GL 第6版】側方断端陽性・分割切除のみが eCuraA/B から外れる場合は eCuraC-1。追加切除は個別判断。':
+    '[Treatment GL 6th ed.] eCuraC-1 when only piecemeal resection or positive lateral margin excludes eCuraA/B. Additional resection is case-by-case.',
+  '非治癒切除です。遺残腫瘍の可能性があります。':
+    'Non-curative resection. Residual tumor is possible.',
+  '【ESD ガイドライン】原則開腹または腹腔鏡下胃切除（C, 1）。追加切除不能時は LNM 頻度データ（Table 3–4）を参考に説明・同意。':
+    '[ESD guideline] Open or laparoscopic gastrectomy is generally indicated (C, 1). If surgery is not feasible, explain using LNM data (Tables 3–4) and obtain consent.',
+  '【治療 GL 第6版】eCuraC-2 は原則追加外科切除。年齢・合併症等で追加切除しない場合は LNM リスクと再発時の予後不良を説明。':
+    '[Treatment GL 6th ed.] eCuraC-2: additional surgery in principle. If declined, explain LNM risk and poor prognosis if recurrence occurs.',
+  'LNM リスク層別化には本アプリの eCura スコア（0–7 点）を参照してください。':
+    'For LNM risk stratification, use the eCura score page (0–7 points) in this app.',
+  '注：分化型優位で未分化型成分の長径合計が >2 cm のため eCuraC-2（ESD ガイドライン Fig. 6）。':
+    'Note: eCuraC-2 because total undifferentiated long diameter >2 cm in differentiated-dominant lesion (ESD guideline Fig. 6).',
+  '未分化型領域は再構築（mapping）上の長径合計で計測。複数領域は合算。':
+    'Measure total long diameter of undifferentiated areas on reconstruction; sum multiple areas.',
+  '注：SM 浸潤部に未分化型成分があるため eCuraB ではなく eCuraC-2（ESD ガイドライン Fig. 6）。':
+    'Note: eCuraC-2, not eCuraB, because undifferentiated component is present in the SM-invasive part (ESD guideline Fig. 6).',
+  '該当：分化型優位・長径 ≤3 cm・pT1b（SM1, <500 µm）・一括切除・HM0・VM0・Ly0・V0。':
+    'Meets: differentiated-dominant, long diameter ≤3 cm, pT1b (SM1, <500 µm), en bloc, HM0, VM0, Ly0, V0.',
 };
 
 const DETAIL_PATTERNS: Array<{ re: RegExp; to: (...args: string[]) => string }> = [
+  {
+    re: /^該当パターン：(.+)。一括切除、HM0、VM0、Ly0、V0。$/,
+    to: (pattern) => {
+      const patterns: Record<string, string> = {
+        '（i）分化型優位・pT1a・UL0（長径不問）': '(i) differentiated-dominant, pT1a, UL0 (any size)',
+        '（ii）未分化型優位・長径 ≤2 cm・pT1a・UL0':
+          '(ii) undifferentiated-dominant, long diameter ≤2 cm, pT1a, UL0',
+        '（iii）分化型優位・長径 ≤3 cm・pT1a・UL1':
+          '(iii) differentiated-dominant, long diameter ≤3 cm, pT1a, UL1',
+      };
+      return `Pattern: ${patterns[pattern] ?? pattern}. En bloc, HM0, VM0, Ly0, V0.`;
+    },
+  },
+  {
+    re: /^eCuraA\/B の条件を満たすが、(.+)のため eCuraC-1。$/,
+    to: (reason) => {
+      const en = reason
+        .replace(/分割切除（一括切除でない）/g, 'piecemeal resection (not en bloc)')
+        .replace(/水平断端陽性（HM1）/g, 'positive horizontal margin (HM1)')
+        .replace(/・/g, ' · ');
+      return `Would meet eCuraA/B criteria, but eCuraC-1 because ${en}.`;
+    },
+  },
+  {
+    re: /^主な要因：(.+)。$/,
+    to: (factors) => {
+      const en = factors
+        .replace(/垂直断端陽性（VM1）/g, 'positive vertical margin (VM1)')
+        .replace(/リンパ管侵襲陽性（Ly1）/g, 'lymphatic invasion (Ly1)')
+        .replace(/静脈侵襲陽性（V1）/g, 'venous invasion (V1)')
+        .replace(/pT1b（SM2）以深/g, 'pT1b (SM2) or deeper')
+        .replace(/未分化型優位で eCuraA（ii）の条件外/g, 'undifferentiated-dominant outside eCuraA (ii)')
+        .replace(/長径 >3 cm の pT1a（eCuraA 条件外）/g, 'pT1a with long diameter >3 cm (outside eCuraA)')
+        .replace(/、/g, ', ');
+      return `Main factors: ${en}.`;
+    },
+  },
   {
     re: /^この点数の LNM率 (.+)（(.+)、95% CI (.+)）$/,
     to: (rate, n, ci) => `LNM rate at this score ${rate} (${n}, 95% CI ${ci})`,

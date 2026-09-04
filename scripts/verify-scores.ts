@@ -9,6 +9,7 @@ import {
 } from '../lib/nomogram/kajiwara';
 import { computeBestJ } from '../lib/scores/best-j';
 import { computeEcura, ECURA_LNM_BY_SCORE } from '../lib/scores/ecura';
+import { computeGastricEsdCurability, resolveGastricEsdCurabilityHighlight } from '../lib/scores/gastric-esd-curability';
 import { computeEggim } from '../lib/scores/eggim';
 import { computeGbs } from '../lib/scores/gbs';
 import { computeKyoto } from '../lib/scores/kyoto';
@@ -57,7 +58,7 @@ import {
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
-test('登録スコアは39種で臓器順に並ぶ', () => {
+test('登録スコアは40種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -74,6 +75,7 @@ test('登録スコアは39種で臓器順に並ぶ', () => {
       'kyoto',
       'kyoto-modified',
       'eggim',
+      'gastric-esd-curability',
       'ecura-hatta',
       'sekiguchi',
       'best-j',
@@ -116,6 +118,7 @@ test('登録スコアは39種で臓器順に並ぶ', () => {
           'kyoto',
           'kyoto-modified',
           'eggim',
+          'gastric-esd-curability',
           'ecura-hatta',
           'sekiguchi',
           'best-j',
@@ -149,6 +152,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     kyoto: 'score',
     'kyoto-modified': 'score',
     eggim: 'score',
+    'gastric-esd-curability': 'algorithm',
     'ecura-hatta': 'score',
     sekiguchi: 'score',
     'best-j': 'score',
@@ -194,6 +198,7 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'mesda-g',
     'kyoto',
     'kyoto-modified',
+    'gastric-esd-curability',
     'ecura-hatta',
     'sekiguchi',
     'best-j',
@@ -561,6 +566,67 @@ test('各スコア定義の compute がフィールド経由で動く', () => {
   const ecura = getScoreById('ecura-hatta');
   assert.ok(ecura);
   assert.equal(ecura.compute({ ly: 0, size: 0, vm: 0, v: 0, sm: 0 }).total, 0);
+
+  const curability = getScoreById('gastric-esd-curability');
+  assert.ok(curability && !isClassification(curability));
+  const baseA = {
+    enBloc: 0,
+    histology: 0,
+    size: 2,
+    depth: 0,
+    ul: 0,
+    hm: 0,
+    vm: 0,
+    ly: 0,
+    v: 0,
+    undiffSize: 0,
+    undiffInSm: 0,
+  };
+  assert.equal(computeGastricEsdCurability(baseA).interpretation, 'eCuraA（治癒切除）');
+  assert.equal(
+    computeGastricEsdCurability({ ...baseA, enBloc: 1 }).interpretation,
+    'eCuraC-1（非治癒切除）',
+  );
+  assert.equal(
+    computeGastricEsdCurability({ ...baseA, depth: 1, size: 1 }).interpretation,
+    'eCuraB（治癒切除）',
+  );
+  assert.equal(
+    computeGastricEsdCurability({ ...baseA, histology: 1, undiffSize: 1 }).interpretation,
+    'eCuraC-2（非治癒切除）',
+  );
+  assert.equal(
+    computeGastricEsdCurability({ ...baseA, ly: 1 }).interpretation,
+    'eCuraC-2（非治癒切除）',
+  );
+
+  const highlightA = resolveGastricEsdCurabilityHighlight(baseA);
+  assert.equal(highlightA.complete, true);
+  assert.deepEqual(highlightA.cells, ['cell-diff-pt1a-ul0']);
+
+  const highlightC1 = resolveGastricEsdCurabilityHighlight({ ...baseA, enBloc: 1 });
+  assert.equal(highlightC1.complete, true);
+  assert.ok(highlightC1.cells.includes('cell-diff-pt1a-ul0'));
+  assert.ok(highlightC1.cells.includes('row-c1'));
+
+  const highlightFig6 = resolveGastricEsdCurabilityHighlight({
+    ...baseA,
+    histology: 1,
+    undiffSize: 1,
+  });
+  assert.equal(highlightFig6.complete, true);
+  assert.ok(highlightFig6.cells.includes('row-fig6-undiff-size'));
+  assert.ok(highlightFig6.cells.includes('row-c2'));
+
+  const highlightPartial = resolveGastricEsdCurabilityHighlight({
+    histology: 0,
+    depth: 0,
+    ul: 0,
+    size: 1,
+  });
+  assert.equal(highlightPartial.partial, true);
+  assert.equal(highlightPartial.complete, false);
+  assert.deepEqual(highlightPartial.cells, ['cell-diff-pt1a-ul0']);
 
   const bestJ = getScoreById('best-j');
   assert.ok(bestJ);
@@ -1510,6 +1576,25 @@ test('英語結果は解釈だけ訳し、点数は変えない', () => {
   assert.equal(ecura.interpretation, 'Low risk');
   assert.match(ecura.details?.[0] ?? '', /LNM rate at this score 1\.6%/);
   assert.doesNotMatch(ecura.details?.join(' ') ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+
+  const curabilityEn = localizeResult(
+    computeGastricEsdCurability({
+      enBloc: 0,
+      histology: 0,
+      size: 0,
+      depth: 0,
+      ul: 0,
+      hm: 0,
+      vm: 0,
+      ly: 0,
+      v: 0,
+      undiffSize: 0,
+      undiffInSm: 0,
+    }),
+    'en',
+  );
+  assert.equal(curabilityEn.interpretation, 'eCuraA (curative resection)');
+  assert.doesNotMatch(curabilityEn.details?.join(' ') ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
 
   const japaneseChars = /[\u3040-\u30ff\u4e00-\u9faf]/;
   const spigelmanEn = localizeResult(
