@@ -30,6 +30,7 @@ export type UiStrings = {
   languageEn: string;
   variantTabModified: string;
   variantTabOriginal: string;
+  relatedScores: string;
   japanDeveloped: string;
   organ: Record<ScoreOrgan, string>;
   category: Record<ScoreCategory, string>;
@@ -104,6 +105,7 @@ export const UI: Record<Locale, UiStrings> = {
     languageEn: 'English',
     variantTabModified: '改変版',
     variantTabOriginal: '原法',
+    relatedScores: '関連ツール',
     japanDeveloped: '日本で開発',
     organ: {
       esophagus: '食道',
@@ -200,6 +202,7 @@ export const UI: Record<Locale, UiStrings> = {
     languageEn: 'English',
     variantTabModified: 'Modified',
     variantTabOriginal: 'Original',
+    relatedScores: 'Related tools',
     japanDeveloped: 'Japan-developed',
     organ: {
       esophagus: 'Esophagus',

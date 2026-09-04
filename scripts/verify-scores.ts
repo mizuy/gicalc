@@ -32,7 +32,16 @@ import { computeIshii } from '../lib/scores/ishii';
 import { computeKakushima } from '../lib/scores/kakushima';
 import { computeModifiedSpigelman, computeSpigelman } from '../lib/scores/spigelman';
 import { lowestFieldValues } from '../lib/scores/initialValues';
+import { getRelatedScores } from '../lib/scores/relatedScores';
 import { getScoreById, getScoresGroupedByOrgan, SCORES, ALL_SCORE_DEFINITIONS } from '../data/scores';
+import { RELATED_SCORES } from '../data/scores/related-scores';
+import {
+  getScoreRouteIds,
+  getVariantGroup,
+  HIDDEN_LIST_SCORE_IDS,
+  resolveScoreRoute,
+  SCORE_VARIANT_GROUPS,
+} from '../data/scores/variant-groups';
 import { ISHII_2021_PUBMED } from '../data/scores/ishii';
 import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
 import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
@@ -59,12 +68,6 @@ import { VIENNA_2000_PUBMED } from '../data/scores/vienna';
 import { WASP_2016_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
-import {
-  getScoreRouteIds,
-  getVariantGroup,
-  HIDDEN_LIST_SCORE_IDS,
-  resolveScoreRoute,
-} from '../data/scores/variant-groups';
 import {
   applyAlgorithmAnswer,
   findEntryForResult,
@@ -2064,6 +2067,34 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsNotCcBody, /Dekker 2020/);
   assert.match(UI.ja.about.citationsCcBody, /Misawa 2021/);
   assert.match(UI.ja.about.citationsNotCcBody, /Kudo 2011/);
+});
+
+test('関連スコア: 登録 id は有効で colorectal ↔ nomogram が双方向', () => {
+  for (const [sourceId, entries] of Object.entries(RELATED_SCORES)) {
+    assert.ok(
+      getScoreById(sourceId) || SCORE_VARIANT_GROUPS[sourceId],
+      `関連スコアのキー ${sourceId} が未登録`,
+    );
+    for (const entry of entries) {
+      assert.ok(getScoreById(entry.id), `${sourceId} → ${entry.id} が未登録`);
+      if (entry.hint) {
+        assert.ok(entry.hint.ja.length > 0);
+        assert.ok(entry.hint.en.length > 0);
+      }
+    }
+  }
+
+  const coloLinks = getRelatedScores('colorectal-esd-curability', 'ja');
+  assert.ok(coloLinks.some((item) => item.score.id === 'kajiwara-nomogram'));
+  assert.equal(coloLinks[0]?.href, '/score/kajiwara-nomogram');
+
+  const nomoLinks = getRelatedScores('kajiwara-nomogram', 'en');
+  assert.ok(nomoLinks.some((item) => item.score.id === 'colorectal-esd-curability'));
+  assert.match(nomoLinks[0]?.hint ?? '', /curative resection/i);
+
+  const kyotoLinks = getRelatedScores('kyoto-modified', 'ja');
+  assert.ok(kyotoLinks.length > 0);
+  assert.ok(kyotoLinks.some((item) => item.score.id === 'kimura-takemoto'));
 });
 
 test('引用は PubMed へ行く', () => {

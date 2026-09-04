@@ -17,6 +17,7 @@ import {
   getScoreRouteIds,
   getVariantGroup,
   resolveScoreRoute,
+  type ScoreVariantGroup,
 } from '@/data/scores/variant-groups';
 import { localizeScore, useLocale } from '@/lib/i18n';
 import { hasAlgorithmFlow, isClassification, type CalculatorDefinition } from '@/types/score';
@@ -42,7 +43,7 @@ export default function ScoreScreen() {
     if (typeof params.id !== 'string') return undefined;
     const resolved = resolveScoreRoute(params.id);
     const group = getVariantGroup(resolved.pageId);
-    if (!group) return resolved;
+    if (!group) return { ...resolved, group: undefined as ScoreVariantGroup | undefined };
 
     const variantParam = typeof params.variant === 'string' ? params.variant : undefined;
     const variantId =

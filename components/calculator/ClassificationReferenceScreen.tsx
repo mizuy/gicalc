@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
+import { RelatedScoresPanel } from '@/components/calculator/RelatedScoresPanel';
 import { CitationLink } from '@/components/calculator/CitationLink';
 import { JapanMark } from '@/components/calculator/JapanMark';
 import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
@@ -82,6 +83,8 @@ export function ClassificationReferenceScreen({ score }: Props) {
           ) : null}
         </View>
       ) : null}
+
+      <RelatedScoresPanel scoreId={score.id} />
 
       {score.figures?.map((figure) => (
         <ClassificationFigure key={figureKey(figure)} figure={figure} />

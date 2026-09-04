@@ -151,6 +151,39 @@ export const SCORE_VARIANT_GROUPS = {
 
 ---
 
+## 3b. 関連スコアリンク
+
+臨床フロー上つながるツール同士は、各ページ上部（文献・注の直後）に **関連ツール** パネルで相互リンクします。パラメータの引き継ぎ（prefill）は行いません — リンクのみです。
+
+[`data/scores/related-scores.ts`](../data/scores/related-scores.ts) に一覧を書きます:
+
+```ts
+export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
+  'colorectal-esd-curability': [
+    {
+      id: 'kajiwara-nomogram',
+      hint: { ja: '追加切除検討時の LNM 確率', en: 'LNM probability when considering additional resection' },
+    },
+  ],
+  'kajiwara-nomogram': [
+    { id: 'colorectal-esd-curability', hint: { ja: '…', en: '…' } },
+  ],
+};
+```
+
+| 項目 | 方針 |
+|------|------|
+| 表示 | [`RelatedScoresPanel`](../components/calculator/RelatedScoresPanel.tsx) — 全スコア画面に共通配置 |
+| キー | 表示中スコア id。variant ページは `pageId`（例: `kyoto`）でも可 |
+| URL | `resolveScoreRoute()` で `pageId` に解決（改変版タブの既定表示） |
+| 双方向 | 関連があれば **両方** にエントリを書く |
+| hint | 任意。省略時はスコア名のみ |
+| 結果文 | 「本アプリの ○○ を参照」は残してよいが、リンクパネルが主導線 |
+
+新規スコア追加時は、同カテゴリ・前後工程のツールがあれば `RELATED_SCORES` に追記してください。`scripts/verify-scores.ts` が id の妥当性を検証します。
+
+---
+
 ## 4. 国際化（i18n）
 
 | ファイル | 内容 |
