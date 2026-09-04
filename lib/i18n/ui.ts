@@ -133,7 +133,7 @@ export const UI: Record<Locale, UiStrings> = {
       tools: '収録ツール',
       esophagus: '食道',
       esophagusBody:
-        'JES（Oyama 2017）: Type A / B1 / B2 / B3。LA（逆流性食道炎 A–D）。Prague C & M（Barrett）。Siewert（接合部腺癌 Type I–III。西分類・胃癌ガイドライン第6版の注釈つき）。EREFS（好酸球性食道炎 0–8）。食道胃静脈瘤の記載基準（L / F / C / RC。肝硬変診療ガイドライン2020の注釈つき）。文献は PubMed に飛びます。',
+        'JES（Oyama 2017）: Type A / B1 / B2 / B3。LA（逆流性食道炎 A–D）。Prague C & M（Barrett）。Siewert（接合部腺癌 Type I–III。西分類・胃癌ガイドライン第6版の注釈つき）。EREFS（好酸球性食道炎 0–8）。門脈圧亢進症学会分類（F / L / C / RC。肝硬変診療ガイドライン2020の注釈つき）。文献は PubMed に飛びます。',
       stomach: '胃',
       stomachBody:
         '木村–竹本（萎縮分類）、Hill（胃食道フラップ弁）、Sarin（胃静脈瘤 GOV / IGV。Lg とガイドラインの注釈つき）、MESDA-G（早期胃癌の拡大診断アルゴリズム）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura / Sekiguchi（LNM）、BEST-J（ESD後出血）。',
@@ -226,7 +226,7 @@ export const UI: Record<Locale, UiStrings> = {
       tools: 'Included tools',
       esophagus: 'Esophagus',
       esophagusBody:
-        'JES (Oyama 2017): Type A / B1 / B2 / B3. LA (reflux esophagitis A–D). Prague C & M (Barrett). Siewert (EGJ adenocarcinoma Types I–III, with Nishi and JGCA 6th-edition notes). EREFS (eosinophilic esophagitis 0–8). Esophagogastric varices recording rules (L / F / C / RC, with JSGE/JSH cirrhosis-guideline 2020 notes). Citations open PubMed.',
+        'JES (Oyama 2017): Type A / B1 / B2 / B3. LA (reflux esophagitis A–D). Prague C & M (Barrett). Siewert (EGJ adenocarcinoma Types I–III, with Nishi and JGCA 6th-edition notes). EREFS (eosinophilic esophagitis 0–8). JSPH classification of esophagogastric varices (F / L / C / RC, with JSGE/JSH cirrhosis-guideline 2020 notes). Citations open PubMed.',
       stomach: 'Stomach',
       stomachBody:
         'Kimura–Takemoto (atrophy), Hill (gastroesophageal flap valve), Sarin (gastric varices GOV / IGV, with Lg and guideline notes), MESDA-G (magnifying algorithm for EGC), Kyoto / modified Kyoto / EGGIM (gastritis risk), eCura / Sekiguchi (LNM), BEST-J (post-ESD bleeding).',

@@ -8,21 +8,21 @@ export const NAGASHIMA_2022_PUBMED = '35885720';
 export const jsphVaricesScore: ClassificationDefinition = {
   id: 'jsph-varices',
   kind: 'classification',
-  name: '食道胃静脈瘤（記載基準）',
-  shortName: 'JSPH varices',
+  name: '門脈圧亢進症学会分類（F / L / C）',
+  shortName: 'F / L / C',
   developedInJapan: true,
   organ: 'esophagus',
   category: 'classification',
   categoryLabel: '内視鏡分類',
   description:
-    '日本門脈圧亢進症学会の食道・胃静脈瘤内視鏡所見記載基準。部位（L / Lg）、形態（F）、色調（C）、発赤所見（RC）の順で書く。胃の国際分類は Sarin（GOV / IGV）を別ページに置いた。',
+    '日本門脈圧亢進症学会の食道・胃静脈瘤内視鏡所見記載基準。日常記載の軸は形態（F）、部位（L / Lg）、色調（C）。発赤所見（RC）を続ける。胃の国際分類は Sarin（GOV / IGV）を別ページに置いた。',
   originalLead:
     'The revised rules comprise six main categories: location (L), form (F), color (C), red color signs (RC), bleeding signs, and mucosal findings. In principle, the endoscopic diagnosis is based on endoscopic findings assessed with the naked eye. The esophagus is divided into three portions: Ls (locus superior), Lm (locus medialis), and Li (locus inferior). Gastric varices are listed separately as Lg-c (cardiac), Lg-cf (cardiofornical), and Lg-f (fundal). Form: F0 lesions lack a varicose appearance (used after treatment, even if red or blue veins remain); F1 lesions are straight, small-caliber varices (small venous dilatations that disappear on insufflation are not included); F2 lesions are moderately enlarged, beady varices; F3 lesions are markedly enlarged, nodular or tumor-shaped varices. Color: Cw (white) varices look like large folds of the esophageal mucosa; Cb (blue) varices are bluish or cyanotic and the covering mucosa appears thin. Red color signs are reddish changes immediately beneath the submucosa and are classified as red wale markings (RWM), cherry-red spots (CRS), and hematocystic spots (HCS). RC0 is absent; RC1 is small in number and localized; RC2 is intermediate; RC3 is large in number and circumferential.',
   reference: 'Tajiri T et al. Dig Endosc 2010;22:1-9',
   pubmed: JSPH_VARICES_2010_PUBMED,
   officialUrl: 'https://www.jsge.or.jp/committees/guideline/guideline/lc.html',
   officialLinkLabel: '肝硬変診療ガイドライン2020（食道・胃静脈瘤）',
-  note: '1980年提案、1991年改訂、2010年第2版（英語）。現行の『門脈圧亢進症取扱い規約』も同じ軸。記載順は L, F, C, RC, 出血兆候, 粘膜所見。胃静脈瘤の国際分類は Sarin。欧米の small / large はおおよそ F1 と F2/F3。',
+  note: '1980年提案、1991年改訂、2010年第2版（英語）。現行は『門脈圧亢進症取扱い規約』第4版（2022）で同じ軸。記載順は L, F, C, RC, 出血兆候, 粘膜所見。胃静脈瘤の国際分類は Sarin。欧米の small / large はおおよそ F1 と F2/F3。',
   figures: [
     {
       src: '/figures/varices-nagashima2022-fig2.jpg',
@@ -51,25 +51,67 @@ export const jsphVaricesScore: ClassificationDefinition = {
   ],
   entries: [
     {
-      label: 'L',
-      meaning: 'Esophageal location',
+      label: 'F / L / C',
+      meaning: 'JSPH recording axes',
+      group: '記載基準',
+      severity: 'none',
+      rows: [
+        {
+          heading: 'F',
+          text: 'Form — F0 (no varicose appearance) / F1 (straight, small-caliber) / F2 (beady) / F3 (nodular or tumor-shaped)',
+        },
+        {
+          heading: 'L',
+          text: 'Location — esophagus Ls / Lm / Li; stomach Lg-c / Lg-cf / Lg-f',
+        },
+        {
+          heading: 'C',
+          text: 'Color — Cw (white) / Cb (blue)',
+        },
+        {
+          heading: 'Order',
+          text: 'Write L, F, C, then RC, bleeding signs, and mucosal findings',
+        },
+      ],
+      comment:
+        '日本門脈圧亢進症学会『門脈圧亢進症取扱い規約』の軸。日常は F / L / C と呼ぶ。記載例: Lm, F2, Cb, RC1 (RWM)。',
+    },
+    {
+      label: 'Ls',
+      meaning: 'Locus superior',
       group: '部位',
       severity: 'none',
       rows: [
         {
-          heading: 'Ls',
-          text: 'Locus superior — from the esophageal orifice to the tracheal bifurcation',
-        },
-        {
-          heading: 'Lm',
-          text: 'Locus medialis — the middle esophagus',
-        },
-        {
-          heading: 'Li',
-          text: 'Locus inferior — the lower esophagus, including the abdominal esophagus',
+          heading: 'Definition',
+          text: 'From the esophageal orifice to the tracheal bifurcation',
         },
       ],
       comment: '複数にまたがるときは Ls,m や Lm,i のように全部書く。',
+    },
+    {
+      label: 'Lm',
+      meaning: 'Locus medialis',
+      group: '部位',
+      severity: 'none',
+      rows: [
+        {
+          heading: 'Definition',
+          text: 'The middle esophagus',
+        },
+      ],
+    },
+    {
+      label: 'Li',
+      meaning: 'Locus inferior',
+      group: '部位',
+      severity: 'mild',
+      rows: [
+        {
+          heading: 'Definition',
+          text: 'The lower esophagus, including the abdominal esophagus',
+        },
+      ],
     },
     {
       label: 'Lg',
