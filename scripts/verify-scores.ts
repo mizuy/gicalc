@@ -1460,6 +1460,15 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(nice.figures?.[1]?.license, undefined);
   assert.match(nice.figures?.[1]?.note ?? '', /CC ではない/);
 
+  assert.equal(nice.entries[0]?.figures?.length, 1);
+  assert.match(nice.entries[0]?.figures?.[0]?.src ?? '', /nice-hamada2021-type1/);
+  assert.match(nice.entries[1]?.figures?.[0]?.src ?? '', /nice-hamada2021-type2/);
+  assert.match(nice.entries[2]?.figures?.[0]?.src ?? '', /nice-hamada2021-type3/);
+  assert.match(nice.entries[0]?.figures?.[0]?.source ?? '', /Hamada Y/);
+  assert.equal(nice.entries[0]?.figures?.[0]?.license, 'CC BY 4.0');
+  assert.match(nice.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
+  assert.match(nice.entries[0]?.figures?.[0]?.note ?? '', /CC BY 4\.0/);
+
   const bbpsFig = getScoreById('bbps');
   assert.ok(bbpsFig && !isClassification(bbpsFig));
   assert.equal(bbpsFig.figures?.length, 1);
