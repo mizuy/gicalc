@@ -2,6 +2,10 @@ import type { ClassificationDefinition } from '../../types/score';
 
 /** Tajiri 2010 Dig Endosc（PMID 20078657）。日本門脈圧亢進症学会 記載基準 第2版 */
 export const JSPH_VARICES_2010_PUBMED = '20078657';
+/** Pall 2023 Diagnostics Fig. 1（PMID 36980343）。F1–F3。CC BY 4.0 */
+export const PALL_2023_PUBMED = '36980343';
+/** Kim 2024 Korean J Helicobacter Up Gastrointest Res Fig. 1（PMID 40503288）。F / C / RC。CC BY-NC 4.0 */
+export const KJ_HUGR_2024_PUBMED = '40503288';
 /** Nagashima 2022 Healthcare Fig. 2（PMID 35885720）。RC の実例。CC BY 4.0 */
 export const NAGASHIMA_2022_PUBMED = '35885720';
 
@@ -26,6 +30,32 @@ export const jsphVaricesScore: ClassificationDefinition = {
   note: '1980年提案、1991年改訂、2010年第2版（英語）。現行は『門脈圧亢進症取扱い規約』第4版（2022）で同じ軸。記載順は L, F, C, RC, 出血兆候, 粘膜所見。胃静脈瘤の国際分類は Sarin。欧米の small / large はおおよそ F1 と F2/F3。',
   figures: [
     {
+      src: '/figures/varices-popescu2023-fig1.jpg',
+      alt: 'Esophageal varices by JSPH form: F1 straight small-caliber, F2 beady, F3 nodular (Pall 2023 Fig. 1)',
+      caption: 'Fig. 1. Esophageal varices according to size: F1 (a), F2 (b), F3 (c)',
+      source:
+        'Pall S, Melita G, Shahini E, et al. Diagnosis and Management of Esophagogastric Varices. Diagnostics. 2023;13:1031. Fig. 1. Classification: Tajiri T, Yoshida H, Obara K, et al. General rules for recording endoscopic findings of esophagogastric varices (2nd edition). Dig Endosc. 2010;22:1-9.',
+      doi: 'https://doi.org/10.3390/diagnostics13061031',
+      pubmed: PALL_2023_PUBMED,
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: 'Pall 2023 Diagnostics Fig. 1（F1–F3）。MDPI Diagnostics。ライセンスは CC BY 4.0。F0・部位（L）・Lg は Tajiri 2010 原著 Fig. 1 / 6 へリンク。',
+      aspectRatio: 3688 / 1139,
+    },
+    {
+      src: '/figures/varices-kjhugr2024-fig1.jpg',
+      alt: 'JSPH esophageal varices: F1–F3, Cw, Cb, and RC0–RC3 (Kim 2024 Fig. 1)',
+      caption: 'Fig. 1. Endoscopic classifications of esophageal varices (F1–F3, Cw, Cb, RC0–RC3)',
+      source:
+        'Kim YD, Cheon GJ, Kim MY, et al. Endoscopic Treatment and Prevention of Acute Variceal Hemorrhage. Korean J Helicobacter Up Gastrointest Res. 2024;24:5-15. Fig. 1. Classification: Tajiri T, Yoshida H, Obara K, et al. General rules for recording endoscopic findings of esophagogastric varices (2nd edition). Dig Endosc. 2010;22:1-9.',
+      doi: 'https://doi.org/10.7704/kjhugr.2024.0005',
+      pubmed: KJ_HUGR_2024_PUBMED,
+      license: 'CC BY-NC 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
+      note: 'Kim 2024 Fig. 1（A–C: F1–F3、D: Cw、E: Cb、F–I: RC0–RC3）。CC BY-NC 4.0。Cw-Th / Cb-Th と L / Lg は Tajiri 2010 原著へリンク。',
+      aspectRatio: 1472 / 1097,
+    },
+    {
       src: '/figures/varices-nagashima2022-fig2.jpg',
       alt: 'Red color signs on esophageal varices: cherry-red spot, red wale marking, and hematocystic spot (Nagashima 2022 Fig. 2)',
       caption: 'Fig. 2. RC findings in esophageal varices (A CRS and RWM; B HCS)',
@@ -35,19 +65,19 @@ export const jsphVaricesScore: ClassificationDefinition = {
       pubmed: NAGASHIMA_2022_PUBMED,
       license: 'CC BY 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-      note: 'Nagashima 2022 Fig. 2（A は CRS と RWM、B は HCS）。MDPI Healthcare。ライセンスは CC BY 4.0。Tajiri 2010 Dig Endosc の原図は CC ではない。',
+      note: 'Nagashima 2022 Fig. 2（A は CRS と RWM、B は HCS）。MDPI Healthcare。ライセンスは CC BY 4.0。',
       aspectRatio: 2529 / 1194,
     },
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/j.1443-1661.2009.00929.x',
-      hrefLabel: '2010 paper',
+      hrefLabel: 'Dig Endosc 2010',
       alt: 'Tajiri 2010 general rules for recording endoscopic findings of esophagogastric varices',
       caption:
         'Tajiri T et al. General rules for recording endoscopic findings of esophagogastric varices (2nd edition). Dig Endosc 2010',
       source: 'Tajiri T, Yoshida H, Obara K, et al. Dig Endosc. 2010;22:1-9.',
       doi: 'https://doi.org/10.1111/j.1443-1661.2009.00929.x',
       pubmed: JSPH_VARICES_2010_PUBMED,
-      note: '記載基準第2版の原著。Wiley / Digestive Endoscopy の著作権。CC ではないので画像は置かず、論文へリンクする。',
+      note: '記載基準第2版の決定版（F0、Cw-Th / Cb-Th、L / Lg、出血兆候・粘膜所見の原図）。Wiley / Digestive Endoscopy の著作権。CC ではないので画像は置かず、論文へリンクする。',
     },
   ],
   entries: [

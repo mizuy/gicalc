@@ -153,8 +153,10 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         'Example: Ls, F3, Cb, RC3 (RWM, CRS). Record the stomach separately, e.g. Lg-f, F2, Cb, RC0. Sarin is on the gastric page.',
     },
     figureNotes: [
-      'Nagashima 2022 Fig. 2 (A CRS and RWM; B HCS). MDPI Healthcare. License: CC BY 4.0. The Tajiri 2010 Digestive Endoscopy original figures are not CC.',
-      'Original 2010 rules paper. Wiley / Digestive Endoscopy copyright; not CC, so the figure is not hosted. Link opens the paper.',
+      'Pall 2023 Diagnostics Fig. 1 (F1–F3). MDPI Diagnostics. License: CC BY 4.0. F0, location (L), and Lg are in the Tajiri 2010 original figures — link to the paper.',
+      'Kim 2024 Fig. 1 (A–C: F1–F3; D: Cw; E: Cb; F–I: RC0–RC3). License: CC BY-NC 4.0. Cw-Th / Cb-Th and L / Lg are in the Tajiri 2010 original — link to the paper.',
+      'Nagashima 2022 Fig. 2 (A CRS and RWM; B HCS). MDPI Healthcare. License: CC BY 4.0.',
+      'Definitive 2010 rules paper (F0, Cw-Th / Cb-Th, L / Lg, bleeding and mucosal findings). Wiley / Digestive Endoscopy copyright; not CC — link opens the paper.',
     ],
   },
   sarin: {
