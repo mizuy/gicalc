@@ -65,6 +65,7 @@ import {
 } from '../lib/scores/algorithmFlow';
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
+import { classificationOriginalLocale } from '../lib/i18n/localize';
 
 test('登録スコアは42種で臓器順に並ぶ', () => {
   assert.deepEqual(
@@ -942,7 +943,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(esdFibrosis.originalLead ?? '', /white muscular-like structure/);
   assert.equal(esdFibrosis.developedInJapan, true);
   assert.equal(esdFibrosis.pubmed, ESD_FIBROSIS_2010_PUBMED);
-  assert.match(esdFibrosis.description, /pit pattern/);
+  assert.match(localizeScore(esdFibrosis, 'ja').description, /pit pattern/);
   assert.match(esdFibrosis.description, /とは別の分類/);
 
   const colorectalEc = getScoreById('colorectal-ec');
@@ -1541,6 +1542,29 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(aronchick.license, 'CC BY-NC-ND 4.0');
 });
 
+test('分類は日本語モードでも英語原著なら定義文を英語で表示する', () => {
+  const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
+  const nice = getScoreById('nice');
+  assert.ok(nice && isClassification(nice));
+  const jaNice = localizeScore(nice, 'ja');
+  assert.equal(jaNice.name, nice.name);
+  assert.equal(jaNice.description, SCORE_EN.nice.description);
+  assert.doesNotMatch(jaNice.description, japanese);
+  const type1 = jaNice.entries.find((entry) => entry.label === 'Type 1');
+  assert.match(type1?.comment ?? '', japanese);
+
+  const kimura = getScoreById('kimura-takemoto');
+  assert.ok(kimura && isClassification(kimura));
+  assert.equal(classificationOriginalLocale(kimura), 'ja');
+  const jaKimura = localizeScore(kimura, 'ja');
+  assert.match(jaKimura.description, japanese);
+
+  const jsph = getScoreById('jsph-varices');
+  assert.ok(jsph && isClassification(jsph));
+  assert.equal(classificationOriginalLocale(jsph), 'ja');
+  assert.match(localizeScore(jsph, 'ja').description, japanese);
+});
+
 test('英語コピーが全スコアの表示項目を覆う', () => {
   const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
   for (const score of SCORES) {
@@ -1554,6 +1578,10 @@ test('英語コピーが全スコアの表示項目を覆う', () => {
     assert.doesNotMatch(english.description, japanese);
 
     if (isClassification(score) && isClassification(english)) {
+      if (classificationOriginalLocale(score) !== 'ja') {
+        const jaLocalized = localizeScore(score, 'ja');
+        assert.equal(jaLocalized.description, copy.description, score.id);
+      }
       for (const entry of score.entries) {
         if (entry.group) {
           assert.ok(copy.groups?.[entry.group], `${score.id} group ${entry.group}`);

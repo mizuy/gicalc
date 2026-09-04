@@ -91,7 +91,8 @@ export const UI: Record<Locale, UiStrings> = {
     openFigure: '図を開く',
     closeFigure: '閉じる',
     resultPlaceholder: 'すべての項目を選択すると結果が表示されます',
-    footnote: '診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。',
+    footnote:
+      '診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。分類の定義・用語は原著の言語で表示します（英語原著は英語、日本語原著は日本語）。注釈（コメント）は日本語です。',
     missingTitle: '未登録',
     missingBody: '指定されたスコアは見つかりません。',
     notFoundTitle: 'ページが見つかりません',
@@ -184,7 +185,8 @@ export const UI: Record<Locale, UiStrings> = {
     openFigure: 'Open figure',
     closeFigure: 'Close',
     resultPlaceholder: 'Select every item to see the result',
-    footnote: 'Decision support only. Follow current guidelines and local protocols.',
+    footnote:
+      'Decision support only. Follow current guidelines and local protocols. Classification definitions and terminology follow the original publication language.',
     missingTitle: 'Not found',
     missingBody: 'This score is not registered.',
     notFoundTitle: 'Page not found',

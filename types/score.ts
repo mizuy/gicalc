@@ -12,6 +12,9 @@ export type ScoreCategory =
 /** ツールの性質。画面の小さなバッジ。JNET と MESDA-G は混ぜない */
 export type ToolKind = 'classification' | 'score' | 'prediction' | 'algorithm';
 
+/** 分類の原著言語。省略時は en（英語原著） */
+export type OriginalLocale = 'en' | 'ja';
+
 export type ScoreOption = {
   value: number;
   label: string;
@@ -72,6 +75,8 @@ type ToolBase = {
   description: string;
   /** 省略時は分類→classification、計算→score */
   toolKind?: ToolKind;
+  /** 分類のみ。原著の言語。省略時は en */
+  originalLocale?: OriginalLocale;
   /** 日本で考案・策定されたツール。国際分類（Paris / NICE など）には付けない */
   developedInJapan?: boolean;
   reference?: string;

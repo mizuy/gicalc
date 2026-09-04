@@ -3,13 +3,14 @@ import type {
   AlgorithmMapNode,
   CalculatorDefinition,
   ClassificationDefinition,
+  OriginalLocale,
   ScoreDefinition,
   ScoreField,
   ScoreResult,
 } from '../../types/score';
 import { isClassification } from '../../types/score';
 import { localizeResult as localizeComputedResult } from './results';
-import { SCORE_EN, type FlowCopy } from './scoreCopy';
+import { SCORE_EN, type FlowCopy, type ScoreCopy } from './scoreCopy';
 import { UI } from './ui';
 import type { Locale } from './types';
 
@@ -47,6 +48,38 @@ function localizeFlow(flow: AlgorithmFlow, copy?: FlowCopy): AlgorithmFlow {
   };
 }
 
+export function classificationOriginalLocale(score: ClassificationDefinition): OriginalLocale {
+  return score.originalLocale ?? 'en';
+}
+
+function applyEnglishClassificationBody(
+  score: ClassificationDefinition,
+  copy: ScoreCopy | undefined,
+  options: { translateComments: boolean },
+): Pick<ClassificationDefinition, 'description' | 'entries' | 'flow'> {
+  if (!copy) {
+    return {
+      description: score.description,
+      entries: score.entries,
+      flow: score.flow,
+    };
+  }
+
+  return {
+    description: copy.description,
+    entries: score.entries.map((entry) => ({
+      ...entry,
+      meaning: copy.meanings?.[entry.label] ?? entry.meaning,
+      group: entry.group ? (copy.groups?.[entry.group] ?? entry.group) : entry.group,
+      comment:
+        options.translateComments && entry.comment
+          ? (copy.comments?.[entry.label] ?? entry.comment)
+          : entry.comment,
+    })),
+    flow: score.flow ? localizeFlow(score.flow, copy.flow) : score.flow,
+  };
+}
+
 export function localizeResult(result: ScoreResult, locale: Locale): ScoreResult {
   return localizeComputedResult(result, locale);
 }
@@ -76,39 +109,60 @@ function localizeFields(score: CalculatorDefinition, locale: Locale): ScoreField
   });
 }
 
+function localizeClassificationDefinition(
+  score: ClassificationDefinition,
+  locale: Locale,
+): ClassificationDefinition {
+  const categoryLabel = UI[locale].category[score.category];
+  const copy = SCORE_EN[score.id];
+  const useJapaneseOriginal = locale === 'ja' && classificationOriginalLocale(score) === 'ja';
+
+  if (useJapaneseOriginal) {
+    return { ...score, categoryLabel };
+  }
+
+  const englishBody = applyEnglishClassificationBody(score, copy, {
+    translateComments: !useJapaneseOriginal && locale === 'en',
+  });
+
+  if (locale === 'ja') {
+    return {
+      ...score,
+      ...englishBody,
+      categoryLabel,
+    };
+  }
+
+  return {
+    ...score,
+    name: copy?.name ?? score.name,
+    shortName: copy?.shortName ?? score.shortName,
+    description: englishBody.description,
+    categoryLabel,
+    officialLinkLabel: copy?.officialLinkLabel ?? score.officialLinkLabel,
+    note: copy?.note ?? score.note,
+    entries: englishBody.entries,
+    figures: score.figures?.map((figure, index) => ({
+      ...figure,
+      note: copy?.figureNotes?.[index] ?? figure.note,
+    })),
+    flow: englishBody.flow,
+  };
+}
+
 export function localizeScore<T extends ScoreDefinition>(score: T, locale: Locale): T {
+  if (isClassification(score)) {
+    return localizeClassificationDefinition(score, locale) as T;
+  }
+
   const categoryLabel = UI[locale].category[score.category];
   if (locale === 'ja') {
-    return { ...score, categoryLabel };
+    return { ...score, categoryLabel } as T;
   }
 
   const copy = SCORE_EN[score.id];
   if (!copy) {
-    return { ...score, categoryLabel };
-  }
-
-  if (isClassification(score)) {
-    const localized: ClassificationDefinition = {
-      ...score,
-      name: copy.name,
-      shortName: copy.shortName ?? score.shortName,
-      description: copy.description,
-      categoryLabel,
-      officialLinkLabel: copy.officialLinkLabel ?? score.officialLinkLabel,
-      note: copy.note ?? score.note,
-      entries: score.entries.map((entry) => ({
-        ...entry,
-        meaning: copy.meanings?.[entry.label] ?? entry.meaning,
-        group: entry.group ? (copy.groups?.[entry.group] ?? entry.group) : entry.group,
-        comment: entry.comment ? (copy.comments?.[entry.label] ?? entry.comment) : entry.comment,
-      })),
-      figures: score.figures?.map((figure, index) => ({
-        ...figure,
-        note: copy.figureNotes?.[index] ?? figure.note,
-      })),
-      flow: score.flow ? localizeFlow(score.flow, copy.flow) : score.flow,
-    };
-    return localized as T;
+    return { ...score, categoryLabel } as T;
   }
 
   const calculator = score as CalculatorDefinition;

@@ -11,6 +11,7 @@ export const jsphVaricesScore: ClassificationDefinition = {
   name: '門脈圧亢進症学会分類（F / L / C）',
   shortName: 'F / L / C',
   developedInJapan: true,
+  originalLocale: 'ja',
   organ: 'esophagus',
   category: 'classification',
   categoryLabel: '内視鏡分類',
