@@ -4,7 +4,7 @@ import type { ScoreDefinition } from '../../types/score';
 export const ecuraHattaScore: ScoreDefinition = {
   id: 'ecura-hatta',
   name: 'eCura Scoring System（早期胃癌 LNM）',
-  shortName: 'eCura',
+  shortName: 'eCura LNM',
   developedInJapan: true,
   organ: 'stomach',
   category: 'gastric',

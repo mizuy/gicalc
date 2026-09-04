@@ -16,8 +16,8 @@
 | 胃 | 京都分類（原法） | 胃炎・胃癌リスク | 点数 0–8 |
 | 胃 | 改変京都（Kawamura 2021） | 胃炎・胃癌リスク | 点数 0–5 |
 | 胃 | EGGIM | 内視鏡的腸上皮化生 | 点数 0–8 |
-| 胃 | eCura 判定（JGES/JGCA） | ESD 後・内視鏡的根治度 | eCuraA / B / C-1 / C-2 |
-| 胃 | eCura（Hatta 2017） | 早期胃癌・非治癒切除後 LNM | 点数 0–7 |
+| 胃 | 治癒切除判定（JGES/JGCA） | ESD 後・内視鏡的根治度 | eCuraA / B / C-1 / C-2 |
+| 胃 | eCura LNM（Hatta 2017） | 早期胃癌・非治癒切除後 LNM | 点数 0–7 |
 | 胃 | Sekiguchi（2016） | 早期胃癌 LNM（混合型を区別） | 点数 0–11 |
 | 胃 | BEST-J（Hatta 2021） | 早期胃癌 ESD 後出血 | 点数 |
 | 十二指腸 | Spigelman（1989） | FAP 十二指腸腺腫 | 点数 0–12 / Stage 0–IV |

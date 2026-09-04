@@ -6,8 +6,8 @@ import type { ScoreDefinition } from '../../types/score';
 
 export const gastricEsdCurabilityScore: ScoreDefinition = {
   id: 'gastric-esd-curability',
-  name: '早期胃癌 ESD 後・内視鏡的根治度（eCura）',
-  shortName: 'eCura 判定',
+  name: '早期胃癌 ESD 後・治癒切除判定（eCura）',
+  shortName: '治癒切除',
   developedInJapan: true,
   toolKind: 'algorithm',
   organ: 'stomach',

@@ -420,8 +420,8 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
   },
   'gastric-esd-curability': {
-    name: 'Early gastric cancer endoscopic curability after ESD (eCura)',
-    shortName: 'eCura grade',
+    name: 'Early gastric cancer curative resection after ESD (eCura)',
+    shortName: 'Curability',
     description:
       'Determines endoscopic curability (eCuraA / B / C-1 / C-2) from post-ESD/EMR pathology. Notes from the JGES gastric ESD/EMR guideline (2nd ed.) and JGCA gastric cancer treatment guideline (6th ed.) are shown together.',
     officialLinkLabel: 'JGCA gastric cancer treatment guideline 6th ed. (endoscopic resection)',
@@ -493,6 +493,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
   },
   'ecura-hatta': {
     name: 'eCura scoring system (early gastric cancer LNM)',
+    shortName: 'eCura LNM',
     description:
       'Scores lymph-node metastasis risk after non-curative resection of early gastric cancer. Shows the LNM rate for each score 0–7 as well as the low / intermediate / high-risk groups.',
     fields: {
