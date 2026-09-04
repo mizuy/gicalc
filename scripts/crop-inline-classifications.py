@@ -66,10 +66,11 @@ CROPS: dict[str, tuple[Path, tuple[int, int, int, int]]] = {
     'ec-maeda2021-fig3-ec-v1.jpg': (EC3, (8, 24, 258, 313)),
     'ec-maeda2021-fig3-ec-v2.jpg': (EC3, (272, 24, 521, 313)),
     'ec-maeda2021-fig3-ec-v3.jpg': (EC3, (524, 24, 766, 313)),
-    # NICE: Hamada 2021 Fig. 1 の Endoscopic image 行（1956×1285 原寸 → 1200×788 WebP 座標）
-    'nice-hamada2021-type1.jpg': (NICE, (250, 502, 511, 618)),
-    'nice-hamada2021-type2.jpg': (NICE, (576, 502, 841, 618)),
-    'nice-hamada2021-type3.jpg': (NICE, (907, 502, 1175, 618)),
+    # NICE: Hamada 2021 Fig. 1 の Endoscopic image 行（1200×788 WebP 座標）
+    # 旧座標 y=502–618 は行の下半分のみ。y=396–629 で画像セル全体。
+    'nice-hamada2021-type1.jpg': (NICE, (250, 396, 511, 629)),
+    'nice-hamada2021-type2.jpg': (NICE, (576, 396, 841, 629)),
+    'nice-hamada2021-type3.jpg': (NICE, (907, 396, 1175, 629)),
 }
 
 

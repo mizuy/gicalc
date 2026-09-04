@@ -76,7 +76,7 @@ export const niceScore: ClassificationDefinition = {
           alt: 'NICE Type 1 endoscopic example (Hamada 2021 Fig. 1, Type 1 column)',
           caption: 'Fig. 1 Type 1',
           note: 'Hamada 2021 Fig. 1 Endoscopic image 行から Type 1 列を切り抜き。CC BY 4.0。拡大なし NBI。',
-          aspectRatio: 261 / 116,
+          aspectRatio: 261 / 233,
         }),
       ],
       rows: [
@@ -104,7 +104,7 @@ export const niceScore: ClassificationDefinition = {
           alt: 'NICE Type 2 endoscopic example (Hamada 2021 Fig. 1, Type 2 column)',
           caption: 'Fig. 1 Type 2',
           note: 'Hamada 2021 Fig. 1 Endoscopic image 行から Type 2 列を切り抜き。CC BY 4.0。拡大なし NBI。',
-          aspectRatio: 265 / 116,
+          aspectRatio: 265 / 233,
         }),
       ],
       rows: [
@@ -135,7 +135,7 @@ export const niceScore: ClassificationDefinition = {
           alt: 'NICE Type 3 endoscopic example (Hamada 2021 Fig. 1, Type 3 column)',
           caption: 'Fig. 1 Type 3',
           note: 'Hamada 2021 Fig. 1 Endoscopic image 行から Type 3 列を切り抜き。CC BY 4.0。拡大なし NBI。',
-          aspectRatio: 268 / 116,
+          aspectRatio: 268 / 233,
         }),
       ],
       rows: [
