@@ -197,9 +197,24 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       Furrows: 'Later modifications sometimes grade furrows as 0 / mild / severe. This page uses the 2013 original 0–1.',
       Total: 'Biopsies from the distal and mid esophagus are still required. EREFS alone does not confirm the diagnosis.',
     },
-    figureNotes: [
-      'Abe 2022 Fig. 2 (a edema, b rings, c exudates, d furrows, e stricture, f narrow-caliber). MDPI Diagnostics. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
-    ],
+    entryFigureNotes: {
+      Edema: [
+        'Cropped from original Fig. 2a (edema). MDPI Diagnostics. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
+      ],
+      Rings: [
+        'Cropped from original Fig. 2b (rings). MDPI Diagnostics. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
+      ],
+      Exudates: [
+        'Cropped from original Fig. 2c (exudates). MDPI Diagnostics. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
+      ],
+      Furrows: [
+        'Cropped from original Fig. 2d (furrows). MDPI Diagnostics. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
+      ],
+      Stricture: [
+        'Cropped from original Fig. 2e (stricture). MDPI Diagnostics. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
+        'Cropped from original Fig. 2f (narrow-caliber; not an EREFS item in the 2013 original). MDPI Diagnostics. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
+      ],
+    },
   },
   'esophagus-esd-curability': {
     name: 'Early esophageal SCC curative resection after ESD',
@@ -246,9 +261,20 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     comments: {
       'Grade III': 'Grades III–IV are more often associated with reflux and hiatal hernia.',
     },
-    figureNotes: [
-      'Ge 2023 Fig. 1 (sample images I–IV). Annals of Medicine. License: CC BY-NC 4.0. The Hill 1996 GIE original is not CC.',
-    ],
+    entryFigureNotes: {
+      'Grade I': [
+        'Cropped from original Fig. 1 (Grade I). Annals of Medicine. License: CC BY-NC 4.0. The Hill 1996 GIE original is not CC.',
+      ],
+      'Grade II': [
+        'Cropped from original Fig. 1 (Grade II). Annals of Medicine. License: CC BY-NC 4.0. The Hill 1996 GIE original is not CC.',
+      ],
+      'Grade III': [
+        'Cropped from original Fig. 1 (Grade III). Annals of Medicine. License: CC BY-NC 4.0. The Hill 1996 GIE original is not CC.',
+      ],
+      'Grade IV': [
+        'Cropped from original Fig. 1 (Grade IV). Annals of Medicine. License: CC BY-NC 4.0. The Hill 1996 GIE original is not CC.',
+      ],
+    },
   },
   'kimura-takemoto': {
     name: 'Kimura–Takemoto classification (gastric atrophy)',
@@ -1042,9 +1068,20 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'LST-NG pseudodepressed':
         'Highest invasion risk of the four subtypes. The 31.6% (CI 19.8–43.4%) on the figure is from Bogie 2018. Consider en-bloc resection.',
     },
-    figureNotes: [
-      'Four LST subtypes and deep-SMI rates (Bogie 2018 meta-analysis). Figure from Clin Endosc 2025 Fig. 3 (CC BY-NC 4.0). Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
-    ],
+    entryFigureNotes: {
+      'LST-G homogeneous': [
+        'Cropped from original Fig. 3 (LST-G homogeneous). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+      ],
+      'LST-G mixed nodular': [
+        'Cropped from original Fig. 3 (LST-G mixed nodular). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+      ],
+      'LST-NG flat elevated': [
+        'Cropped from original Fig. 3 (LST-NG flat). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+      ],
+      'LST-NG pseudodepressed': [
+        'Cropped from original Fig. 3 (LST-NG pseudodepressed). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+      ],
+    },
   },
   'appendiceal-orifice': {
     name: 'Appendiceal orifice lesion classification (Toyonaga type)',
@@ -1056,7 +1093,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     comments: {
       'Type 0':
-        'Not shown in the figure (Oung 2020 included contact lesions only). Often managed like routine cecal ESD.',
+        'Oung 2020 ESD series included contact lesions only (Type 0 excluded). Often managed like routine cecal ESD.',
       'Type 1': 'Strategy A (incise the appendiceal side first) is usual; switch to Strategy B if fibrosis limits access.',
       'Type 2':
         'En-bloc ESD rates of 83.3–100% are often reported. Strategy B is primary; Strategy A if submucosal lift is good.',
@@ -1065,9 +1102,23 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Type 3a':
         'Short residual stump favors en-bloc resection. Included with Type 3 in Oung 2020 DCT-ESD series; traction helps.',
     },
-    figureNotes: [
-      'Types 1–3 and 3a only (Oung 2020 Fig. 2, CC BY-NC-ND 4.0). Type 0 is defined in text per Jacob 2016. The Endoscopy 2016 original is not CC.',
-    ],
+    entryFigureNotes: {
+      'Type 0': [
+        'Cropped from original Fig. 2 (Type 0). Endosc Int Open. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
+      ],
+      'Type 1': [
+        'Cropped from original Fig. 2 (Type 1). Endosc Int Open. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
+      ],
+      'Type 2': [
+        'Cropped from original Fig. 2 (Type 2). Endosc Int Open. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
+      ],
+      'Type 3': [
+        'Cropped from original Fig. 2 (Type 3). Endosc Int Open. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
+      ],
+      'Type 3a': [
+        'Cropped from original Fig. 2 (Type 3a). Endosc Int Open. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
+      ],
+    },
   },
   'esd-fibrosis': {
     name: 'ESD submucosal fibrosis classification (F0–F2)',
@@ -1161,10 +1212,32 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'EC-V3': 'Predicts invasive cancer including SMm; faster workflow than methylene blue EC.',
       Observation: 'GIF-H290EC / CF-H290ECI integrated scopes. Often combined with pit pattern and JNET for depth.',
     },
-    figureNotes: [
-      'Clin Endosc 2021 Fig. 2 (CC BY-NC 3.0). Kudo 2011 Endoscopy original is not CC.',
-      'Clin Endosc 2021 Fig. 3 (CC BY-NC 3.0). Kudo 2015 GIE EC-V original is not CC.',
-    ],
+    entryFigureNotes: {
+      EC1a: [
+        'Cropped from original Fig. 2 (EC1a). Clin Endosc 2021. License: CC BY-NC 3.0. The Kudo 2011 Endoscopy original is not CC.',
+      ],
+      EC1b: [
+        'Cropped from original Fig. 2 (EC1b). Clin Endosc 2021. License: CC BY-NC 3.0. The Kudo 2011 Endoscopy original is not CC.',
+      ],
+      EC2: [
+        'Cropped from original Fig. 2 (EC2). Clin Endosc 2021. License: CC BY-NC 3.0. The Kudo 2011 Endoscopy original is not CC.',
+      ],
+      EC3a: [
+        'Cropped from original Fig. 2 (EC3a). Clin Endosc 2021. License: CC BY-NC 3.0. The Kudo 2011 Endoscopy original is not CC.',
+      ],
+      EC3b: [
+        'Cropped from original Fig. 2 (EC3b). Clin Endosc 2021. License: CC BY-NC 3.0. The Kudo 2011 Endoscopy original is not CC.',
+      ],
+      'EC-V1': [
+        'Cropped from original Fig. 3 (EC-V1). Clin Endosc 2021. License: CC BY-NC 3.0. The Kudo 2015 GIE original is not CC.',
+      ],
+      'EC-V2': [
+        'Cropped from original Fig. 3 (EC-V2). Clin Endosc 2021. License: CC BY-NC 3.0. The Kudo 2015 GIE original is not CC.',
+      ],
+      'EC-V3': [
+        'Cropped from original Fig. 3 (EC-V3). Clin Endosc 2021. License: CC BY-NC 3.0. The Kudo 2015 GIE original is not CC.',
+      ],
+    },
     note: 'EC uses methylene blue (or crystal violet double stain). EC-V uses EC-NBI without dye. EndoBRAIN is a separate AI decision-support device (PMDA-approved).',
   },
   nice: {
@@ -1389,9 +1462,32 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       IIa: 'Indication for endoscopic hemostasis.',
       IIc: 'IIc / III are usually observed without endoscopic therapy for the stigma itself.',
     },
-    figureNotes: [
-      'Zhou 2025 Fig. 1 (A Ia spurting, B Ib oozing, C IIa visible vessel, D IIb adherent clot, E IIc black base, F III clean base). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-    ],
+    entryFigureNotes: {
+      Ia: [
+        'Cropped from original Fig. 1A (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+        'Cropped from original Fig. 1A (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+      ],
+      Ib: [
+        'Cropped from original Fig. 1B (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+        'Cropped from original Fig. 1B (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+      ],
+      IIa: [
+        'Cropped from original Fig. 1C (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+        'Cropped from original Fig. 1C (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+      ],
+      IIb: [
+        'Cropped from original Fig. 1D (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+        'Cropped from original Fig. 1D (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+      ],
+      IIc: [
+        'Cropped from original Fig. 1E (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+        'Cropped from original Fig. 1E (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+      ],
+      III: [
+        'Cropped from original Fig. 1F (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+        'Cropped from original Fig. 1F (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+      ],
+    },
   },
   gbs: {
     name: 'Glasgow-Blatchford Score (upper GI bleeding)',

@@ -1,4 +1,4 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
 
 /** Kudo 2011 Endoscopy（PMID 21837586）。大腸 EC 分類（メチレンブルー染色） */
 export const KUDO_EC_2011_PUBMED = '21837586';
@@ -6,6 +6,32 @@ export const KUDO_EC_2011_PUBMED = '21837586';
 export const KUDO_ECV_2015_PUBMED = '26071058';
 /** Misawa 2021 Clin Endosc Fig. 2–3（PMID 34233111）。CC BY-NC 3.0 */
 export const MAEDA_EC_REVIEW_2021_PUBMED = '34233111';
+
+const MISAWA_SOURCE_FIG2 =
+  'Misawa M, Kudo SE, Takashina Y, et al. Clinical efficacy of endocytoscopy for gastrointestinal endoscopy. Clin Endosc. 2021;54:455-463. Fig. 2 (based on Kudo SE et al. Endoscopy 2011;43:869-875).';
+const MISAWA_SOURCE_FIG3 =
+  'Misawa M, Kudo SE, Takashina Y, et al. Clinical efficacy of endocytoscopy for gastrointestinal endoscopy. Clin Endosc. 2021;54:455-463. Fig. 3 (based on Kudo SE et al. Gastrointest Endosc 2015;82:912-923).';
+const MISAWA_DOI = 'https://doi.org/10.5946/ce.2021.165';
+
+function misawaCrop(
+  source: string,
+  figure: {
+    src: string;
+    alt: string;
+    caption: string;
+    note: string;
+    aspectRatio: number;
+  },
+): ClassificationFigure {
+  return {
+    ...figure,
+    source,
+    doi: MISAWA_DOI,
+    pubmed: MAEDA_EC_REVIEW_2021_PUBMED,
+    license: 'CC BY-NC 3.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',
+  };
+}
 
 export const colorectalEcScore: ClassificationDefinition = {
   id: 'colorectal-ec',
@@ -24,40 +50,21 @@ export const colorectalEcScore: ClassificationDefinition = {
     'Kudo SE et al. Endoscopy 2011;43:869-875. Kudo SE et al. Gastrointest Endosc 2015;82:912-923',
   pubmed: KUDO_EC_2011_PUBMED,
   note: 'EC 分類はメチレンブルー（またはクリスタルバイオレット併用）染色後の観察。EC-V は EC-NBI で染色不要。SMs＝粘膜下層軽度浸潤、SMm＝高度浸潤（リンパ節転移リスク）。EndoBRAIN は EC/EC-NBI 画像の診断支援（薬機承認）で、本ページの分類表とは別製品。',
-  figures: [
-    {
-      src: '/figures/ec-maeda2021-fig2.jpg',
-      alt: 'Endocytoscopic classification for colorectal lesions EC1a EC1b EC2 EC3a EC3b',
-      caption: 'Fig. 2. Endocytoscopic classification for colorectal lesions (Kudo et al.)',
-      source:
-        'Misawa M, Kudo SE, Takashina Y, et al. Clinical efficacy of endocytoscopy for gastrointestinal endoscopy. Clin Endosc. 2021;54:455-463. Fig. 2 (based on Kudo SE et al. Endoscopy 2011;43:869-875).',
-      doi: 'https://doi.org/10.5946/ce.2021.165',
-      pubmed: MAEDA_EC_REVIEW_2021_PUBMED,
-      license: 'CC BY-NC 3.0',
-      licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',
-      note: 'Clin Endosc 2021 Fig. 2（CC BY-NC 3.0）。原著 Kudo 2011 Endoscopy は CC ではない。',
-      aspectRatio: 783 / 664,
-    },
-    {
-      src: '/figures/ec-maeda2021-fig3.jpg',
-      alt: 'Endocytoscopic vascular EC-V classification EC-V1 EC-V2 EC-V3 with NBI',
-      caption: 'Fig. 3. Endocytoscopic classification based on narrow-band imaging (EC-V)',
-      source:
-        'Misawa M, Kudo SE, Takashina Y, et al. Clinical efficacy of endocytoscopy for gastrointestinal endoscopy. Clin Endosc. 2021;54:455-463. Fig. 3 (based on Kudo SE et al. Gastrointest Endosc 2015;82:912-923).',
-      doi: 'https://doi.org/10.5946/ce.2021.165',
-      pubmed: MAEDA_EC_REVIEW_2021_PUBMED,
-      license: 'CC BY-NC 3.0',
-      licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',
-      note: 'Clin Endosc 2021 Fig. 3（CC BY-NC 3.0）。EC-V 原著 Kudo 2015 GIE は CC ではない。',
-      aspectRatio: 776 / 314,
-    },
-  ],
   entries: [
     {
       label: 'EC1a',
       meaning: 'Normal mucosa',
       group: 'EC（染色）',
       severity: 'none',
+      figures: [
+        misawaCrop(MISAWA_SOURCE_FIG2, {
+          src: '/figures/ec-maeda2021-fig2-ec1a.jpg',
+          alt: 'Colorectal EC1a roundish lumens and uniform nuclei (Misawa 2021 Fig. 2)',
+          caption: 'Fig. 2 EC1a',
+          note: '原図 Fig. 2 の EC1a から切り抜き。Clin Endosc 2021。ライセンスは CC BY-NC 3.0。Kudo 2011 Endoscopy 原著は CC ではない。',
+          aspectRatio: 231 / 319,
+        }),
+      ],
       rows: [
         {
           heading: 'Crypt',
@@ -75,6 +82,15 @@ export const colorectalEcScore: ClassificationDefinition = {
       meaning: 'Hyperplastic polyp',
       group: 'EC（染色）',
       severity: 'none',
+      figures: [
+        misawaCrop(MISAWA_SOURCE_FIG2, {
+          src: '/figures/ec-maeda2021-fig2-ec1b.jpg',
+          alt: 'Colorectal EC1b serrated lumens (Misawa 2021 Fig. 2)',
+          caption: 'Fig. 2 EC1b',
+          note: '原図 Fig. 2 の EC1b から切り抜き。Clin Endosc 2021。ライセンスは CC BY-NC 3.0。Kudo 2011 Endoscopy 原著は CC ではない。',
+          aspectRatio: 231 / 313,
+        }),
+      ],
       rows: [
         {
           heading: 'Crypt',
@@ -93,6 +109,15 @@ export const colorectalEcScore: ClassificationDefinition = {
       meaning: 'Adenoma to intramucosal cancer',
       group: 'EC（染色）',
       severity: 'mild',
+      figures: [
+        misawaCrop(MISAWA_SOURCE_FIG2, {
+          src: '/figures/ec-maeda2021-fig2-ec2.jpg',
+          alt: 'Colorectal EC2 slit-like lumens and fusiform nuclei (Misawa 2021 Fig. 2)',
+          caption: 'Fig. 2 EC2',
+          note: '原図 Fig. 2 の EC2 から切り抜き。Clin Endosc 2021。ライセンスは CC BY-NC 3.0。Kudo 2011 Endoscopy 原著は CC ではない。',
+          aspectRatio: 231 / 292,
+        }),
+      ],
       rows: [
         {
           heading: 'Crypt',
@@ -114,6 +139,15 @@ export const colorectalEcScore: ClassificationDefinition = {
       meaning: 'Intramucosal to slightly invasive SM',
       group: 'EC（染色）',
       severity: 'moderate',
+      figures: [
+        misawaCrop(MISAWA_SOURCE_FIG2, {
+          src: '/figures/ec-maeda2021-fig2-ec3a.jpg',
+          alt: 'Colorectal EC3a irregular lumens and swollen nuclei (Misawa 2021 Fig. 2)',
+          caption: 'Fig. 2 EC3a',
+          note: '原図 Fig. 2 の EC3a から切り抜き。Clin Endosc 2021。ライセンスは CC BY-NC 3.0。Kudo 2011 Endoscopy 原著は CC ではない。',
+          aspectRatio: 232 / 319,
+        }),
+      ],
       rows: [
         {
           heading: 'Crypt',
@@ -131,6 +165,15 @@ export const colorectalEcScore: ClassificationDefinition = {
       meaning: 'Massively invasive SM or deeper',
       group: 'EC（染色）',
       severity: 'severe',
+      figures: [
+        misawaCrop(MISAWA_SOURCE_FIG2, {
+          src: '/figures/ec-maeda2021-fig2-ec3b.jpg',
+          alt: 'Colorectal EC3b unclear lumens and distorted nuclei (Misawa 2021 Fig. 2)',
+          caption: 'Fig. 2 EC3b',
+          note: '原図 Fig. 2 の EC3b から切り抜き。Clin Endosc 2021。ライセンスは CC BY-NC 3.0。Kudo 2011 Endoscopy 原著は CC ではない。',
+          aspectRatio: 232 / 313,
+        }),
+      ],
       rows: [
         {
           heading: 'Crypt',
@@ -152,6 +195,15 @@ export const colorectalEcScore: ClassificationDefinition = {
       meaning: 'Obscure microvessels',
       group: 'EC-V（EC-NBI）',
       severity: 'none',
+      figures: [
+        misawaCrop(MISAWA_SOURCE_FIG3, {
+          src: '/figures/ec-maeda2021-fig3-ec-v1.jpg',
+          alt: 'Colorectal EC-V1 obscure surface microvessels (Misawa 2021 Fig. 3)',
+          caption: 'Fig. 3 EC-V1',
+          note: '原図 Fig. 3 の EC-V1 から切り抜き。Clin Endosc 2021。ライセンスは CC BY-NC 3.0。Kudo 2015 GIE 原著は CC ではない。',
+          aspectRatio: 250 / 289,
+        }),
+      ],
       rows: [
         {
           heading: 'Vessels',
@@ -169,6 +221,15 @@ export const colorectalEcScore: ClassificationDefinition = {
       meaning: 'Uniform microvessel network',
       group: 'EC-V（EC-NBI）',
       severity: 'mild',
+      figures: [
+        misawaCrop(MISAWA_SOURCE_FIG3, {
+          src: '/figures/ec-maeda2021-fig3-ec-v2.jpg',
+          alt: 'Colorectal EC-V2 uniform microvessel network (Misawa 2021 Fig. 3)',
+          caption: 'Fig. 3 EC-V2',
+          note: '原図 Fig. 3 の EC-V2 から切り抜き。Clin Endosc 2021。ライセンスは CC BY-NC 3.0。Kudo 2015 GIE 原著は CC ではない。',
+          aspectRatio: 249 / 289,
+        }),
+      ],
       rows: [
         {
           heading: 'Vessels',
@@ -189,6 +250,15 @@ export const colorectalEcScore: ClassificationDefinition = {
       meaning: 'Irregular dilated microvessels',
       group: 'EC-V（EC-NBI）',
       severity: 'severe',
+      figures: [
+        misawaCrop(MISAWA_SOURCE_FIG3, {
+          src: '/figures/ec-maeda2021-fig3-ec-v3.jpg',
+          alt: 'Colorectal EC-V3 irregular dilated microvessels (Misawa 2021 Fig. 3)',
+          caption: 'Fig. 3 EC-V3',
+          note: '原図 Fig. 3 の EC-V3 から切り抜き。Clin Endosc 2021。ライセンスは CC BY-NC 3.0。Kudo 2015 GIE 原著は CC ではない。',
+          aspectRatio: 242 / 289,
+        }),
+      ],
       rows: [
         {
           heading: 'Vessels',

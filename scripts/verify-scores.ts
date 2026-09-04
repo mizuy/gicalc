@@ -1,5 +1,11 @@
 import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { test } from 'node:test';
+
+function hostedFigureExists(src: string): boolean {
+  return existsSync(join(process.cwd(), 'public', src.replace(/^\//, '')));
+}
 
 import {
   NOMOGRAM_ITEM_POINTS,
@@ -1031,11 +1037,12 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(appendicealOrifice.originalLead ?? '', /Type 3a denotes deep invasion/);
   assert.equal(appendicealOrifice.pubmed, APPENDICEAL_ORIFICE_2016_PUBMED);
   assert.equal(appendicealOrifice.developedInJapan, true);
-  assert.equal(appendicealOrifice.figures?.length, 1);
-  assert.match(appendicealOrifice.figures?.[0]?.src ?? '', /oung2020-fig2/);
-  assert.equal(appendicealOrifice.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
-  assert.equal(appendicealOrifice.figures?.[0]?.pubmed, OUNG_2020_PUBMED);
-  assert.match(appendicealOrifice.figures?.[0]?.note ?? '', /Type 0/);
+  assert.equal(appendicealOrifice.figures, undefined);
+  assert.equal(appendicealOrifice.entries[0]?.figures?.length, 1);
+  assert.match(appendicealOrifice.entries[0]?.figures?.[0]?.src ?? '', /type-0/);
+  assert.equal(appendicealOrifice.entries[0]?.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.equal(appendicealOrifice.entries[0]?.figures?.[0]?.pubmed, OUNG_2020_PUBMED);
+  assert.match(appendicealOrifice.entries[0]?.comment ?? '', /Type 0/);
 
   const nice = getScoreById('nice');
   assert.ok(nice && isClassification(nice));
@@ -1274,13 +1281,16 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const colorectalEcFig = getScoreById('colorectal-ec');
   assert.ok(colorectalEcFig && isClassification(colorectalEcFig));
-  assert.equal(colorectalEcFig.figures?.length, 2);
-  assert.match(colorectalEcFig.figures?.[0]?.src ?? '', /ec-maeda2021-fig2/);
-  assert.match(colorectalEcFig.figures?.[1]?.src ?? '', /ec-maeda2021-fig3/);
-  assert.equal(colorectalEcFig.figures?.[0]?.license, 'CC BY-NC 3.0');
-  assert.equal(colorectalEcFig.figures?.[0]?.pubmed, MAEDA_EC_REVIEW_2021_PUBMED);
-  assert.match(colorectalEcFig.figures?.[0]?.caption ?? '', /Fig\. 2/);
-  assert.match(colorectalEcFig.figures?.[1]?.caption ?? '', /Fig\. 3/);
+  assert.equal(colorectalEcFig.figures, undefined);
+  assert.equal(colorectalEcFig.entries[0]?.figures?.length, 1);
+  assert.equal(colorectalEcFig.entries[5]?.figures?.length, 1);
+  assert.match(colorectalEcFig.entries[0]?.figures?.[0]?.src ?? '', /fig2-ec1a/);
+  assert.match(colorectalEcFig.entries[5]?.figures?.[0]?.src ?? '', /fig3-ec-v1/);
+  assert.equal(colorectalEcFig.entries[0]?.figures?.[0]?.license, 'CC BY-NC 3.0');
+  assert.equal(colorectalEcFig.entries[0]?.figures?.[0]?.pubmed, MAEDA_EC_REVIEW_2021_PUBMED);
+  assert.match(colorectalEcFig.entries[0]?.figures?.[0]?.caption ?? '', /Fig\. 2/);
+  assert.match(colorectalEcFig.entries[5]?.figures?.[0]?.caption ?? '', /Fig\. 3/);
+  assert.equal(colorectalEcFig.entries[8]?.figures, undefined);
   assert.equal(colorectalEcFig.pubmed, KUDO_EC_2011_PUBMED);
 
   const jes = getScoreById('jes');
@@ -1343,23 +1353,31 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const lst = getScoreById('lst');
   assert.ok(lst && isClassification(lst));
-  assert.equal(lst.figures?.length, 1);
-  assert.match(lst.figures?.[0]?.src ?? '', /lst-ce2025-fig3/);
-  assert.match(lst.figures?.[0]?.caption ?? '', /Fig\. 3/);
-  assert.match(lst.figures?.[0]?.source ?? '', /Kudo S/);
+  assert.equal(lst.figures, undefined);
+  assert.equal(lst.entries[0]?.figures?.length, 1);
+  assert.match(lst.entries[0]?.figures?.[0]?.src ?? '', /g-homogeneous/);
+  assert.match(lst.entries[1]?.figures?.[0]?.src ?? '', /g-mixed/);
+  assert.match(lst.entries[2]?.figures?.[0]?.src ?? '', /ng-flat/);
+  assert.match(lst.entries[3]?.figures?.[0]?.src ?? '', /ng-pseudodepressed/);
+  assert.match(lst.entries[0]?.figures?.[0]?.caption ?? '', /Fig\. 3/);
+  assert.match(lst.entries[0]?.figures?.[0]?.source ?? '', /Kudo S/);
   assert.equal(lst.pubmed, LST_2008_PUBMED);
-  assert.equal(lst.figures?.[0]?.license, 'CC BY-NC 4.0');
-  assert.match(lst.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
+  assert.equal(lst.entries[0]?.figures?.[0]?.license, 'CC BY-NC 4.0');
+  assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
+  assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
 
   const appendicealOrificeFig = getScoreById('appendiceal-orifice');
   assert.ok(appendicealOrificeFig && isClassification(appendicealOrificeFig));
-  assert.equal(appendicealOrificeFig.figures?.length, 1);
-  assert.match(appendicealOrificeFig.figures?.[0]?.src ?? '', /oung2020-fig2/);
-  assert.match(appendicealOrificeFig.figures?.[0]?.caption ?? '', /Fig\. 2/);
-  assert.match(appendicealOrificeFig.figures?.[0]?.source ?? '', /Oung B/);
-  assert.equal(appendicealOrificeFig.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
-  assert.match(appendicealOrificeFig.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
-  assert.match(appendicealOrificeFig.figures?.[0]?.note ?? '', /Type 0/);
+  assert.equal(appendicealOrificeFig.figures, undefined);
+  assert.equal(appendicealOrificeFig.entries[0]?.figures?.length, 1);
+  assert.match(appendicealOrificeFig.entries[0]?.figures?.[0]?.src ?? '', /type-0/);
+  assert.match(appendicealOrificeFig.entries[1]?.figures?.[0]?.src ?? '', /type-1/);
+  assert.match(appendicealOrificeFig.entries[4]?.figures?.[0]?.src ?? '', /type-3a/);
+  assert.match(appendicealOrificeFig.entries[0]?.figures?.[0]?.caption ?? '', /Fig\. 2/);
+  assert.match(appendicealOrificeFig.entries[0]?.figures?.[0]?.source ?? '', /Oung B/);
+  assert.equal(appendicealOrificeFig.entries[0]?.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.match(appendicealOrificeFig.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
+  assert.match(appendicealOrificeFig.entries[0]?.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
 
   const nice = getScoreById('nice');
   assert.ok(nice && isClassification(nice));
@@ -1408,25 +1426,38 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const erefsFig = getScoreById('erefs');
   assert.ok(erefsFig && isClassification(erefsFig));
-  assert.equal(erefsFig.figures?.length, 1);
-  assert.match(erefsFig.figures?.[0]?.src ?? '', /erefs-abe2022-fig2/);
-  assert.match(erefsFig.figures?.[0]?.source ?? '', /Abe Y/);
-  assert.equal(erefsFig.figures?.[0]?.license, 'CC BY 4.0');
-  assert.match(erefsFig.figures?.[0]?.note ?? '', /CC BY 4\.0/);
+  assert.equal(erefsFig.figures, undefined);
+  assert.equal(erefsFig.entries[0]?.figures?.length, 1);
+  assert.equal(erefsFig.entries[4]?.figures?.length, 2);
+  assert.equal(erefsFig.entries[5]?.figures, undefined);
+  assert.match(erefsFig.entries[0]?.figures?.[0]?.src ?? '', /edema/);
+  assert.match(erefsFig.entries[4]?.figures?.[1]?.src ?? '', /narrow-caliber/);
+  assert.match(erefsFig.entries[0]?.figures?.[0]?.source ?? '', /Abe Y/);
+  assert.equal(erefsFig.entries[0]?.figures?.[0]?.license, 'CC BY 4.0');
+  assert.match(erefsFig.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
+  assert.match(erefsFig.entries[0]?.figures?.[0]?.note ?? '', /CC BY 4\.0/);
   assert.equal(erefsFig.pubmed, EREFS_2013_PUBMED);
 
   const hillFig = getScoreById('hill');
   assert.ok(hillFig && isClassification(hillFig));
-  assert.match(hillFig.figures?.[0]?.src ?? '', /hill-ge2023-fig1/);
-  assert.match(hillFig.figures?.[0]?.source ?? '', /Hill LD/);
-  assert.equal(hillFig.figures?.[0]?.license, 'CC BY-NC 4.0');
+  assert.equal(hillFig.figures, undefined);
+  assert.equal(hillFig.entries[0]?.figures?.length, 1);
+  assert.match(hillFig.entries[0]?.figures?.[0]?.src ?? '', /grade-i/);
+  assert.match(hillFig.entries[3]?.figures?.[0]?.src ?? '', /grade-iv/);
+  assert.match(hillFig.entries[0]?.figures?.[0]?.source ?? '', /Hill LD/);
+  assert.equal(hillFig.entries[0]?.figures?.[0]?.license, 'CC BY-NC 4.0');
+  assert.match(hillFig.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
   assert.equal(hillFig.pubmed, HILL_1996_PUBMED);
 
   const forrestFig = getScoreById('forrest');
   assert.ok(forrestFig && isClassification(forrestFig));
-  assert.match(forrestFig.figures?.[0]?.src ?? '', /forrest-jsmu2025-fig1/);
-  assert.match(forrestFig.figures?.[0]?.source ?? '', /Forrest JA/);
-  assert.equal(forrestFig.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.equal(forrestFig.figures, undefined);
+  assert.equal(forrestFig.entries[0]?.figures?.length, 2);
+  assert.match(forrestFig.entries[0]?.figures?.[0]?.src ?? '', /ia-top/);
+  assert.match(forrestFig.entries[5]?.figures?.[1]?.src ?? '', /iii-bottom/);
+  assert.match(forrestFig.entries[0]?.figures?.[0]?.source ?? '', /Forrest JA/);
+  assert.equal(forrestFig.entries[0]?.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.match(forrestFig.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
   assert.equal(forrestFig.pubmed, FORREST_1974_PUBMED);
 
   const jsphFig = getScoreById('jsph-varices');
@@ -1551,6 +1582,23 @@ test('分類は原著の図を出典付きで持つ', () => {
   const aronchick = getScoreById('aronchick');
   assert.ok(aronchick);
   assert.equal(aronchick.license, 'CC BY-NC-ND 4.0');
+
+  for (const score of SCORES) {
+    for (const figure of score.figures ?? []) {
+      if (figure.src) {
+        assert.ok(hostedFigureExists(figure.src), figure.src);
+      }
+    }
+    if (isClassification(score)) {
+      for (const entry of score.entries) {
+        for (const figure of entry.figures ?? []) {
+          if (figure.src) {
+            assert.ok(hostedFigureExists(figure.src), `${score.id} ${entry.label} ${figure.src}`);
+          }
+        }
+      }
+    }
+  }
 });
 
 test('分類は日本語モードでも英語原著なら定義文を英語で表示する', () => {
