@@ -31,6 +31,7 @@ const INTERPRETATION_EN: Record<string, string> = {
   'Poor（不良）': 'Poor',
   'Inadequate（不適）': 'Inadequate',
   '良好（adequate）': 'Excellent (adequate)',
+  adequate: 'Adequate',
   'eCuraA（治癒切除）': 'eCuraA (curative resection)',
   'eCuraB（治癒切除）': 'eCuraB (curative resection)',
   'eCuraC-1（非治癒切除）': 'eCuraC-1 (non-curative resection)',
