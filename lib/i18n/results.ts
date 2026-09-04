@@ -239,6 +239,14 @@ const DETAIL_EXACT_EN: Record<string, string> = {
     'Note: after piecemeal resection, check for local residual disease by endoscopy at about 6 months.',
   'pTis/M・VM0 の完全切除。':
     'Complete pTis/M resection with VM0.',
+  '5 項目のいずれかを満たさない、または水平断端陽性のため、追加腸切除を低推奨で検討します。':
+    'One or more of the five criteria are not met, or HM is positive; additional colectomy is weakly recommended.',
+  '水平断端陽性（HM1）。内視鏡的治癒切除の 5 項目を満たしても追加腸切除を検討。':
+    'Positive horizontal margin (HM1). Consider additional colectomy even if the five curative criteria are met.',
+  '5 項目すべて充足：VM0、HM0、乳頭/管状腺癌、SM<1000 µm、Ly0、V0、簇出 G1。':
+    'All five criteria met: VM0, HM0, papillary/tubular adenocarcinoma, SM <1000 µm, Ly0, V0, budding G1.',
+  '注：水平断端陽性（HM1）。局所遺残リスクを考慮し追加切除または慎重フォローを検討。':
+    'Note: HM1. Consider additional resection or careful follow-up because of local residual risk.',
   '5 項目すべて充足：VM0、乳頭/管状腺癌、SM<1000 µm、脈管陰性、簇出 G1。':
     'All five criteria met: VM0, papillary/tubular adenocarcinoma, SM <1000 µm, negative lymphovascular invasion, budding G1.',
 };
@@ -267,6 +275,8 @@ const DETAIL_PATTERNS: Array<{ re: RegExp; to: (...args: string[]) => string }> 
           const map: Record<string, string> = {
             '組織型（乳頭/管状腺癌以外）': 'histology (not papillary/tubular adenocarcinoma)',
             'SM 浸潤 ≥1000 µm': 'SM invasion ≥1000 µm',
+            'リンパ管侵襲陽性（Ly1）': 'lymphatic invasion (Ly1)',
+            '静脈侵襲陽性（V1）': 'venous invasion (V1)',
             脈管侵襲陽性: 'lymphovascular invasion present',
             '簇出 Grade 2/3': 'budding Grade 2/3',
           };

@@ -12,14 +12,17 @@ export type ColorectalEsdCurabilityGrade =
 export type ColorectalEsdCurabilityCellId =
   | 'row-tis'
   | 'row-vm1'
+  | 'row-hm1'
   | 'crit-vm'
+  | 'crit-hm'
   | 'crit-histology'
   | 'crit-sm-depth'
-  | 'crit-lyv'
+  | 'crit-ly'
+  | 'crit-v'
   | 'crit-budding'
   | 'row-additional';
 
-const SM_CRITERIA = ['histology', 'smDepth', 'lyv', 'budding'] as const;
+const SM_CRITERIA = ['histology', 'smDepth', 'ly', 'v', 'budding'] as const;
 
 export type ColorectalEsdCurabilityHighlight = {
   cells: ColorectalEsdCurabilityCellId[];
@@ -30,9 +33,12 @@ export type ColorectalEsdCurabilityHighlight = {
 export function getColorectalEsdCurabilityRequiredFields(
   values: Record<string, number | undefined>,
 ): string[] {
-  const required = ['depth', 'vm', 'enBloc'];
+  const required = ['depth', 'vm', 'hm'];
+  if (values.depth === 0) {
+    required.push('enBloc');
+  }
   if (values.depth === 1) {
-    required.push(...SM_CRITERIA);
+    required.push('enBloc', ...SM_CRITERIA);
   }
   return required;
 }
@@ -46,18 +52,22 @@ export function isColorectalEsdCurabilityComplete(
 function smCriteriaMet(values: Record<string, number>): boolean {
   return (
     values.vm === 0 &&
+    values.hm === 0 &&
     values.histology === 0 &&
     values.smDepth === 0 &&
-    values.lyv === 0 &&
+    values.ly === 0 &&
+    values.v === 0 &&
     values.budding === 0
   );
 }
 
 function smCriteriaCells(values: Record<string, number>): ColorectalEsdCurabilityCellId[] {
   const cells: ColorectalEsdCurabilityCellId[] = ['crit-vm'];
+  if (values.hm === 0) cells.push('crit-hm');
   if (values.histology === 0) cells.push('crit-histology');
   if (values.smDepth === 0) cells.push('crit-sm-depth');
-  if (values.lyv === 0) cells.push('crit-lyv');
+  if (values.ly === 0) cells.push('crit-ly');
+  if (values.v === 0) cells.push('crit-v');
   if (values.budding === 0) cells.push('crit-budding');
   if (!smCriteriaMet(values)) cells.push('row-additional');
   return cells;
@@ -73,8 +83,9 @@ export function resolveColorectalEsdCurabilityHighlight(
   if (values.depth === 0) {
     const cells: ColorectalEsdCurabilityCellId[] = ['row-tis'];
     if (values.vm === 1) cells.push('row-vm1');
+    if (values.hm === 1) cells.push('row-hm1');
     if (!isColorectalEsdCurabilityComplete(values)) {
-      return { cells, partial: values.vm !== undefined, complete: false };
+      return { cells, partial: values.vm !== undefined || values.hm !== undefined, complete: false };
     }
     return { cells, partial: false, complete: true };
   }
@@ -93,15 +104,17 @@ export function resolveColorectalEsdCurabilityHighlight(
   }
 
   const partialCells = partialReady ? smCriteriaCells(filledPartial) : [];
+  if (values.hm === 1 && partialReady) {
+    partialCells.push('row-hm1');
+  }
+
   if (!isColorectalEsdCurabilityComplete(values)) {
     return { cells: partialCells, partial: partialReady, complete: false };
   }
 
-  return {
-    cells: smCriteriaMet(filledPartial) ? smCriteriaCells(filledPartial) : smCriteriaCells(filledPartial),
-    partial: false,
-    complete: true,
-  };
+  const cells = smCriteriaCells(filledPartial);
+  if (values.hm === 1) cells.push('row-hm1');
+  return { cells, partial: false, complete: true };
 }
 
 function baseDetails(grade: ColorectalEsdCurabilityGrade): string[] {
@@ -126,7 +139,7 @@ function baseDetails(grade: ColorectalEsdCurabilityGrade): string[] {
     case 'additional-consider':
       return [
         ...common,
-        '5 項目のいずれかを満たさないため、追加腸切除を低推奨で検討します。',
+        '5 項目のいずれかを満たさない、または水平断端陽性のため、追加腸切除を低推奨で検討します。',
         '【治療 GL】予測 LNM 率と患者背景（年齢、合併症、QOL）を総合評価し個別判断。',
         'T1 nomogram（本アプリ）で LNM 確率の参考にしてください。',
       ];
@@ -179,16 +192,32 @@ export function computeColorectalEsdCurability(values: Record<string, number>): 
   }
 
   if (values.depth === 0) {
-    const extras =
-      values.enBloc === 1
-        ? ['注：分割切除後は 6 カ月前後に内視鏡で局所遺残を確認してください。']
-        : [];
+    const extras: string[] = [];
+    if (values.enBloc === 1) {
+      extras.push('注：分割切除後は 6 カ月前後に内視鏡で局所遺残を確認してください。');
+    }
+    if (values.hm === 1) {
+      extras.push('注：水平断端陽性（HM1）。局所遺残リスクを考慮し追加切除または慎重フォローを検討。');
+    }
     return {
       total: 0,
       displayMode: 'points',
       severity: severityFor('curative-tis'),
       interpretation: labelFor('curative-tis'),
       details: ['pTis/M・VM0 の完全切除。', ...extras, ...baseDetails('curative-tis')],
+    };
+  }
+
+  if (values.hm === 1) {
+    return {
+      total: 0,
+      displayMode: 'points',
+      severity: severityFor('additional-consider'),
+      interpretation: labelFor('additional-consider'),
+      details: [
+        '水平断端陽性（HM1）。内視鏡的治癒切除の 5 項目を満たしても追加腸切除を検討。',
+        ...baseDetails('additional-consider'),
+      ],
     };
   }
 
@@ -199,7 +228,7 @@ export function computeColorectalEsdCurability(values: Record<string, number>): 
       severity: severityFor('curative-sm'),
       interpretation: labelFor('curative-sm'),
       details: [
-        '5 項目すべて充足：VM0、乳頭/管状腺癌、SM<1000 µm、脈管陰性、簇出 G1。',
+        '5 項目すべて充足：VM0、HM0、乳頭/管状腺癌、SM<1000 µm、Ly0、V0、簇出 G1。',
         ...baseDetails('curative-sm'),
       ],
     };
@@ -208,7 +237,8 @@ export function computeColorectalEsdCurability(values: Record<string, number>): 
   const unmet: string[] = [];
   if (values.histology !== 0) unmet.push('組織型（乳頭/管状腺癌以外）');
   if (values.smDepth !== 0) unmet.push('SM 浸潤 ≥1000 µm');
-  if (values.lyv !== 0) unmet.push('脈管侵襲陽性');
+  if (values.ly !== 0) unmet.push('リンパ管侵襲陽性（Ly1）');
+  if (values.v !== 0) unmet.push('静脈侵襲陽性（V1）');
   if (values.budding !== 0) unmet.push('簇出 Grade 2/3');
 
   return {

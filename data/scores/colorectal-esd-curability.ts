@@ -20,7 +20,7 @@ export const colorectalEsdCurabilityScore: ScoreDefinition = {
   officialUrl: 'https://www.jsccr.jp/guideline/',
   officialLinkLabel: '大腸癌治療ガイドライン（JSCCR）',
   note:
-    'JGES 大腸 ESD/EMR ガイドライン第2版の pT1（SM）5 項目をテーブル表示。入力に連動して該当行をハイライト。LNM 確率は T1 Nomogram ページを参照。',
+    'JGES 大腸 ESD/EMR ガイドライン第2版の pT1（SM）5 項目をテーブル表示。VM・HM・深達度・組織型・Ly・V・budding を入力し、該当行をハイライト。LNM 確率は T1 Nomogram ページを参照。',
   fields: [
     {
       id: 'depth',
@@ -39,6 +39,14 @@ export const colorectalEsdCurabilityScore: ScoreDefinition = {
       ],
     },
     {
+      id: 'hm',
+      label: '水平断端（HM）',
+      options: [
+        { value: 0, label: 'HM0（陰性）' },
+        { value: 1, label: 'HM1（陽性）' },
+      ],
+    },
+    {
       id: 'enBloc',
       label: '切除方法',
       options: [
@@ -49,7 +57,7 @@ export const colorectalEsdCurabilityScore: ScoreDefinition = {
     {
       id: 'histology',
       label: '組織型',
-      description: 'pT1（SM）の場合のみ',
+      description: 'pT1（SM）の 5 項目②',
       options: [
         { value: 0, label: '乳頭腺癌・管状腺癌' },
         { value: 1, label: 'その他（粘液癌等）' },
@@ -58,23 +66,34 @@ export const colorectalEsdCurabilityScore: ScoreDefinition = {
     {
       id: 'smDepth',
       label: 'SM 浸潤距離',
-      description: 'pT1（SM）の場合のみ',
+      description: 'pT1（SM）の 5 項目③',
       options: [
         { value: 0, label: '<1000 µm' },
         { value: 1, label: '≥1000 µm' },
       ],
     },
     {
-      id: 'lyv',
-      label: '脈管侵襲（Ly / V）',
+      id: 'ly',
+      label: 'リンパ管侵襲（Ly）',
+      description: 'pT1（SM）の 5 項目④',
       options: [
-        { value: 0, label: '陰性' },
-        { value: 1, label: '陽性' },
+        { value: 0, label: 'Ly0（陰性）' },
+        { value: 1, label: 'Ly1（陽性）' },
+      ],
+    },
+    {
+      id: 'v',
+      label: '静脈侵襲（V）',
+      description: 'pT1（SM）の 5 項目④',
+      options: [
+        { value: 0, label: 'V0（陰性）' },
+        { value: 1, label: 'V1（陽性）' },
       ],
     },
     {
       id: 'budding',
       label: '腫瘍簇出（budding）',
+      description: 'pT1（SM）の 5 項目⑤',
       options: [
         { value: 0, label: 'Grade 1' },
         { value: 1, label: 'Grade 2 / 3' },
