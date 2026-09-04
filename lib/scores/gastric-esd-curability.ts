@@ -222,14 +222,14 @@ function baseDetails(grade: GastricEsdCurabilityGrade): string[] {
         '治癒切除に相当します（適応拡大）。十分な長期成績は限られますが、根治が期待されます。',
         '【ESD ガイドライン】eCuraB 後は EGD に加え、転移検索のため US または CT も望ましい（C, 2）。',
         '【ESD ガイドライン】H. pylori 陽性例では除菌を推奨。',
-        '【治療 GL 第6版】SM1（<500 µm）、長径 ≤3 cm、分化型、pT1b（SM1）の条件に該当。',
+        '【治療 GL 第6版】SM1（<500 µm）、長径 ≤3 cm、分化型、pT1b1（SM1）の条件に該当。',
       ];
     case 'eCuraC-1':
       return [
         ...common,
         '非治癒切除（eCuraC）ですが、転移リスクは eCuraC-2 より低いとされます。',
         '【ESD ガイドライン】追加外科切除に加え、再 ESD・焼灼・経過観察も施設方針と同意のもと選択可（C）。',
-        '【ESD ガイドライン】原則追加外科切除：① 長径 ≤3 cm・分化型・pT1a・UL1、② 長径 ≤3 cm・分化型・pT1b（SM1）で、内視鏡的遺残＋標本内癌の合計 >30 mm、または SM 浸潤部の分割切除・断端陽性（Fig. 2–3）。',
+        '【ESD ガイドライン】原則追加外科切除：① 長径 ≤3 cm・分化型・pT1a・UL1、② 長径 ≤3 cm・分化型・pT1b1（SM1）で、内視鏡的遺残＋標本内癌の合計 >30 mm、または SM 浸潤部の分割切除・断端陽性（Fig. 2–3）。',
         '【ESD ガイドライン】追加切除せず経過観察を選ぶ場合は EGD 慎重フォロー（C, 2）。HM 陽性 ≥6 mm や長径 ≥2 cm では局所再発リスク上昇。',
         '【治療 GL 第6版】側方断端陽性・分割切除のみが eCuraA/B から外れる場合は eCuraC-1。追加切除は個別判断。',
       ];
@@ -302,7 +302,7 @@ export function computeGastricEsdCurability(values: Record<string, number>): Sco
 
   if (meetsEcuraB(values)) {
     return buildResult('eCuraB', [
-      '該当：分化型優位・長径 ≤3 cm・pT1b（SM1, <500 µm）・一括切除・HM0・VM0・Ly0・V0。',
+      '該当：分化型優位・長径 ≤3 cm・pT1b1（SM1, <500 µm）・一括切除・HM0・VM0・Ly0・V0。',
     ]);
   }
 

@@ -455,7 +455,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         label: 'Depth of invasion',
         options: [
           { label: 'pT1a (M) intramucosal' },
-          { label: 'pT1b (SM1) <500 μm' },
+          { label: 'pT1b1 (SM1) <500 μm' },
           { label: 'pT1b (SM2) or deeper' },
         ],
       },
@@ -486,7 +486,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       },
       undiffInSm: {
         label: 'Undifferentiated component in SM-invasive part',
-        description: 'Differentiated-dominant with undifferentiated component and pT1b (SM1)',
+        description: 'Differentiated-dominant with undifferentiated component and pT1b1 (SM1)',
         options: [{ label: 'Absent / not applicable' }, { label: 'Present' }],
       },
     },

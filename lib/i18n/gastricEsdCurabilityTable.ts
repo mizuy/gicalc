@@ -60,7 +60,7 @@ export const GASTRIC_ESD_CURABILITY_TABLE: Record<Locale, GastricEsdCurabilityTa
     title: 'Fig. 2 腫瘍関連因子による根治度評価',
     subtitle: 'JGES 胃癌 ESD/EMR ガイドライン第2版（2020）',
     caption:
-      'pT1a (M)＝粘膜内癌（病理）、pT1b (SM1)＝粘膜下浸潤 <500 µm。UL0/UL1＝潰瘍・潰瘍瘢痕の有無。長径は再構図上の最大径。',
+      'pT1a (M)＝粘膜内癌（病理）、pT1b1 (SM1)＝粘膜下浸潤 <500 µm。UL0/UL1＝潰瘍・潰瘍瘢痕の有無。長径は再構図上の最大径。',
     footnoteStar: '* eCuraA・eCuraB は一括切除かつ HM0、VM0、Ly0、V0 に限定',
     headers: {
       depthUlceration: '深達度\n潰瘍',
@@ -84,7 +84,7 @@ export const GASTRIC_ESD_CURABILITY_TABLE: Record<Locale, GastricEsdCurabilityTa
             cells: [A('(iii)'), C2()],
           },
           {
-            depthUl: 'pT1b (SM1)',
+            depthUl: 'pT1b1 (SM1)',
             baseKey: 'pt1b-sm1',
             cells: [B(), C2()],
           },
@@ -107,7 +107,7 @@ export const GASTRIC_ESD_CURABILITY_TABLE: Record<Locale, GastricEsdCurabilityTa
             cells: [C2(), C2()],
           },
           {
-            depthUl: 'pT1b (SM1)',
+            depthUl: 'pT1b1 (SM1)',
             baseKey: 'pt1b-sm1',
             cells: [C2(), C2()],
           },
@@ -128,7 +128,7 @@ export const GASTRIC_ESD_CURABILITY_TABLE: Record<Locale, GastricEsdCurabilityTa
     title: 'Fig. 2 Evaluation of curability according to tumor-related factors',
     subtitle: 'JGES gastric ESD/EMR guideline 2nd ed. (2020)',
     caption:
-      'pT1a (M), intramucosal cancer; pT1b (SM1), SM invasion <500 µm. UL0/UL1, ulcer/scar absent or present. Long diameter on reconstruction.',
+      'pT1a (M), intramucosal cancer; pT1b1 (SM1), SM invasion <500 µm. UL0/UL1, ulcer/scar absent or present. Long diameter on reconstruction.',
     footnoteStar: '* eCuraA/B require en bloc resection and HM0, VM0, Ly0, V0',
     headers: {
       depthUlceration: 'Depth\nUlceration',
@@ -152,7 +152,7 @@ export const GASTRIC_ESD_CURABILITY_TABLE: Record<Locale, GastricEsdCurabilityTa
             cells: [A('(iii)'), C2()],
           },
           {
-            depthUl: 'pT1b (SM1)',
+            depthUl: 'pT1b1 (SM1)',
             baseKey: 'pt1b-sm1',
             cells: [B(), C2()],
           },
@@ -175,7 +175,7 @@ export const GASTRIC_ESD_CURABILITY_TABLE: Record<Locale, GastricEsdCurabilityTa
             cells: [C2(), C2()],
           },
           {
-            depthUl: 'pT1b (SM1)',
+            depthUl: 'pT1b1 (SM1)',
             baseKey: 'pt1b-sm1',
             cells: [C2(), C2()],
           },
