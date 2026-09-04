@@ -96,7 +96,7 @@ export const gastricEsdCurabilityScore: ScoreDefinition = {
       label: '深達度',
       options: [
         { value: 0, label: 'pT1a（M）粘膜内癌' },
-        { value: 1, label: 'pT1b（SM1）<500 µm' },
+        { value: 1, label: 'pT1b1（SM1）<500 µm' },
         { value: 2, label: 'pT1b（SM2）以深' },
       ],
     },
@@ -152,7 +152,7 @@ export const gastricEsdCurabilityScore: ScoreDefinition = {
     {
       id: 'undiffInSm',
       label: 'SM 浸潤部の未分化型成分',
-      description: '分化型優位＋未分化成分あり、かつ pT1b（SM1）の場合',
+      description: '分化型優位＋未分化成分あり、かつ pT1b1（SM1）の場合',
       options: [
         { value: 0, label: 'なし／該当なし' },
         { value: 1, label: 'あり' },

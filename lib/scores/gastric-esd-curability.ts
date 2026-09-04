@@ -5,14 +5,35 @@ export const JGES_GASTRIC_ESD_2020_PUBMED = '32216137';
 
 export type GastricEsdCurabilityGrade = 'eCuraA' | 'eCuraB' | 'eCuraC-1' | 'eCuraC-2';
 
-/** JGES Fig. 2 相当テーブルのセル・注釈行 ID */
+/** JGES Fig. 2 相当テーブルの行キー（組織型 × 深達度 × 潰瘍） */
+export type GastricEsdCurabilityBaseKey =
+  | 'diff-pt1a-ul0'
+  | 'diff-pt1a-ul1'
+  | 'diff-pt1b-sm1'
+  | 'undiff-pt1a-ul0'
+  | 'undiff-pt1a-ul1'
+  | 'undiff-pt1b-sm1';
+
+/** サイズ列（分化型 ≤30 / >30 mm、未分化型 ≤20 / >20 mm） */
+export type GastricEsdCurabilitySizeCol = 'le30' | 'gt30' | 'le20' | 'gt20';
+
+/** サイズ列付きセル ID */
+export type GastricEsdCurabilitySizedCellId =
+  | 'cell-diff-pt1a-ul0-le30'
+  | 'cell-diff-pt1a-ul0-gt30'
+  | 'cell-diff-pt1a-ul1-le30'
+  | 'cell-diff-pt1a-ul1-gt30'
+  | 'cell-diff-pt1b-sm1-le30'
+  | 'cell-diff-pt1b-sm1-gt30'
+  | 'cell-undiff-pt1a-ul0-le20'
+  | 'cell-undiff-pt1a-ul0-gt20'
+  | 'cell-undiff-pt1a-ul1-le20'
+  | 'cell-undiff-pt1a-ul1-gt20'
+  | 'cell-undiff-pt1b-sm1-le20'
+  | 'cell-undiff-pt1b-sm1-gt20';
+
 export type GastricEsdCurabilityCellId =
-  | 'cell-diff-pt1a-ul0'
-  | 'cell-diff-pt1a-ul1'
-  | 'cell-diff-pt1b-sm1'
-  | 'cell-undiff-pt1a-ul0'
-  | 'cell-undiff-pt1a-ul1'
-  | 'cell-undiff-pt1b-sm1'
+  | GastricEsdCurabilitySizedCellId
   | 'row-c1'
   | 'row-c2'
   | 'row-fig6-undiff-size'
@@ -26,7 +47,35 @@ export type GastricEsdCurabilityHighlight = {
   complete: boolean;
 };
 
-const TUMOR_FACTOR_FIELDS = ['histology', 'depth', 'ul', 'size'] as const;
+const ROW_FACTOR_FIELDS = ['histology', 'depth', 'ul'] as const;
+
+export function gastricCurabilityCellId(
+  base: GastricEsdCurabilityBaseKey,
+  col: GastricEsdCurabilitySizeCol,
+): GastricEsdCurabilitySizedCellId {
+  return `cell-${base}-${col}` as GastricEsdCurabilitySizedCellId;
+}
+
+function sizeColsForBase(
+  base: GastricEsdCurabilityBaseKey,
+  size?: number,
+): GastricEsdCurabilitySizeCol[] {
+  const isDiff = base.startsWith('diff-');
+  if (size === undefined) {
+    return isDiff ? ['le30', 'gt30'] : ['le20', 'gt20'];
+  }
+  if (isDiff) {
+    return size === 2 ? ['gt30'] : ['le30'];
+  }
+  return size === 0 ? ['le20'] : ['gt20'];
+}
+
+function sizedCells(
+  base: GastricEsdCurabilityBaseKey,
+  size?: number,
+): GastricEsdCurabilityCellId[] {
+  return sizeColsForBase(base, size).map((col) => gastricCurabilityCellId(base, col));
+}
 
 export function getGastricEsdCurabilityRequiredFields(
   values: Record<string, number | undefined>,
@@ -45,24 +94,24 @@ export function isGastricEsdCurabilityComplete(values: Record<string, number | u
   return getGastricEsdCurabilityRequiredFields(values).every((id) => values[id] !== undefined);
 }
 
-function isTumorFactorsReady(values: Record<string, number | undefined>): boolean {
-  return TUMOR_FACTOR_FIELDS.every((id) => values[id] !== undefined);
+function isRowFactorsReady(values: Record<string, number | undefined>): boolean {
+  return ROW_FACTOR_FIELDS.every((id) => values[id] !== undefined);
 }
 
-function tumorFactorCell(values: Record<string, number>): GastricEsdCurabilityCellId | null {
+function tumorFactorBase(values: Record<string, number>): GastricEsdCurabilityBaseKey | null {
   const { histology, depth, ul } = values;
   const isDiff = histology === 0 || histology === 1;
 
   if (depth === 0) {
-    if (ul === 0) return isDiff ? 'cell-diff-pt1a-ul0' : 'cell-undiff-pt1a-ul0';
-    return isDiff ? 'cell-diff-pt1a-ul1' : 'cell-undiff-pt1a-ul1';
+    if (ul === 0) return isDiff ? 'diff-pt1a-ul0' : 'undiff-pt1a-ul0';
+    return isDiff ? 'diff-pt1a-ul1' : 'undiff-pt1a-ul1';
   }
   if (depth === 1) {
-    return isDiff ? 'cell-diff-pt1b-sm1' : 'cell-undiff-pt1b-sm1';
+    return isDiff ? 'diff-pt1b-sm1' : 'undiff-pt1b-sm1';
   }
   if (depth === 2) {
-    if (isDiff) return ul === 0 ? 'cell-diff-pt1a-ul0' : 'cell-diff-pt1a-ul1';
-    return ul === 0 ? 'cell-undiff-pt1a-ul0' : 'cell-undiff-pt1a-ul1';
+    if (isDiff) return ul === 0 ? 'diff-pt1a-ul0' : 'diff-pt1a-ul1';
+    return ul === 0 ? 'undiff-pt1a-ul0' : 'undiff-pt1a-ul1';
   }
   return null;
 }
@@ -75,15 +124,15 @@ function uniqueCells(cells: GastricEsdCurabilityCellId[]): GastricEsdCurabilityC
 export function resolveGastricEsdCurabilityHighlight(
   values: Record<string, number | undefined>,
 ): GastricEsdCurabilityHighlight {
-  if (!isTumorFactorsReady(values)) {
+  if (!isRowFactorsReady(values)) {
     return { cells: [], partial: false, complete: false };
   }
 
   const filled = Object.fromEntries(
     Object.entries(values).filter(([, value]) => value !== undefined),
   ) as Record<string, number>;
-  const cell = tumorFactorCell(filled);
-  const baseCells = cell ? [cell] : [];
+  const base = tumorFactorBase(filled);
+  const baseCells = base ? sizedCells(base, filled.size) : [];
 
   if (!isGastricEsdCurabilityComplete(values)) {
     return { cells: baseCells, partial: true, complete: false };
@@ -173,14 +222,14 @@ function baseDetails(grade: GastricEsdCurabilityGrade): string[] {
         '治癒切除に相当します（適応拡大）。十分な長期成績は限られますが、根治が期待されます。',
         '【ESD ガイドライン】eCuraB 後は EGD に加え、転移検索のため US または CT も望ましい（C, 2）。',
         '【ESD ガイドライン】H. pylori 陽性例では除菌を推奨。',
-        '【治療 GL 第6版】SM1（<500 µm）、長径 ≤3 cm、分化型、pT1b（SM1）の条件に該当。',
+        '【治療 GL 第6版】SM1（<500 µm）、長径 ≤3 cm、分化型、pT1b1（SM1）の条件に該当。',
       ];
     case 'eCuraC-1':
       return [
         ...common,
         '非治癒切除（eCuraC）ですが、転移リスクは eCuraC-2 より低いとされます。',
         '【ESD ガイドライン】追加外科切除に加え、再 ESD・焼灼・経過観察も施設方針と同意のもと選択可（C）。',
-        '【ESD ガイドライン】原則追加外科切除：① 長径 ≤3 cm・分化型・pT1a・UL1、② 長径 ≤3 cm・分化型・pT1b（SM1）で、内視鏡的遺残＋標本内癌の合計 >30 mm、または SM 浸潤部の分割切除・断端陽性（Fig. 2–3）。',
+        '【ESD ガイドライン】原則追加外科切除：① 長径 ≤3 cm・分化型・pT1a・UL1、② 長径 ≤3 cm・分化型・pT1b1（SM1）で、内視鏡的遺残＋標本内癌の合計 >30 mm、または SM 浸潤部の分割切除・断端陽性（Fig. 2–3）。',
         '【ESD ガイドライン】追加切除せず経過観察を選ぶ場合は EGD 慎重フォロー（C, 2）。HM 陽性 ≥6 mm や長径 ≥2 cm では局所再発リスク上昇。',
         '【治療 GL 第6版】側方断端陽性・分割切除のみが eCuraA/B から外れる場合は eCuraC-1。追加切除は個別判断。',
       ];
@@ -253,7 +302,7 @@ export function computeGastricEsdCurability(values: Record<string, number>): Sco
 
   if (meetsEcuraB(values)) {
     return buildResult('eCuraB', [
-      '該当：分化型優位・長径 ≤3 cm・pT1b（SM1, <500 µm）・一括切除・HM0・VM0・Ly0・V0。',
+      '該当：分化型優位・長径 ≤3 cm・pT1b1（SM1, <500 µm）・一括切除・HM0・VM0・Ly0・V0。',
     ]);
   }
 

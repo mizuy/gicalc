@@ -616,11 +616,11 @@ test('各スコア定義の compute がフィールド経由で動く', () => {
 
   const highlightA = resolveGastricEsdCurabilityHighlight(baseA);
   assert.equal(highlightA.complete, true);
-  assert.deepEqual(highlightA.cells, ['cell-diff-pt1a-ul0']);
+  assert.deepEqual(highlightA.cells, ['cell-diff-pt1a-ul0-gt30']);
 
   const highlightC1 = resolveGastricEsdCurabilityHighlight({ ...baseA, enBloc: 1 });
   assert.equal(highlightC1.complete, true);
-  assert.ok(highlightC1.cells.includes('cell-diff-pt1a-ul0'));
+  assert.ok(highlightC1.cells.includes('cell-diff-pt1a-ul0-gt30'));
   assert.ok(highlightC1.cells.includes('row-c1'));
 
   const highlightFig6 = resolveGastricEsdCurabilityHighlight({
@@ -640,7 +640,7 @@ test('各スコア定義の compute がフィールド経由で動く', () => {
   });
   assert.equal(highlightPartial.partial, true);
   assert.equal(highlightPartial.complete, false);
-  assert.deepEqual(highlightPartial.cells, ['cell-diff-pt1a-ul0']);
+  assert.deepEqual(highlightPartial.cells, ['cell-diff-pt1a-ul0-le30']);
 
   const esophagusCurability = getScoreById('esophagus-esd-curability');
   assert.ok(esophagusCurability && !isClassification(esophagusCurability));
