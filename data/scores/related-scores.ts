@@ -25,10 +25,6 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
         en: 'LNM probability when considering additional resection',
       },
     },
-    {
-      id: 'esd-fibrosis',
-      hint: { ja: '大腸 ESD 前の submucosal fibrosis', en: 'Submucosal fibrosis before colorectal ESD' },
-    },
   ],
   'kajiwara-nomogram': [
     {
@@ -108,12 +104,6 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
   aronchick: [{ id: 'bbps', hint: { ja: 'BBPS スコア', en: 'BBPS score' } }],
   gbs: [{ id: 'forrest', hint: { ja: 'Forrest 分類', en: 'Forrest classification' } }],
   forrest: [{ id: 'gbs', hint: { ja: 'Glasgow-Blatchford スコア', en: 'Glasgow-Blatchford score' } }],
-  'esd-fibrosis': [
-    {
-      id: 'colorectal-esd-curability',
-      hint: { ja: 'ESD 後治癒切除判定', en: 'Post-ESD curative resection' },
-    },
-  ],
   'colorectal-ec': [
     { id: 'nice', hint: { ja: 'NICE 分類', en: 'NICE classification' } },
     { id: 'kudo-tsuruta', hint: { ja: 'pit pattern', en: 'Pit pattern (Kudo–Tsuruta)' } },
