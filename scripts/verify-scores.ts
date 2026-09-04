@@ -675,28 +675,44 @@ test('各スコア定義の compute がフィールド経由で動く', () => {
 
   const colorectalCurability = getScoreById('colorectal-esd-curability');
   assert.ok(colorectalCurability && !isClassification(colorectalCurability));
-  const coloTis = { depth: 0, vm: 0, enBloc: 0, histology: 0, smDepth: 0, lyv: 0, budding: 0 };
+  const coloTis = { depth: 0, vm: 0, hm: 0, enBloc: 0 };
   assert.equal(computeColorectalEsdCurability(coloTis).interpretation, '治癒切除（pTis/M）');
   assert.equal(
     computeColorectalEsdCurability({ ...coloTis, vm: 1 }).interpretation,
     '非治癒切除（VM1）',
   );
-  const coloSmCurative = { depth: 1, vm: 0, enBloc: 0, histology: 0, smDepth: 0, lyv: 0, budding: 0 };
+  const coloSmCurative = {
+    depth: 1,
+    vm: 0,
+    hm: 0,
+    enBloc: 0,
+    histology: 0,
+    smDepth: 0,
+    ly: 0,
+    v: 0,
+    budding: 0,
+  };
   assert.equal(
     computeColorectalEsdCurability(coloSmCurative).interpretation,
     '内視鏡的治癒切除（pT1 SM）',
   );
   assert.equal(
-    computeColorectalEsdCurability({ ...coloSmCurative, lyv: 1 }).interpretation,
+    computeColorectalEsdCurability({ ...coloSmCurative, ly: 1 }).interpretation,
+    '追加腸切除要検討',
+  );
+  assert.equal(
+    computeColorectalEsdCurability({ ...coloSmCurative, hm: 1 }).interpretation,
     '追加腸切除要検討',
   );
 
   const coloHighlight = resolveColorectalEsdCurabilityHighlight(coloSmCurative);
   assert.equal(coloHighlight.complete, true);
   assert.ok(coloHighlight.cells.includes('crit-vm'));
-  assert.ok(coloHighlight.cells.includes('crit-histology'));
+  assert.ok(coloHighlight.cells.includes('crit-hm'));
+  assert.ok(coloHighlight.cells.includes('crit-ly'));
+  assert.ok(coloHighlight.cells.includes('crit-v'));
 
-  const coloPartial = resolveColorectalEsdCurabilityHighlight({ depth: 1, vm: 0, histology: 0 });
+  const coloPartial = resolveColorectalEsdCurabilityHighlight({ depth: 1, vm: 0, hm: 0, histology: 0 });
   assert.equal(coloPartial.partial, true);
   assert.equal(coloPartial.complete, false);
 
@@ -1734,10 +1750,12 @@ test('英語結果は解釈だけ訳し、点数は変えない', () => {
     computeColorectalEsdCurability({
       depth: 1,
       vm: 0,
+      hm: 0,
       enBloc: 0,
       histology: 0,
       smDepth: 0,
-      lyv: 0,
+      ly: 0,
+      v: 0,
       budding: 0,
     }),
     'en',

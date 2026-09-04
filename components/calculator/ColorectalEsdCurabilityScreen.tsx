@@ -14,9 +14,11 @@ import type { CalculatorDefinition } from '@/types/score';
 
 type Props = { score: CalculatorDefinition };
 
+const SM_ONLY_FIELDS = new Set(['histology', 'smDepth', 'ly', 'v', 'budding']);
+
 function visibleFields(score: CalculatorDefinition, values: Record<string, number | undefined>) {
   return score.fields.filter((field) => {
-    if (field.id === 'histology' || field.id === 'smDepth' || field.id === 'lyv' || field.id === 'budding') {
+    if (SM_ONLY_FIELDS.has(field.id)) {
       return values.depth === 1;
     }
     return true;
@@ -46,10 +48,9 @@ export function ColorectalEsdCurabilityScreen({ score }: Props) {
     setValues((current) => {
       const next = { ...current, [fieldId]: value };
       if (fieldId === 'depth' && value !== 1) {
-        delete next.histology;
-        delete next.smDepth;
-        delete next.lyv;
-        delete next.budding;
+        for (const id of SM_ONLY_FIELDS) {
+          delete next[id];
+        }
       }
       return next;
     });

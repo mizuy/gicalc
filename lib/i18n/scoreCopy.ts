@@ -1106,13 +1106,17 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
           { label: 'VM1 (positive, incomplete resection)' },
         ],
       },
+      hm: {
+        label: 'Horizontal margin (HM)',
+        options: [{ label: 'HM0 (negative)' }, { label: 'HM1 (positive)' }],
+      },
       enBloc: {
         label: 'Resection method',
         options: [{ label: 'En bloc' }, { label: 'Piecemeal' }],
       },
       histology: {
         label: 'Histology',
-        description: 'pT1 (SM) only',
+        description: 'pT1 (SM) criterion ②',
         options: [
           { label: 'Papillary or tubular adenocarcinoma' },
           { label: 'Other (e.g. mucinous)' },
@@ -1120,16 +1124,26 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       },
       smDepth: {
         label: 'SM invasion depth',
-        description: 'pT1 (SM) only',
+        description: 'pT1 (SM) criterion ③',
         options: [{ label: '<1000 µm' }, { label: '≥1000 µm' }],
       },
-      lyv: {
-        label: 'Lymphovascular invasion (Ly / V)',
-        options: [{ label: 'Absent' }, { label: 'Present' }],
+      ly: {
+        label: 'Lymphatic invasion (Ly)',
+        description: 'pT1 (SM) criterion ④',
+        options: [{ label: 'Ly0 (absent)' }, { label: 'Ly1 (present)' }],
+      },
+      v: {
+        label: 'Venous invasion (V)',
+        description: 'pT1 (SM) criterion ④',
+        options: [{ label: 'V0 (absent)' }, { label: 'V1 (present)' }],
       },
       budding: {
         label: 'Tumor budding',
-        options: [{ label: 'Grade 1' }, { label: 'Grade 2 / 3' }],
+        description: 'pT1 (SM) criterion ⑤. 20× hotspot (0.785 mm²)',
+        options: [
+          { label: 'BD1', description: '<5 buds' },
+          { label: 'BD2/3', description: 'BD2: 5–9 buds; BD3: ≥10 buds' },
+        ],
       },
     },
   },

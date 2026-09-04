@@ -30,10 +30,13 @@ export function ColorectalEsdCurabilityTable({ highlightedCells, partial, comple
   const rows: RowDef[] = [
     { id: 'row-tis', label: copy.rows.tis.label, text: copy.rows.tis.text },
     { id: 'row-vm1', label: copy.rows.vm1.label, text: copy.rows.vm1.text },
+    { id: 'row-hm1', label: copy.rows.hm1.label, text: copy.rows.hm1.text },
     { id: 'crit-vm', label: copy.rows.vm.label, text: copy.rows.vm.text },
+    { id: 'crit-hm', label: copy.rows.hm.label, text: copy.rows.hm.text },
     { id: 'crit-histology', label: copy.rows.histology.label, text: copy.rows.histology.text },
     { id: 'crit-sm-depth', label: copy.rows.smDepth.label, text: copy.rows.smDepth.text },
-    { id: 'crit-lyv', label: copy.rows.lyv.label, text: copy.rows.lyv.text },
+    { id: 'crit-ly', label: copy.rows.ly.label, text: copy.rows.ly.text },
+    { id: 'crit-v', label: copy.rows.v.label, text: copy.rows.v.text },
     { id: 'crit-budding', label: copy.rows.budding.label, text: copy.rows.budding.text },
     { id: 'row-additional', label: copy.rows.additional.label, text: copy.rows.additional.text },
   ];
