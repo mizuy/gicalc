@@ -4,8 +4,10 @@ import { apcsScore } from './apcs';
 import { aronchickScore } from './aronchick';
 import { bbpsScore } from './bbps';
 import { bestJScore } from './best-j';
+import { colorectalEsdCurabilityScore } from './colorectal-esd-curability';
 import { colorectalEcScore } from './colorectal-ec';
 import { ecuraHattaScore } from './ecura-hatta';
+import { esophagusEsdCurabilityScore } from './esophagus-esd-curability';
 import { esdFibrosisScore } from './esd-fibrosis';
 import { gastricEsdCurabilityScore } from './gastric-esd-curability';
 import { eggimScore } from './eggim';
@@ -48,6 +50,7 @@ export const SCORES: ScoreDefinition[] = [
   siewertScore,
   erefsScore,
   jsphVaricesScore,
+  esophagusEsdCurabilityScore,
   kimuraTakemotoScore,
   hillScore,
   sarinScore,
@@ -72,6 +75,7 @@ export const SCORES: ScoreDefinition[] = [
   appendicealOrificeScore,
   kudoTsurutaScore,
   esdFibrosisScore,
+  colorectalEsdCurabilityScore,
   colorectalEcScore,
   niceScore,
   waspScore,

@@ -9,6 +9,14 @@ import {
 } from '../lib/nomogram/kajiwara';
 import { computeBestJ } from '../lib/scores/best-j';
 import { computeEcura, ECURA_LNM_BY_SCORE } from '../lib/scores/ecura';
+import {
+  computeColorectalEsdCurability,
+  resolveColorectalEsdCurabilityHighlight,
+} from '../lib/scores/colorectal-esd-curability';
+import {
+  computeEsophagusEsdCurability,
+  resolveEsophagusEsdCurabilityHighlight,
+} from '../lib/scores/esophagus-esd-curability';
 import { computeGastricEsdCurability, resolveGastricEsdCurabilityHighlight } from '../lib/scores/gastric-esd-curability';
 import { computeEggim } from '../lib/scores/eggim';
 import { computeGbs } from '../lib/scores/gbs';
@@ -58,7 +66,7 @@ import {
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 
-test('登録スコアは40種で臓器順に並ぶ', () => {
+test('登録スコアは42種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -68,6 +76,7 @@ test('登録スコアは40種で臓器順に並ぶ', () => {
       'siewert',
       'erefs',
       'jsph-varices',
+      'esophagus-esd-curability',
       'kimura-takemoto',
       'hill',
       'sarin',
@@ -92,6 +101,7 @@ test('登録スコアは40種で臓器順に並ぶ', () => {
       'appendiceal-orifice',
       'kudo-tsuruta',
       'esd-fibrosis',
+      'colorectal-esd-curability',
       'colorectal-ec',
       'nice',
       'wasp',
@@ -107,7 +117,7 @@ test('登録スコアは40種で臓器順に並ぶ', () => {
   assert.deepEqual(
     getScoresGroupedByOrgan().map((group) => [group.organ, group.scores.map((score) => score.id)]),
     [
-      ['esophagus', ['jes', 'la', 'prague', 'siewert', 'erefs', 'jsph-varices']],
+      ['esophagus', ['jes', 'la', 'prague', 'siewert', 'erefs', 'jsph-varices', 'esophagus-esd-curability']],
       [
         'stomach',
         [
@@ -130,7 +140,7 @@ test('登録スコアは40種で臓器順に並ぶ', () => {
       ],
       [
         'colorectum',
-        ['apcs', 'sps', 'vienna', 'paris', 'lst', 'appendiceal-orifice', 'kudo-tsuruta', 'esd-fibrosis', 'colorectal-ec', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
+        ['apcs', 'sps', 'vienna', 'paris', 'lst', 'appendiceal-orifice', 'kudo-tsuruta', 'esd-fibrosis', 'colorectal-esd-curability', 'colorectal-ec', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
       ],
       ['bleeding', ['forrest', 'gbs', 'noblads']],
     ],
@@ -145,6 +155,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     siewert: 'classification',
     erefs: 'classification',
     'jsph-varices': 'classification',
+    'esophagus-esd-curability': 'algorithm',
     'kimura-takemoto': 'classification',
     hill: 'classification',
     sarin: 'classification',
@@ -169,6 +180,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     'appendiceal-orifice': 'classification',
     'kudo-tsuruta': 'classification',
     'esd-fibrosis': 'classification',
+    'colorectal-esd-curability': 'algorithm',
     'colorectal-ec': 'classification',
     nice: 'classification',
     wasp: 'classification',
@@ -194,6 +206,7 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
   const japan = [
     'jes',
     'jsph-varices',
+    'esophagus-esd-curability',
     'kimura-takemoto',
     'mesda-g',
     'kyoto',
@@ -209,6 +222,7 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'appendiceal-orifice',
     'kudo-tsuruta',
     'esd-fibrosis',
+    'colorectal-esd-curability',
     'colorectal-ec',
     'jnet',
     'kajiwara-nomogram',
@@ -627,6 +641,62 @@ test('各スコア定義の compute がフィールド経由で動く', () => {
   assert.equal(highlightPartial.partial, true);
   assert.equal(highlightPartial.complete, false);
   assert.deepEqual(highlightPartial.cells, ['cell-diff-pt1a-ul0']);
+
+  const esophagusCurability = getScoreById('esophagus-esd-curability');
+  assert.ok(esophagusCurability && !isClassification(esophagusCurability));
+  const esophBase = { depth: 0, vascular: 0, margin: 0, enBloc: 0 };
+  assert.equal(computeEsophagusEsdCurability(esophBase).interpretation, '治癒切除');
+  assert.equal(
+    computeEsophagusEsdCurability({ ...esophBase, margin: 1 }).interpretation,
+    '非治癒切除（断端陽性）',
+  );
+  assert.equal(
+    computeEsophagusEsdCurability({ ...esophBase, depth: 1, vascular: 0 }).interpretation,
+    '追加治療要個別判断',
+  );
+  assert.equal(
+    computeEsophagusEsdCurability({ ...esophBase, depth: 1, vascular: 1 }).interpretation,
+    '追加治療強く推奨',
+  );
+  assert.equal(
+    computeEsophagusEsdCurability({ ...esophBase, depth: 2 }).interpretation,
+    '追加治療強く推奨',
+  );
+
+  const esophHighlight = resolveEsophagusEsdCurabilityHighlight(esophBase);
+  assert.equal(esophHighlight.complete, true);
+  assert.deepEqual(esophHighlight.cells, ['cell-ep-lpm-v0']);
+
+  const esophPartial = resolveEsophagusEsdCurabilityHighlight({ depth: 0, vascular: 0, margin: 0 });
+  assert.equal(esophPartial.partial, true);
+  assert.equal(esophPartial.complete, false);
+
+  const colorectalCurability = getScoreById('colorectal-esd-curability');
+  assert.ok(colorectalCurability && !isClassification(colorectalCurability));
+  const coloTis = { depth: 0, vm: 0, enBloc: 0, histology: 0, smDepth: 0, lyv: 0, budding: 0 };
+  assert.equal(computeColorectalEsdCurability(coloTis).interpretation, '治癒切除（pTis/M）');
+  assert.equal(
+    computeColorectalEsdCurability({ ...coloTis, vm: 1 }).interpretation,
+    '非治癒切除（VM1）',
+  );
+  const coloSmCurative = { depth: 1, vm: 0, enBloc: 0, histology: 0, smDepth: 0, lyv: 0, budding: 0 };
+  assert.equal(
+    computeColorectalEsdCurability(coloSmCurative).interpretation,
+    '内視鏡的治癒切除（pT1 SM）',
+  );
+  assert.equal(
+    computeColorectalEsdCurability({ ...coloSmCurative, lyv: 1 }).interpretation,
+    '追加腸切除要検討',
+  );
+
+  const coloHighlight = resolveColorectalEsdCurabilityHighlight(coloSmCurative);
+  assert.equal(coloHighlight.complete, true);
+  assert.ok(coloHighlight.cells.includes('crit-vm'));
+  assert.ok(coloHighlight.cells.includes('crit-histology'));
+
+  const coloPartial = resolveColorectalEsdCurabilityHighlight({ depth: 1, vm: 0, histology: 0 });
+  assert.equal(coloPartial.partial, true);
+  assert.equal(coloPartial.complete, false);
 
   const bestJ = getScoreById('best-j');
   assert.ok(bestJ);
@@ -1595,6 +1665,28 @@ test('英語結果は解釈だけ訳し、点数は変えない', () => {
   );
   assert.equal(curabilityEn.interpretation, 'eCuraA (curative resection)');
   assert.doesNotMatch(curabilityEn.details?.join(' ') ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+
+  const esophCurabilityEn = localizeResult(
+    computeEsophagusEsdCurability({ depth: 0, vascular: 0, margin: 0, enBloc: 0 }),
+    'en',
+  );
+  assert.equal(esophCurabilityEn.interpretation, 'Curative resection');
+  assert.doesNotMatch(esophCurabilityEn.details?.join(' ') ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+
+  const coloCurabilityEn = localizeResult(
+    computeColorectalEsdCurability({
+      depth: 1,
+      vm: 0,
+      enBloc: 0,
+      histology: 0,
+      smDepth: 0,
+      lyv: 0,
+      budding: 0,
+    }),
+    'en',
+  );
+  assert.equal(coloCurabilityEn.interpretation, 'Endoscopic curative resection (pT1 SM)');
+  assert.doesNotMatch(coloCurabilityEn.details?.join(' ') ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
 
   const japaneseChars = /[\u3040-\u30ff\u4e00-\u9faf]/;
   const spigelmanEn = localizeResult(

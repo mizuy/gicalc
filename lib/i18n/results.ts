@@ -37,6 +37,14 @@ const INTERPRETATION_EN: Record<string, string> = {
   'eCuraC-1（非治癒切除）': 'eCuraC-1 (non-curative resection)',
   'eCuraC-2（非治癒切除）': 'eCuraC-2 (non-curative resection)',
   '不十分（inadequate）': 'Inadequate',
+  治癒切除: 'Curative resection',
+  '追加治療強く推奨': 'Additional therapy strongly recommended',
+  追加治療要個別判断: 'Additional therapy: individual decision',
+  '非治癒切除（断端陽性）': 'Non-curative resection (positive margin)',
+  '治癒切除（pTis/M）': 'Curative resection (pTis/M)',
+  '内視鏡的治癒切除（pT1 SM）': 'Endoscopic curative resection (pT1 SM)',
+  追加腸切除要検討: 'Consider additional colectomy',
+  '非治癒切除（VM1）': 'Non-curative resection (VM1)',
 };
 
 const DETAIL_EXACT_EN: Record<string, string> = {
@@ -171,9 +179,107 @@ const DETAIL_EXACT_EN: Record<string, string> = {
     'Note: eCuraC-2, not eCuraB, because undifferentiated component is present in the SM-invasive part (ESD guideline Fig. 6).',
   '該当：分化型優位・長径 ≤3 cm・pT1b（SM1, <500 µm）・一括切除・HM0・VM0・Ly0・V0。':
     'Meets: differentiated-dominant, long diameter ≤3 cm, pT1b (SM1, <500 µm), en bloc, HM0, VM0, Ly0, V0.',
+  'JGES 食道 ESD/EMR ガイドライン（2020）と食道癌取扱い規約に基づく根治度評価です。':
+    'Curability assessment per the JGES esophageal ESD/EMR guideline (2020) and JES esophageal cancer practice guidelines.',
+  '病理診断（p 診）に基づき判定します。適応決定は c 診、根治度評価は p 診です。':
+    'Judged from pathological (p) findings. Indications use clinical (c) diagnosis; curability uses p diagnosis.',
+  '治癒切除に相当します。脈管侵襲陰性・断端陰性の pEP/LPM では LNM 頻度は極めて低く、追加治療は通常不要です。':
+    'Equivalent to curative resection. With negative lymphovascular invasion and margins, pEP/LPM has extremely low LNM frequency; additional therapy is usually unnecessary.',
+  '【ESD ガイドライン】経過観察を行います。飲酒・喫煙中止を強く推奨（CQ8）。':
+    '[ESD guideline] Surveillance is recommended. Strongly advise smoking and alcohol cessation (CQ8).',
+  '【取扱い規約】異時性食道癌・頭頸部癌の surveillance を計画してください。':
+    '[Practice guidelines] Plan surveillance for metachronous esophageal and head-and-neck cancers.',
+  'pT1a-MM・脈管侵襲陰性・断端陰性では、追加治療の推奨/非推奨はガイドライン上明確なコンセンサスがありません（CQ6）。':
+    'For pT1a-MM with negative lymphovascular invasion and margins, the guideline has no clear consensus on recommending or withholding additional therapy (CQ6).',
+  '【ESD ガイドライン】JCOG0508 では pMM・脈管陰性・断端陰性は経過観察 arm に含まれています。':
+    '[ESD guideline] JCOG0508 included pMM with negative lymphovascular invasion and margins in the observation arm.',
+  '【取扱い規約】MDT で追加外科切除または化学放射線療法の要否を個別判断してください。':
+    '[Practice guidelines] Decide on additional surgery or chemoradiotherapy case by case at MDT.',
+  '非治癒切除または追加治療が強く推奨される所見です。':
+    'Findings for non-curative resection or strongly recommended additional therapy.',
+  '【ESD ガイドライン】pMM＋脈管侵襲陽性は追加治療強く推奨。pT1b-SM も追加治療強く推奨（CQ7）。':
+    '[ESD guideline] pMM with lymphovascular invasion strongly warrants additional therapy; pT1b-SM also strongly warrants additional therapy (CQ7).',
+  '【JCOG0508】pSM・断端陰性は予防的 CRT、pMM＋脈管陽性も予防的 CRT arm。':
+    '[JCOG0508] pSM with negative margins and pMM with lymphovascular invasion were assigned to prophylactic CRT.',
+  '追加外科切除または化学放射線療法を MDT で検討してください。':
+    'Consider additional surgery or chemoradiotherapy at MDT.',
+  '非治癒切除（断端陽性）です。遺残腫瘍の可能性があります。':
+    'Non-curative resection (positive margin). Residual tumor is possible.',
+  '【ESD ガイドライン】断端陽性は確定的化学放射線療法を検討（JCOG0508）。':
+    '[ESD guideline] Positive margins: consider definitive chemoradiotherapy (JCOG0508).',
+  '追加外科切除も選択肢です。MDT で方針を決定してください。':
+    'Additional surgery is also an option. Decide at MDT.',
+  '注：分割切除ですが、断端・深達度・脈管所見が治癒切除条件を満たしています。':
+    'Note: piecemeal resection, but margins, depth, and lymphovascular findings meet curative criteria.',
+  '注：分割切除は病理評価・断端判定に影響し得ます。':
+    'Note: piecemeal resection may affect pathological assessment and margin evaluation.',
+  'JGES 大腸 ESD/EMR ガイドライン第2版と大腸癌治療ガイドラインに基づく内視鏡的治癒切除判定です。':
+    'Endoscopic curative resection per the JGES colorectal ESD/EMR guideline (2nd ed.) and JSCCR colorectal cancer treatment guideline.',
+  'pT1（SM）癌は病理組織学的 5 項目で評価します。':
+    'pT1 (SM) cancer is assessed with five pathological criteria.',
+  'pTis/M・垂直断端陰性の完全切除で経過観察が可能です。':
+    'Complete pTis/M resection with negative vertical margin allows surveillance.',
+  '【ESD ガイドライン】分割切除後は 6 カ月前後の内視鏡で局所遺残を確認してください。':
+    '[ESD guideline] After piecemeal resection, check for local residual disease by endoscopy at about 6 months.',
+  '内視鏡的治癒切除に相当します。5 項目すべてを満たしています。':
+    'Equivalent to endoscopic curative resection. All five criteria are met.',
+  '【治療 GL】LNM・遺残再発は極めて稀とされ、経過観察でよい（推奨 2, B）。':
+    '[Treatment GL] LNM and residual recurrence are extremely rare; surveillance is acceptable (grade 2, B).',
+  '【ESD ガイドライン】大腸内視鏡に加え、必要に応じ CEA/CT 等の全身 surveillance を計画。':
+    '[ESD guideline] Plan colonoscopy plus systemic surveillance (CEA/CT as needed).',
+  '5 項目のいずれかを満たさないため、追加腸切除を低推奨で検討します。':
+    'One or more of the five criteria are not met; additional colectomy is weakly recommended.',
+  '【治療 GL】予測 LNM 率と患者背景（年齢、合併症、QOL）を総合評価し個別判断。':
+    '[Treatment GL] Integrate predicted LNM rate with age, comorbidity, and QOL for individual decisions.',
+  'T1 nomogram（本アプリ）で LNM 確率の参考にしてください。':
+    'Use the T1 Nomogram page in this app for LNM probability.',
+  '内視鏡的不完全切除（深部断端陽性）です。追加手術を強く推奨します。':
+    'Endoscopically incomplete resection (positive deep margin). Additional surgery is strongly recommended.',
+  '【ESD ガイドライン】深部断端陽性は追加外科切除の強い適応です。':
+    '[ESD guideline] Positive deep margin is a strong indication for additional surgery.',
+  '垂直断端陽性（内視鏡的不完全切除）。':
+    'Positive vertical margin (endoscopically incomplete resection).',
+  '注：分割切除後は 6 カ月前後に内視鏡で局所遺残を確認してください。':
+    'Note: after piecemeal resection, check for local residual disease by endoscopy at about 6 months.',
+  'pTis/M・VM0 の完全切除。':
+    'Complete pTis/M resection with VM0.',
+  '5 項目すべて充足：VM0、乳頭/管状腺癌、SM<1000 µm、脈管陰性、簇出 G1。':
+    'All five criteria met: VM0, papillary/tubular adenocarcinoma, SM <1000 µm, negative lymphovascular invasion, budding G1.',
 };
 
 const DETAIL_PATTERNS: Array<{ re: RegExp; to: (...args: string[]) => string }> = [
+  {
+    re: /^該当：(.+)・脈管侵襲(陰性|陽性)・断端(陰性|陽性)。$/,
+    to: (depth, vascular, margin) => {
+      const depthEn: Record<string, string> = {
+        'pEP/LPM': 'pEP/LPM',
+        'pT1a-MM': 'pT1a-MM',
+        'pT1b-SM1': 'pT1b-SM1',
+        'pT1b-SM2 以深': 'pT1b-SM2 or deeper',
+      };
+      const vascularEn = vascular === '陰性' ? 'negative' : 'positive';
+      const marginEn = margin === '陰性' ? 'negative' : 'positive';
+      return `Meets: ${depthEn[depth] ?? depth}, lymphovascular invasion ${vascularEn}, margin ${marginEn}.`;
+    },
+  },
+  {
+    re: /^未充足：(.+)。$/,
+    to: (items) => {
+      const en = items
+        .split('、')
+        .map((item) => {
+          const map: Record<string, string> = {
+            '組織型（乳頭/管状腺癌以外）': 'histology (not papillary/tubular adenocarcinoma)',
+            'SM 浸潤 ≥1000 µm': 'SM invasion ≥1000 µm',
+            脈管侵襲陽性: 'lymphovascular invasion present',
+            '簇出 Grade 2/3': 'budding Grade 2/3',
+          };
+          return map[item] ?? item;
+        })
+        .join(', ');
+      return `Not met: ${en}.`;
+    },
+  },
   {
     re: /^該当パターン：(.+)。一括切除、HM0、VM0、Ly0、V0。$/,
     to: (pattern) => {

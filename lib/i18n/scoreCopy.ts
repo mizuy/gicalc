@@ -192,6 +192,39 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Abe 2022 Fig. 2 (a edema, b rings, c exudates, d furrows, e stricture, f narrow-caliber). MDPI Diagnostics. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
     ],
   },
+  'esophagus-esd-curability': {
+    name: 'Early esophageal SCC curative resection after ESD',
+    shortName: 'Curability',
+    description:
+      'Assesses curability and need for additional therapy after esophageal ESD/EMR from pathology. Based on JGES esophageal ESD/EMR guideline (2020) Fig. 5 and JES practice guidelines.',
+    officialLinkLabel: 'JES esophageal cancer practice guidelines',
+    note: 'Fig. 5-style table at the top; depth, lymphovascular invasion, and margins highlight the matching cell. pT1a-MM without Ly/V has no clear consensus (CQ6).',
+    figureNotes: ['Curability and additional-treatment recommendations (CQ6–7). Links to Fig. 5.'],
+    fields: {
+      depth: {
+        label: 'Depth (pathology)',
+        options: [
+          { label: 'pEP / pLPM (intramucosal)' },
+          { label: 'pT1a-MM (muscularis mucosae)' },
+          { label: 'pT1b-SM1' },
+          { label: 'pT1b-SM2 or deeper' },
+        ],
+      },
+      vascular: {
+        label: 'Lymphovascular invasion (Ly / V)',
+        description: 'Includes immunostaining (e.g. D2-40)',
+        options: [{ label: 'Absent' }, { label: 'Present' }],
+      },
+      margin: {
+        label: 'Resection margin',
+        options: [{ label: 'Negative (R0)' }, { label: 'Positive' }],
+      },
+      enBloc: {
+        label: 'Resection method',
+        options: [{ label: 'En bloc' }, { label: 'Piecemeal' }],
+      },
+    },
+  },
   hill: {
     name: 'Hill classification (gastroesophageal flap valve)',
     shortName: 'Hill',
@@ -1042,6 +1075,52 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Original Fig. 1. Intest Res copyright; not CC, so the figure is not hosted. Link opens Fig. 1 in the paper. The colorectal F classification was first described by Matsumoto 2010 (Scand J Gastroenterol).',
     ],
     note: 'Graded during ESD after indigo carmine submucosal injection. Preoperative EUS-F0/F1/F2 is a separate system. The same F definitions are used in gastric ESD, but this page focuses on colorectal ESD. JGES colorectal ESD guidelines list biopsy- or prolapse-related fibrosis as an indication but do not define F0–F2 in the guideline text.',
+  },
+  'colorectal-esd-curability': {
+    name: 'Early colorectal cancer curative resection after ESD',
+    shortName: 'Curability',
+    description:
+      'Determines endoscopic curative resection vs need for additional colectomy after colorectal ESD/EMR using the five JGES criteria for pT1 (SM) cancer.',
+    officialLinkLabel: 'JSCCR colorectal cancer treatment guideline',
+    note: 'Five-criteria checklist table at the top with input-linked highlighting. For LNM probability after non-curative factors, see the T1 Nomogram page.',
+    fields: {
+      depth: {
+        label: 'Pathological depth',
+        options: [{ label: 'pTis / M (intramucosal)' }, { label: 'pT1 (SM)' }],
+      },
+      vm: {
+        label: 'Vertical margin (VM)',
+        options: [
+          { label: 'VM0 (negative, complete resection)' },
+          { label: 'VM1 (positive, incomplete resection)' },
+        ],
+      },
+      enBloc: {
+        label: 'Resection method',
+        options: [{ label: 'En bloc' }, { label: 'Piecemeal' }],
+      },
+      histology: {
+        label: 'Histology',
+        description: 'pT1 (SM) only',
+        options: [
+          { label: 'Papillary or tubular adenocarcinoma' },
+          { label: 'Other (e.g. mucinous)' },
+        ],
+      },
+      smDepth: {
+        label: 'SM invasion depth',
+        description: 'pT1 (SM) only',
+        options: [{ label: '<1000 µm' }, { label: '≥1000 µm' }],
+      },
+      lyv: {
+        label: 'Lymphovascular invasion (Ly / V)',
+        options: [{ label: 'Absent' }, { label: 'Present' }],
+      },
+      budding: {
+        label: 'Tumor budding',
+        options: [{ label: 'Grade 1' }, { label: 'Grade 2 / 3' }],
+      },
+    },
   },
   'kudo-tsuruta': {
     name: 'Kudo–Tsuruta classification (pit pattern)',

@@ -133,7 +133,7 @@ export const UI: Record<Locale, UiStrings> = {
       tools: '収録ツール',
       esophagus: '食道',
       esophagusBody:
-        'JES（Oyama 2017）: Type A / B1 / B2 / B3。LA（逆流性食道炎 A–D）。Prague C & M（Barrett）。Siewert（接合部腺癌 Type I–III。西分類・胃癌ガイドライン第6版の注釈つき）。EREFS（好酸球性食道炎 0–8）。門脈圧亢進症学会分類（F / L / C / RC。肝硬変診療ガイドライン2020の注釈つき）。文献は PubMed に飛びます。',
+        'JES（Oyama 2017）: Type A / B1 / B2 / B3。LA（逆流性食道炎 A–D）。Prague C & M（Barrett）。Siewert（接合部腺癌 Type I–III。西分類・胃癌ガイドライン第6版の注釈つき）。EREFS（好酸球性食道炎 0–8）。門脈圧亢進症学会分類（F / L / C / RC。肝硬変診療ガイドライン2020の注釈つき）。治癒切除判定（食道 ESD 後・JGES/JES ガイドライン）。文献は PubMed に飛びます。',
       stomach: '胃',
       stomachBody:
         '木村–竹本（萎縮分類）、Hill（胃食道フラップ弁）、Sarin（胃静脈瘤 GOV / IGV。Lg とガイドラインの注釈つき）、MESDA-G（早期胃癌の拡大診断アルゴリズム）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura 判定（ESD 後・JGES/JGCA ガイドライン）、eCura スコア / Sekiguchi（LNM）、BEST-J（ESD後出血）。',
@@ -142,7 +142,7 @@ export const UI: Record<Locale, UiStrings> = {
         'Spigelman / Modified Spigelman（FAP 十二指腸腺腫の Stage）。Ishii（SNADET C3 vs C4/5）、Kakushima WLI（LGA vs HGA/癌）、Toya ME-CV（SNADET アルゴリズム。ME-NBI は Kikuchi 2014）。',
       colorectum: '大腸',
       colorectumBody:
-        'APCS（検診）、SPS（鋸歯状ポリープ症候群・WHO 2019 診断基準）、Vienna（消化管上皮性腫瘍の病理分類）、Paris（肉眼型）、LST（側方発育）、虫垂開口部 Type（Toyonaga）、工藤–鶴田（pit pattern）、ESD-F（大腸 ESD 粘膜下層線維化 F0–F2）、EC（超拡大・EC/EC-V）、NICE（NBI非拡大）、WASP（HP / SSL / 腺腫）、JNET（NBI拡大）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。',
+        'APCS（検診）、SPS（鋸歯状ポリープ症候群・WHO 2019 診断基準）、Vienna（消化管上皮性腫瘍の病理分類）、Paris（肉眼型）、LST（側方発育）、虫垂開口部 Type（Toyonaga）、工藤–鶴田（pit pattern）、ESD-F（大腸 ESD 粘膜下層線維化 F0–F2）、治癒切除判定（大腸 ESD 後・JGES/JSCCR 5 項目）、EC（超拡大・EC/EC-V）、NICE（NBI非拡大）、WASP（HP / SSL / 腺腫）、JNET（NBI拡大）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。',
       bleeding: '出血',
       bleedingBody: 'Forrest（潰瘍出血の内視鏡所見）。上部は GBS（Blatchford 2000）、下部は NOBLADS（Aoki 2016）。',
       pwaTitle: 'PWA インストール手順',
@@ -226,7 +226,7 @@ export const UI: Record<Locale, UiStrings> = {
       tools: 'Included tools',
       esophagus: 'Esophagus',
       esophagusBody:
-        'JES (Oyama 2017): Type A / B1 / B2 / B3. LA (reflux esophagitis A–D). Prague C & M (Barrett). Siewert (EGJ adenocarcinoma Types I–III, with Nishi and JGCA 6th-edition notes). EREFS (eosinophilic esophagitis 0–8). JSPH classification of esophagogastric varices (F / L / C / RC, with JSGE/JSH cirrhosis-guideline 2020 notes). Citations open PubMed.',
+        'JES (Oyama 2017): Type A / B1 / B2 / B3. LA (reflux esophagitis A–D). Prague C & M (Barrett). Siewert (EGJ adenocarcinoma Types I–III, with Nishi and JGCA 6th-edition notes). EREFS (eosinophilic esophagitis 0–8). JSPH classification of esophagogastric varices (F / L / C / RC, with JSGE/JSH cirrhosis-guideline 2020 notes). Curability after esophageal ESD (JGES/JES guidelines). Citations open PubMed.',
       stomach: 'Stomach',
       stomachBody:
         'Kimura–Takemoto (atrophy), Hill (gastroesophageal flap valve), Sarin (gastric varices GOV / IGV, with Lg and guideline notes), MESDA-G (magnifying algorithm for EGC), Kyoto / modified Kyoto / EGGIM (gastritis risk), eCura curability (post-ESD, JGES/JGCA guidelines), eCura score / Sekiguchi (LNM), BEST-J (post-ESD bleeding).',
@@ -235,7 +235,7 @@ export const UI: Record<Locale, UiStrings> = {
         'Spigelman / Modified Spigelman (FAP duodenal-adenoma stage). Ishii (SNADET C3 vs C4/5), Kakushima WLI (LGA vs HGA/cancer), Toya ME-CV (SNADET algorithm; ME-NBI is Kikuchi 2014).',
       colorectum: 'Colorectum',
       colorectumBody:
-        'APCS (screening), SPS (serrated polyposis syndrome — WHO 2019 criteria), Vienna (pathological classification of GI epithelial neoplasia), Paris (morphology), LST (laterally spreading), appendiceal orifice type (Toyonaga), Kudo–Tsuruta (pit pattern), ESD-F (colorectal ESD submucosal fibrosis F0–F2), EC (ultra-magnifying EC / EC-V), NICE (NBI, non-magnifying), WASP (HP / SSL / adenoma), JNET (NBI magnifying), T1 Nomogram (Kajiwara), BBPS / Aronchick (bowel prep).',
+        'APCS (screening), SPS (serrated polyposis syndrome — WHO 2019 criteria), Vienna (pathological classification of GI epithelial neoplasia), Paris (morphology), LST (laterally spreading), appendiceal orifice type (Toyonaga), Kudo–Tsuruta (pit pattern), ESD-F (colorectal ESD submucosal fibrosis F0–F2), curability after colorectal ESD (JGES five criteria / JSCCR), EC (ultra-magnifying EC / EC-V), NICE (NBI, non-magnifying), WASP (HP / SSL / adenoma), JNET (NBI magnifying), T1 Nomogram (Kajiwara), BBPS / Aronchick (bowel prep).',
       bleeding: 'Bleeding',
       bleedingBody:
         'Forrest (endoscopic stigmata of ulcer bleeding). Upper GI: GBS (Blatchford 2000). Lower GI: NOBLADS (Aoki 2016).',
