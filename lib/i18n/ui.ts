@@ -28,6 +28,8 @@ export type UiStrings = {
   notFoundLink: string;
   languageJa: string;
   languageEn: string;
+  variantTabModified: string;
+  variantTabOriginal: string;
   japanDeveloped: string;
   organ: Record<ScoreOrgan, string>;
   category: Record<ScoreCategory, string>;
@@ -100,6 +102,8 @@ export const UI: Record<Locale, UiStrings> = {
     notFoundLink: 'スコア一覧へ戻る',
     languageJa: '日本語',
     languageEn: 'English',
+    variantTabModified: '改変版',
+    variantTabOriginal: '原法',
     japanDeveloped: '日本で開発',
     organ: {
       esophagus: '食道',
@@ -194,6 +198,8 @@ export const UI: Record<Locale, UiStrings> = {
     notFoundLink: 'Back to scores',
     languageJa: '日本語',
     languageEn: 'English',
+    variantTabModified: 'Modified',
+    variantTabOriginal: 'Original',
     japanDeveloped: 'Japan-developed',
     organ: {
       esophagus: 'Esophagus',

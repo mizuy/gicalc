@@ -24,6 +24,7 @@ import { computeKyoto } from '../lib/scores/kyoto';
 import { computeKyotoModified } from '../lib/scores/kyoto-modified';
 import { computeNoblads } from '../lib/scores/noblads';
 import { computeApcs } from '../lib/scores/apcs';
+import { computeApcsModified } from '../lib/scores/apcs-modified';
 import { computeAronchick } from '../lib/scores/aronchick';
 import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
@@ -31,7 +32,7 @@ import { computeIshii } from '../lib/scores/ishii';
 import { computeKakushima } from '../lib/scores/kakushima';
 import { computeModifiedSpigelman, computeSpigelman } from '../lib/scores/spigelman';
 import { lowestFieldValues } from '../lib/scores/initialValues';
-import { getScoreById, getScoresGroupedByOrgan, SCORES } from '../data/scores';
+import { getScoreById, getScoresGroupedByOrgan, SCORES, ALL_SCORE_DEFINITIONS } from '../data/scores';
 import { ISHII_2021_PUBMED } from '../data/scores/ishii';
 import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
 import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
@@ -59,6 +60,12 @@ import { WASP_2016_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import {
+  getScoreRouteIds,
+  getVariantGroup,
+  HIDDEN_LIST_SCORE_IDS,
+  resolveScoreRoute,
+} from '../data/scores/variant-groups';
+import {
   applyAlgorithmAnswer,
   findEntryForResult,
   walkAlgorithmFlow,
@@ -67,7 +74,7 @@ import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '..
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 import { classificationOriginalLocale } from '../lib/i18n/localize';
 
-test('登録スコアは42種で臓器順に並ぶ', () => {
+test('登録スコアは40種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -83,14 +90,12 @@ test('登録スコアは42種で臓器順に並ぶ', () => {
       'sarin',
       'mesda-g',
       'kyoto',
-      'kyoto-modified',
       'eggim',
       'gastric-esd-curability',
       'ecura-hatta',
       'sekiguchi',
       'best-j',
       'spigelman',
-      'modified-spigelman',
       'ishii',
       'kakushima',
       'toya',
@@ -127,7 +132,6 @@ test('登録スコアは42種で臓器順に並ぶ', () => {
           'sarin',
           'mesda-g',
           'kyoto',
-          'kyoto-modified',
           'eggim',
           'gastric-esd-curability',
           'ecura-hatta',
@@ -135,10 +139,7 @@ test('登録スコアは42種で臓器順に並ぶ', () => {
           'best-j',
         ],
       ],
-      [
-        'duodenum',
-        ['spigelman', 'modified-spigelman', 'ishii', 'kakushima', 'toya'],
-      ],
+      ['duodenum', ['spigelman', 'ishii', 'kakushima', 'toya']],
       [
         'colorectum',
         ['apcs', 'sps', 'vienna', 'paris', 'lst', 'appendiceal-orifice', 'kudo-tsuruta', 'esd-fibrosis', 'colorectal-esd-curability', 'colorectal-ec', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
@@ -146,6 +147,29 @@ test('登録スコアは42種で臓器順に並ぶ', () => {
       ['bleeding', ['forrest', 'gbs', 'noblads']],
     ],
   );
+});
+
+test('variant 専用 id は一覧から隠し、全定義43種を保持する', () => {
+  assert.deepEqual([...HIDDEN_LIST_SCORE_IDS].sort(), ['apcs-modified', 'kyoto-modified', 'modified-spigelman']);
+  assert.equal(ALL_SCORE_DEFINITIONS.length, 43);
+  assert.ok(getScoreById('kyoto-modified'));
+  assert.ok(getScoreById('modified-spigelman'));
+  assert.ok(getScoreById('apcs-modified'));
+  assert.equal(getScoreRouteIds().length, 6);
+});
+
+test('variant ルーティングは pageId と default を返す', () => {
+  assert.deepEqual(resolveScoreRoute('kyoto'), { pageId: 'kyoto', variantId: 'kyoto-modified' });
+  assert.deepEqual(resolveScoreRoute('kyoto-modified'), { pageId: 'kyoto', variantId: 'kyoto-modified' });
+  assert.deepEqual(resolveScoreRoute('spigelman'), { pageId: 'spigelman', variantId: 'modified-spigelman' });
+  assert.deepEqual(resolveScoreRoute('modified-spigelman'), {
+    pageId: 'spigelman',
+    variantId: 'modified-spigelman',
+  });
+  assert.deepEqual(resolveScoreRoute('apcs'), { pageId: 'apcs', variantId: 'apcs-modified' });
+  assert.deepEqual(resolveScoreRoute('apcs-modified'), { pageId: 'apcs', variantId: 'apcs-modified' });
+  assert.deepEqual(resolveScoreRoute('jes'), { pageId: 'jes', variantId: 'jes' });
+  assert.deepEqual(getVariantGroup('kyoto')?.defaultVariantId, 'kyoto-modified');
 });
 
 test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM のいずれか', () => {
@@ -162,14 +186,12 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     sarin: 'classification',
     'mesda-g': 'algorithm',
     kyoto: 'score',
-    'kyoto-modified': 'score',
     eggim: 'score',
     'gastric-esd-curability': 'algorithm',
     'ecura-hatta': 'score',
     sekiguchi: 'score',
     'best-j': 'score',
     spigelman: 'score',
-    'modified-spigelman': 'score',
     ishii: 'prediction',
     kakushima: 'prediction',
     toya: 'algorithm',
@@ -211,7 +233,6 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'kimura-takemoto',
     'mesda-g',
     'kyoto',
-    'kyoto-modified',
     'gastric-esd-curability',
     'ecura-hatta',
     'sekiguchi',
@@ -238,7 +259,6 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'sarin',
     'eggim',
     'spigelman',
-    'modified-spigelman',
     'apcs',
     'sps',
     'vienna',
@@ -913,6 +933,29 @@ test('APCS: 0–1 平均 / 2–3 中等度 / 4–7 高リスク（Yeoh 2011）',
   const defined = getScoreById('apcs');
   assert.ok(defined);
   assert.equal(defined.compute({ age: 0, sex: 0, family: 0, smoking: 0 }).interpretation, '平均リスク（AR）');
+});
+
+test('改変 APCS: BMI 追加・0–6 点', () => {
+  const average = computeApcsModified({ age: 0, sex: 0, family: 0, smoking: 0, bmi: 0 });
+  assert.equal(average.total, 0);
+  assert.equal(average.maxScore, 6);
+  assert.equal(average.interpretation, '平均リスク（AR）');
+
+  const moderate = computeApcsModified({ age: 1, sex: 1, family: 0, smoking: 0, bmi: 0 });
+  assert.equal(moderate.total, 2);
+  assert.equal(moderate.interpretation, '中等度リスク（MR）');
+
+  const high = computeApcsModified({ age: 2, sex: 1, family: 1, smoking: 0, bmi: 0 });
+  assert.equal(high.total, 4);
+  assert.equal(high.interpretation, '高リスク（HR）');
+
+  const max = computeApcsModified({ age: 2, sex: 1, family: 1, smoking: 1, bmi: 1 });
+  assert.equal(max.total, 6);
+  assert.equal(max.interpretation, '高リスク（HR）');
+
+  const defined = getScoreById('apcs-modified');
+  assert.ok(defined);
+  assert.equal(defined.fields.length, 5);
 });
 
 test('Aronchick: Excellent/Good は adequate、Poor/Inadequate は inadequate', () => {
@@ -1684,6 +1727,27 @@ test('英語コピーが全スコアの表示項目を覆う', () => {
       }
     }
   }
+});
+
+test('英語コピーが variant 専用 id も覆う', () => {
+  const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
+  for (const id of HIDDEN_LIST_SCORE_IDS) {
+    const score = getScoreById(id);
+    assert.ok(score, id);
+    const copy = SCORE_EN[id];
+    assert.ok(copy, id);
+    const english = localizeScore(score, 'en');
+    assert.equal(english.name, copy.name);
+    assert.doesNotMatch(english.name, japanese);
+    assert.doesNotMatch(english.description, japanese);
+    if (!isClassification(score)) {
+      for (const field of score.fields) {
+        assert.ok(copy.fields?.[field.id], `${id}.${field.id}`);
+      }
+    }
+  }
+  assert.equal(UI.en.variantTabModified, 'Modified');
+  assert.equal(UI.en.variantTabOriginal, 'Original');
 });
 
 test('英語結果は解釈だけ訳し、点数は変えない', () => {

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { CitationLink } from '@/components/calculator/CitationLink';
@@ -14,9 +14,10 @@ import { figureKey, getToolKind, isJapanDeveloped, type CalculatorDefinition } f
 
 type Props = {
   score: CalculatorDefinition;
+  header?: ReactNode;
 };
 
-export function ScoreCalculatorScreen({ score }: Props) {
+export function ScoreCalculatorScreen({ score, header }: Props) {
   const [values, setValues] = useState<Record<string, number>>(() => lowestFieldValues(score.fields));
   const background = useThemeColor({}, 'background');
   const textSecondary = useThemeColor({}, 'textSecondary');
@@ -41,6 +42,7 @@ export function ScoreCalculatorScreen({ score }: Props) {
       style={[styles.scroll, { backgroundColor: background }]}
       contentContainerStyle={styles.content}
       keyboardShouldPersistTaps="handled">
+      {header}
       <View style={styles.titleBlock}>
         <ToolKindBadge kind={getToolKind(score)} />
         <View style={styles.titleRow}>

@@ -10,6 +10,7 @@ export const apcsScore: ScoreDefinition = {
   categoryLabel: '大腸がん検診',
   description:
     '無症状のアジア人で、進行大腸腫瘍（進行腺腫または癌）のリスクを年齢・性別・家族歴・喫煙で 0–7 点に層別します。',
+  note: 'BMI を加えた改変法（Sung 2018、0–6 点）は「改変版」タブ。',
   reference: 'Yeoh KG et al. Gut 2011;60:1236-1241',
   pubmed: '21402615',
   fields: [

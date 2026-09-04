@@ -93,6 +93,13 @@ const DETAIL_EXACT_EN: Record<string, string> = {
   '検証コホートの進行腫瘍有病率 5.2%（平均リスクの 4.3 倍）。':
     'Advanced-neoplasia prevalence 5.2% in the validation cohort (4.3× average risk).',
   '大腸内視鏡検診の優先対象です。': 'A priority for colonoscopy screening.',
+  '検証コホートの進行腫瘍有病率 3.8%（Sung 2018）。': 'Advanced-neoplasia prevalence 3.8% in the validation cohort (Sung 2018).',
+  '便潜血検診も選択肢です。': 'Fecal occult-blood screening is also an option.',
+  '検証コホートの進行腫瘍有病率 4.3%（Sung 2018）。': 'Advanced-neoplasia prevalence 4.3% in the validation cohort (Sung 2018).',
+  'リスク適応型スクリーニングでは FIT 併用も検討されます。':
+    'Risk-adapted screening may combine FIT with other tests.',
+  '検証コホートの進行腫瘍有病率 9.3%（Sung 2018）。平均リスクの約 2.5 倍。':
+    'Advanced-neoplasia prevalence 9.3% in the validation cohort (Sung 2018), about 2.5× average risk.',
   'カットオフ ≥3 点。導出コホートの正診率 92%、感度 95%、特異度 93%。':
     'Cutoff ≥3. Derivation-cohort accuracy 92%, sensitivity 95%, specificity 93%.',
   '色調は白光、表面・血管は NBI 拡大で評価する。': 'Score color on WLI; surface and vessels on magnifying NBI.',

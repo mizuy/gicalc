@@ -1,5 +1,7 @@
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { router, Stack, useLocalSearchParams } from 'expo-router';
 import type { ComponentType } from 'react';
+import { useCallback, useMemo } from 'react';
+import { View } from 'react-native';
 
 import { AlgorithmFlowScreen } from '@/components/calculator/AlgorithmFlowScreen';
 import { ClassificationReferenceScreen } from '@/components/calculator/ClassificationReferenceScreen';
@@ -7,8 +9,15 @@ import { ColorectalEsdCurabilityScreen } from '@/components/calculator/Colorecta
 import { EsophagusEsdCurabilityScreen } from '@/components/calculator/EsophagusEsdCurabilityScreen';
 import { GastricEsdCurabilityScreen } from '@/components/calculator/GastricEsdCurabilityScreen';
 import { ScoreCalculatorScreen } from '@/components/calculator/ScoreCalculatorScreen';
-import { Text, View } from '@/components/Themed';
-import { SCORES, getScoreById } from '@/data/scores';
+import { ScoreVariantTabs } from '@/components/calculator/ScoreVariantTabs';
+import { Text } from '@/components/Themed';
+import { ALL_SCORE_DEFINITIONS, SCORES, getScoreById } from '@/data/scores';
+import {
+  findVariantGroupByScoreId,
+  getScoreRouteIds,
+  getVariantGroup,
+  resolveScoreRoute,
+} from '@/data/scores/variant-groups';
 import { localizeScore, useLocale } from '@/lib/i18n';
 import { hasAlgorithmFlow, isClassification, type CalculatorDefinition } from '@/types/score';
 
@@ -19,15 +28,43 @@ const CURABILITY_SCREENS: Record<string, ComponentType<{ score: CalculatorDefini
 };
 
 export function generateStaticParams() {
-  return SCORES.map((score) => ({ id: score.id }));
+  const ids = new Set<string>();
+  for (const score of SCORES) ids.add(score.id);
+  for (const routeId of getScoreRouteIds()) ids.add(routeId);
+  return [...ids].map((id) => ({ id }));
 }
 
 export default function ScoreScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const params = useLocalSearchParams<{ id: string; variant?: string }>();
   const { locale, t } = useLocale();
-  const score = typeof id === 'string' ? getScoreById(id) : undefined;
 
-  if (!score) {
+  const route = useMemo(() => {
+    if (typeof params.id !== 'string') return undefined;
+    const resolved = resolveScoreRoute(params.id);
+    const group = getVariantGroup(resolved.pageId);
+    if (!group) return resolved;
+
+    const variantParam = typeof params.variant === 'string' ? params.variant : undefined;
+    const variantId =
+      variantParam && group.variantIds.includes(variantParam)
+        ? variantParam
+        : resolved.variantId;
+
+    return { pageId: resolved.pageId, variantId, group };
+  }, [params.id, params.variant]);
+
+  const pageScore = route ? getScoreById(route.pageId) : undefined;
+  const activeScore = route ? getScoreById(route.variantId) : undefined;
+
+  const handleVariantSelect = useCallback(
+    (variantId: string) => {
+      if (!route?.group) return;
+      router.setParams({ id: route.pageId, variant: variantId });
+    },
+    [route?.group, route?.pageId],
+  );
+
+  if (!route || !pageScore || !activeScore) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 }}>
         <Stack.Screen options={{ title: t.missingTitle, headerBackTitle: t.back }} />
@@ -36,21 +73,32 @@ export default function ScoreScreen() {
     );
   }
 
-  const localized = localizeScore(score, locale);
-  const CurabilityScreen = CURABILITY_SCREENS[localized.id];
+  const localizedPage = localizeScore(pageScore, locale);
+  const localizedActive = localizeScore(activeScore, locale);
+  const CurabilityScreen = CURABILITY_SCREENS[localizedActive.id];
+
+  const variantTabs = route.group ? (
+    <ScoreVariantTabs
+      group={route.group}
+      activeVariantId={route.variantId}
+      onSelect={handleVariantSelect}
+    />
+  ) : undefined;
 
   return (
     <>
-      <Stack.Screen options={{ title: localized.shortName, headerBackTitle: t.back }} />
-      {hasAlgorithmFlow(localized) ? (
-        <AlgorithmFlowScreen key={localized.id} score={localized} />
-      ) : isClassification(localized) && !CurabilityScreen ? (
-        <ClassificationReferenceScreen score={localized} />
-      ) : CurabilityScreen && !isClassification(localized) ? (
-        <CurabilityScreen key={localized.id} score={localized} />
-      ) : !isClassification(localized) ? (
-        <ScoreCalculatorScreen key={localized.id} score={localized} />
+      <Stack.Screen options={{ title: localizedPage.shortName, headerBackTitle: t.back }} />
+      {hasAlgorithmFlow(localizedActive) ? (
+        <AlgorithmFlowScreen key={localizedActive.id} score={localizedActive} />
+      ) : isClassification(localizedActive) && !CurabilityScreen ? (
+        <ClassificationReferenceScreen score={localizedActive} />
+      ) : CurabilityScreen && !isClassification(localizedActive) ? (
+        <CurabilityScreen key={localizedActive.id} score={localizedActive} />
+      ) : !isClassification(localizedActive) ? (
+        <ScoreCalculatorScreen key={localizedActive.id} score={localizedActive} header={variantTabs} />
       ) : null}
     </>
   );
 }
+
+export { ALL_SCORE_DEFINITIONS };
