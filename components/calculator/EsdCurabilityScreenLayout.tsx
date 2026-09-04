@@ -1,15 +1,11 @@
 import { type ReactNode } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
-import { CitationLink } from '@/components/calculator/CitationLink';
-import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
-import { RelatedScoresPanel } from '@/components/calculator/RelatedScoresPanel';
+import { ScorePageShell } from '@/components/calculator/ScorePageShell';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
-import { JapanMark } from '@/components/calculator/JapanMark';
-import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
 import { Text, useThemeColor } from '@/components/Themed';
 import { localizeResult, useLocale } from '@/lib/i18n';
-import { figureKey, getToolKind, isJapanDeveloped, type CalculatorDefinition, type ScoreResult } from '@/types/score';
+import type { CalculatorDefinition, ScoreResult } from '@/types/score';
 
 type Props = {
   score: CalculatorDefinition;
@@ -34,7 +30,6 @@ export function EsdCurabilityScreenLayout({
   result,
   onReset,
 }: Props) {
-  const background = useThemeColor({}, 'background');
   const textSecondary = useThemeColor({}, 'textSecondary');
   const accent = useThemeColor({}, 'accent');
   const surface = useThemeColor({}, 'surface');
@@ -44,35 +39,7 @@ export function EsdCurabilityScreenLayout({
   const localizedResult = result ? localizeResult(result, locale) : undefined;
 
   return (
-    <ScrollView
-      style={[styles.scroll, { backgroundColor: background }]}
-      contentContainerStyle={styles.content}
-      keyboardShouldPersistTaps="handled">
-      <View style={styles.titleBlock}>
-        <ToolKindBadge kind={getToolKind(score)} />
-        <View style={styles.titleRow}>
-          <Text style={styles.title}>{score.name}</Text>
-          {isJapanDeveloped(score) ? <JapanMark /> : null}
-        </View>
-      </View>
-      <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
-      {score.reference ? (
-        <View style={styles.reference}>
-          <CitationLink label={`${t.reference}: ${score.reference}`} pubmed={score.pubmed} />
-          {score.license ? (
-            <CitationLink label={`${t.license}: ${score.license}`} href={score.licenseUrl} />
-          ) : null}
-          {score.officialUrl ? (
-            <CitationLink label={score.officialLinkLabel ?? score.officialUrl} href={score.officialUrl} />
-          ) : null}
-          {score.note ? (
-            <Text style={[styles.note, { color: textSecondary }]}>{score.note}</Text>
-          ) : null}
-        </View>
-      ) : null}
-
-      <RelatedScoresPanel scoreId={score.id} />
-
+    <ScorePageShell score={score} keyboardShouldPersistTaps="handled">
       {table}
 
       <View style={styles.inputHeader}>
@@ -85,10 +52,6 @@ export function EsdCurabilityScreenLayout({
       {fields}
 
       <ScoreResultPanel result={localizedResult} ready={allFieldsFilled} />
-
-      {score.figures?.map((figure) => (
-        <ClassificationFigure key={figureKey(figure)} figure={figure} />
-      ))}
 
       <Pressable
         accessibilityRole="button"
@@ -103,34 +66,11 @@ export function EsdCurabilityScreenLayout({
         ]}>
         <Text style={[styles.resetText, { color: accent }]}>{t.reset}</Text>
       </Pressable>
-
-      <View style={[styles.footnoteBox, { borderColor: border }]}>
-        <Text style={[styles.footnote, { color: textSecondary }]}>{t.footnote}</Text>
-      </View>
-    </ScrollView>
+    </ScorePageShell>
   );
 }
 
 const styles = StyleSheet.create({
-  scroll: { flex: 1 },
-  content: {
-    maxWidth: 720,
-    width: '100%',
-    alignSelf: 'center',
-    padding: 20,
-    paddingBottom: 40,
-  },
-  titleBlock: { gap: 8, marginBottom: 8 },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  title: { fontSize: 22, fontWeight: '800', flexShrink: 1 },
-  description: { fontSize: 14, lineHeight: 22, marginBottom: 8 },
-  reference: { marginBottom: 20 },
-  note: { fontSize: 12, lineHeight: 18, marginTop: 8 },
   inputHeader: {
     flexDirection: 'row',
     alignItems: 'baseline',
@@ -148,6 +88,4 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   resetText: { fontSize: 16, fontWeight: '700' },
-  footnoteBox: { marginTop: 20, borderTopWidth: 1, paddingTop: 16 },
-  footnote: { fontSize: 12, lineHeight: 18 },
 });

@@ -1,20 +1,11 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
-import { RelatedScoresPanel } from '@/components/calculator/RelatedScoresPanel';
-import { CitationLink } from '@/components/calculator/CitationLink';
-import { JapanMark } from '@/components/calculator/JapanMark';
-import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
+import { ScorePageShell } from '@/components/calculator/ScorePageShell';
 import { Text, useThemeColor } from '@/components/Themed';
 import { SeverityColors } from '@/constants/Colors';
 import { useLocale } from '@/lib/i18n';
-import {
-  figureKey,
-  getToolKind,
-  isJapanDeveloped,
-  type ClassificationDefinition,
-  type ClassificationEntry,
-} from '@/types/score';
+import { figureKey, type ClassificationDefinition, type ClassificationEntry } from '@/types/score';
 
 type Props = {
   score: ClassificationDefinition;
@@ -41,7 +32,6 @@ function groupEntries(entries: ClassificationEntry[]): EntryGroup[] {
 }
 
 export function ClassificationReferenceScreen({ score }: Props) {
-  const background = useThemeColor({}, 'background');
   const textSecondary = useThemeColor({}, 'textSecondary');
   const tint = useThemeColor({}, 'tint');
   const surface = useThemeColor({}, 'surface');
@@ -50,46 +40,7 @@ export function ClassificationReferenceScreen({ score }: Props) {
   const groups = groupEntries(score.entries);
 
   return (
-    <ScrollView
-      style={[styles.scroll, { backgroundColor: background }]}
-      contentContainerStyle={styles.content}>
-      <View style={styles.titleBlock}>
-        <ToolKindBadge kind={getToolKind(score)} />
-        <View style={styles.titleRow}>
-          <Text style={styles.title}>{score.name}</Text>
-          {isJapanDeveloped(score) ? <JapanMark /> : null}
-        </View>
-      </View>
-      {score.originalLead ? (
-        <View style={styles.originalBlock}>
-          <Text style={[styles.originalLabel, { color: tint }]}>{t.original}</Text>
-          <Text style={[styles.originalLead, { color: tint }]}>{score.originalLead}</Text>
-        </View>
-      ) : null}
-      {score.description ? (
-        <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
-      ) : null}
-      {score.reference ? (
-        <View style={styles.reference}>
-          <CitationLink label={`${t.reference}: ${score.reference}`} pubmed={score.pubmed} />
-          {score.license ? (
-            <CitationLink label={`${t.license}: ${score.license}`} href={score.licenseUrl} />
-          ) : null}
-          {score.officialUrl ? (
-            <CitationLink label={score.officialLinkLabel ?? score.officialUrl} href={score.officialUrl} />
-          ) : null}
-          {score.note ? (
-            <Text style={[styles.note, { color: textSecondary }]}>{score.note}</Text>
-          ) : null}
-        </View>
-      ) : null}
-
-      <RelatedScoresPanel scoreId={score.id} />
-
-      {score.figures?.map((figure) => (
-        <ClassificationFigure key={figureKey(figure)} figure={figure} />
-      ))}
-
+    <ScorePageShell score={score}>
       {groups.map((group) => (
         <View key={group.key || 'default'} style={styles.group}>
           {group.label ? (
@@ -130,68 +81,11 @@ export function ClassificationReferenceScreen({ score }: Props) {
           })}
         </View>
       ))}
-
-      <View style={[styles.footnoteBox, { borderColor: border }]}>
-        <Text style={[styles.footnote, { color: textSecondary }]}>
-          {t.footnote}
-        </Text>
-      </View>
-    </ScrollView>
+    </ScorePageShell>
   );
 }
 
 const styles = StyleSheet.create({
-  scroll: {
-    flex: 1,
-  },
-  content: {
-    maxWidth: 720,
-    width: '100%',
-    alignSelf: 'center',
-    padding: 20,
-    paddingBottom: 40,
-  },
-  titleBlock: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '800',
-    flexShrink: 1,
-  },
-  originalBlock: {
-    marginBottom: 8,
-  },
-  originalLabel: {
-    fontSize: 11,
-    fontWeight: '800',
-    letterSpacing: 0.4,
-    marginBottom: 4,
-  },
-  originalLead: {
-    fontSize: 14,
-    lineHeight: 22,
-  },
-  description: {
-    fontSize: 14,
-    lineHeight: 22,
-    marginBottom: 8,
-  },
-  reference: {
-    marginBottom: 16,
-  },
-  note: {
-    fontSize: 13,
-    lineHeight: 20,
-    marginTop: 8,
-  },
   group: {
     marginBottom: 8,
   },
@@ -256,14 +150,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 18,
     marginTop: 8,
-  },
-  footnoteBox: {
-    marginTop: 12,
-    borderTopWidth: 1,
-    paddingTop: 16,
-  },
-  footnote: {
-    fontSize: 12,
-    lineHeight: 18,
   },
 });

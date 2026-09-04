@@ -18,6 +18,14 @@ scripts/verify-scores.ts … 回帰テスト（必ず更新）
 
 **既定 UI 言語は英語**です。日本語は定義ファイルの原文、英語は `SCORE_EN` で上書きします。
 
+各ツールページの並びは [`ScorePageShell`](../components/calculator/ScorePageShell.tsx) で共通です。
+
+1. **先頭** — タグ（種別バッジ・カテゴリ・日本マーク）と一行の `description`
+2. **本体** — 分類カード、計算項目、またはアルゴリズムフロー
+3. **末尾** — ページ全体の図（`score.figures`）、原著文（`originalLead`）、文献・ライセンス・公式リンク、注意、関連ツール
+
+型ごとの切り抜き（`entry.figures`）は分類カードの中に置きます。ページ先頭には出しません。
+
 ---
 
 ## 1. ツール種別を決める
@@ -67,7 +75,7 @@ export const xxxScore: ClassificationDefinition = {
   kind: 'classification',
   name: '…',
   shortName: '…',
-  originalLead: '…',   // 原著の定義文（英語原著なら英語のまま）
+  originalLead: '…',   // 原著の定義文（英語原著なら英語のまま。画面末尾）
   entries: [
     {
       label: 'Type 1',
@@ -153,7 +161,7 @@ export const SCORE_VARIANT_GROUPS = {
 
 ## 3b. 関連スコアリンク
 
-臨床フロー上つながるツール同士は、各ページ上部（文献・注の直後）に **関連ツール** パネルで相互リンクします。パラメータの引き継ぎ（prefill）は行いません — リンクのみです。
+臨床フロー上つながるツール同士は、各ページ末尾（図・文献・注のあと）に **関連ツール** パネルで相互リンクします。パラメータの引き継ぎ（prefill）は行いません — リンクのみです。
 
 [`data/scores/related-scores.ts`](../data/scores/related-scores.ts) に一覧を書きます:
 

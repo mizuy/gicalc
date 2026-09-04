@@ -156,7 +156,7 @@ export type AlgorithmFlow = {
 
 export type ClassificationDefinition = ToolBase & {
   kind: 'classification';
-  /** 原著の定義文。画面では日本語コメントの前に出す */
+  /** 原著の定義文。画面末尾の文献ブロックに出す */
   originalLead?: string;
   entries: ClassificationEntry[];
   /** WASP / MESDA-G のような手順付きアルゴリズムだけ付ける */

@@ -1,11 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
-import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
-import { RelatedScoresPanel } from '@/components/calculator/RelatedScoresPanel';
-import { CitationLink } from '@/components/calculator/CitationLink';
-import { JapanMark } from '@/components/calculator/JapanMark';
-import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
+import { ScorePageShell } from '@/components/calculator/ScorePageShell';
 import { Text, useThemeColor } from '@/components/Themed';
 import { SeverityColors } from '@/constants/Colors';
 import { useLocale } from '@/lib/i18n';
@@ -17,9 +13,6 @@ import {
   walkAlgorithmFlow,
 } from '@/lib/scores/algorithmFlow';
 import {
-  figureKey,
-  getToolKind,
-  isJapanDeveloped,
   type AlgorithmFlow,
   type AlgorithmMapNode,
   type ClassificationDefinition,
@@ -213,41 +206,7 @@ export function AlgorithmFlowScreen({ score }: Props) {
   };
 
   return (
-    <ScrollView
-      style={[styles.scroll, { backgroundColor: background }]}
-      contentContainerStyle={styles.content}
-      keyboardShouldPersistTaps="handled">
-      <View style={styles.titleBlock}>
-        <ToolKindBadge kind={getToolKind(score)} />
-        <View style={styles.titleRow}>
-          <Text style={styles.title}>{score.name}</Text>
-          {isJapanDeveloped(score) ? <JapanMark /> : null}
-        </View>
-      </View>
-      {score.originalLead ? (
-        <View style={styles.originalBlock}>
-          <Text style={[styles.originalLabel, { color: tint }]}>{t.original}</Text>
-          <Text style={[styles.originalLead, { color: tint }]}>{score.originalLead}</Text>
-        </View>
-      ) : null}
-      {score.description ? (
-        <Text style={[styles.description, { color: textSecondary }]}>{score.description}</Text>
-      ) : null}
-      {score.reference ? (
-        <View style={styles.reference}>
-          <CitationLink label={`${t.reference}: ${score.reference}`} pubmed={score.pubmed} />
-          {score.license ? (
-            <CitationLink label={`${t.license}: ${score.license}`} href={score.licenseUrl} />
-          ) : null}
-        </View>
-      ) : null}
-
-      <RelatedScoresPanel scoreId={score.id} />
-
-      {score.figures?.map((figure) => (
-        <ClassificationFigure key={figureKey(figure)} figure={figure} />
-      ))}
-
+    <ScorePageShell score={score} keyboardShouldPersistTaps="handled">
       <Text style={[styles.section, { color: tint }]}>{flow.title}</Text>
       <Text style={[styles.hint, { color: textSecondary }]}>{t.algorithmHint}</Text>
 
@@ -337,61 +296,11 @@ export function AlgorithmFlowScreen({ score }: Props) {
           dimmed={Boolean(diagnosis && diagnosis.label !== entry.label)}
         />
       ))}
-
-      <View style={[styles.footnoteBox, { borderColor: border }]}>
-        <Text style={[styles.footnote, { color: textSecondary }]}>{t.footnote}</Text>
-      </View>
-    </ScrollView>
+    </ScorePageShell>
   );
 }
 
 const styles = StyleSheet.create({
-  scroll: {
-    flex: 1,
-  },
-  content: {
-    maxWidth: 720,
-    width: '100%',
-    alignSelf: 'center',
-    padding: 20,
-    paddingBottom: 40,
-  },
-  titleBlock: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '800',
-    flexShrink: 1,
-  },
-  originalBlock: {
-    marginBottom: 8,
-  },
-  originalLabel: {
-    fontSize: 11,
-    fontWeight: '800',
-    letterSpacing: 0.4,
-    marginBottom: 4,
-  },
-  originalLead: {
-    fontSize: 14,
-    lineHeight: 22,
-  },
-  description: {
-    fontSize: 14,
-    lineHeight: 22,
-    marginBottom: 8,
-  },
-  reference: {
-    marginBottom: 16,
-  },
   section: {
     fontSize: 13,
     fontWeight: '800',
@@ -592,14 +501,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 18,
     marginTop: 8,
-  },
-  footnoteBox: {
-    marginTop: 12,
-    borderTopWidth: 1,
-    paddingTop: 16,
-  },
-  footnote: {
-    fontSize: 12,
-    lineHeight: 18,
   },
 });
