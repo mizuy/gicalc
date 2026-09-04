@@ -456,9 +456,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     name: 'Early gastric cancer curative resection after ESD (eCura)',
     shortName: 'Curability',
     description:
-      'Determines endoscopic curability (eCuraA / B / C-1 / C-2) from post-ESD/EMR pathology. Notes from the JGES gastric ESD/EMR guideline (2nd ed.) and JGCA gastric cancer treatment guideline (6th ed.) are shown together.',
-    officialLinkLabel: 'JGCA gastric cancer treatment guideline 6th ed. (endoscopic resection)',
-    note: 'Fig. 2-style table at the top; pathology inputs highlight the matching cell. JGCA 6th-ed. notes included. For LNM scoring after non-curative resection, see the separate eCura score page (Hatta 2017). Figures 3 and 6 link to the paper.',
+      'Determines endoscopic curability (eCuraA / C-1 / C-2) from post-ESD/EMR pathology. Fig. 2 table from the JGES gastric ESD/EMR guideline (2nd ed.); logic follows JGCA treatment guideline (7th ed., Mar 2025).',
+    officialLinkLabel: 'JGCA gastric cancer treatment guideline 7th ed. (endoscopic resection)',
+    note: 'Unified Fig. 2-style table at the top; pathology inputs highlight the matching cell. Differentiated pT1b1 (SM1) ≤3 cm is eCuraA per the 2025 7th-ed. revision. For LNM scoring after non-curative resection, see the separate eCura score page (Hatta 2017).',
     figureNotes: [
       'Tumor-factor curability chart. Same logic as the on-screen form. Links to Fig. 2.',
       'Post-ESD/EMR treatment flowchart, including exceptions where additional surgery is generally indicated for eCuraC-1.',
@@ -489,7 +489,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         options: [
           { label: 'pT1a (M) intramucosal' },
           { label: 'pT1b1 (SM1) <500 μm' },
-          { label: 'pT1b (SM2) or deeper' },
+          { label: 'pT1b2 (SM2) or deeper' },
         ],
       },
       ul: {
