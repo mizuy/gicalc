@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { CitationLink } from '@/components/calculator/CitationLink';
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
+import { RelatedScoresPanel } from '@/components/calculator/RelatedScoresPanel';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
 import { JapanMark } from '@/components/calculator/JapanMark';
 import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
@@ -69,6 +70,8 @@ export function EsdCurabilityScreenLayout({
           ) : null}
         </View>
       ) : null}
+
+      <RelatedScoresPanel scoreId={score.id} />
 
       {table}
 

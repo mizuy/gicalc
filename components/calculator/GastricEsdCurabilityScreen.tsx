@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { CitationLink } from '@/components/calculator/CitationLink';
 import { GastricEsdCurabilityTable } from '@/components/calculator/GastricEsdCurabilityTable';
+import { RelatedScoresPanel } from '@/components/calculator/RelatedScoresPanel';
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
 import { ScoreFieldSelector } from '@/components/calculator/ScoreFieldSelector';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
@@ -101,6 +102,8 @@ export function GastricEsdCurabilityScreen({ score }: Props) {
           ) : null}
         </View>
       ) : null}
+
+      <RelatedScoresPanel scoreId={score.id} />
 
       <GastricEsdCurabilityTable
         highlightedCells={highlight.cells}

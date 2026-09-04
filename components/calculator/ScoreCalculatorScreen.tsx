@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { CitationLink } from '@/components/calculator/CitationLink';
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
+import { RelatedScoresPanel } from '@/components/calculator/RelatedScoresPanel';
 import { ScoreFieldSelector } from '@/components/calculator/ScoreFieldSelector';
 import { ScoreResultPanel } from '@/components/calculator/ScoreResultPanel';
 import { JapanMark } from '@/components/calculator/JapanMark';
@@ -65,6 +66,8 @@ export function ScoreCalculatorScreen({ score, header }: Props) {
           ) : null}
         </View>
       ) : null}
+
+      <RelatedScoresPanel scoreId={score.id} />
 
       {score.figures?.map((figure) => (
         <ClassificationFigure key={figureKey(figure)} figure={figure} />
