@@ -113,17 +113,29 @@ const DETAIL_EXACT_EN: Record<string, string> = {
   '1989 原法の軽度・中等度・高度は使わない。乳頭部は別評価。':
     'Do not use the 1989 mild / moderate / severe grades. Assess the papilla separately.',
   '透明な少量の液体。粘膜の 95% 超が見える。': 'Small amount of clear fluid. >95% of mucosa visible.',
+  '少量の透明な便汁で、粘膜の 95% 以上が観察可能（JGES 2020 Table 11）。':
+    'Small amount of clear fluid; ≥95% of mucosa visible (JGES 2020 Table 11).',
   'adequate。洗浄前に全体を評価します。': 'Adequate. Score the whole colon before washing.',
+  'adequate。洗浄前に大腸全体を評価します。':
+    'Adequate. Score the entire colon before washing.',
   '透明な液体が多めでも、粘膜の 90% 超が見える。':
     'Larger volume of clear fluid, but >90% of mucosa visible.',
+  '検査に支障がない程度の少量便汁で、粘膜の 90% 以上が観察可能（JGES 2020 Table 11）。':
+    'Small amount of fluid that does not hinder the exam; ≥90% of mucosa visible (JGES 2020 Table 11).',
   '半固形便があるが吸引・洗浄で除去でき、粘膜の 90% 超が見える。':
     'Semisolid stool that can be suctioned or washed; >90% of mucosa visible.',
+  '少量の便はあるが吸引可能で、粘膜の 90% 以上が観察可能（JGES 2020 Table 11）。':
+    'Small amount of stool, suctionable; ≥90% of mucosa visible (JGES 2020 Table 11).',
   '施設により adequate に含めることがあります。': 'Some centers still count this as adequate.',
   '半固形便を吸引できず、粘膜の 90% 未満しか見えない。':
     'Semisolid stool cannot be suctioned; <90% of mucosa visible.',
+  '吸引不能な便が貯留し、粘膜の 90% 未満しか観察できない（JGES 2020 Table 11）。':
+    'Non-suctionable stool retained; <90% of mucosa visible (JGES 2020 Table 11).',
   'inadequate。再検査を検討してください。': 'Inadequate. Consider a repeat examination.',
   '残渣が多く検査を完遂できない。再前処置が必要です。':
     'Too much residue to complete the exam. Repeat preparation is required.',
+  '大量の便塊のため精密検査が不可能。再度腸管洗浄が必要（JGES 2020 Table 11）。':
+    'Large stool burden; exam not feasible. Repeat bowel preparation required (JGES 2020 Table 11).',
   '各区域 ≥2 かつ合計 ≥6 は、通常のサーベイランス間隔の目安です。':
     'Each segment ≥2 and a total ≥6 is a usual surveillance-interval benchmark.',
   '洗浄・吸引後の抜去時に評価します。Aronchick とは時点が違います。':

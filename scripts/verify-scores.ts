@@ -54,7 +54,8 @@ import { FORREST_1974_PUBMED } from '../data/scores/forrest';
 import { HILL_1996_PUBMED } from '../data/scores/hill';
 import { LA_1999_PUBMED } from '../data/scores/la';
 import { SAURIN_2004_PUBMED } from '../data/scores/modified-spigelman';
-import { NICE_2013_PUBMED } from '../data/scores/nice';
+import { NICE_2013_PUBMED, NICE_HAMADA_2021_PUBMED } from '../data/scores/nice';
+import { BBPS_SCIREP_2024_PUBMED } from '../data/scores/bbps';
 import { PARIS_2003_PUBMED } from '../data/scores/paris';
 import { PRAGUE_2006_PUBMED } from '../data/scores/prague';
 import { JSPH_VARICES_2010_PUBMED, KJ_HUGR_2024_PUBMED, NAGASHIMA_2022_PUBMED, PALL_2023_PUBMED } from '../data/scores/jsph-varices';
@@ -1425,16 +1426,31 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const nice = getScoreById('nice');
   assert.ok(nice && isClassification(nice));
-  assert.equal(nice.figures?.length, 1);
-  assert.equal(nice.figures?.[0]?.src, undefined);
-  assert.match(nice.figures?.[0]?.href ?? '', /S0016510713018531-gr1_lrg\.jpg/);
-  assert.equal(nice.figures?.[0]?.hrefLabel, 'Fig. 1');
+  assert.equal(nice.figures?.length, 2);
+  assert.match(nice.figures?.[0]?.src ?? '', /nice-hamada2021-fig1/);
   assert.match(nice.figures?.[0]?.caption ?? '', /Fig\. 1/);
-  assert.match(nice.figures?.[0]?.source ?? '', /Hayashi N/);
+  assert.match(nice.figures?.[0]?.source ?? '', /Hamada Y/);
+  assert.equal(nice.figures?.[0]?.pubmed, NICE_HAMADA_2021_PUBMED);
+  assert.equal(nice.figures?.[0]?.license, 'CC BY 4.0');
+  assert.match(nice.figures?.[0]?.note ?? '', /CC BY 4\.0/);
+  assert.equal(nice.figures?.[1]?.src, undefined);
+  assert.match(nice.figures?.[1]?.href ?? '', /S0016510713018531-gr1_lrg\.jpg/);
+  assert.equal(nice.figures?.[1]?.hrefLabel, 'Hayashi 2013 Fig. 1');
+  assert.match(nice.figures?.[1]?.source ?? '', /Hayashi N/);
   assert.equal(nice.pubmed, NICE_2013_PUBMED);
-  assert.equal(nice.figures?.[0]?.pubmed, NICE_2013_PUBMED);
-  assert.equal(nice.figures?.[0]?.license, undefined);
-  assert.match(nice.figures?.[0]?.note ?? '', /CC ではない/);
+  assert.equal(nice.figures?.[1]?.pubmed, NICE_2013_PUBMED);
+  assert.equal(nice.figures?.[1]?.license, undefined);
+  assert.match(nice.figures?.[1]?.note ?? '', /CC ではない/);
+
+  const bbpsFig = getScoreById('bbps');
+  assert.ok(bbpsFig && !isClassification(bbpsFig));
+  assert.equal(bbpsFig.figures?.length, 1);
+  assert.match(bbpsFig.figures?.[0]?.src ?? '', /bbps-scirep2024-fig1/);
+  assert.match(bbpsFig.figures?.[0]?.caption ?? '', /Fig\. 1/);
+  assert.match(bbpsFig.figures?.[0]?.source ?? '', /Kim J/);
+  assert.equal(bbpsFig.figures?.[0]?.pubmed, BBPS_SCIREP_2024_PUBMED);
+  assert.equal(bbpsFig.figures?.[0]?.license, 'CC BY 4.0');
+  assert.match(bbpsFig.figures?.[0]?.note ?? '', /CC BY 4\.0/);
 
   const esdFibrosisFig = getScoreById('esd-fibrosis');
   assert.ok(esdFibrosisFig && isClassification(esdFibrosisFig));
@@ -1621,6 +1637,9 @@ test('分類は原著の図を出典付きで持つ', () => {
   const aronchick = getScoreById('aronchick');
   assert.ok(aronchick);
   assert.equal(aronchick.license, 'CC BY-NC-ND 4.0');
+  assert.match(aronchick.note ?? '', /JGES 2020/);
+  assert.match(aronchick.note ?? '', /Table 11/);
+  assert.match(aronchick.officialUrl ?? '', /jstage\.jst\.go\.jp/);
 });
 
 test('分類は日本語モードでも英語原著なら定義文を英語で表示する', () => {

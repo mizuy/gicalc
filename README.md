@@ -34,12 +34,12 @@
 | 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（文言。図は原著へリンク） |
 | 大腸 | ESD-F（Matsumoto 2010 / Kim 2016） | 大腸 ESD 粘膜下層線維化 F0–F2 | 定義一覧（文言。図は原著へリンク） |
 | 大腸 | 治癒切除判定（JGES/JSCCR） | 大腸 ESD 後・内視鏡的治癒切除 | 治癒切除 / 追加腸切除 / VM1 |
-| 大腸 | NICE（Hayashi 2013） | 大腸 NBI（非拡大） | 定義一覧（文言。図は原著へリンク） |
+| 大腸 | NICE（Hayashi 2013） | 大腸 NBI（非拡大） | 定義一覧（Hamada 2021 CC 図 + Hayashi 原著リンク） |
 | 大腸 | WASP（IJspeert 2016） | HP / SSL / 腺腫（<10 mm） | 定義一覧（文言。図は原著へリンク） |
 | 大腸 | JNET（Sano 2016） | NBI 拡大 | 定義一覧（文言。図は原著へリンク） |
 | 大腸 | T1 Nomogram（Kajiwara 2023） | 大腸T1癌の LNM 確率 | 確率（%）と nomogram 点 |
-| 大腸 | BBPS（Lai 2009） | 腸管前処置（洗浄後・3区域） | 点数 0–9 |
-| 大腸 | Aronchick | 腸管前処置（洗浄前・全体） | 5段階 |
+| 大腸 | BBPS（Lai 2009） | 腸管前処置（洗浄後・3区域） | 点数 0–9（Kim 2024 CC 図例） |
+| 大腸 | Aronchick | 腸管前処置（洗浄前・全体） | 5段階（JGES 2020 Table 11 準拠） |
 | 出血 | Forrest（1974） | 消化性潰瘍出血の所見 | 定義一覧（Zhou 2025 の図・文言） |
 | 出血 | GBS（Blatchford 2000） | 上部消化管出血 | 点数 0–23 |
 | 出血 | NOBLADS（Aoki 2016） | 急性下部消化管出血 | 点数 0–8 |
@@ -104,13 +104,15 @@ npm run preview:pages
 - Paris の図（Kim 2025, *Clin Endosc* Fig. 2）: **CC BY-NC 4.0**（Johnson 2023 *Can J Surg* は CC BY-NC-ND 4.0）
 - LST の図（Kim 2025, *Clin Endosc* Fig. 3）: **CC BY-NC 4.0**（Castillo-Regalado 2022 *WJGE* は CC BY-NC 4.0）
 - BEST-J（Hatta 2021, *Gut*）: **CC BY-NC 4.0**
+- NICE teaching 図（Hamada 2021, *BMC Gastroenterol* Fig. 1）: **CC BY 4.0**（Hayashi 2013 原著 Fig. 1 は Elsevier 著作権のためリンクのみ）
+- BBPS 区域スコア例（Kim 2024, *Sci Rep* Fig. 1）: **CC BY 4.0**（Lai 2009 原著 Fig. 1 は Elsevier 著作権）
 - Aronchick（2000, *GIE*）: Crossref 上の Version of Record は **CC BY-NC-ND 4.0**（遅延公開）
 - Kakushima WLI スコア（Kakushima 2017, *Endosc Int Open* Table 2）: **CC BY-NC-ND 4.0**（表は HTML のため埋め込まず Table 2 へリンク）
 
 **CC ではないソース**
 
 - JNET（Sano 2016, *Dig Endosc*）: Wiley 標準著作権。図は埋め込まず、原著 Fig. 7 へリンクする
-- NICE（Hayashi 2013, *GIE*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
+- NICE（Hayashi 2013, *GIE*）: Elsevier 著作権。原著 Fig. 1 は埋め込まずリンクする（CC 図は Hamada 2021 *BMC Gastroenterol* Fig. 1 を埋め込み）
 - WASP（IJspeert 2016, *Gut*）: BMJ 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
 - Prague（Sharma 2006, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 3 へリンクする
 - LA 原著（Lundell 1999, *Gut*）: CC ではない。A–D 揃いの静止画は置かず、VideoGIE 2013（CC BY-NC-ND 4.0 の動画）へリンクする
@@ -122,7 +124,7 @@ npm run preview:pages
 - eCura（Hatta 2017, *AJG*）: CC ではない
 - Sekiguchi（2016, *J Gastroenterol*）: CC ではない
 - APCS（Yeoh 2011, *Gut*）: CC ではない
-- BBPS（Lai 2009, *GIE*）: CC ではない
+- BBPS（Lai 2009, *GIE*）: CC ではない（CC 図例は Kim 2024 *Sci Rep* Fig. 1 を埋め込み）
 - GBS（Blatchford 2000, *Lancet*）: CC ではない
 - NOBLADS（Aoki 2016, *CGH*）: CC ではない
 - T1 Nomogram（Kajiwara 2023, *GIE*）: CC ではない。図は埋め込まず、原著 Fig. 2 へリンクする
