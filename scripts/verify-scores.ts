@@ -1322,13 +1322,14 @@ test('分類は原著の図を出典付きで持つ', () => {
   const paris = getScoreById('paris');
   assert.ok(paris && isClassification(paris));
   assert.equal(paris.figures?.length, 1);
-  assert.match(paris.figures?.[0]?.src ?? '', /paris-ce2025-fig2/);
-  assert.match(paris.figures?.[0]?.caption ?? '', /Fig\. 2/);
+  assert.match(paris.figures?.[0]?.src ?? '', /paris-gicalc\.svg/);
+  assert.match(paris.figures?.[0]?.caption ?? '', /schematic cross-section/i);
+  assert.match(paris.figures?.[0]?.source ?? '', /GI Calc/);
   assert.match(paris.figures?.[0]?.source ?? '', /Paris workshop/);
   assert.equal(paris.pubmed, PARIS_2003_PUBMED);
-  assert.equal(paris.figures?.[0]?.license, 'CC BY-NC 4.0');
-  assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
-  assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
+  assert.equal(paris.figures?.[0]?.license, undefined);
+  assert.match(paris.figures?.[0]?.note ?? '', /SVG/);
+  assert.match(paris.figures?.[0]?.note ?? '', /2003\/2005/);
 
   const spsFig = getScoreById('sps');
   assert.ok(spsFig && isClassification(spsFig));

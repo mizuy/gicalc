@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 380" role="img" aria-labelledby="paris-title paris-desc">
+  <title id="paris-title">Paris Type 0 endoscopic morphology</title>
+  <desc id="paris-desc">Schematic cross-sections of Paris classification subtypes 0-Ip, 0-Is, 0-IIa, 0-IIb, 0-IIc, and 0-III.</desc>
+
+  <defs>
+    <linearGradient id="mucosa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F2DCC8"/>
+      <stop offset="100%" stop-color="#E8C9AE"/>
+    </linearGradient>
+    <linearGradient id="submucosa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D9B896"/>
+      <stop offset="100%" stop-color="#C9A882"/>
+    </linearGradient>
+    <linearGradient id="lesion" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E8957A"/>
+      <stop offset="100%" stop-color="#D46B52"/>
+    </linearGradient>
+    <linearGradient id="lesionFlat" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#E8957A"/>
+      <stop offset="100%" stop-color="#D46B52"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    .title { font: 700 15px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1A2A2B; }
+    .group { font: 700 12px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #0D7377; letter-spacing: 0.04em; }
+    .label { font: 700 14px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1A2A2B; }
+    .sublabel { font: 500 11px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #5A6E70; }
+    .baseline { stroke: #5A6E70; stroke-width: 1.5; stroke-dasharray: 4 3; opacity: 0.55; }
+    .panel-bg { fill: #FFFFFF; stroke: #D8E4E5; stroke-width: 1.2; }
+  </style>
+
+  <text x="540" y="28" text-anchor="middle" class="title">Paris classification  Type 0 morphology (schematic cross-section)</text>
+
+  <!-- Group headers -->
+  <text x="170" y="52" text-anchor="middle" class="group">0-I · Protruding</text>
+  <text x="490" y="52" text-anchor="middle" class="group">0-II · Nonprotruding</text>
+  <text x="910" y="52" text-anchor="middle" class="group">0-III · Excavated</text>
+
+  <!-- Shared baseline reference -->
+  <line x1="24" y1="132" x2="1056" y2="132" class="baseline"/>
+
+  <!-- Panel helper macro via groups -->
+
+  <!-- 0-Ip -->
+  <g transform="translate(100, 72)">
+    <rect class="panel-bg" width="140" height="188" rx="8"/>
+    <g>
+      <rect x="0" y="60" width="140" height="128" fill="url(#submucosa)"/>
+      <rect x="0" y="48" width="140" height="18" fill="url(#mucosa)"/>
+      <rect x="66" y="18" width="8" height="30" fill="url(#lesion)" rx="2"/>
+      <ellipse cx="70" cy="16" rx="24" ry="18" fill="url(#lesion)"/>
+      <line x1="0" y1="60" x2="140" y2="60" stroke="#B8956E" stroke-width="1"/>
+    </g>
+    <text x="70" y="214" text-anchor="middle" class="label">0-Ip</text>
+    <text x="70" y="232" text-anchor="middle" class="sublabel">Pedunculated</text>
+  </g>
+
+  <!-- 0-Is -->
+  <g transform="translate(240, 72)">
+    <rect class="panel-bg" width="140" height="188" rx="8"/>
+    <g>
+      <rect x="0" y="60" width="140" height="128" fill="url(#submucosa)"/>
+      <rect x="0" y="48" width="140" height="18" fill="url(#mucosa)"/>
+      <path d="M 34 60 Q 34 8 70 8 Q 106 8 106 60 Z" fill="url(#lesion)"/>
+      <line x1="0" y1="60" x2="140" y2="60" stroke="#B8956E" stroke-width="1"/>
+    </g>
+    <text x="70" y="214" text-anchor="middle" class="label">0-Is</text>
+    <text x="70" y="232" text-anchor="middle" class="sublabel">Sessile</text>
+  </g>
+
+  <!-- 0-IIa -->
+  <g transform="translate(380, 72)">
+    <rect class="panel-bg" width="140" height="188" rx="8"/>
+    <g>
+      <rect x="0" y="60" width="140" height="128" fill="url(#submucosa)"/>
+      <rect x="0" y="48" width="140" height="18" fill="url(#mucosa)"/>
+      <path d="M 38 60 Q 38 46 70 44 Q 102 46 102 60 Z" fill="url(#lesion)"/>
+      <line x1="0" y1="60" x2="140" y2="60" stroke="#B8956E" stroke-width="1"/>
+      <!-- cut-off hint -->
+      <line x1="102" y1="44" x2="118" y2="44" stroke="#0D7377" stroke-width="1.2"/>
+      <line x1="118" y1="44" x2="118" y2="60" stroke="#0D7377" stroke-width="1.2"/>
+      <text x="122" y="54" class="sublabel" fill="#0D7377">&lt;2.5</text>
+    </g>
+    <text x="70" y="214" text-anchor="middle" class="label">0-IIa</text>
+    <text x="70" y="232" text-anchor="middle" class="sublabel">Slightly elevated</text>
+  </g>
+
+  <!-- 0-IIb -->
+  <g transform="translate(520, 72)">
+    <rect class="panel-bg" width="140" height="188" rx="8"/>
+    <g>
+      <rect x="0" y="60" width="140" height="128" fill="url(#submucosa)"/>
+      <rect x="0" y="48" width="140" height="18" fill="url(#mucosa)"/>
+      <rect x="36" y="54" width="68" height="6" fill="url(#lesionFlat)" rx="2"/>
+      <line x1="0" y1="60" x2="140" y2="60" stroke="#B8956E" stroke-width="1"/>
+    </g>
+    <text x="70" y="214" text-anchor="middle" class="label">0-IIb</text>
+    <text x="70" y="232" text-anchor="middle" class="sublabel">Flat</text>
+  </g>
+
+  <!-- 0-IIc -->
+  <g transform="translate(660, 72)">
+    <rect class="panel-bg" width="140" height="188" rx="8"/>
+    <g>
+      <rect x="0" y="60" width="140" height="128" fill="url(#submucosa)"/>
+      <rect x="0" y="48" width="140" height="18" fill="url(#mucosa)"/>
+      <path d="M 36 60 L 36 72 Q 70 78 104 72 L 104 60 Z" fill="url(#submucosa)"/>
+      <path d="M 36 60 Q 70 68 104 60" fill="none" stroke="#C45C42" stroke-width="2"/>
+      <ellipse cx="70" cy="69" rx="30" ry="7" fill="url(#lesion)" opacity="0.85"/>
+      <line x1="0" y1="60" x2="140" y2="60" stroke="#B8956E" stroke-width="1"/>
+    </g>
+    <text x="70" y="214" text-anchor="middle" class="label">0-IIc</text>
+    <text x="70" y="232" text-anchor="middle" class="sublabel">Depressed</text>
+  </g>
+
+  <!-- 0-III -->
+  <g transform="translate(840, 72)">
+    <rect class="panel-bg" width="140" height="188" rx="8"/>
+    <g>
+      <rect x="0" y="60" width="140" height="128" fill="url(#submucosa)"/>
+      <rect x="0" y="48" width="140" height="18" fill="url(#mucosa)"/>
+      <path d="M 34 60 L 46 108 Q 70 118 94 108 L 106 60 Z" fill="url(#submucosa)"/>
+      <path d="M 34 60 L 46 108 Q 70 118 94 108 L 106 60" fill="url(#lesion)" opacity="0.35"/>
+      <path d="M 34 60 Q 70 72 106 60" fill="none" stroke="#C45C42" stroke-width="2"/>
+      <line x1="0" y1="60" x2="140" y2="60" stroke="#B8956E" stroke-width="1"/>
+    </g>
+    <text x="70" y="214" text-anchor="middle" class="label">0-III</text>
+    <text x="70" y="232" text-anchor="middle" class="sublabel">Ulcer</text>
+  </g>
+
+  <text x="540" y="318" text-anchor="middle" class="sublabel">
+    Elevation cut-off: 2.5 mm (columnar epithelium) · 1.2 mm (esophagus). Original schematic by GI Calc.
+  </text>
+  <text x="540" y="338" text-anchor="middle" class="sublabel">
+    Type 0 definitions: Paris workshop (Gastrointest Endosc 2003) and Endoscopic Classification Review Group (Endoscopy 2005).
+  </text>
+</svg>

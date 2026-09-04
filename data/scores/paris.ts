@@ -21,17 +21,14 @@ export const parisScore: ClassificationDefinition = {
   pubmed: PARIS_2003_PUBMED,
   figures: [
     {
-      src: '/figures/paris-ce2025-fig2.jpg',
-      alt: 'Schematic of the Paris Type 0 classification (0-Ip, 0-Isp, 0-Is, 0-IIa, 0-IIb, 0-IIc, 0-III)',
-      caption: 'Fig. 2. Schematic representation of the Paris classification of polyp morphology',
+      src: '/figures/paris-gicalc.svg',
+      alt: 'Schematic cross-sections of Paris Type 0 morphology (0-Ip, 0-Is, 0-IIa, 0-IIb, 0-IIc, 0-III)',
+      caption: 'Paris Type 0 morphology (schematic cross-section)',
       source:
-        'Kim OZ. Classification of image-enhanced endoscopy in colon tumors. Clin Endosc. 2025;58:337-351, Fig. 2 (adapted from Johnson GGRJ et al. Can J Surg. 2023;66:E491-E498). Original Type 0 definitions: Paris workshop, Gastrointest Endosc 2003;58:S3-S43, and Endoscopic Classification Review Group, Endoscopy 2005;37:570-578.',
-      doi: 'https://doi.org/10.5946/ce.2024.263',
-      pubmed: '40336268',
-      license: 'CC BY-NC 4.0',
-      licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
-      note: '図の 0-Isp は日本語分類／後年の追加。2003/2005 の Paris 表は 0-Ip と 0-Is。図は Clin Endosc 2025 Fig. 2（CC BY-NC 4.0）。Johnson 2023 Can J Surg は CC BY-NC-ND 4.0。2003/2005 の原著は CC ではない。',
-      aspectRatio: 1566 / 815,
+        'Original schematic by GI Calc. Type 0 definitions: Paris workshop, Gastrointest Endosc 2003;58:S3-S43, and Endoscopic Classification Review Group, Endoscopy 2005;37:570-578.',
+      pubmed: PARIS_2003_PUBMED,
+      note: 'GI Calc 自作の模式図（SVG）。2003/2005 の Paris 定義に基づく。0-Isp や複合型（0-IIc+IIa 等）は含まない。柱状上皮の隆起カットオフ 2.5 mm（食道 1.2 mm）を 0-IIa に示す。',
+      aspectRatio: 1080 / 380,
     },
   ],
   entries: [

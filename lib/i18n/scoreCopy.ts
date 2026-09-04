@@ -1022,7 +1022,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       '0-III': 'Almost never seen in the colorectum.',
     },
     figureNotes: [
-      '0-Isp in the figure is Japanese / later. The 2003/2005 Paris table lists 0-Ip and 0-Is. Figure from Clin Endosc 2025 Fig. 2 (CC BY-NC 4.0). Johnson 2023 Can J Surg is CC BY-NC-ND 4.0. The 2003/2005 originals are not CC.',
+      'Original GI Calc schematic (SVG) based on the 2003/2005 Paris Type 0 definitions. 0-Isp and compound types (e.g. 0-IIc+IIa) are not shown. The 2.5 mm elevation cut-off (columnar epithelium) is indicated on 0-IIa.',
     ],
   },
   lst: {
