@@ -1283,16 +1283,26 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
-  assert.equal(jes.figures?.length, 2);
-  assert.match(jes.figures?.[0]?.source ?? '', /Oyama T/);
-  assert.match(jes.figures?.[0]?.doi ?? '', /10\.1007\/s10388-016-0527-7/);
-  assert.match(jes.figures?.[0]?.src ?? '', /jes-oyama2017-fig1-4/);
-  assert.match(jes.figures?.[1]?.src ?? '', /jes-oyama2017-fig5/);
+  assert.equal(jes.figures, undefined);
+  assert.equal(jes.entries[0]?.figures?.length, 1);
+  assert.equal(jes.entries[1]?.figures?.length, 1);
+  assert.equal(jes.entries[2]?.figures?.length, 1);
+  assert.equal(jes.entries[3]?.figures?.length, 1);
+  assert.equal(jes.entries[4]?.figures?.length, 3);
+  assert.match(jes.entries[0]?.figures?.[0]?.src ?? '', /fig1-type-a/);
+  assert.match(jes.entries[1]?.figures?.[0]?.src ?? '', /fig2-type-b1/);
+  assert.match(jes.entries[2]?.figures?.[0]?.src ?? '', /fig3-type-b2/);
+  assert.match(jes.entries[3]?.figures?.[0]?.src ?? '', /fig4-type-b3/);
+  assert.match(jes.entries[4]?.figures?.[0]?.src ?? '', /ava-small/);
+  assert.match(jes.entries[4]?.figures?.[1]?.src ?? '', /ava-middle/);
+  assert.match(jes.entries[4]?.figures?.[2]?.src ?? '', /ava-large/);
+  assert.match(jes.entries[0]?.figures?.[0]?.source ?? '', /Oyama T/);
+  assert.match(jes.entries[0]?.figures?.[0]?.doi ?? '', /10\.1007\/s10388-016-0527-7/);
   assert.equal(jes.pubmed, '28386209');
   assert.equal(jes.license, 'CC BY 4.0');
-  assert.equal(jes.figures?.[0]?.license, 'CC BY 4.0');
-  assert.equal(jes.figures?.[1]?.license, 'CC BY 4.0');
-  assert.match(jes.figures?.[0]?.note ?? '', /CC BY 4\.0/);
+  assert.equal(jes.entries[0]?.figures?.[0]?.license, 'CC BY 4.0');
+  assert.match(jes.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
+  assert.match(jes.entries[0]?.figures?.[0]?.note ?? '', /CC BY 4\.0/);
 
   const kimura = getScoreById('kimura-takemoto');
   assert.ok(kimura && isClassification(kimura));
@@ -1561,11 +1571,21 @@ test('英語コピーが全スコアの表示項目を覆う', () => {
         if (entry.comment) {
           assert.ok(copy.comments?.[entry.label], `${score.id} comment ${entry.label}`);
         }
+        if (entry.figures?.length) {
+          assert.equal(
+            copy.entryFigureNotes?.[entry.label]?.length,
+            entry.figures.length,
+            `${score.id} entry figures ${entry.label}`,
+          );
+        }
       }
       for (const entry of english.entries) {
         if (entry.group) assert.doesNotMatch(entry.group, japanese);
         if (entry.comment) assert.doesNotMatch(entry.comment, japanese);
         if (entry.meaning) assert.doesNotMatch(entry.meaning, japanese);
+        for (const figure of entry.figures ?? []) {
+          assert.doesNotMatch(figure.note, japanese, `${score.id} ${entry.label} figure`);
+        }
       }
       if (hasAlgorithmFlow(score)) {
         assert.ok(copy.flow, `${score.id} flow copy`);

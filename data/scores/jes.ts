@@ -1,4 +1,26 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
+
+const OYAMA_SOURCE =
+  'Oyama T, Inoue H, Arima M, et al. Prediction of the invasion depth of superficial squamous cell carcinoma based on microvessel morphology: magnifying endoscopic classification of the Japan Esophageal Society. Esophagus. 2017;14:105-112.';
+const OYAMA_DOI = 'https://doi.org/10.1007/s10388-016-0527-7';
+const OYAMA_PUBMED = '28386209';
+
+function oyamaCrop(figure: {
+  src: string;
+  alt: string;
+  caption: string;
+  note: string;
+  aspectRatio: number;
+}): ClassificationFigure {
+  return {
+    ...figure,
+    source: OYAMA_SOURCE,
+    doi: OYAMA_DOI,
+    pubmed: OYAMA_PUBMED,
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+  };
+}
 
 export const jesScore: ClassificationDefinition = {
   id: 'jes',
@@ -13,41 +35,23 @@ export const jesScore: ClassificationDefinition = {
   originalLead:
     'The microvascular irregularity is evaluated for weaving (tortuosity), dilatation, irregular caliber, and different shape. Microvessels are classified as type A if they have three or fewer factors and type B if they have all four. Type A microvessels correspond to noncancerous lesions and lack severe irregularity; type B, to cancerous lesions, and exhibit severe irregularity. Type B vessels were subclassified into B1, B2, and B3.',
   reference: 'Oyama T et al. Esophagus 2017;14:105-112',
-  pubmed: '28386209',
+  pubmed: OYAMA_PUBMED,
   license: 'CC BY 4.0',
   licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-  figures: [
-    {
-      src: '/figures/jes-oyama2017-fig1-4.jpg',
-      alt: 'JES classification Type A, B1, B2, and B3 (Oyama 2017 Fig. 1–4)',
-      caption: 'Fig. 1–4. Type A / B1 / B2 / B3 (Oyama et al. Esophagus 2017)',
-      source:
-        'Oyama T, Inoue H, Arima M, et al. Prediction of the invasion depth of superficial squamous cell carcinoma based on microvessel morphology: magnifying endoscopic classification of the Japan Esophageal Society. Esophagus. 2017;14:105-112.',
-      doi: 'https://doi.org/10.1007/s10388-016-0527-7',
-      pubmed: '28386209',
-      license: 'CC BY 4.0',
-      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-      note: '上段左 Fig. 1 Type A、上段右 Fig. 2 Type B1、下段左 Fig. 3 Type B2、下段右 Fig. 4 Type B3。Springer Open。ライセンスは CC BY 4.0。',
-      aspectRatio: 1200 / 523,
-    },
-    {
-      src: '/figures/jes-oyama2017-fig5.jpg',
-      alt: 'JES classification AVA (Oyama 2017 Fig. 5)',
-      caption: 'Fig. 5. AVA (Oyama et al. Esophagus 2017)',
-      source: 'Oyama T, Inoue H, Arima M, et al. Esophagus. 2017;14:105-112.',
-      doi: 'https://doi.org/10.1007/s10388-016-0527-7',
-      pubmed: '28386209',
-      license: 'CC BY 4.0',
-      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-      note: 'AVA-small / middle / large。Springer Open。ライセンスは CC BY 4.0。',
-      aspectRatio: 709 / 203,
-    },
-  ],
   entries: [
     {
       label: 'Type A',
       meaning: 'No invasion',
       severity: 'none',
+      figures: [
+        oyamaCrop({
+          src: '/figures/jes-oyama2017-fig1-type-a.jpg',
+          alt: 'JES Type A microvessels (Oyama 2017 Fig. 1 a–b)',
+          caption: 'Fig. 1 Type A',
+          note: '原図 Fig. 1 から切り抜き（a / b）。Springer Open。ライセンスは CC BY 4.0。',
+          aspectRatio: 598 / 258,
+        }),
+      ],
       rows: [
         { heading: 'Definition', text: 'Normal IPCL, or abnormal microvessels without severe irregularity' },
         { heading: 'Invasion', text: 'No invasion' },
@@ -58,6 +62,15 @@ export const jesScore: ClassificationDefinition = {
       label: 'Type B1',
       meaning: 'T1a-EP or T1a-LPM',
       severity: 'mild',
+      figures: [
+        oyamaCrop({
+          src: '/figures/jes-oyama2017-fig2-type-b1.jpg',
+          alt: 'JES Type B1 microvessels (Oyama 2017 Fig. 2 a–b)',
+          caption: 'Fig. 2 Type B1',
+          note: '原図 Fig. 2 から切り抜き（a / b）。Springer Open。ライセンスは CC BY 4.0。',
+          aspectRatio: 598 / 258,
+        }),
+      ],
       rows: [
         { heading: 'Definition', text: 'Type B vessels with a loop-like formation' },
         { heading: 'Invasion', text: 'T1a-EP or T1a-LPM' },
@@ -72,6 +85,15 @@ export const jesScore: ClassificationDefinition = {
       label: 'Type B2',
       meaning: 'T1a-MM or T1b-SM1',
       severity: 'moderate',
+      figures: [
+        oyamaCrop({
+          src: '/figures/jes-oyama2017-fig3-type-b2.jpg',
+          alt: 'JES Type B2 microvessels (Oyama 2017 Fig. 3 a–b)',
+          caption: 'Fig. 3 Type B2',
+          note: '原図 Fig. 3 から切り抜き（a / b）。Springer Open。ライセンスは CC BY 4.0。',
+          aspectRatio: 598 / 258,
+        }),
+      ],
       rows: [
         {
           heading: 'Definition',
@@ -89,6 +111,15 @@ export const jesScore: ClassificationDefinition = {
       label: 'Type B3',
       meaning: 'T1b-SM2 or deeper',
       severity: 'severe',
+      figures: [
+        oyamaCrop({
+          src: '/figures/jes-oyama2017-fig4-type-b3.jpg',
+          alt: 'JES Type B3 microvessels (Oyama 2017 Fig. 4 a–b)',
+          caption: 'Fig. 4 Type B3',
+          note: '原図 Fig. 4 から切り抜き（a / b）。Springer Open。ライセンスは CC BY 4.0。',
+          aspectRatio: 598 / 258,
+        }),
+      ],
       rows: [
         {
           heading: 'Definition',
@@ -105,6 +136,29 @@ export const jesScore: ClassificationDefinition = {
       label: 'AVA',
       meaning: 'Avascular area',
       severity: 'moderate',
+      figures: [
+        oyamaCrop({
+          src: '/figures/jes-oyama2017-fig5-ava-small.jpg',
+          alt: 'JES AVA-small (Oyama 2017 Fig. 5a)',
+          caption: 'Fig. 5a AVA-small',
+          note: '原図 Fig. 5a から切り抜き。Springer Open。ライセンスは CC BY 4.0。',
+          aspectRatio: 232 / 203,
+        }),
+        oyamaCrop({
+          src: '/figures/jes-oyama2017-fig5-ava-middle.jpg',
+          alt: 'JES AVA-middle (Oyama 2017 Fig. 5b)',
+          caption: 'Fig. 5b AVA-middle',
+          note: '原図 Fig. 5b から切り抜き。Springer Open。ライセンスは CC BY 4.0。',
+          aspectRatio: 233 / 203,
+        }),
+        oyamaCrop({
+          src: '/figures/jes-oyama2017-fig5-ava-large.jpg',
+          alt: 'JES AVA-large (Oyama 2017 Fig. 5c)',
+          caption: 'Fig. 5c AVA-large',
+          note: '原図 Fig. 5c から切り抜き。Springer Open。ライセンスは CC BY 4.0。',
+          aspectRatio: 233 / 203,
+        }),
+      ],
       rows: [
         {
           heading: 'Definition',

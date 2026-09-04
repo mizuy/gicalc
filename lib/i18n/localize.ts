@@ -101,6 +101,10 @@ export function localizeScore<T extends ScoreDefinition>(score: T, locale: Local
         meaning: copy.meanings?.[entry.label] ?? entry.meaning,
         group: entry.group ? (copy.groups?.[entry.group] ?? entry.group) : entry.group,
         comment: entry.comment ? (copy.comments?.[entry.label] ?? entry.comment) : entry.comment,
+        figures: entry.figures?.map((figure, index) => ({
+          ...figure,
+          note: copy.entryFigureNotes?.[entry.label]?.[index] ?? figure.note,
+        })),
       })),
       figures: score.figures?.map((figure, index) => ({
         ...figure,

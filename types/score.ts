@@ -102,6 +102,8 @@ export type ClassificationEntry = {
   comment?: string;
   group?: string;
   severity?: ScoreSeverity;
+  /** CC 図を切り抜いて各型の参考にするときだけ付ける */
+  figures?: ClassificationFigure[];
 };
 
 export type CalculatorDefinition = ToolBase & {

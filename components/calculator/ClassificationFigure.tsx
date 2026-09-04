@@ -10,6 +10,8 @@ import type { ClassificationFigure as Figure } from '@/types/score';
 
 type Props = {
   figure: Figure;
+  /** 分類カード内の参考画像。出典の長い行は出さない */
+  compact?: boolean;
 };
 
 type WebLinkProps = {
@@ -17,7 +19,7 @@ type WebLinkProps = {
   hrefAttrs: { target: string; rel: string };
 };
 
-export function ClassificationFigure({ figure }: Props) {
+export function ClassificationFigure({ figure, compact = false }: Props) {
   const [open, setOpen] = useState(false);
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
@@ -28,7 +30,12 @@ export function ClassificationFigure({ figure }: Props) {
   const aspectRatio = figure.aspectRatio ?? 16 / 9;
 
   return (
-    <View style={[styles.box, { backgroundColor: surface, borderColor: border }]}>
+    <View
+      style={[
+        styles.box,
+        compact ? styles.boxCompact : null,
+        { backgroundColor: surface, borderColor: border },
+      ]}>
       {uri ? (
         <Pressable
           accessibilityRole="button"
@@ -41,15 +48,15 @@ export function ClassificationFigure({ figure }: Props) {
             style={[styles.image, { aspectRatio }]}
             resizeMode="contain"
           />
-          <View style={[styles.enlargeBadge, { backgroundColor: tint }]}>
+          <View style={[styles.enlargeBadge, compact ? styles.enlargeBadgeCompact : null, { backgroundColor: tint }]}>
             <Text style={styles.enlargeBadgeText}>{t.enlargeHint}</Text>
           </View>
         </Pressable>
       ) : figure.href ? (
         <FigureHrefButton href={figure.href} label={`${t.openFigure}: ${figure.hrefLabel ?? figure.caption}`} />
       ) : null}
-      <Text style={styles.caption}>{figure.caption}</Text>
-      <CitationLink label={`${t.source}: ${figure.source}`} pubmed={figure.pubmed} />
+      <Text style={[styles.caption, compact ? styles.captionCompact : null]}>{figure.caption}</Text>
+      {compact ? null : <CitationLink label={`${t.source}: ${figure.source}`} pubmed={figure.pubmed} />}
       {figure.license ? (
         <CitationLink label={`${t.license}: ${figure.license}`} href={figure.licenseUrl} />
       ) : null}
@@ -135,6 +142,13 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 16,
   },
+  boxCompact: {
+    flex: 1,
+    minWidth: 140,
+    borderRadius: 10,
+    padding: 8,
+    marginBottom: 0,
+  },
   thumbWrap: {
     position: 'relative',
   },
@@ -166,6 +180,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
   },
+  enlargeBadgeCompact: {
+    right: 4,
+    bottom: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
   enlargeBadgeText: {
     color: '#FFFFFF',
     fontSize: 11,
@@ -176,6 +196,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginTop: 10,
     lineHeight: 20,
+  },
+  captionCompact: {
+    fontSize: 12,
+    marginTop: 6,
+    lineHeight: 16,
   },
   note: {
     fontSize: 11,
