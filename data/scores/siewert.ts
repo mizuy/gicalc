@@ -24,7 +24,7 @@ export const siewertScore: ClassificationDefinition = {
   note: 'Siewert はドイツの外科分類で、日本マークは付けない。日本では日本食道学会・日本胃癌学会が西分類を採用する。計測のゼロ点は Prague と同じく胃粘膜縦走ひだの上端（Siewert）。日本の内視鏡では柵状血管下端を優先し、不明なときだけひだの上端を EGJ とする。Z-line（SCJ）は EGJ と一致しないことがある。',
   figures: [
     {
-      src: '/figures/siewert-jce2017-fig2-6.jpg',
+      src: '/figures/siewert-jce2017-fig2-6.webp',
       alt: 'Siewert Type I, II, and III relative to the anatomical cardia (JCE 11th Fig. 2-6)',
       caption: 'Fig. 2-6. Definition of adenocarcinoma at the EGJ according to Siewert’s classification',
       source:
@@ -37,7 +37,7 @@ export const siewertScore: ClassificationDefinition = {
       aspectRatio: 387 / 321,
     },
     {
-      src: '/figures/siewert-jce2017-fig2-5.jpg',
+      src: '/figures/siewert-jce2017-fig2-5.webp',
       alt: 'Nishi EGJ zone: 2 cm above and 2 cm below the EGJ (JCE 11th Fig. 2-5)',
       caption: 'Fig. 2-5. Zone of the esophagogastric junction (Nishi: ±2 cm)',
       source:
@@ -50,7 +50,7 @@ export const siewertScore: ClassificationDefinition = {
       aspectRatio: 387 / 257,
     },
     {
-      src: '/figures/siewert-jce2017-fig2-7.jpg',
+      src: '/figures/siewert-jce2017-fig2-7.webp',
       alt: 'Nishi occupation E, EG, E=G, GE, and G (JCE 11th Fig. 2-7)',
       caption: 'Fig. 2-7. Subclassification of cancer at the EGJ (E / EG / E=G / GE / G)',
       source:

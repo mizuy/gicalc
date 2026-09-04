@@ -1373,7 +1373,7 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.ok(kimura && isClassification(kimura));
   assert.match(kimura.figures?.[0]?.source ?? '', /Quach DT/);
   assert.match(kimura.figures?.[0]?.doi ?? '', /10\.5946\/ce\.2019\.072/);
-  assert.match(kimura.figures?.[0]?.src ?? '', /kimura-takemoto-1969\.png/);
+  assert.match(kimura.figures?.[0]?.src ?? '', /kimura-takemoto-1969\.webp/);
   assert.equal(kimura.pubmed, QUACH_2019_PUBMED);
   assert.equal(kimura.license, 'CC BY-NC 3.0');
   assert.equal(kimura.figures?.[0]?.pubmed, QUACH_2019_PUBMED);

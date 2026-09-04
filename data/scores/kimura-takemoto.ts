@@ -22,7 +22,7 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
   licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',
   figures: [
     {
-      src: '/figures/kimura-takemoto-1969.png',
+      src: '/figures/kimura-takemoto-1969.webp',
       alt: 'Kimura–Takemoto classification C-1 to O-3 (Quach 2019 Fig. 2)',
       caption: 'Fig. 2. Kimura–Takemoto classification of the atrophic border (Quach and Hiyama, Clin Endosc 2019)',
       source:

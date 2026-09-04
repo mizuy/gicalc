@@ -26,7 +26,7 @@ export const bbpsScore: ScoreDefinition = {
   pubmed: BBPS_2009_PUBMED,
   figures: [
     {
-      src: '/figures/bbps-scirep2024-fig1.png',
+      src: '/figures/bbps-scirep2024-fig1.webp',
       alt: 'Boston Bowel Preparation Scale segment scores 0 through 3 (Kim 2024 Fig. 1)',
       caption: 'Fig. 1. Examples of the BBPS (segment scores 0–3)',
       source:

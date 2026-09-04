@@ -20,7 +20,7 @@ export const lstScore: ClassificationDefinition = {
   pubmed: LST_2008_PUBMED,
   figures: [
     {
-      src: '/figures/lst-ce2025-fig3.jpg',
+      src: '/figures/lst-ce2025-fig3.webp',
       alt: 'LST classification: granular homogeneous, granular mixed nodular, nongranular flat, nongranular pseudodepressed',
       caption: 'Fig. 3. Laterally spreading tumor (LST) classification',
       source:

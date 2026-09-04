@@ -21,7 +21,7 @@ export const parisScore: ClassificationDefinition = {
   pubmed: PARIS_2003_PUBMED,
   figures: [
     {
-      src: '/figures/paris-ce2025-fig2.jpg',
+      src: '/figures/paris-ce2025-fig2.webp',
       alt: 'Schematic of the Paris Type 0 classification (0-Ip, 0-Isp, 0-Is, 0-IIa, 0-IIb, 0-IIc, 0-III)',
       caption: 'Fig. 2. Schematic representation of the Paris classification of polyp morphology',
       source:

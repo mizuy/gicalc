@@ -26,7 +26,7 @@ export const colorectalEcScore: ClassificationDefinition = {
   note: 'EC 分類はメチレンブルー（またはクリスタルバイオレット併用）染色後の観察。EC-V は EC-NBI で染色不要。SMs＝粘膜下層軽度浸潤、SMm＝高度浸潤（リンパ節転移リスク）。EndoBRAIN は EC/EC-NBI 画像の診断支援（薬機承認）で、本ページの分類表とは別製品。',
   figures: [
     {
-      src: '/figures/ec-maeda2021-fig2.jpg',
+      src: '/figures/ec-maeda2021-fig2.webp',
       alt: 'Endocytoscopic classification for colorectal lesions EC1a EC1b EC2 EC3a EC3b',
       caption: 'Fig. 2. Endocytoscopic classification for colorectal lesions (Kudo et al.)',
       source:
@@ -39,7 +39,7 @@ export const colorectalEcScore: ClassificationDefinition = {
       aspectRatio: 783 / 664,
     },
     {
-      src: '/figures/ec-maeda2021-fig3.jpg',
+      src: '/figures/ec-maeda2021-fig3.webp',
       alt: 'Endocytoscopic vascular EC-V classification EC-V1 EC-V2 EC-V3 with NBI',
       caption: 'Fig. 3. Endocytoscopic classification based on narrow-band imaging (EC-V)',
       source:

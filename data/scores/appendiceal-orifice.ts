@@ -24,7 +24,7 @@ export const appendicealOrificeScore: ClassificationDefinition = {
   pubmed: APPENDICEAL_ORIFICE_2016_PUBMED,
   figures: [
     {
-      src: '/figures/oung2020-fig2.jpg',
+      src: '/figures/oung2020-fig2.webp',
       alt: 'Toyonaga appendiceal orifice lesion classification Types 1, 2, 3, and 3a',
       caption:
         'Fig. 2. Lesion classification according to Toyonaga’s classification with additional type 3a in case of previous appendectomy',

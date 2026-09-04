@@ -20,7 +20,7 @@ export const hillScore: ClassificationDefinition = {
   pubmed: HILL_1996_PUBMED,
   figures: [
     {
-      src: '/figures/hill-ge2023-fig1.jpg',
+      src: '/figures/hill-ge2023-fig1.webp',
       alt: 'Hill classification grades I–IV of the gastroesophageal flap valve (Ge 2023 Fig. 1)',
       caption: 'Fig. 1. Sample images of the Hill classification standard (Ge et al. Ann Med 2023)',
       source:
