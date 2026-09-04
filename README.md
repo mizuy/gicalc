@@ -104,7 +104,7 @@ npm run preview:pages
 - Paris の図（Kim 2025, *Clin Endosc* Fig. 2）: **CC BY-NC 4.0**（Johnson 2023 *Can J Surg* は CC BY-NC-ND 4.0）
 - LST の図（Kim 2025, *Clin Endosc* Fig. 3）: **CC BY-NC 4.0**（Castillo-Regalado 2022 *WJGE* は CC BY-NC 4.0）
 - BEST-J（Hatta 2021, *Gut*）: **CC BY-NC 4.0**
-- NICE teaching 図（Hamada 2021, *BMC Gastroenterol* Fig. 1）: **CC BY 4.0**（Hayashi 2013 原著 Fig. 1 は Elsevier 著作権のためリンクのみ）
+- NICE teaching 図（Hamada 2021, *BMC Gastroenterol* Fig. 1）: **CC BY 4.0**（各 Type に Endoscopic image 行から切り抜きを掲載。Hayashi 2013 原著 Fig. 1 は Elsevier 著作権のためリンクのみ）
 - BBPS 区域スコア例（Kim 2024, *Sci Rep* Fig. 1）: **CC BY 4.0**（Lai 2009 原著 Fig. 1 は Elsevier 著作権）
 - Aronchick（2000, *GIE*）: Crossref 上の Version of Record は **CC BY-NC-ND 4.0**（遅延公開）
 - Kakushima WLI スコア（Kakushima 2017, *Endosc Int Open* Table 2）: **CC BY-NC-ND 4.0**（表は HTML のため埋め込まず Table 2 へリンク）

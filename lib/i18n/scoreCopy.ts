@@ -1317,6 +1317,17 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Hamada 2021 BMC Gastroenterol Fig. 1 (CC BY 4.0). Teaching images for NICE Types 1–3. Non-magnifying NBI. Separate from JNET.',
       'Hayashi 2013 original Fig. 1. Elsevier / GIE copyright; not CC — link opens the publisher Fig. 1 image.',
     ],
+    entryFigureNotes: {
+      'Type 1': [
+        'Cropped from Hamada 2021 Fig. 1 Endoscopic image row, Type 1 column. CC BY 4.0. Non-magnifying NBI.',
+      ],
+      'Type 2': [
+        'Cropped from Hamada 2021 Fig. 1 Endoscopic image row, Type 2 column. CC BY 4.0. Non-magnifying NBI.',
+      ],
+      'Type 3': [
+        'Cropped from Hamada 2021 Fig. 1 Endoscopic image row, Type 3 column. CC BY 4.0. Non-magnifying NBI.',
+      ],
+    },
   },
   wasp: {
     name: 'WASP classification (HP / SSL / adenoma)',

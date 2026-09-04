@@ -1,9 +1,30 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
 
 /** Hayashi 2013 GIE（PMID 23910062）。Type 1/2 は Hewett 2012。 */
 export const NICE_2013_PUBMED = '23910062';
 /** Hamada 2021 BMC Gastroenterol（PMID 34454417）。CC BY 4.0 の teaching 図。 */
 export const NICE_HAMADA_2021_PUBMED = '34454417';
+
+const HAMADA_SOURCE =
+  'Hamada Y, Tanaka K, Katsurahara M, et al. Utility of the narrow-band imaging international colorectal endoscopic classification for optical diagnosis of colorectal polyp histology in clinical practice: a retrospective study. BMC Gastroenterol. 2021;21:336. Fig. 1. Classification: Hayashi N, Tanaka S, Hewett DG, et al. Gastrointest Endosc. 2013;78:625-632.';
+const HAMADA_DOI = 'https://doi.org/10.1186/s12876-021-01898-z';
+
+function hamadaCrop(figure: {
+  src: string;
+  alt: string;
+  caption: string;
+  note: string;
+  aspectRatio: number;
+}): ClassificationFigure {
+  return {
+    ...figure,
+    source: HAMADA_SOURCE,
+    doi: HAMADA_DOI,
+    pubmed: NICE_HAMADA_2021_PUBMED,
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+  };
+}
 
 export const niceScore: ClassificationDefinition = {
   id: 'nice',
@@ -24,9 +45,8 @@ export const niceScore: ClassificationDefinition = {
       src: '/figures/nice-hamada2021-fig1.webp',
       alt: 'NICE classification Type 1, Type 2, and Type 3 (Hamada 2021 Fig. 1)',
       caption: 'Fig. 1. Narrow-band imaging International colorectal endoscopic classification',
-      source:
-        'Hamada Y, Tanaka K, Katsurahara M, et al. Utility of the narrow-band imaging international colorectal endoscopic classification for optical diagnosis of colorectal polyp histology in clinical practice: a retrospective study. BMC Gastroenterol. 2021;21:336. Fig. 1. Classification: Hayashi N, Tanaka S, Hewett DG, et al. Gastrointest Endosc. 2013;78:625-632.',
-      doi: 'https://doi.org/10.1186/s12876-021-01898-z',
+      source: HAMADA_SOURCE,
+      doi: HAMADA_DOI,
       pubmed: NICE_HAMADA_2021_PUBMED,
       license: 'CC BY 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
@@ -50,6 +70,15 @@ export const niceScore: ClassificationDefinition = {
       label: 'Type 1',
       meaning: 'Hyperplastic',
       severity: 'none',
+      figures: [
+        hamadaCrop({
+          src: '/figures/nice-hamada2021-type1.webp',
+          alt: 'NICE Type 1 endoscopic example (Hamada 2021 Fig. 1, Type 1 column)',
+          caption: 'Fig. 1 Type 1',
+          note: 'Hamada 2021 Fig. 1 Endoscopic image 行から Type 1 列を切り抜き。CC BY 4.0。拡大なし NBI。',
+          aspectRatio: 261 / 116,
+        }),
+      ],
       rows: [
         { heading: 'Color', text: 'Same or lighter than background' },
         { heading: 'Vessels', text: 'None, or isolated lacy vessels coursing across the lesion' },
@@ -69,6 +98,15 @@ export const niceScore: ClassificationDefinition = {
       label: 'Type 2',
       meaning: 'Adenoma to superficial SM ca',
       severity: 'mild',
+      figures: [
+        hamadaCrop({
+          src: '/figures/nice-hamada2021-type2.webp',
+          alt: 'NICE Type 2 endoscopic example (Hamada 2021 Fig. 1, Type 2 column)',
+          caption: 'Fig. 1 Type 2',
+          note: 'Hamada 2021 Fig. 1 Endoscopic image 行から Type 2 列を切り抜き。CC BY 4.0。拡大なし NBI。',
+          aspectRatio: 265 / 116,
+        }),
+      ],
       rows: [
         { heading: 'Color', text: 'Browner relative to background (verify color arises from vessels)' },
         { heading: 'Vessels', text: 'Brown vessels surrounding white structures' },
@@ -91,6 +129,15 @@ export const niceScore: ClassificationDefinition = {
       label: 'Type 3',
       meaning: 'Deep SM invasive cancer',
       severity: 'severe',
+      figures: [
+        hamadaCrop({
+          src: '/figures/nice-hamada2021-type3.webp',
+          alt: 'NICE Type 3 endoscopic example (Hamada 2021 Fig. 1, Type 3 column)',
+          caption: 'Fig. 1 Type 3',
+          note: 'Hamada 2021 Fig. 1 Endoscopic image 行から Type 3 列を切り抜き。CC BY 4.0。拡大なし NBI。',
+          aspectRatio: 268 / 116,
+        }),
+      ],
       rows: [
         {
           heading: 'Color',
