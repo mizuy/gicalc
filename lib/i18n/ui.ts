@@ -19,6 +19,7 @@ export type UiStrings = {
   enlargeHint: string;
   openFigure: string;
   closeFigure: string;
+  figureLoadError: string;
   resultPlaceholder: string;
   footnote: string;
   missingTitle: string;
@@ -92,6 +93,7 @@ export const UI: Record<Locale, UiStrings> = {
     enlargeHint: 'タップして拡大',
     openFigure: '図を開く',
     closeFigure: '閉じる',
+    figureLoadError: '画像を読み込めませんでした',
     resultPlaceholder: 'すべての項目を選択すると結果が表示されます',
     footnote:
       '診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。分類の定義・用語は原著の言語で表示します（英語原著は英語、日本語原著は日本語）。注釈（コメント）は日本語です。',
@@ -188,6 +190,7 @@ export const UI: Record<Locale, UiStrings> = {
     enlargeHint: 'Tap to enlarge',
     openFigure: 'Open figure',
     closeFigure: 'Close',
+    figureLoadError: 'Image unavailable',
     resultPlaceholder: 'Select every item to see the result',
     footnote:
       'Decision support only. Follow current guidelines and local protocols. Classification definitions and terminology follow the original publication language.',

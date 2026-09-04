@@ -15,6 +15,7 @@ function resize(dest, size) {
 
 resize(join(root, 'public/logo192.png'), 192);
 resize(join(root, 'public/logo512.png'), 512);
+resize(join(root, 'assets/images/icon-home.png'), 88);
 resize(join(root, 'assets/images/favicon.png'), 48);
 resize(join(root, 'assets/images/splash-icon.png'), 512);
 resize(join(root, 'assets/images/android-icon-foreground.png'), 432);

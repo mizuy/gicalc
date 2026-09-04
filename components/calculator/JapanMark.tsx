@@ -1,6 +1,9 @@
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { useLocale } from '@/lib/i18n';
+
+/** 日の丸（日本開発マーク）。PNG ではなく View で描画し、読み込み遅延を避ける。 */
+const FLAG_RED = '#BC002D';
 
 type Props = {
   compact?: boolean;
@@ -8,17 +11,14 @@ type Props = {
 
 export function JapanMark({ compact = false }: Props) {
   const { t } = useLocale();
+  const frame = compact ? styles.frameCompact : styles.frameTitle;
+  const disc = compact ? styles.discCompact : styles.discTitle;
 
   return (
-    <View
-      accessibilityLabel={t.japanDeveloped}
-      style={[styles.frame, compact ? styles.frameCompact : styles.frameTitle]}>
-      <Image
-        accessibilityIgnoresInvertColors
-        source={require('../../assets/images/japan-flag.png')}
-        style={styles.image}
-        resizeMode="cover"
-      />
+    <View accessibilityLabel={t.japanDeveloped} style={[styles.frame, frame]}>
+      <View style={[styles.flag, frame]}>
+        <View style={[styles.disc, disc]} />
+      </View>
     </View>
   );
 }
@@ -29,6 +29,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#8A8A8A',
     overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   frameCompact: {
     width: 26,
@@ -39,8 +41,22 @@ const styles = StyleSheet.create({
     width: 38,
     height: 25,
   },
-  image: {
-    width: '100%',
-    height: '100%',
+  flag: {
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  disc: {
+    backgroundColor: FLAG_RED,
+  },
+  discCompact: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+  },
+  discTitle: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
   },
 });
