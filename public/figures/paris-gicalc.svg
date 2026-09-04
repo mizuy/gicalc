@@ -31,12 +31,12 @@
     .panel-bg { fill: #FFFFFF; stroke: #D8E4E5; stroke-width: 1.2; }
   </style>
 
-  <text x="540" y="28" text-anchor="middle" class="title">Paris classification  Type 0 morphology (schematic cross-section)</text>
+  <text x="540" y="28" text-anchor="middle" class="title">Paris classification &#8212; Type 0 morphology (schematic cross-section)</text>
 
   <!-- Group headers -->
-  <text x="170" y="52" text-anchor="middle" class="group">0-I · Protruding</text>
-  <text x="490" y="52" text-anchor="middle" class="group">0-II · Nonprotruding</text>
-  <text x="910" y="52" text-anchor="middle" class="group">0-III · Excavated</text>
+  <text x="170" y="52" text-anchor="middle" class="group">0-I &#183; Protruding</text>
+  <text x="490" y="52" text-anchor="middle" class="group">0-II &#183; Nonprotruding</text>
+  <text x="910" y="52" text-anchor="middle" class="group">0-III &#183; Excavated</text>
 
   <!-- Shared baseline reference -->
   <line x1="24" y1="132" x2="1056" y2="132" class="baseline"/>
@@ -131,7 +131,7 @@
   </g>
 
   <text x="540" y="318" text-anchor="middle" class="sublabel">
-    Elevation cut-off: 2.5 mm (columnar epithelium) · 1.2 mm (esophagus). Original schematic by GI Calc.
+    Elevation cut-off: 2.5 mm (columnar epithelium) &#183; 1.2 mm (esophagus). Original schematic by GI Calc.
   </text>
   <text x="540" y="338" text-anchor="middle" class="sublabel">
     Type 0 definitions: Paris workshop (Gastrointest Endosc 2003) and Endoscopic Classification Review Group (Endoscopy 2005).
