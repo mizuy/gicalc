@@ -143,14 +143,14 @@ const DETAIL_EXACT_EN: Record<string, string> = {
     '[ESD guideline] After eCuraB, add US or CT for metastasis detection in addition to EGD (C, 2).',
   '【ESD ガイドライン】H. pylori 陽性例では除菌を推奨。':
     '[ESD guideline] Eradicate H. pylori when positive.',
-  '【治療 GL 第6版】SM1（<500 µm）、長径 ≤3 cm、分化型、pT1b（SM1）の条件に該当。':
-    '[Treatment GL 6th ed.] Meets SM1 (<500 µm), long diameter ≤3 cm, differentiated type, pT1b (SM1).',
+  '【治療 GL 第6版】SM1（<500 µm）、長径 ≤3 cm、分化型、pT1b1（SM1）の条件に該当。':
+    '[Treatment GL 6th ed.] Meets SM1 (<500 µm), long diameter ≤3 cm, differentiated type, pT1b1 (SM1).',
   '非治癒切除（eCuraC）ですが、転移リスクは eCuraC-2 より低いとされます。':
     'Non-curative resection (eCuraC), but metastasis risk is considered lower than eCuraC-2.',
   '【ESD ガイドライン】追加外科切除に加え、再 ESD・焼灼・経過観察も施設方針と同意のもと選択可（C）。':
     '[ESD guideline] Besides additional surgery, repeat ESD, ablation, or observation may be chosen per institutional policy and consent (C).',
-  '【ESD ガイドライン】原則追加外科切除：① 長径 ≤3 cm・分化型・pT1a・UL1、② 長径 ≤3 cm・分化型・pT1b（SM1）で、内視鏡的遺残＋標本内癌の合計 >30 mm、または SM 浸潤部の分割切除・断端陽性（Fig. 2–3）。':
-    '[ESD guideline] Additional surgery generally indicated: (1) ≤3 cm, differentiated, pT1a, UL1; (2) ≤3 cm, differentiated, pT1b (SM1) with endoscopic remnant plus specimen tumor >30 mm, or piecemeal/positive margin in the SM-invasive part (Figs 2–3).',
+  '【ESD ガイドライン】原則追加外科切除：① 長径 ≤3 cm・分化型・pT1a・UL1、② 長径 ≤3 cm・分化型・pT1b1（SM1）で、内視鏡的遺残＋標本内癌の合計 >30 mm、または SM 浸潤部の分割切除・断端陽性（Fig. 2–3）。':
+    '[ESD guideline] Additional surgery generally indicated: (1) ≤3 cm, differentiated, pT1a, UL1; (2) ≤3 cm, differentiated, pT1b1 (SM1) with endoscopic remnant plus specimen tumor >30 mm, or piecemeal/positive margin in the SM-invasive part (Figs 2–3).',
   '【ESD ガイドライン】追加切除せず経過観察を選ぶ場合は EGD 慎重フォロー（C, 2）。HM 陽性 ≥6 mm や長径 ≥2 cm では局所再発リスク上昇。':
     '[ESD guideline] If observation without additional resection is chosen, careful EGD follow-up (C, 2). Local recurrence risk rises with HM ≥6 mm or long diameter ≥2 cm.',
   '【治療 GL 第6版】側方断端陽性・分割切除のみが eCuraA/B から外れる場合は eCuraC-1。追加切除は個別判断。':
@@ -169,8 +169,8 @@ const DETAIL_EXACT_EN: Record<string, string> = {
     'Measure total long diameter of undifferentiated areas on reconstruction; sum multiple areas.',
   '注：SM 浸潤部に未分化型成分があるため eCuraB ではなく eCuraC-2（ESD ガイドライン Fig. 6）。':
     'Note: eCuraC-2, not eCuraB, because undifferentiated component is present in the SM-invasive part (ESD guideline Fig. 6).',
-  '該当：分化型優位・長径 ≤3 cm・pT1b（SM1, <500 µm）・一括切除・HM0・VM0・Ly0・V0。':
-    'Meets: differentiated-dominant, long diameter ≤3 cm, pT1b (SM1, <500 µm), en bloc, HM0, VM0, Ly0, V0.',
+  '該当：分化型優位・長径 ≤3 cm・pT1b1（SM1, <500 µm）・一括切除・HM0・VM0・Ly0・V0。':
+    'Meets: differentiated-dominant, long diameter ≤3 cm, pT1b1 (SM1, <500 µm), en bloc, HM0, VM0, Ly0, V0.',
 };
 
 const DETAIL_PATTERNS: Array<{ re: RegExp; to: (...args: string[]) => string }> = [
