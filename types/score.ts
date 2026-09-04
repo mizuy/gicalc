@@ -146,12 +146,16 @@ export type AlgorithmMapNode = {
   resultId?: string;
 };
 
+export type AlgorithmFlowMapLayout = 'compact' | 'scroll';
+
 export type AlgorithmFlow = {
   title: string;
   start: string;
   steps: Record<string, AlgorithmStep>;
   results: Record<string, AlgorithmResult>;
   map: AlgorithmMapNode;
+  /** compact = スマホ幅に収める（MESDA-G 等）。scroll = 横スクロール（WASP 等） */
+  mapLayout?: AlgorithmFlowMapLayout;
 };
 
 export type ClassificationDefinition = ToolBase & {
