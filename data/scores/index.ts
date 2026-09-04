@@ -1,5 +1,6 @@
 import { ORGAN_LABELS, ORGAN_ORDER, type ScoreOrgan, type ScoreDefinition } from '../../types/score';
 import { appendicealOrificeScore } from './appendiceal-orifice';
+import { apcsModifiedScore } from './apcs-modified';
 import { apcsScore } from './apcs';
 import { aronchickScore } from './aronchick';
 import { bbpsScore } from './bbps';
@@ -41,9 +42,10 @@ import { spsScore } from './sps';
 import { toyaScore } from './toya';
 import { viennaScore } from './vienna';
 import { waspScore } from './wasp';
+import { HIDDEN_LIST_SCORE_IDS } from './variant-groups';
 
-/** 表示順: 食道 → 胃 → 十二指腸 → 大腸 → 出血。臓器内は分類→リスク→治療予測 */
-export const SCORES: ScoreDefinition[] = [
+/** 全定義（タブ variant 含む） */
+export const ALL_SCORE_DEFINITIONS: ScoreDefinition[] = [
   jesScore,
   laScore,
   pragueScore,
@@ -68,6 +70,7 @@ export const SCORES: ScoreDefinition[] = [
   kakushimaScore,
   toyaScore,
   apcsScore,
+  apcsModifiedScore,
   spsScore,
   viennaScore,
   parisScore,
@@ -88,8 +91,16 @@ export const SCORES: ScoreDefinition[] = [
   nobladsScore,
 ];
 
+/** ホーム一覧用（variant 専用 id は除外） */
+export const SCORES: ScoreDefinition[] = ALL_SCORE_DEFINITIONS.filter(
+  (score) => !HIDDEN_LIST_SCORE_IDS.has(score.id),
+);
+
+/** 表示順: 食道 → 胃 → 十二指腸 → 大腸 → 出血。臓器内は分類→リスク→治療予測 */
+export { SCORES as default };
+
 export function getScoreById(id: string): ScoreDefinition | undefined {
-  return SCORES.find((score) => score.id === id);
+  return ALL_SCORE_DEFINITIONS.find((score) => score.id === id);
 }
 
 export type ScoreOrganGroup = {

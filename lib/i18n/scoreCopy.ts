@@ -952,10 +952,59 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     ],
     note: 'Either 2019 criterion suffices. The 2010 family-history criterion (Type 2) was removed. Proximal to the rectum = orad to rectosigmoid (2010 used proximal to sigmoid). See ESGE 2019 and US MSTF 2020 for surveillance.',
   },
+  'apcs-modified': {
+    name: 'Modified APCS with BMI (0–6)',
+    shortName: 'Mod. APCS',
+    description:
+      'Sung 2018 modification of Yeoh 2011 APCS adding BMI (≥23 kg/m²). Age and family-history points are rescaled to 0–6 total. Average (0) / moderate (1–2) / high (3–6).',
+    note: 'The Yeoh 2011 original (0–7) is on the Original tab. BMI cutoff 23 kg/m² is for Asian populations.',
+    fields: {
+      age: {
+        label: 'Age',
+        options: [
+          { label: '<50 y', description: pts(0, false) },
+          { label: '50–59 y', description: pts(1) },
+          { label: '≥60 y', description: pts(2) },
+        ],
+      },
+      sex: {
+        label: 'Sex',
+        options: [
+          { label: 'Female', description: pts(0, false) },
+          { label: 'Male', description: pts(1) },
+        ],
+      },
+      family: {
+        label: 'Family history of CRC',
+        description: 'First-degree relatives only (parents, siblings, children)',
+        options: [
+          { label: 'No', description: pts(0, false) },
+          { label: 'Yes', description: pts(1) },
+        ],
+      },
+      smoking: {
+        label: 'Smoking',
+        description: 'Current or former',
+        options: [
+          { label: 'Never', description: pts(0, false) },
+          { label: 'Current or former', description: pts(1) },
+        ],
+      },
+      bmi: {
+        label: 'BMI',
+        description: '≥23 kg/m² (Asian cutoff)',
+        options: [
+          { label: '<23 kg/m²', description: pts(0, false) },
+          { label: '≥23 kg/m²', description: pts(1) },
+        ],
+      },
+    },
+  },
   apcs: {
     name: 'Asia-Pacific Colorectal Screening Score (APCS)',
     description:
       'Stratifies asymptomatic Asian adults for advanced colorectal neoplasia (advanced adenoma or cancer) by age, sex, family history, and smoking (0–7).',
+    note: 'The Sung 2018 modification with BMI (0–6) is on the Modified tab.',
     fields: {
       age: {
         label: 'Age',

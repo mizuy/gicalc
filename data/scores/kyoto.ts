@@ -3,7 +3,7 @@ import type { ScoreDefinition } from '../../types/score';
 
 export const kyotoScore: ScoreDefinition = {
   id: 'kyoto',
-  name: '京都分類リスクスコア（原法 0–8）',
+  name: '京都分類リスクスコア（0–8）',
   shortName: '京都分類',
   developedInJapan: true,
   organ: 'stomach',
