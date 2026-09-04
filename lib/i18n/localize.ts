@@ -75,6 +75,12 @@ function applyEnglishClassificationBody(
         options.translateComments && entry.comment
           ? (copy.comments?.[entry.label] ?? entry.comment)
           : entry.comment,
+      figures: entry.figures?.map((figure, index) => ({
+        ...figure,
+        note: options.translateComments
+          ? (copy.entryFigureNotes?.[entry.label]?.[index] ?? figure.note)
+          : figure.note,
+      })),
     })),
     flow: score.flow ? localizeFlow(score.flow, copy.flow) : score.flow,
   };

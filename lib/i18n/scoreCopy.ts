@@ -26,6 +26,8 @@ export type ScoreCopy = {
   comments?: Record<string, string>;
   meanings?: Record<string, string>;
   figureNotes?: string[];
+  /** 分類エントリに載せた切り抜き図の英語注。キーは entry.label */
+  entryFigureNotes?: Record<string, string[]>;
   officialLinkLabel?: string;
   note?: string;
   flow?: FlowCopy;
@@ -43,10 +45,17 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     comments: {
       'Type B2': 'Esophageal SM1 is ≤200 μm.',
     },
-    figureNotes: [
-      'Top left Fig. 1 Type A; top right Fig. 2 Type B1; bottom left Fig. 3 Type B2; bottom right Fig. 4 Type B3. Springer Open. License: CC BY 4.0.',
-      'AVA-small / middle / large. Springer Open. License: CC BY 4.0.',
-    ],
+    entryFigureNotes: {
+      'Type A': ['Cropped from original Fig. 1 (a / b). Springer Open. License: CC BY 4.0.'],
+      'Type B1': ['Cropped from original Fig. 2 (a / b). Springer Open. License: CC BY 4.0.'],
+      'Type B2': ['Cropped from original Fig. 3 (a / b). Springer Open. License: CC BY 4.0.'],
+      'Type B3': ['Cropped from original Fig. 4 (a / b). Springer Open. License: CC BY 4.0.'],
+      AVA: [
+        'Cropped from original Fig. 5a. Springer Open. License: CC BY 4.0.',
+        'Cropped from original Fig. 5b. Springer Open. License: CC BY 4.0.',
+        'Cropped from original Fig. 5c. Springer Open. License: CC BY 4.0.',
+      ],
+    },
   },
   la: {
     name: 'Los Angeles classification (reflux esophagitis)',

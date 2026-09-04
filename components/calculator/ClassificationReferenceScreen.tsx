@@ -104,6 +104,13 @@ export function ClassificationReferenceScreen({ score }: Props) {
                     <Text style={styles.badgeText}>{entry.meaning}</Text>
                   </View>
                 </View>
+                {entry.figures?.length ? (
+                  <View style={styles.entryFigures}>
+                    {entry.figures.map((figure) => (
+                      <ClassificationFigure key={figureKey(figure)} figure={figure} compact />
+                    ))}
+                  </View>
+                ) : null}
                 {entry.rows.map((row) => (
                   <View key={`${entry.label}-${row.heading}`} style={styles.row}>
                     <Text style={[styles.rowHeading, { color: textSecondary }]}>{row.heading}</Text>
@@ -205,6 +212,12 @@ const styles = StyleSheet.create({
     gap: 10,
     marginBottom: 10,
     flexWrap: 'wrap',
+  },
+  entryFigures: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 12,
   },
   entryLabel: {
     fontSize: 20,
