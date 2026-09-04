@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
+import { GridCell, GridRow, GridTable, tableWidth } from '@/components/calculator/grid/FixedGrid';
 import { ESOPHAGUS_ESD_CURABILITY_TABLE } from '@/lib/i18n/esophagusEsdCurabilityTable';
 import { useLocale } from '@/lib/i18n';
 import type { EsophagusEsdCurabilityCellId } from '@/lib/scores/esophagus-esd-curability';
@@ -11,47 +12,10 @@ type Props = {
   complete: boolean;
 };
 
-function Cell({
-  text,
-  highlighted,
-  partial,
-  header,
-  rowLabel,
-}: {
-  text: string;
-  highlighted: boolean;
-  partial: boolean;
-  header?: boolean;
-  rowLabel?: boolean;
-}) {
-  const border = useThemeColor({}, 'border');
-  const textSecondary = useThemeColor({}, 'textSecondary');
-  const tint = useThemeColor({}, 'tint');
-  const surface = useThemeColor({}, 'surface');
-  const active = highlighted && !header && !rowLabel;
-
-  return (
-    <View
-      style={[
-        styles.cell,
-        rowLabel ? styles.rowLabelCell : header ? styles.headerCell : styles.dataCell,
-        {
-          backgroundColor: active ? (partial ? `${tint}12` : `${tint}22`) : header || rowLabel ? surface : undefined,
-          borderColor: active ? tint : border,
-          borderWidth: active ? 2 : 1,
-        },
-      ]}>
-      <Text
-        style={[
-          header || rowLabel ? styles.headerText : styles.cellText,
-          { color: header || rowLabel ? textSecondary : undefined },
-          active && { color: tint, fontWeight: '700' },
-        ]}>
-        {text}
-      </Text>
-    </View>
-  );
-}
+const ESOPHAGUS_COL_WIDTHS = [100, 150, 150] as const;
+const ESOPHAGUS_TABLE_W = tableWidth(ESOPHAGUS_COL_WIDTHS);
+const ROW_H = 52;
+const HEADER_H = 40;
 
 function NoteRow({
   text,
@@ -88,12 +52,77 @@ function NoteRow({
   );
 }
 
+function DataCell({
+  text,
+  highlighted,
+  partial,
+  colSpan,
+  startCol,
+  borderColor,
+}: {
+  text: string;
+  highlighted: boolean;
+  partial: boolean;
+  colSpan: number;
+  startCol: number;
+  borderColor: string;
+}) {
+  const tint = useThemeColor({}, 'tint');
+  const textSecondary = useThemeColor({}, 'textSecondary');
+
+  return (
+    <GridCell
+      columnWidths={ESOPHAGUS_COL_WIDTHS}
+      colSpan={colSpan}
+      startCol={startCol}
+      highlighted={highlighted}
+      highlightColor={tint}
+      borderColor={borderColor}
+      backgroundColor={highlighted ? (partial ? `${tint}12` : `${tint}22`) : undefined}
+      minHeight={ROW_H}>
+      <Text
+        style={[
+          styles.cellText,
+          { color: highlighted ? tint : textSecondary },
+          highlighted && styles.cellTextActive,
+        ]}>
+        {text}
+      </Text>
+    </GridCell>
+  );
+}
+
 export function EsophagusEsdCurabilityTable({ highlightedCells, partial, complete }: Props) {
   const { locale } = useLocale();
   const textSecondary = useThemeColor({}, 'textSecondary');
+  const border = useThemeColor({}, 'border');
+  const surface = useThemeColor({}, 'surface');
   const copy = ESOPHAGUS_ESD_CURABILITY_TABLE[locale];
   const set = new Set(highlightedCells);
   const on = (id: EsophagusEsdCurabilityCellId) => set.has(id);
+
+  const labelCell = (text: string) => (
+    <GridCell
+      columnWidths={ESOPHAGUS_COL_WIDTHS}
+      startCol={0}
+      borderColor={border}
+      surfaceColor={surface}
+      minHeight={ROW_H}>
+      <Text style={[styles.labelText, { color: textSecondary }]}>{text}</Text>
+    </GridCell>
+  );
+
+  const headerCell = (text: string, startCol: number) => (
+    <GridCell
+      columnWidths={ESOPHAGUS_COL_WIDTHS}
+      startCol={startCol}
+      borderColor={border}
+      surfaceColor={surface}
+      header
+      minHeight={HEADER_H}>
+      <Text style={[styles.headerText, { color: textSecondary }]}>{text}</Text>
+    </GridCell>
+  );
 
   return (
     <View style={styles.wrapper}>
@@ -104,29 +133,66 @@ export function EsophagusEsdCurabilityTable({ highlightedCells, partial, complet
         {complete || partial ? `${complete ? '✓ ' : '… '}${copy.tableHint}` : copy.tableHint}
       </Text>
 
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={styles.table}>
-          <View style={styles.row}>
-            <Cell text={copy.headers.depth} highlighted={false} partial={partial} header />
-            <Cell text={copy.headers.v0} highlighted={false} partial={partial} header />
-            <Cell text={copy.headers.v1} highlighted={false} partial={partial} header />
-          </View>
-          <View style={styles.row}>
-            <Cell text={copy.rows.epLpm.label} highlighted={false} partial={partial} rowLabel />
-            <Cell text={copy.rows.epLpm.v0} highlighted={on('cell-ep-lpm-v0')} partial={partial} />
-            <Cell text={copy.rows.epLpm.v1} highlighted={on('cell-ep-lpm-v1')} partial={partial} />
-          </View>
-          <View style={styles.row}>
-            <Cell text={copy.rows.mm.label} highlighted={false} partial={partial} rowLabel />
-            <Cell text={copy.rows.mm.v0} highlighted={on('cell-mm-v0')} partial={partial} />
-            <Cell text={copy.rows.mm.v1} highlighted={on('cell-mm-v1')} partial={partial} />
-          </View>
-          <View style={styles.row}>
-            <Cell text={copy.rows.sm.label} highlighted={false} partial={partial} rowLabel />
-            <Cell text={copy.rows.sm.text} highlighted={on('cell-sm')} partial={partial} />
-            <View style={[styles.dataCell, styles.spacer]} />
-          </View>
-        </View>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tableScroll}>
+        <GridTable borderColor={border} width={ESOPHAGUS_TABLE_W}>
+          <GridRow borderColor={border} width={ESOPHAGUS_TABLE_W}>
+            {headerCell(copy.headers.depth, 0)}
+            {headerCell(copy.headers.v0, 1)}
+            {headerCell(copy.headers.v1, 2)}
+          </GridRow>
+
+          <GridRow borderColor={border} width={ESOPHAGUS_TABLE_W}>
+            {labelCell(copy.rows.epLpm.label)}
+            <DataCell
+              text={copy.rows.epLpm.v0}
+              highlighted={on('cell-ep-lpm-v0')}
+              partial={partial}
+              colSpan={1}
+              startCol={1}
+              borderColor={border}
+            />
+            <DataCell
+              text={copy.rows.epLpm.v1}
+              highlighted={on('cell-ep-lpm-v1')}
+              partial={partial}
+              colSpan={1}
+              startCol={2}
+              borderColor={border}
+            />
+          </GridRow>
+
+          <GridRow borderColor={border} width={ESOPHAGUS_TABLE_W}>
+            {labelCell(copy.rows.mm.label)}
+            <DataCell
+              text={copy.rows.mm.v0}
+              highlighted={on('cell-mm-v0')}
+              partial={partial}
+              colSpan={1}
+              startCol={1}
+              borderColor={border}
+            />
+            <DataCell
+              text={copy.rows.mm.v1}
+              highlighted={on('cell-mm-v1')}
+              partial={partial}
+              colSpan={1}
+              startCol={2}
+              borderColor={border}
+            />
+          </GridRow>
+
+          <GridRow borderColor={border} width={ESOPHAGUS_TABLE_W}>
+            {labelCell(copy.rows.sm.label)}
+            <DataCell
+              text={copy.rows.sm.text}
+              highlighted={on('cell-sm')}
+              partial={partial}
+              colSpan={2}
+              startCol={1}
+              borderColor={border}
+            />
+          </GridRow>
+        </GridTable>
       </ScrollView>
 
       <View style={styles.notes}>
@@ -143,15 +209,11 @@ const styles = StyleSheet.create({
   subtitle: { fontSize: 12, marginBottom: 8 },
   footnoteStar: { fontSize: 12, lineHeight: 18, marginBottom: 4 },
   hint: { fontSize: 12, lineHeight: 18, marginBottom: 12 },
-  table: { minWidth: 480, paddingHorizontal: 4 },
-  row: { flexDirection: 'row' },
-  cell: { justifyContent: 'center' },
-  headerCell: { flex: 1, minWidth: 100, paddingVertical: 10, paddingHorizontal: 8, borderRadius: 8, margin: 2 },
-  rowLabelCell: { width: 96, paddingVertical: 12, paddingHorizontal: 8, borderRadius: 8, margin: 2 },
-  dataCell: { flex: 1, minWidth: 120, paddingVertical: 12, paddingHorizontal: 8, borderRadius: 8, margin: 2 },
-  spacer: { opacity: 0 },
+  tableScroll: { marginHorizontal: -4, paddingHorizontal: 4 },
   headerText: { fontSize: 12, fontWeight: '700', textAlign: 'center' },
-  cellText: { fontSize: 13, lineHeight: 18, textAlign: 'center' },
+  labelText: { fontSize: 12, fontWeight: '600', textAlign: 'center' },
+  cellText: { fontSize: 12, lineHeight: 17, textAlign: 'center' },
+  cellTextActive: { fontWeight: '700' },
   notes: { marginTop: 12, gap: 6 },
   noteRow: { borderRadius: 8, paddingVertical: 8, paddingHorizontal: 10 },
   noteText: { fontSize: 12, lineHeight: 18 },

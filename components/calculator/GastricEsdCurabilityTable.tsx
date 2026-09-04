@@ -6,6 +6,7 @@ import {
   GridCell,
   GridRow,
   GridTable,
+  tableWidth,
 } from '@/components/calculator/grid/FixedGrid';
 import {
   GASTRIC_ESD_CURABILITY_TABLE,
@@ -26,6 +27,8 @@ type Props = {
   complete: boolean;
 };
 
+const GASTRIC_COL_WIDTHS = [76, 48, 76, 76, 76, 76] as const;
+const GASTRIC_TABLE_W = tableWidth(GASTRIC_COL_WIDTHS);
 const ROW_H = 46;
 const HEADER_H = 40;
 
@@ -128,6 +131,7 @@ function DataGradeCell({
 
   return (
     <GridCell
+      columnWidths={GASTRIC_COL_WIDTHS}
       colSpan={colSpan}
       startCol={startCol}
       highlighted={highlighted}
@@ -150,12 +154,12 @@ function renderDataRow(
   const rowKey = row.rowKey as GastricEsdCurabilityRowKey;
 
   return (
-    <GridRow key={row.rowKey} borderColor={borderColor}>
-      <GridCell startCol={0} borderColor={borderColor} minHeight={ROW_H}>
+    <GridRow key={row.rowKey} borderColor={borderColor} width={GASTRIC_TABLE_W}>
+      <GridCell columnWidths={GASTRIC_COL_WIDTHS} startCol={0} borderColor={borderColor} minHeight={ROW_H}>
         <LabelText text={depthLabel} />
       </GridCell>
 
-      <GridCell startCol={1} borderColor={borderColor} minHeight={ROW_H}>
+      <GridCell columnWidths={GASTRIC_COL_WIDTHS} startCol={1} borderColor={borderColor} minHeight={ROW_H}>
         <LabelText text={row.ulcerLabel ?? ''} />
       </GridCell>
 
@@ -277,35 +281,35 @@ export function GastricEsdCurabilityTable({ highlightedCells, partial, complete 
       </Text>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tableScroll}>
-        <GridTable borderColor={border}>
-          <GridRow borderColor={border}>
-            <GridCell startCol={0} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
+        <GridTable borderColor={border} width={GASTRIC_TABLE_W}>
+          <GridRow borderColor={border} width={GASTRIC_TABLE_W}>
+            <GridCell columnWidths={GASTRIC_COL_WIDTHS} startCol={0} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
               <HeaderText text={copy.headers.depth} />
             </GridCell>
-            <GridCell startCol={1} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
+            <GridCell columnWidths={GASTRIC_COL_WIDTHS} startCol={1} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
               <HeaderText text={copy.headers.ulcer} />
             </GridCell>
-            <GridCell colSpan={2} startCol={2} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
+            <GridCell columnWidths={GASTRIC_COL_WIDTHS} colSpan={2} startCol={2} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
               <HeaderText text={copy.headers.differentiated} />
             </GridCell>
-            <GridCell colSpan={2} startCol={4} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
+            <GridCell columnWidths={GASTRIC_COL_WIDTHS} colSpan={2} startCol={4} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
               <HeaderText text={copy.headers.undifferentiated} />
             </GridCell>
           </GridRow>
 
-          <GridRow borderColor={border}>
-            <GridCell startCol={0} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H} />
-            <GridCell startCol={1} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H} />
-            <GridCell startCol={2} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
+          <GridRow borderColor={border} width={GASTRIC_TABLE_W}>
+            <GridCell columnWidths={GASTRIC_COL_WIDTHS} startCol={0} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H} />
+            <GridCell columnWidths={GASTRIC_COL_WIDTHS} startCol={1} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H} />
+            <GridCell columnWidths={GASTRIC_COL_WIDTHS} startCol={2} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
               <HeaderText text={copy.headers.diffLe3} />
             </GridCell>
-            <GridCell startCol={3} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
+            <GridCell columnWidths={GASTRIC_COL_WIDTHS} startCol={3} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
               <HeaderText text={copy.headers.diffGt3} />
             </GridCell>
-            <GridCell startCol={4} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
+            <GridCell columnWidths={GASTRIC_COL_WIDTHS} startCol={4} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
               <HeaderText text={copy.headers.undiffLe2} />
             </GridCell>
-            <GridCell startCol={5} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
+            <GridCell columnWidths={GASTRIC_COL_WIDTHS} startCol={5} borderColor={border} surfaceColor={surface} header minHeight={HEADER_H}>
               <HeaderText text={copy.headers.undiffGt2} />
             </GridCell>
           </GridRow>

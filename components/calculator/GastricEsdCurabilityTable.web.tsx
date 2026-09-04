@@ -16,6 +16,8 @@ import {
   type GastricEsdCurabilityRowKey,
 } from '@/lib/scores/gastric-esd-curability';
 
+import { HTML_TABLE_BASE, htmlTableCellStyle } from '@/components/calculator/grid/htmlTableStyles';
+
 type Props = {
   highlightedCells: GastricEsdCurabilityCellId[];
   partial: boolean;
@@ -77,17 +79,12 @@ function cellStyle(
   label = false,
   surface?: string,
 ): CSSProperties {
-  return {
-    border: `${highlighted ? 2 : 1}px solid ${highlighted ? tint : border}`,
-    padding: '8px 4px',
-    textAlign: 'center',
-    verticalAlign: 'middle',
-    fontSize: label ? 11 : 12,
-    fontWeight: label ? 600 : undefined,
-    lineHeight: 1.35,
-    backgroundColor: bg ?? (label ? surface : undefined),
-    boxSizing: 'border-box',
-  };
+  return htmlTableCellStyle(border, tint, {
+    highlighted,
+    backgroundColor: bg,
+    label,
+    surface,
+  });
 }
 
 function isHighlighted(
@@ -334,12 +331,7 @@ export function GastricEsdCurabilityTable({ highlightedCells, partial, complete 
   );
 }
 
-const TABLE_STYLE: CSSProperties = {
-  borderCollapse: 'collapse',
-  tableLayout: 'fixed',
-  width: 428,
-  maxWidth: '100%',
-};
+const TABLE_STYLE: CSSProperties = { ...HTML_TABLE_BASE, width: 428 };
 
 const styles = StyleSheet.create({
   wrapper: { marginBottom: 24 },

@@ -1,16 +1,16 @@
 import type { ReactNode } from 'react';
 import { StyleSheet, View, type ViewStyle } from 'react-native';
 
-/** 壁深達度 | 潰瘍 | 分化×2 | 未分化×2 */
-export const GASTRIC_GRID_COL_WIDTHS = [76, 48, 76, 76, 76, 76] as const;
+export function sumWidths(columnWidths: readonly number[], startCol: number, colSpan: number): number {
+  return columnWidths.slice(startCol, startCol + colSpan).reduce((sum, w) => sum + w, 0);
+}
 
-export const GASTRIC_GRID_WIDTH = GASTRIC_GRID_COL_WIDTHS.reduce((sum, w) => sum + w, 0);
-
-export function gridColWidth(startCol: number, colSpan: number): number {
-  return GASTRIC_GRID_COL_WIDTHS.slice(startCol, startCol + colSpan).reduce((sum, w) => sum + w, 0);
+export function tableWidth(columnWidths: readonly number[]): number {
+  return columnWidths.reduce((sum, w) => sum + w, 0);
 }
 
 type GridCellProps = {
+  columnWidths: readonly number[];
   colSpan?: number;
   startCol?: number;
   width?: number;
@@ -26,6 +26,7 @@ type GridCellProps = {
 };
 
 export function GridCell({
+  columnWidths,
   colSpan = 1,
   startCol = 0,
   width,
@@ -39,7 +40,7 @@ export function GridCell({
   style,
   children,
 }: GridCellProps) {
-  const cellWidth = width ?? gridColWidth(startCol, colSpan);
+  const cellWidth = width ?? sumWidths(columnWidths, startCol, colSpan);
 
   return (
     <View
@@ -61,9 +62,17 @@ export function GridCell({
   );
 }
 
-export function GridRow({ children, borderColor }: { children: ReactNode; borderColor: string }) {
+export function GridRow({
+  children,
+  borderColor,
+  width,
+}: {
+  children: ReactNode;
+  borderColor: string;
+  width: number;
+}) {
   return (
-    <View style={[styles.row, { width: GASTRIC_GRID_WIDTH, borderColor }]}>
+    <View style={[styles.row, { width, borderColor }]}>
       {children}
     </View>
   );
@@ -72,12 +81,14 @@ export function GridRow({ children, borderColor }: { children: ReactNode; border
 export function GridTable({
   children,
   borderColor,
+  width,
 }: {
   children: ReactNode;
   borderColor: string;
+  width: number;
 }) {
   return (
-    <View style={[styles.table, { borderColor, width: GASTRIC_GRID_WIDTH }]}>
+    <View style={[styles.table, { borderColor, width }]}>
       {children}
     </View>
   );
