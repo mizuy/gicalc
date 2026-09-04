@@ -5,14 +5,38 @@ export const JGES_GASTRIC_ESD_2020_PUBMED = '32216137';
 
 export type GastricEsdCurabilityGrade = 'eCuraA' | 'eCuraB' | 'eCuraC-1' | 'eCuraC-2';
 
-/** JGES Fig. 2 相当テーブルのセル・注釈行 ID */
+/** JGES Fig. 2 相当テーブルの行キー（組織型 × 深達度 × 潰瘍） */
+export type GastricEsdCurabilityBaseKey =
+  | 'diff-pt1a-ul0'
+  | 'diff-pt1a-ul1'
+  | 'diff-pt1b-sm1'
+  | 'undiff-pt1a-ul0'
+  | 'undiff-pt1a-ul1'
+  | 'undiff-pt1b-sm1';
+
+/** サイズ列付きセル ID（s0=≤20 mm, s1=21–30 mm, s2=>30 mm） */
+export type GastricEsdCurabilitySizedCellId =
+  | 'cell-diff-pt1a-ul0-s0'
+  | 'cell-diff-pt1a-ul0-s1'
+  | 'cell-diff-pt1a-ul0-s2'
+  | 'cell-diff-pt1a-ul1-s0'
+  | 'cell-diff-pt1a-ul1-s1'
+  | 'cell-diff-pt1a-ul1-s2'
+  | 'cell-diff-pt1b-sm1-s0'
+  | 'cell-diff-pt1b-sm1-s1'
+  | 'cell-diff-pt1b-sm1-s2'
+  | 'cell-undiff-pt1a-ul0-s0'
+  | 'cell-undiff-pt1a-ul0-s1'
+  | 'cell-undiff-pt1a-ul0-s2'
+  | 'cell-undiff-pt1a-ul1-s0'
+  | 'cell-undiff-pt1a-ul1-s1'
+  | 'cell-undiff-pt1a-ul1-s2'
+  | 'cell-undiff-pt1b-sm1-s0'
+  | 'cell-undiff-pt1b-sm1-s1'
+  | 'cell-undiff-pt1b-sm1-s2';
+
 export type GastricEsdCurabilityCellId =
-  | 'cell-diff-pt1a-ul0'
-  | 'cell-diff-pt1a-ul1'
-  | 'cell-diff-pt1b-sm1'
-  | 'cell-undiff-pt1a-ul0'
-  | 'cell-undiff-pt1a-ul1'
-  | 'cell-undiff-pt1b-sm1'
+  | GastricEsdCurabilitySizedCellId
   | 'row-c1'
   | 'row-c2'
   | 'row-fig6-undiff-size'
@@ -26,7 +50,24 @@ export type GastricEsdCurabilityHighlight = {
   complete: boolean;
 };
 
-const TUMOR_FACTOR_FIELDS = ['histology', 'depth', 'ul', 'size'] as const;
+const ROW_FACTOR_FIELDS = ['histology', 'depth', 'ul'] as const;
+
+export function gastricCurabilityCellId(
+  base: GastricEsdCurabilityBaseKey,
+  sizeIndex: 0 | 1 | 2,
+): GastricEsdCurabilitySizedCellId {
+  return `cell-${base}-s${sizeIndex}` as GastricEsdCurabilitySizedCellId;
+}
+
+function sizedCells(
+  base: GastricEsdCurabilityBaseKey,
+  size?: number,
+): GastricEsdCurabilityCellId[] {
+  if (size === undefined) {
+    return [0, 1, 2].map((s) => gastricCurabilityCellId(base, s as 0 | 1 | 2));
+  }
+  return [gastricCurabilityCellId(base, size as 0 | 1 | 2)];
+}
 
 export function getGastricEsdCurabilityRequiredFields(
   values: Record<string, number | undefined>,
@@ -45,24 +86,24 @@ export function isGastricEsdCurabilityComplete(values: Record<string, number | u
   return getGastricEsdCurabilityRequiredFields(values).every((id) => values[id] !== undefined);
 }
 
-function isTumorFactorsReady(values: Record<string, number | undefined>): boolean {
-  return TUMOR_FACTOR_FIELDS.every((id) => values[id] !== undefined);
+function isRowFactorsReady(values: Record<string, number | undefined>): boolean {
+  return ROW_FACTOR_FIELDS.every((id) => values[id] !== undefined);
 }
 
-function tumorFactorCell(values: Record<string, number>): GastricEsdCurabilityCellId | null {
+function tumorFactorBase(values: Record<string, number>): GastricEsdCurabilityBaseKey | null {
   const { histology, depth, ul } = values;
   const isDiff = histology === 0 || histology === 1;
 
   if (depth === 0) {
-    if (ul === 0) return isDiff ? 'cell-diff-pt1a-ul0' : 'cell-undiff-pt1a-ul0';
-    return isDiff ? 'cell-diff-pt1a-ul1' : 'cell-undiff-pt1a-ul1';
+    if (ul === 0) return isDiff ? 'diff-pt1a-ul0' : 'undiff-pt1a-ul0';
+    return isDiff ? 'diff-pt1a-ul1' : 'undiff-pt1a-ul1';
   }
   if (depth === 1) {
-    return isDiff ? 'cell-diff-pt1b-sm1' : 'cell-undiff-pt1b-sm1';
+    return isDiff ? 'diff-pt1b-sm1' : 'undiff-pt1b-sm1';
   }
   if (depth === 2) {
-    if (isDiff) return ul === 0 ? 'cell-diff-pt1a-ul0' : 'cell-diff-pt1a-ul1';
-    return ul === 0 ? 'cell-undiff-pt1a-ul0' : 'cell-undiff-pt1a-ul1';
+    if (isDiff) return ul === 0 ? 'diff-pt1a-ul0' : 'diff-pt1a-ul1';
+    return ul === 0 ? 'undiff-pt1a-ul0' : 'undiff-pt1a-ul1';
   }
   return null;
 }
@@ -75,15 +116,15 @@ function uniqueCells(cells: GastricEsdCurabilityCellId[]): GastricEsdCurabilityC
 export function resolveGastricEsdCurabilityHighlight(
   values: Record<string, number | undefined>,
 ): GastricEsdCurabilityHighlight {
-  if (!isTumorFactorsReady(values)) {
+  if (!isRowFactorsReady(values)) {
     return { cells: [], partial: false, complete: false };
   }
 
   const filled = Object.fromEntries(
     Object.entries(values).filter(([, value]) => value !== undefined),
   ) as Record<string, number>;
-  const cell = tumorFactorCell(filled);
-  const baseCells = cell ? [cell] : [];
+  const base = tumorFactorBase(filled);
+  const baseCells = base ? sizedCells(base, filled.size) : [];
 
   if (!isGastricEsdCurabilityComplete(values)) {
     return { cells: baseCells, partial: true, complete: false };

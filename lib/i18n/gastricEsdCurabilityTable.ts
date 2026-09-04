@@ -3,7 +3,19 @@ import type { Locale } from './types';
 export type GastricEsdCurabilityGradeCell = {
   grade: string;
   pattern?: string;
-  size?: string;
+};
+
+export type GastricEsdCurabilityTableRow = {
+  depthUl: string;
+  baseKey: string;
+  cells: [GastricEsdCurabilityGradeCell, GastricEsdCurabilityGradeCell, GastricEsdCurabilityGradeCell];
+};
+
+export type GastricEsdCurabilityTableSection = {
+  title: string;
+  prefix: 'diff' | 'undiff';
+  sizeHeaders: [string, string, string];
+  rows: GastricEsdCurabilityTableRow[];
 };
 
 export type GastricEsdCurabilityTableCopy = {
@@ -13,26 +25,9 @@ export type GastricEsdCurabilityTableCopy = {
   footnoteStar: string;
   headers: {
     depthUlceration: string;
-    differentiated: string;
-    undifferentiated: string;
+    size: string;
   };
-  depth: {
-    pt1a: string;
-    pt1b: string;
-  };
-  ulceration: {
-    ul0: string;
-    ul1: string;
-  };
-  cells: Record<
-    | 'cell-diff-pt1a-ul0'
-    | 'cell-undiff-pt1a-ul0'
-    | 'cell-diff-pt1a-ul1'
-    | 'cell-undiff-pt1a-ul1'
-    | 'cell-diff-pt1b-sm1'
-    | 'cell-undiff-pt1b-sm1',
-    GastricEsdCurabilityGradeCell
-  >;
+  sections: [GastricEsdCurabilityTableSection, GastricEsdCurabilityTableSection];
   notes: {
     c1: string;
     c2: string;
@@ -43,34 +38,67 @@ export type GastricEsdCurabilityTableCopy = {
   tableHint: string;
 };
 
+const A = (pattern?: string): GastricEsdCurabilityGradeCell => ({ grade: 'eCuraA', pattern });
+const B = (): GastricEsdCurabilityGradeCell => ({ grade: 'eCuraB', pattern: '*' });
+const C2 = (): GastricEsdCurabilityGradeCell => ({ grade: 'eCuraC-2' });
+
 export const GASTRIC_ESD_CURABILITY_TABLE: Record<Locale, GastricEsdCurabilityTableCopy> = {
   ja: {
     title: 'Fig. 2 腫瘍関連因子による根治度評価',
     subtitle: 'JGES 胃癌 ESD/EMR ガイドライン第2版（2020）',
     caption:
-      'pT1a (M)＝粘膜内癌（病理）、pT1b (SM)＝粘膜下浸潤癌（病理）。UL0＝潰瘍・潰瘍瘢痕なし、UL1＝潰瘍・潰瘍瘢痕あり。',
+      'pT1a (M)＝粘膜内癌（病理）、pT1b (SM1)＝粘膜下浸潤 <500 µm。UL0/UL1＝潰瘍・潰瘍瘢痕の有無。長径は再構図上の最大径。',
     footnoteStar: '* eCuraA・eCuraB は一括切除かつ HM0、VM0、Ly0、V0 に限定',
     headers: {
       depthUlceration: '深達度\n潰瘍',
-      differentiated: '分化型優位',
-      undifferentiated: '未分化型優位',
+      size: '長径（再構図）',
     },
-    depth: {
-      pt1a: 'pT1a (M)',
-      pt1b: 'pT1b (SM1)',
-    },
-    ulceration: {
-      ul0: 'UL0',
-      ul1: 'UL1',
-    },
-    cells: {
-      'cell-diff-pt1a-ul0': { grade: 'eCuraA', pattern: '(i)', size: '長径不問' },
-      'cell-undiff-pt1a-ul0': { grade: 'eCuraA', pattern: '(ii)', size: '≤2 cm' },
-      'cell-diff-pt1a-ul1': { grade: 'eCuraA', pattern: '(iii)', size: '≤3 cm' },
-      'cell-undiff-pt1a-ul1': { grade: 'eCuraC-2' },
-      'cell-diff-pt1b-sm1': { grade: 'eCuraB', pattern: '*', size: '≤3 cm' },
-      'cell-undiff-pt1b-sm1': { grade: 'eCuraC-2' },
-    },
+    sections: [
+      {
+        title: '分化型優位',
+        prefix: 'diff',
+        sizeHeaders: ['≤20 mm', '21–30 mm', '>30 mm'],
+        rows: [
+          {
+            depthUl: 'pT1a (M)\nUL0',
+            baseKey: 'pt1a-ul0',
+            cells: [A('(i)'), A('(i)'), A('(i)')],
+          },
+          {
+            depthUl: 'pT1a (M)\nUL1',
+            baseKey: 'pt1a-ul1',
+            cells: [A('(iii)'), A('(iii)'), C2()],
+          },
+          {
+            depthUl: 'pT1b (SM1)',
+            baseKey: 'pt1b-sm1',
+            cells: [B(), B(), C2()],
+          },
+        ],
+      },
+      {
+        title: '未分化型優位',
+        prefix: 'undiff',
+        sizeHeaders: ['≤20 mm', '21–30 mm', '>30 mm'],
+        rows: [
+          {
+            depthUl: 'pT1a (M)\nUL0',
+            baseKey: 'pt1a-ul0',
+            cells: [A('(ii)'), C2(), C2()],
+          },
+          {
+            depthUl: 'pT1a (M)\nUL1',
+            baseKey: 'pt1a-ul1',
+            cells: [C2(), C2(), C2()],
+          },
+          {
+            depthUl: 'pT1b (SM1)',
+            baseKey: 'pt1b-sm1',
+            cells: [C2(), C2(), C2()],
+          },
+        ],
+      },
+    ],
     notes: {
       c1: 'eCuraC-1：eCuraA/B の条件を満たすが、分割切除または水平断端陽性（HM1）',
       c2: 'eCuraC-2：上記以外（垂直断端・脈管侵襲・SM2 以深、サイズ超過など）',
@@ -85,29 +113,58 @@ export const GASTRIC_ESD_CURABILITY_TABLE: Record<Locale, GastricEsdCurabilityTa
     title: 'Fig. 2 Evaluation of curability according to tumor-related factors',
     subtitle: 'JGES gastric ESD/EMR guideline 2nd ed. (2020)',
     caption:
-      'pT1a (M), intramucosal cancer (pathology); pT1b (SM), submucosally invasive cancer (pathology). UL0, no ulcer/scar; UL1, ulcer/scar present.',
+      'pT1a (M), intramucosal cancer; pT1b (SM1), SM invasion <500 µm. UL0/UL1, ulcer/scar absent or present. Long diameter on reconstruction.',
     footnoteStar: '* eCuraA/B require en bloc resection and HM0, VM0, Ly0, V0',
     headers: {
       depthUlceration: 'Depth\nUlceration',
-      differentiated: 'Differentiated-dominant',
-      undifferentiated: 'Undifferentiated-dominant',
+      size: 'Long diameter',
     },
-    depth: {
-      pt1a: 'pT1a (M)',
-      pt1b: 'pT1b (SM1)',
-    },
-    ulceration: {
-      ul0: 'UL0',
-      ul1: 'UL1',
-    },
-    cells: {
-      'cell-diff-pt1a-ul0': { grade: 'eCuraA', pattern: '(i)', size: 'any size' },
-      'cell-undiff-pt1a-ul0': { grade: 'eCuraA', pattern: '(ii)', size: '≤2 cm' },
-      'cell-diff-pt1a-ul1': { grade: 'eCuraA', pattern: '(iii)', size: '≤3 cm' },
-      'cell-undiff-pt1a-ul1': { grade: 'eCuraC-2' },
-      'cell-diff-pt1b-sm1': { grade: 'eCuraB', pattern: '*', size: '≤3 cm' },
-      'cell-undiff-pt1b-sm1': { grade: 'eCuraC-2' },
-    },
+    sections: [
+      {
+        title: 'Differentiated-dominant',
+        prefix: 'diff',
+        sizeHeaders: ['≤20 mm', '21–30 mm', '>30 mm'],
+        rows: [
+          {
+            depthUl: 'pT1a (M)\nUL0',
+            baseKey: 'pt1a-ul0',
+            cells: [A('(i)'), A('(i)'), A('(i)')],
+          },
+          {
+            depthUl: 'pT1a (M)\nUL1',
+            baseKey: 'pt1a-ul1',
+            cells: [A('(iii)'), A('(iii)'), C2()],
+          },
+          {
+            depthUl: 'pT1b (SM1)',
+            baseKey: 'pt1b-sm1',
+            cells: [B(), B(), C2()],
+          },
+        ],
+      },
+      {
+        title: 'Undifferentiated-dominant',
+        prefix: 'undiff',
+        sizeHeaders: ['≤20 mm', '21–30 mm', '>30 mm'],
+        rows: [
+          {
+            depthUl: 'pT1a (M)\nUL0',
+            baseKey: 'pt1a-ul0',
+            cells: [A('(ii)'), C2(), C2()],
+          },
+          {
+            depthUl: 'pT1a (M)\nUL1',
+            baseKey: 'pt1a-ul1',
+            cells: [C2(), C2(), C2()],
+          },
+          {
+            depthUl: 'pT1b (SM1)',
+            baseKey: 'pt1b-sm1',
+            cells: [C2(), C2(), C2()],
+          },
+        ],
+      },
+    ],
     notes: {
       c1: 'eCuraC-1: meets eCuraA/B criteria but piecemeal resection or HM1',
       c2: 'eCuraC-2: all others (VM1, Ly/V1, SM2+, size out of range, etc.)',
