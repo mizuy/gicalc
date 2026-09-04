@@ -21,7 +21,7 @@ export const niceScore: ClassificationDefinition = {
   pubmed: NICE_2013_PUBMED,
   figures: [
     {
-      src: '/figures/nice-hamada2021-fig1.png',
+      src: '/figures/nice-hamada2021-fig1.webp',
       alt: 'NICE classification Type 1, Type 2, and Type 3 (Hamada 2021 Fig. 1)',
       caption: 'Fig. 1. Narrow-band imaging International colorectal endoscopic classification',
       source:

@@ -20,7 +20,7 @@ export const forrestScore: ClassificationDefinition = {
   pubmed: FORREST_1974_PUBMED,
   figures: [
     {
-      src: '/figures/forrest-jsmu2025-fig1.jpg',
+      src: '/figures/forrest-jsmu2025-fig1.webp',
       alt: 'Forrest classification Ia, Ib, IIa, IIb, IIc, and III (Zhou 2025 Fig. 1)',
       caption: 'Fig. 1. Representative endoscopic images of peptic ulcers in the 6 Forrest grades (Zhou et al. 2025)',
       source:

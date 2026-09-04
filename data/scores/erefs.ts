@@ -20,7 +20,7 @@ export const erefsScore: ClassificationDefinition = {
   pubmed: EREFS_2013_PUBMED,
   figures: [
     {
-      src: '/figures/erefs-abe2022-fig2.jpg',
+      src: '/figures/erefs-abe2022-fig2.webp',
       alt: 'EREFS findings: edema, rings, exudates, furrows, stricture, and narrow-caliber esophagus (Abe 2022 Fig. 2)',
       caption: 'Fig. 2. Characteristic endoscopic findings of EoE (Abe et al. Diagnostics 2022)',
       source:

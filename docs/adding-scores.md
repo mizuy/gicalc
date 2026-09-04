@@ -206,7 +206,7 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
 
 | 条件 | やること |
 |------|----------|
-| **CC ライセンス確認済み** | `public/figures/` に画像を置き、`src: '/figures/xxx.jpg'` で埋め込む |
+| **CC ライセンス確認済み** | `public/figures/` に WebP を置き（`scripts/optimize-figures.py` でリサイズ）、`src: '/figures/xxx.webp'` で埋め込む |
 | **CC ではない / 未確認** | 画像は置かず `href` + `hrefLabel` で原著・GeneReviews 等へリンク |
 | 出典 | `source`, `doi`, `pubmed`, `note`（ライセンス説明）を必ず書く |
 

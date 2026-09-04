@@ -30,7 +30,7 @@ export const jsphVaricesScore: ClassificationDefinition = {
   note: '1980年提案、1991年改訂、2010年第2版（英語）。現行は『門脈圧亢進症取扱い規約』第4版（2022）で同じ軸。記載順は L, F, C, RC, 出血兆候, 粘膜所見。胃静脈瘤の国際分類は Sarin。欧米の small / large はおおよそ F1 と F2/F3。',
   figures: [
     {
-      src: '/figures/varices-popescu2023-fig1.jpg',
+      src: '/figures/varices-popescu2023-fig1.webp',
       alt: 'Esophageal varices by JSPH form: F1 straight small-caliber, F2 beady, F3 nodular (Pall 2023 Fig. 1)',
       caption: 'Fig. 1. Esophageal varices according to size: F1 (a), F2 (b), F3 (c)',
       source:
@@ -43,7 +43,7 @@ export const jsphVaricesScore: ClassificationDefinition = {
       aspectRatio: 3688 / 1139,
     },
     {
-      src: '/figures/varices-kjhugr2024-fig1.jpg',
+      src: '/figures/varices-kjhugr2024-fig1.webp',
       alt: 'JSPH esophageal varices: F1–F3, Cw, Cb, and RC0–RC3 (Kim 2024 Fig. 1)',
       caption: 'Fig. 1. Endoscopic classifications of esophageal varices (F1–F3, Cw, Cb, RC0–RC3)',
       source:
@@ -56,7 +56,7 @@ export const jsphVaricesScore: ClassificationDefinition = {
       aspectRatio: 1472 / 1097,
     },
     {
-      src: '/figures/varices-nagashima2022-fig2.jpg',
+      src: '/figures/varices-nagashima2022-fig2.webp',
       alt: 'Red color signs on esophageal varices: cherry-red spot, red wale marking, and hematocystic spot (Nagashima 2022 Fig. 2)',
       caption: 'Fig. 2. RC findings in esophageal varices (A CRS and RWM; B HCS)',
       source:

@@ -15,6 +15,7 @@
     "preview:web": "npx serve dist",
     "preview:pages": "node scripts/preview-pages.mjs",
     "test": "tsx --test scripts/verify-scores.ts",
+    "optimize:figures": "python3 scripts/optimize-figures.py",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

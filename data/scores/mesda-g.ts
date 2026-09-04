@@ -36,7 +36,7 @@ export const mesdaGScore: ClassificationDefinition = {
       note: '画面のフローチャートと同じ手順なので埋め込まず、原著 Fig. 1 へリンクする。Wiley / JGES の Open Access。ライセンスは CC BY-NC-ND 4.0。胃の拡大診断アルゴリズム。JNET / NICE とは別。',
     },
     {
-      src: '/figures/mesda-g-muto2016-fig13.jpg',
+      src: '/figures/mesda-g-muto2016-fig13.webp',
       alt: 'VS classification: microvascular and microsurface patterns regular, irregular, or absent (Muto 2016 Fig. 13)',
       caption: 'Fig. 13. Vessels plus surface (VS) classification',
       source: 'Muto M, Yao K, Kaise M, et al. Dig Endosc. 2016;28:379-393. Fig. 13.',
