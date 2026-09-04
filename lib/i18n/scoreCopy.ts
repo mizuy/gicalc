@@ -1128,8 +1128,11 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       },
       budding: {
         label: 'Tumor budding',
-        description: 'pT1 (SM) criterion ⑤',
-        options: [{ label: 'Grade 1' }, { label: 'Grade 2 / 3' }],
+        description: 'pT1 (SM) criterion ⑤. 20× hotspot (0.785 mm²)',
+        options: [
+          { label: 'BD1', description: '<5 buds' },
+          { label: 'BD2/3', description: 'BD2: 5–9 buds; BD3: ≥10 buds' },
+        ],
       },
     },
   },

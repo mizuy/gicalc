@@ -92,11 +92,11 @@ export const colorectalEsdCurabilityScore: ScoreDefinition = {
     },
     {
       id: 'budding',
-      label: '腫瘍簇出（budding）',
-      description: 'pT1（SM）の 5 項目⑤',
+      label: '簇出',
+      description: 'pT1（SM）の 5 項目⑤。20倍視野（0.785 mm²）hotspot',
       options: [
-        { value: 0, label: 'Grade 1' },
-        { value: 1, label: 'Grade 2 / 3' },
+        { value: 0, label: 'BD1', description: '<5個' },
+        { value: 1, label: 'BD2/3', description: 'BD2: 5–9個、BD3: ≥10個' },
       ],
     },
   ],

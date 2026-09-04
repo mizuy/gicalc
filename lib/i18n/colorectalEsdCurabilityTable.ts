@@ -36,7 +36,7 @@ export const COLORECTAL_ESD_CURABILITY_TABLE: Record<Locale, ColorectalEsdCurabi
       smDepth: { label: '③ SM 浸潤', text: '<1000 µm' },
       ly: { label: '④ Ly', text: 'Ly0（陰性）' },
       v: { label: '④ V', text: 'V0（陰性）' },
-      budding: { label: '⑤ 簇出', text: 'Grade 1' },
+      budding: { label: '⑤ 簇出', text: 'BD1' },
       additional: {
         label: '5 項目の不足',
         text: '追加腸切除を低推奨で検討（LNM 率・患者背景を総合判断）',
@@ -59,7 +59,7 @@ export const COLORECTAL_ESD_CURABILITY_TABLE: Record<Locale, ColorectalEsdCurabi
       smDepth: { label: '③ SM invasion', text: '<1000 µm' },
       ly: { label: '④ Ly', text: 'Ly0 (absent)' },
       v: { label: '④ V', text: 'V0 (absent)' },
-      budding: { label: '⑤ Budding', text: 'Grade 1' },
+      budding: { label: '⑤ Budding', text: 'BD1' },
       additional: {
         label: 'Criteria not met',
         text: 'Consider additional resection (low recommendation); balance LNM risk and patient factors',

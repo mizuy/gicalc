@@ -228,7 +228,7 @@ export function computeColorectalEsdCurability(values: Record<string, number>): 
       severity: severityFor('curative-sm'),
       interpretation: labelFor('curative-sm'),
       details: [
-        '5 項目すべて充足：VM0、HM0、乳頭/管状腺癌、SM<1000 µm、Ly0、V0、簇出 G1。',
+        '5 項目すべて充足：VM0、HM0、乳頭/管状腺癌、SM<1000 µm、Ly0、V0、BD1。',
         ...baseDetails('curative-sm'),
       ],
     };
@@ -239,7 +239,7 @@ export function computeColorectalEsdCurability(values: Record<string, number>): 
   if (values.smDepth !== 0) unmet.push('SM 浸潤 ≥1000 µm');
   if (values.ly !== 0) unmet.push('リンパ管侵襲陽性（Ly1）');
   if (values.v !== 0) unmet.push('静脈侵襲陽性（V1）');
-  if (values.budding !== 0) unmet.push('簇出 Grade 2/3');
+  if (values.budding !== 0) unmet.push('BD2/3');
 
   return {
     total: 0,
