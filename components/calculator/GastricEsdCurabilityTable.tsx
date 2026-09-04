@@ -5,12 +5,14 @@ import { SeverityColors } from '@/constants/Colors';
 import {
   GASTRIC_ESD_CURABILITY_TABLE,
   type GastricEsdCurabilityGradeCell,
-  type GastricEsdCurabilityTableSection,
+  type GastricEsdCurabilityUnifiedRow,
 } from '@/lib/i18n/gastricEsdCurabilityTable';
 import { useLocale } from '@/lib/i18n';
 import {
   gastricCurabilityCellId,
   type GastricEsdCurabilityCellId,
+  type GastricEsdCurabilityColKey,
+  type GastricEsdCurabilityRowKey,
 } from '@/lib/scores/gastric-esd-curability';
 
 type Props = {
@@ -29,15 +31,30 @@ function GradeCell({
   cell,
   highlighted,
   partial,
+  style,
 }: {
-  cell: GastricEsdCurabilityGradeCell;
+  cell: GastricEsdCurabilityGradeCell | null;
   highlighted: boolean;
   partial: boolean;
+  style?: object;
 }) {
   const border = useThemeColor({}, 'border');
   const tint = useThemeColor({}, 'tint');
-  const tone = gradeTone(cell.grade);
 
+  if (!cell) {
+    return (
+      <View
+        style={[
+          styles.gradeCell,
+          styles.emptyCell,
+          { borderColor: border },
+          style,
+        ]}
+      />
+    );
+  }
+
+  const tone = gradeTone(cell.grade);
   const toneBg = {
     curative: `${SeverityColors.none}22`,
     expanded: `${SeverityColors.mild}33`,
@@ -58,6 +75,7 @@ function GradeCell({
           borderWidth: highlighted ? 2 : StyleSheet.hairlineWidth,
           backgroundColor: highlighted ? (partial ? `${tint}14` : `${tint}24`) : toneBg,
         },
+        style,
       ]}>
       <Text
         style={[
@@ -72,38 +90,32 @@ function GradeCell({
   );
 }
 
-function LabelCell({
-  text,
-  header,
-  style,
-}: {
-  text: string;
-  header?: boolean;
-  style?: object;
-}) {
+function HeaderCell({ text, style }: { text: string; style?: object }) {
   const border = useThemeColor({}, 'border');
-  const textSecondary = useThemeColor({}, 'textSecondary');
   const surface = useThemeColor({}, 'surface');
+  const textSecondary = useThemeColor({}, 'textSecondary');
 
   return (
     <View
       style={[
-        styles.labelCell,
-        header && styles.headerCell,
-        {
-          borderColor: border,
-          backgroundColor: header ? surface : undefined,
-        },
+        styles.headerCell,
+        { borderColor: border, backgroundColor: surface },
         style,
       ]}>
-      <Text
-        style={[
-          header ? styles.headerText : styles.labelText,
-          { color: textSecondary },
-          header && styles.headerTextBold,
-        ]}>
+      <Text style={[styles.headerText, styles.headerTextBold, { color: textSecondary }]}>
         {text}
       </Text>
+    </View>
+  );
+}
+
+function LabelCell({ text, style }: { text: string; style?: object }) {
+  const border = useThemeColor({}, 'border');
+  const textSecondary = useThemeColor({}, 'textSecondary');
+
+  return (
+    <View style={[styles.labelCell, { borderColor: border }, style]}>
+      <Text style={[styles.labelText, { color: textSecondary }]}>{text}</Text>
     </View>
   );
 }
@@ -143,59 +155,63 @@ function NoteRow({
   );
 }
 
-function HistologyTable({
-  section,
-  highlightSet,
-  partial,
-  border,
-  textSecondary,
-  depthUlHeader,
-}: {
-  section: GastricEsdCurabilityTableSection;
-  highlightSet: Set<GastricEsdCurabilityCellId>;
-  partial: boolean;
-  border: string;
-  textSecondary: string;
-  depthUlHeader: string;
-}) {
-  return (
-    <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: textSecondary }]}>{section.title}</Text>
-      <View style={[styles.table, { borderColor: border }]}>
-        <View style={styles.row}>
-          <View style={[styles.colDepthUl, styles.headerCell, { borderColor: border }]}>
-            <Text style={[styles.headerText, styles.headerTextBold, { color: textSecondary }]}>
-              {depthUlHeader}
-            </Text>
-          </View>
-          {section.sizeHeaders.map((header) => (
-            <LabelCell key={header} text={header} header style={styles.colSize} />
-          ))}
-        </View>
+function renderDiffCells(
+  row: GastricEsdCurabilityUnifiedRow,
+  highlightSet: Set<GastricEsdCurabilityCellId>,
+  partial: boolean,
+  border: string,
+) {
+  const rowKey = row.rowKey as GastricEsdCurabilityRowKey;
 
-        {section.rows.map((row) => (
-          <View key={row.baseKey} style={styles.row}>
-            <LabelCell text={row.depthUl} style={styles.colDepthUl} />
-            {row.cells.map((cell, colIndex) => {
-              const colKey = section.sizeColKeys[colIndex];
-              const id = gastricCurabilityCellId(
-                `${section.prefix}-${row.baseKey}` as Parameters<typeof gastricCurabilityCellId>[0],
-                colKey,
-              );
-              return (
-                <GradeCell
-                  key={id}
-                  cell={cell}
-                  highlighted={highlightSet.has(id)}
-                  partial={partial}
-                />
-              );
-            })}
-          </View>
-        ))}
-      </View>
-    </View>
-  );
+  if (row.diffMergeSizeCols) {
+    const id = gastricCurabilityCellId(rowKey, row.diffColKeys[0]);
+    const highlighted =
+      highlightSet.has(id) || highlightSet.has(gastricCurabilityCellId(rowKey, row.diffColKeys[1]));
+    return (
+      <GradeCell
+        cell={row.diffCells[0]}
+        highlighted={highlighted}
+        partial={partial}
+        style={[styles.colDiff, styles.mergedCell, { borderColor: border }]}
+      />
+    );
+  }
+
+  return row.diffCells.map((cell, index) => {
+    const colKey = row.diffColKeys[index] as GastricEsdCurabilityColKey;
+    const id = gastricCurabilityCellId(rowKey, colKey);
+    return (
+      <GradeCell
+        key={id}
+        cell={cell}
+        highlighted={highlightSet.has(id)}
+        partial={partial}
+        style={styles.colDiffHalf}
+      />
+    );
+  });
+}
+
+function renderUndiffCells(
+  row: GastricEsdCurabilityUnifiedRow,
+  highlightSet: Set<GastricEsdCurabilityCellId>,
+  partial: boolean,
+) {
+  const rowKey = row.rowKey as GastricEsdCurabilityRowKey;
+
+  return row.undiffCells.map((cell, index) => {
+    const colKey = row.undiffColKeys[index] as GastricEsdCurabilityColKey;
+    const id = gastricCurabilityCellId(rowKey, colKey);
+    return (
+      <GradeCell
+        key={id}
+        cell={cell}
+        highlighted={highlightSet.has(id)}
+        partial={partial}
+        style={styles.colUndiffHalf}
+      />
+    );
+  });
 }
 
 export function GastricEsdCurabilityTable({ highlightedCells, partial, complete }: Props) {
@@ -220,22 +236,39 @@ export function GastricEsdCurabilityTable({ highlightedCells, partial, complete 
       )}
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tableScroll}>
-        <View style={styles.tablesStack}>
-          {copy.sections.map((section) => (
-            <HistologyTable
-              key={section.prefix}
-              section={section}
-              highlightSet={highlightSet}
-              partial={partial}
-              border={border}
-              textSecondary={textSecondary}
-              depthUlHeader={copy.headers.depthUlceration}
-            />
+        <View style={[styles.table, { borderColor: border }]}>
+          <View style={styles.row}>
+            <HeaderCell text={copy.headers.depth} style={styles.colDepth} />
+            <HeaderCell text={copy.headers.ulcer} style={styles.colUlcer} />
+            <HeaderCell text={copy.headers.differentiated} style={styles.colDiffGroup} />
+            <HeaderCell text={copy.headers.undifferentiated} style={styles.colUndiffGroup} />
+          </View>
+          <View style={styles.row}>
+            <HeaderCell text="" style={styles.colDepth} />
+            <HeaderCell text="" style={styles.colUlcer} />
+            <HeaderCell text={copy.headers.diffLe3} style={styles.colDiffHalf} />
+            <HeaderCell text={copy.headers.diffGt3} style={styles.colDiffHalf} />
+            <HeaderCell text={copy.headers.undiffLe2} style={styles.colUndiffHalf} />
+            <HeaderCell text={copy.headers.undiffGt2} style={styles.colUndiffHalf} />
+          </View>
+
+          {copy.rows.map((row) => (
+            <View key={row.rowKey} style={styles.row}>
+              {row.depthLabel ? (
+                <LabelCell text={row.depthLabel} style={styles.colDepth} />
+              ) : (
+                <View style={[styles.colDepth, styles.spacerCell, { borderColor: border }]} />
+              )}
+              <LabelCell text={row.ulcerLabel ?? ''} style={styles.colUlcer} />
+              {renderDiffCells(row, highlightSet, partial, border)}
+              {renderUndiffCells(row, highlightSet, partial)}
+            </View>
           ))}
         </View>
       </ScrollView>
 
       <Text style={[styles.footnoteStar, { color: textSecondary }]}>{copy.footnoteStar}</Text>
+      <Text style={[styles.footnoteStar, { color: textSecondary }]}>{copy.footnoteEcuraB}</Text>
 
       <View style={styles.notes}>
         <NoteRow text={copy.notes.c1} highlighted={highlightSet.has('row-c1')} partial={partial} />
@@ -255,7 +288,10 @@ export function GastricEsdCurabilityTable({ highlightedCells, partial, complete 
   );
 }
 
-const COL_DEPTH_UL = 88;
+const COL_DEPTH = 72;
+const COL_ULCER = 44;
+const COL_DIFF_HALF = 72;
+const COL_UNDIFF_HALF = 72;
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -289,50 +325,61 @@ const styles = StyleSheet.create({
   tableScroll: {
     marginHorizontal: -4,
   },
-  tablesStack: {
-    gap: 16,
-    paddingHorizontal: 4,
-    minWidth: 420,
-  },
-  section: {
-    gap: 6,
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '800',
-  },
   table: {
     borderWidth: 1,
     borderRadius: 8,
     overflow: 'hidden',
+    minWidth: 480,
+    marginHorizontal: 4,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'stretch',
   },
-  colDepthUl: {
-    width: COL_DEPTH_UL,
+  colDepth: {
+    width: COL_DEPTH,
     borderRightWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 6,
   },
-  colSize: {
-    flex: 1,
-    minWidth: 88,
+  colUlcer: {
+    width: COL_ULCER,
+    borderRightWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  labelCell: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 6,
+  colDiffGroup: {
+    width: COL_DIFF_HALF * 2,
+    borderRightWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  colUndiffGroup: {
+    width: COL_UNDIFF_HALF * 2,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  colDiff: {
+    width: COL_DIFF_HALF * 2,
+  },
+  colDiffHalf: {
+    width: COL_DIFF_HALF,
+  },
+  colUndiffHalf: {
+    width: COL_UNDIFF_HALF,
+  },
+  mergedCell: {
+    flex: 0,
+    width: COL_DIFF_HALF * 2,
+  },
+  spacerCell: {
     borderRightWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   headerCell: {
-    minHeight: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 4,
+    borderRightWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    minHeight: 40,
   },
   headerText: {
     fontSize: 11,
@@ -342,26 +389,37 @@ const styles = StyleSheet.create({
   headerTextBold: {
     fontWeight: '700',
   },
-  labelText: {
-    fontSize: 12,
-    textAlign: 'center',
-    fontWeight: '600',
-    lineHeight: 16,
-  },
-  gradeCell: {
-    flex: 1,
-    minWidth: 88,
+  labelCell: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 4,
     borderRightWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
+  labelText: {
+    fontSize: 11,
+    textAlign: 'center',
+    fontWeight: '600',
+    lineHeight: 15,
+  },
+  gradeCell: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 4,
+    borderRightWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    minHeight: 44,
+  },
+  emptyCell: {
+    backgroundColor: 'transparent',
+  },
   gradeLabel: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '800',
     textAlign: 'center',
+    lineHeight: 16,
   },
   gradeLabelActive: {
     fontWeight: '900',
