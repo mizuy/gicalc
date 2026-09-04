@@ -78,11 +78,16 @@ npm run preview:pages
 
 ## スコア追加
 
-1. `data/scores/xxx.ts` に計算系（`fields` + `compute`）または分類一覧（`kind: 'classification'` + `entries`）を定義する
-2. `data/scores/index.ts` の `SCORES` に追加する
-3. 必要なら `types/score.ts` に `ScoreCategory` を追加する
+詳細な手順・設計方針は **[docs/adding-scores.md](docs/adding-scores.md)** を参照してください。
 
-`/score/{id}` は expo-router の動的ルートで自動的に開きます。
+概要:
+
+1. `data/scores/xxx.ts` に定義（計算系・分類一覧・アルゴリズム）
+2. `data/scores/index.ts` の `ALL_SCORE_DEFINITIONS` に追加
+3. 英語 UI は `lib/i18n/scoreCopy.ts`、結果訳は `lib/i18n/results.ts`
+4. `scripts/verify-scores.ts` を更新して `npm test`
+
+`/score/{id}` は expo-router の動的ルートで自動的に開きます。改変版がある場合は `data/scores/variant-groups.ts` で同一ページのタブにまとめます。
 
 ## 引用とライセンス
 
