@@ -66,6 +66,7 @@ export type UiStrings = {
     pwaAndroid: string;
     pwaBanner: string;
     pwaUpdate: string;
+    versionLabel: string;
     citationsTitle: string;
     citationsIntro: string;
     citationsCc: string;
@@ -165,7 +166,8 @@ export const UI: Record<Locale, UiStrings> = {
       pwaAndroid: 'Android（Chrome）: メニュー → 「アプリをインストール」または「ホーム画面に追加」',
       pwaBanner: '対応ブラウザではホーム画面のインストールバナーからも追加できます。',
       pwaUpdate:
-        '新しい版があるときは画面上部にバナーが出ます。「再読み込み」を押すと最新になります。About 画面の「更新を確認」から手動でチェックすることもできます。',
+        '新しい版があるときは画面上部にバナーが出ます。「再読み込み」を押すと最新になります。About のバージョン番号と「更新を確認」で、手元の版を確認できます。',
+      versionLabel: 'バージョン',
       citationsTitle: '引用とライセンス',
       citationsIntro:
         '図と原著のライセンスは、出版社ページと Crossref の表記で確認した。Creative Commons のものは下に書き、そうでないものはリストにした。',
@@ -268,7 +270,8 @@ export const UI: Record<Locale, UiStrings> = {
       pwaAndroid: 'Android (Chrome): Menu → Install app or Add to Home Screen',
       pwaBanner: 'Supported browsers may also show an install banner on the home screen.',
       pwaUpdate:
-        'When a new version is available, a banner appears at the top. Tap Reload to apply it. You can also tap Check for updates on this About screen.',
+        'When a new version is available, a banner appears at the top. Tap Reload to apply it. Check the version number and tap Check for updates on this About screen to verify what you are running.',
+      versionLabel: 'Version',
       citationsTitle: 'Citations and licenses',
       citationsIntro:
         'Figure and paper licenses were checked against publisher pages and Crossref. Creative Commons sources are listed first; sources that are not CC follow.',

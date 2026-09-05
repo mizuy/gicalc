@@ -3,6 +3,7 @@ import { Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
 import { useLocale } from '@/lib/i18n';
+import { getAppVersion } from '@/lib/web/appVersion';
 import {
   checkPwaUpdate,
   clearPwaUpdateDismissed,
@@ -43,8 +44,13 @@ export function PwaCheckUpdate() {
           ? t.pwa.updateAvailable
           : null;
 
+  const version = getAppVersion();
+
   return (
     <View style={[styles.box, { backgroundColor: surface, borderColor: border }]}>
+      <Text style={[styles.version, { color: textSecondary }]}>
+        {t.about.versionLabel}: {version}
+      </Text>
       <Pressable
         accessibilityRole="button"
         disabled={state === 'checking'}
@@ -77,6 +83,10 @@ const styles = StyleSheet.create({
     padding: 14,
     marginBottom: 10,
     gap: 10,
+  },
+  version: {
+    fontSize: 13,
+    fontWeight: '600',
   },
   button: {
     alignSelf: 'flex-start',

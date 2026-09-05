@@ -2082,9 +2082,36 @@ test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', (
 });
 
 test('PWA 更新はユーザー操作まで waiting のままにする', () => {
-  const workbox = require('../workbox-config.js') as { skipWaiting: boolean; clientsClaim: boolean };
-  assert.equal(workbox.skipWaiting, false);
-  assert.equal(workbox.clientsClaim, true);
+  const previousBaseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+  process.env.EXPO_PUBLIC_BASE_URL = '/gicalc';
+  delete require.cache[require.resolve('../workbox-config.js')];
+  try {
+    const workbox = require('../workbox-config.js') as {
+      skipWaiting: boolean;
+      clientsClaim: boolean;
+      globIgnores: string[];
+      globPatterns: string[];
+      runtimeCaching: Array<{ handler: string; urlPattern: RegExp }>;
+    };
+    assert.equal(workbox.skipWaiting, false);
+    assert.equal(workbox.clientsClaim, true);
+    assert.deepEqual(workbox.globIgnores, ['**/*.html']);
+    assert.equal(workbox.runtimeCaching.some((rule) => rule.handler === 'NetworkFirst'), true);
+    assert.equal(
+      workbox.runtimeCaching.some((rule) => rule.handler === 'NetworkFirst' && rule.urlPattern.test('/gicalc/about')),
+      true,
+    );
+    assert.equal(workbox.globPatterns.every((pattern) => !pattern.includes('html')), true);
+  } finally {
+    if (previousBaseUrl === undefined) delete process.env.EXPO_PUBLIC_BASE_URL;
+    else process.env.EXPO_PUBLIC_BASE_URL = previousBaseUrl;
+    delete require.cache[require.resolve('../workbox-config.js')];
+  }
+});
+
+test('アプリバージョンは expo 設定と一致する', () => {
+  const appConfig = require('../app.config.js') as { expo: { version: string } };
+  assert.equal(appConfig.expo.version, '1.0.2');
 });
 
 test('PWA 更新バナーの文言と検知', () => {
@@ -2094,13 +2121,15 @@ test('PWA 更新バナーの文言と検知', () => {
   assert.equal(UI.ja.pwa.later, '後で');
   assert.equal(UI.ja.pwa.checkUpdate, '更新を確認');
   assert.equal(UI.ja.pwa.upToDate, '最新版です');
-  assert.match(UI.ja.about.pwaUpdate, /更新を確認/);
+  assert.match(UI.ja.about.pwaUpdate, /バージョン/);
+  assert.equal(UI.ja.about.versionLabel, 'バージョン');
   assert.equal(UI.en.pwa.updateAvailable, 'A new version is available');
   assert.equal(UI.en.pwa.reload, 'Reload');
   assert.equal(UI.en.pwa.later, 'Later');
   assert.equal(UI.en.pwa.checkUpdate, 'Check for updates');
   assert.equal(UI.en.pwa.upToDate, 'You have the latest version');
-  assert.match(UI.en.about.pwaUpdate, /Check for updates/);
+  assert.match(UI.en.about.pwaUpdate, /version number/i);
+  assert.equal(UI.en.about.versionLabel, 'Version');
   assert.doesNotMatch(UI.en.pwa.updateAvailable, japanese);
   assert.doesNotMatch(UI.en.pwa.reload, japanese);
   assert.doesNotMatch(UI.en.pwa.later, japanese);
