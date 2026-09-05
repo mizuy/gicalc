@@ -66,7 +66,7 @@ export type ScoreDuodenumSiteGroup = {
   scores: ScoreDefinition[];
 };
 
-/** 十二指腸は非乳头部 / 乳头部でグループ化（既存順序を保持） */
+/** 十二指腸は非乳頭部 / 乳頭部でグループ化（既存順序を保持） */
 export function groupScoresByDuodenumSite(scores: ScoreDefinition[]): ScoreDuodenumSiteGroup[] {
   const buckets = new Map<DuodenumSite, ScoreDefinition[]>();
   for (const site of DUODENUM_SITE_ORDER) {

@@ -28,7 +28,7 @@ export const LIST_CLINICAL_PHASE_ORDER: ListClinicalPhase[] = [
   'treatment',
 ];
 
-/** 十二指腸一覧のサブ見出し（非乳头部 / 乳头部） */
+/** 十二指腸一覧のサブ見出し（非乳頭部 / 乳頭部） */
 export type DuodenumSite = 'non-ampullary' | 'ampulla';
 
 export const DUODENUM_SITE_ORDER: DuodenumSite[] = ['non-ampullary', 'ampulla'];

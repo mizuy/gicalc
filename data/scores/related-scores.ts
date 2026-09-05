@@ -75,7 +75,7 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
   ],
   spigelman: [
     { id: 'ishii', hint: { ja: 'SNADET C3 vs C4/5', en: 'SNADET C3 vs C4/5' } },
-    { id: 'uchiyama', hint: { ja: '乳头部 ME-NBI（別評価）', en: 'Ampullary ME-NBI (assess papilla separately)' } },
+    { id: 'uchiyama', hint: { ja: '乳頭部 ME-NBI（別評価）', en: 'Ampullary ME-NBI (assess papilla separately)' } },
   ],
   ishii: [
     { id: 'kikuchi-mebi', hint: { ja: 'ME-NBI アルゴリズム', en: 'ME-NBI algorithm' } },
@@ -99,12 +99,12 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
     { id: 'vienna', hint: { ja: 'Vienna C3 / C4 / C5', en: 'Vienna C3 / C4 / C5' } },
   ],
   uchiyama: [
-    { id: 'ampullary-macroscopic', hint: { ja: '乳头部癌肉眼型', en: 'Ampullary macroscopic types' } },
-    { id: 'spigelman', hint: { ja: 'FAP 十二指腸腺腫（非乳头部）', en: 'FAP duodenal adenoma (non-ampullary)' } },
+    { id: 'ampullary-macroscopic', hint: { ja: '乳頭部癌肉眼型', en: 'Ampullary macroscopic types' } },
+    { id: 'spigelman', hint: { ja: 'FAP 十二指腸腺腫（非乳頭部）', en: 'FAP duodenal adenoma (non-ampullary)' } },
   ],
   'ampullary-macroscopic': [
-    { id: 'uchiyama', hint: { ja: '乳头部 ME-NBI', en: 'Ampullary ME-NBI' } },
-    { id: 'spigelman', hint: { ja: 'FAP 腺腫（乳头部は別評価）', en: 'FAP adenoma (papilla assessed separately)' } },
+    { id: 'uchiyama', hint: { ja: '乳頭部 ME-NBI', en: 'Ampullary ME-NBI' } },
+    { id: 'spigelman', hint: { ja: 'FAP 腺腫（乳頭部は別評価）', en: 'FAP adenoma (papilla assessed separately)' } },
   ],
   nice: [
     { id: 'jnet', hint: { ja: 'NBI 拡大の JNET 分類', en: 'JNET on magnifying NBI' } },

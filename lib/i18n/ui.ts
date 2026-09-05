@@ -96,14 +96,14 @@ export const UI: Record<Locale, UiStrings> = {
       treatment: '治療',
     },
     duodenumSite: {
-      'non-ampullary': '非乳头部',
-      ampulla: '乳头部',
+      'non-ampullary': '非乳頭部',
+      ampulla: '乳頭部',
     },
     navCategoryLead: {
       esophagus: '食道の内視鏡分類、拡大診断、ESD 後の判定。',
       stomach: '胃の萎縮・静脈瘤・拡大診断、胃炎リスク、早期癌のスコアと ESD 後判定。',
       duodenum:
-        '非乳头部（FAP 腺腫・SNADET）と乳头部（ME-NBI・肉眼型）のツール。Non-ampullary / Ampulla で分けています。',
+        '非乳頭部（FAP 腺腫・SNADET）と乳頭部（ME-NBI・肉眼型）のツール。Non-ampullary / Ampulla で分けています。',
       colorectum: '大腸の分類、検診、T1 予測、ESD 後判定、前処置。',
       pathology: '消化管上皮性腫瘍・鋸歯状病変・腫瘍芽・NET・胃癌組織型などの病理分類。',
       bleeding: '潰瘍出血の内視鏡所見と上下部出血スコア。',
@@ -187,7 +187,7 @@ export const UI: Record<Locale, UiStrings> = {
         '木村–竹本（萎縮分類）、Hill（胃食道フラップ弁）、Sarin（胃静脈瘤 GOV / IGV。Lg とガイドラインの注釈つき）、MESDA-G（早期胃癌の拡大診断アルゴリズム）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura 判定（ESD 後・JGES/JGCA ガイドライン）、eCura スコア / Sekiguchi（LNM）、BEST-J（ESD後出血）。',
       duodenum: '十二指腸',
       duodenumBody:
-        'Non-ampullary: Spigelman / Modified Spigelman（FAP）、Ishii・Kakushima（SNADET）、Kikuchi ME-NBI・Toya ME-CV。Ampulla: Uchiyama ME-NBI、日本胆道外科学会の乳头部癌肉眼型。',
+        'Non-ampullary: Spigelman / Modified Spigelman（FAP）、Ishii・Kakushima（SNADET）、Kikuchi ME-NBI・Toya ME-CV。Ampulla: Uchiyama ME-NBI、日本胆道外科学会の乳頭部癌肉眼型。',
       colorectum: '大腸',
       colorectumBody:
         'APCS（検診）、SPS（鋸歯状ポリープ症候群・WHO 2019 診断基準）、Vienna（消化管上皮性腫瘍の病理分類）、Paris（肉眼型）、LST（側方発育）、虫垂開口部 Type（Toyonaga）、工藤–鶴田（pit pattern）、ESD-F（大腸 ESD 粘膜下層線維化 F0–F2）、治癒切除判定（大腸 ESD 後・JGES/JSCCR 5 項目）、EC（超拡大・EC/EC-V）、NICE（NBI非拡大）、WASP（HP / SSL / 腺腫）、JNET（NBI拡大）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。',

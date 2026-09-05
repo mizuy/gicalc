@@ -28,8 +28,8 @@
 | 十二指腸 | Kakushima WLI（2017） | SNADET LGA vs HGA/癌 | 点数 0–5 |
 | 十二指腸 | Toya ME-CV（2020） | SNADET（ME-CV） | アルゴリズム（C3 / C4/5） |
 | 十二指腸 | Kikuchi ME-NBI（2014） | SNADET（ME-NBI） | アルゴリズム（C3 / C4/5） |
-| 十二指腸 | Uchiyama ME-NBI（2006） | 乳头部 ME-NBI Type I–III | 分類 |
-| 十二指腸 | 乳头部癌肉眼型（JSBS） | 胆道癌取扱い規約 | 分類（腫瘤 / 潰瘍 / 混在 / その他） |
+| 十二指腸 | Uchiyama ME-NBI（2006） | 乳頭部 ME-NBI Type I–III | 分類 |
+| 十二指腸 | 乳頭部癌肉眼型（JSBS） | 胆道癌取扱い規約 | 分類（腫瘤 / 潰瘍 / 混在 / その他） |
 | 大腸 | APCS（Yeoh 2011） | 無症状アジア人の進行大腸腫瘍リスク | 点数 0–7 |
 | 大腸 | Vienna（Schlemper 2000） | 消化管上皮性腫瘍の病理分類 | 定義一覧（C1–C5） |
 | 大腸 | Paris（2003 / 2005） | 表在型腫瘍の肉眼型（Type 0） | 定義一覧（原著の図・文言） |

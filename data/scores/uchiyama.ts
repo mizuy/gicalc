@@ -6,20 +6,20 @@ export const UCHIYAMA_2006_PUBMED = '16612620';
 export const uchiyamaScore: ClassificationDefinition = {
   id: 'uchiyama',
   kind: 'classification',
-  name: 'Uchiyama ME-NBI分類（乳头部）',
+  name: 'Uchiyama ME-NBI分類（乳頭部）',
   shortName: 'Uchiyama ME-NBI',
   developedInJapan: true,
   toolKind: 'classification',
   organ: 'duodenum',
   category: 'classification',
-  categoryLabel: '乳头部',
+  categoryLabel: '乳頭部',
   description:
-    '十二指腸乳头部腫瘍の拡大 NBI（ME-NBI）所見を、表面構造（Type I / II / III）と異常血管の有無で分類する（Uchiyama 2006）。Type I は炎症・増殖性、Type II/III は腺腫・癌。異常血管は腺癌に特徴的。',
+    '十二指腸乳頭部腫瘍の拡大 NBI（ME-NBI）所見を、表面構造（Type I / II / III）と異常血管の有無で分類する（Uchiyama 2006）。Type I は炎症・増殖性、Type II/III は腺腫・癌。異常血管は腺癌に特徴的。',
   originalLead:
     'Magnifying endoscopy combined with narrow-band imaging (ME-NBI) images of ampullary tumors were classified into three groups by surface structure: Type I, oval-shaped villi; Type II, pinecone/leaf-shaped villi; Type III, irregular or nonstructured surface. Abnormal vessels were defined as dilated, tortuous, or network-like vessels, or vessel disappearance on papillary lesions. Type I occurred in inflammation or hyperplastic lesions; Type II and/or III occurred in adenomas and adenocarcinomas. Abnormal vessels appeared only in adenocarcinomas and help differentiate adenoma from adenocarcinoma.',
   reference: 'Uchiyama Y et al. J Gastroenterol 2006;41:483-490',
   pubmed: UCHIYAMA_2006_PUBMED,
-  note: '症例数は少なく、さらなる検証が必要（原著の限界）。非乳头部 SNADET には Kikuchi ME-NBI / Ishii スコアを参照。',
+  note: '症例数は少なく、さらなる検証が必要（原著の限界）。非乳頭部 SNADET には Kikuchi ME-NBI / Ishii スコアを参照。',
   figures: [
     {
       href: 'https://link.springer.com/article/10.1007/s00535-006-1800-7',
