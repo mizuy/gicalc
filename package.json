@@ -1,7 +1,7 @@
 {
   "name": "gicalc",
   "main": "expo-router/entry",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "private": true,
   "homepage": "https://mizuy.github.io/gicalc/",
   "scripts": {
