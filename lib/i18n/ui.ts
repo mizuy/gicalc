@@ -96,8 +96,8 @@ export const UI: Record<Locale, UiStrings> = {
       treatment: '治療',
     },
     duodenumSite: {
-      'non-ampullary': 'Non-ampullary',
-      ampulla: 'Ampulla',
+      'non-ampullary': '非乳头部',
+      ampulla: '乳头部',
     },
     navCategoryLead: {
       esophagus: '食道の内視鏡分類、拡大診断、ESD 後の判定。',
