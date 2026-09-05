@@ -117,6 +117,16 @@ export function buildAlgorithmNodeFlags(
       if (visit(child)) onPath = true;
     }
 
+    if (node.mergeResult) {
+      const mergeOnPath = walk.result?.id === node.mergeResult.resultId;
+      flags.set(node.mergeResult.id, {
+        onPath: mergeOnPath,
+        current: false,
+        isResult: mergeOnPath,
+      });
+      if (mergeOnPath) onPath = true;
+    }
+
     flags.set(node.id, { onPath, current, isResult });
     return onPath;
   }
@@ -135,4 +145,25 @@ export function findEntryForResult(
 ): ClassificationEntry | undefined {
   if (!result) return undefined;
   return entries.find((entry) => entry.label === result.entryLabel);
+}
+
+/** mergeResult.feedFrom に含まれる各ノードの、親からの深さ（1 始まり） */
+export function mergeFeedDepths(
+  node: AlgorithmMapNode,
+  feedFrom: string[],
+  depth = 0,
+): Map<string, number> {
+  const depths = new Map<string, number>();
+  const walk = (current: AlgorithmMapNode, currentDepth: number) => {
+    if (feedFrom.includes(current.id)) {
+      depths.set(current.id, currentDepth);
+    }
+    for (const child of current.children ?? []) {
+      walk(child, currentDepth + 1);
+    }
+  };
+  for (const child of node.children ?? []) {
+    walk(child, depth + 1);
+  }
+  return depths;
 }

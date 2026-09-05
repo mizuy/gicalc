@@ -155,6 +155,14 @@ export type AlgorithmResult = {
   entryLabel: string;
 };
 
+export type AlgorithmMapMergeResult = {
+  id: string;
+  label: string;
+  resultId: string;
+  /** 合流元となる map ノード id（例: absent, regular） */
+  feedFrom: string[];
+};
+
 export type AlgorithmMapNode = {
   id: string;
   label: string;
@@ -162,6 +170,10 @@ export type AlgorithmMapNode = {
   stepId?: string;
   optionId?: string;
   resultId?: string;
+  /** 親の mergeResult へ合流する末端ノード */
+  mergeFeed?: boolean;
+  /** 子ツリーの下に共通結果ボックスを描画する */
+  mergeResult?: AlgorithmMapMergeResult;
 };
 
 export type AlgorithmFlowMapLayout = 'compact' | 'scroll';
