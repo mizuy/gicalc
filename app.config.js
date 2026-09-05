@@ -1,11 +1,15 @@
+const { readFileSync } = require('node:fs');
+const { join } = require('node:path');
+
 const rawBaseUrl = process.env.EXPO_PUBLIC_BASE_URL ?? '';
 const baseUrl = rawBaseUrl === '/' ? '' : rawBaseUrl.replace(/\/$/, '');
+const { version } = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf8'));
 
 module.exports = {
   expo: {
     name: 'GI Calc',
     slug: 'gicalc',
-    version: '1.0.8',
+    version,
     orientation: 'portrait',
     icon: './assets/images/icon.png',
     scheme: 'gicalc',

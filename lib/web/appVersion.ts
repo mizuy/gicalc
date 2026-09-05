@@ -1,5 +1,5 @@
 import Constants from 'expo-constants';
 
 export function getAppVersion(): string {
-  return Constants.expoConfig?.version ?? '0.0.0';
+  return process.env.EXPO_PUBLIC_APP_VERSION ?? Constants.expoConfig?.version ?? '0.0.0';
 }

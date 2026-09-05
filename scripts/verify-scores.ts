@@ -2274,6 +2274,14 @@ test('PWA 更新はユーザー操作まで waiting のままにする', () => {
       workbox.runtimeCaching.some((rule) => rule.handler === 'NetworkFirst' && rule.urlPattern.test('/gicalc/about')),
       true,
     );
+    assert.equal(
+      workbox.runtimeCaching.some(
+        (rule) =>
+          rule.handler === 'NetworkFirst' &&
+          rule.urlPattern.test('/gicalc/_expo/static/js/web/entry-deadbeef.js'),
+      ),
+      true,
+    );
     assert.equal(workbox.globPatterns.every((pattern) => !pattern.includes('html')), true);
   } finally {
     if (previousBaseUrl === undefined) delete process.env.EXPO_PUBLIC_BASE_URL;
@@ -2282,9 +2290,12 @@ test('PWA 更新はユーザー操作まで waiting のままにする', () => {
   }
 });
 
-test('アプリバージョンは expo 設定と一致する', () => {
+test('アプリバージョンは package.json と expo 設定で一致する', () => {
+  delete require.cache[require.resolve('../app.config.js')];
+  const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
-  assert.equal(appConfig.expo.version, '1.0.8');
+  assert.equal(appConfig.expo.version, pkg.version);
+  assert.equal(pkg.version, '1.0.9');
 });
 
 test('PWA 更新バナーの文言と検知', () => {

@@ -39,12 +39,13 @@ module.exports = {
     },
     {
       urlPattern: /\/_expo\/static\/js\/web\/entry-[^/]+\.js$/,
-      handler: 'CacheFirst',
+      handler: 'NetworkFirst',
       options: {
         cacheName: 'gicalc-entry-js',
+        networkTimeoutSeconds: 4,
         expiration: {
           maxEntries: 4,
-          maxAgeSeconds: 30 * 24 * 60 * 60,
+          maxAgeSeconds: 7 * 24 * 60 * 60,
         },
       },
     },
