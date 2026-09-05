@@ -1909,14 +1909,20 @@ test('PWA 更新バナーの文言と検知', () => {
   assert.equal(UI.ja.pwa.updateAvailable, '新しい版があります');
   assert.equal(UI.ja.pwa.reload, '再読み込み');
   assert.equal(UI.ja.pwa.later, '後で');
-  assert.match(UI.ja.about.pwaUpdate, /再読み込み/);
+  assert.equal(UI.ja.pwa.checkUpdate, '更新を確認');
+  assert.equal(UI.ja.pwa.upToDate, '最新版です');
+  assert.match(UI.ja.about.pwaUpdate, /更新を確認/);
   assert.equal(UI.en.pwa.updateAvailable, 'A new version is available');
   assert.equal(UI.en.pwa.reload, 'Reload');
   assert.equal(UI.en.pwa.later, 'Later');
-  assert.match(UI.en.about.pwaUpdate, /Reload/);
+  assert.equal(UI.en.pwa.checkUpdate, 'Check for updates');
+  assert.equal(UI.en.pwa.upToDate, 'You have the latest version');
+  assert.match(UI.en.about.pwaUpdate, /Check for updates/);
   assert.doesNotMatch(UI.en.pwa.updateAvailable, japanese);
   assert.doesNotMatch(UI.en.pwa.reload, japanese);
   assert.doesNotMatch(UI.en.pwa.later, japanese);
+  assert.doesNotMatch(UI.en.pwa.checkUpdate, japanese);
+  assert.doesNotMatch(UI.en.pwa.upToDate, japanese);
   assert.doesNotMatch(UI.en.about.pwaUpdate, japanese);
 
   assert.equal(isPwaUpdateAvailable({ hasController: false, waiting: true }), false);

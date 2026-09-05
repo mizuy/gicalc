@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
+import { PwaCheckUpdate } from '@/components/web/PwaCheckUpdate';
 import { useLocale } from '@/lib/i18n';
 
 export default function AboutScreen() {
@@ -59,6 +60,7 @@ export default function AboutScreen() {
       </View>
 
       <Text style={[styles.section, { color: tint }]}>{t.about.pwaTitle}</Text>
+      <PwaCheckUpdate />
       <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaIos}</Text>
       <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaAndroid}</Text>
       <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaBanner}</Text>
