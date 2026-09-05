@@ -57,7 +57,7 @@ import {
   resolveScoreRoute,
   SCORE_VARIANT_GROUPS,
 } from '../data/scores/variant-groups';
-import { getScoreListPhase, groupScoresByListPhase, navCategoryUsesListPhases } from '../data/scores/list-sections';
+import { getScoreListPhase, groupScoresByDuodenumSite, groupScoresByListPhase, navCategoryUsesListPhases } from '../data/scores/list-sections';
 import { LIST_CLINICAL_PHASE_ORDER, LIST_NAV_CATEGORY_ORDER } from '../types/score';
 import { ISHII_2021_PUBMED } from '../data/scores/ishii';
 import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
@@ -82,7 +82,9 @@ import { JCE_11_PART2_PUBMED, SIEWERT_1998_PUBMED } from '../data/scores/siewert
 import { SPIGELMAN_1989_PUBMED } from '../data/scores/spigelman';
 import { DEKKER_2020_PUBMED, MCWHINNEY_2023_PUBMED } from '../data/scores/sps';
 import { KUDO_EC_2011_PUBMED, MAEDA_EC_REVIEW_2021_PUBMED } from '../data/scores/colorectal-ec';
-import { KIKUCHI_2014_PUBMED, TOYA_2020_PUBMED } from '../data/scores/toya';
+import { KIKUCHI_2014_PUBMED } from '../data/scores/kikuchi-mebi';
+import { UCHIYAMA_2006_PUBMED } from '../data/scores/uchiyama';
+import { KIKUCHI_2014_PUBMED as KIKUCHI_LINK_PUBMED, TOYA_2020_PUBMED } from '../data/scores/toya';
 import { VIENNA_2000_PUBMED } from '../data/scores/vienna';
 import { WHO_DIGESTIVE_2019_PUBMED } from '../data/scores/who-serrated';
 import { ITBCG_BUDDING_PUBMED } from '../data/scores/itbcg-budding';
@@ -101,7 +103,7 @@ import { isRemoteVersionNewer, shouldReportUpdateAvailable } from '../lib/web/pw
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 import { classificationOriginalLocale } from '../lib/i18n/localize';
 
-test('登録スコアは44種で臓器順に並ぶ', () => {
+test('登録スコアは47種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -125,7 +127,10 @@ test('登録スコアは44種で臓器順に並ぶ', () => {
       'spigelman',
       'ishii',
       'kakushima',
+      'kikuchi-mebi',
       'toya',
+      'uchiyama',
+      'ampullary-macroscopic',
       'apcs',
       'sps',
       'vienna',
@@ -170,7 +175,7 @@ test('登録スコアは44種で臓器順に並ぶ', () => {
           'best-j',
         ],
       ],
-      ['duodenum', ['spigelman', 'ishii', 'kakushima', 'toya']],
+      ['duodenum', ['spigelman', 'ishii', 'kakushima', 'kikuchi-mebi', 'toya', 'uchiyama', 'ampullary-macroscopic']],
       [
         'colorectum',
         [
@@ -198,9 +203,9 @@ test('登録スコアは44種で臓器順に並ぶ', () => {
   assert.equal(getScoreNavCategory(getScoreById('vienna')!), 'pathology');
 });
 
-test('variant 専用 id は一覧から隠し、全定義47種を保持する', () => {
+test('variant 専用 id は一覧から隠し、全定義50種を保持する', () => {
   assert.deepEqual([...HIDDEN_LIST_SCORE_IDS].sort(), ['apcs-modified', 'kyoto-modified', 'modified-spigelman']);
-  assert.equal(ALL_SCORE_DEFINITIONS.length, 47);
+  assert.equal(ALL_SCORE_DEFINITIONS.length, 50);
   assert.ok(getScoreById('kyoto-modified'));
   assert.ok(getScoreById('modified-spigelman'));
   assert.ok(getScoreById('apcs-modified'));
@@ -247,6 +252,16 @@ test('一覧はフェーズ別にグループ化し、出血・病理はサブ�
   assert.equal(getScoreListPhase('jes'), 'diagnosis');
   assert.equal(navCategoryUsesListPhases('bleeding'), false);
   assert.equal(navCategoryUsesListPhases('pathology'), false);
+  assert.equal(navCategoryUsesListPhases('duodenum'), false);
+
+  const duodenum = getScoresGroupedForHome().find((group) => group.category === 'duodenum')!.scores;
+  assert.deepEqual(
+    groupScoresByDuodenumSite(duodenum).map((group) => [group.site, group.scores.map((score) => score.id)]),
+    [
+      ['non-ampullary', ['spigelman', 'ishii', 'kakushima', 'kikuchi-mebi', 'toya']],
+      ['ampulla', ['uchiyama', 'ampullary-macroscopic']],
+    ],
+  );
 
   const stomach = getScoresGroupedForHome().find((group) => group.category === 'stomach')!.scores;
   assert.deepEqual(
@@ -309,7 +324,10 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     spigelman: 'score',
     ishii: 'prediction',
     kakushima: 'prediction',
+    'kikuchi-mebi': 'algorithm',
     toya: 'algorithm',
+    uchiyama: 'classification',
+    'ampullary-macroscopic': 'classification',
     apcs: 'score',
     sps: 'classification',
     vienna: 'classification',
@@ -358,7 +376,10 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'best-j',
     'ishii',
     'kakushima',
+    'kikuchi-mebi',
     'toya',
+    'uchiyama',
+    'ampullary-macroscopic',
     'lst',
     'appendiceal-orifice',
     'kudo-tsuruta',
@@ -1393,6 +1414,31 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(toya.pubmed, TOYA_2020_PUBMED);
   assert.equal(toya.organ, 'duodenum');
 
+  const kikuchiMebi = getScoreById('kikuchi-mebi');
+  assert.ok(kikuchiMebi && isClassification(kikuchiMebi));
+  assert.deepEqual(
+    kikuchiMebi.entries.map((entry) => entry.label),
+    ['Mixed type', 'Monotype', 'Unclassified vessels', 'ISV', 'Network', 'Absent vessels'],
+  );
+  assert.equal(kikuchiMebi.pubmed, KIKUCHI_2014_PUBMED);
+  assert.ok(hasAlgorithmFlow(kikuchiMebi));
+
+  const uchiyama = getScoreById('uchiyama');
+  assert.ok(uchiyama && isClassification(uchiyama));
+  assert.deepEqual(
+    uchiyama.entries.map((entry) => entry.label),
+    ['Type I', 'Type II', 'Type III', 'Abnormal vessels'],
+  );
+  assert.equal(uchiyama.pubmed, UCHIYAMA_2006_PUBMED);
+
+  const ampMacro = getScoreById('ampullary-macroscopic');
+  assert.ok(ampMacro && isClassification(ampMacro));
+  assert.equal(ampMacro.originalLocale, 'ja');
+  assert.deepEqual(
+    ampMacro.entries.map((entry) => entry.label),
+    ['腫瘤型', '潰瘍型', '混在型', '正常型', 'ポリープ型', '特殊型'],
+  );
+
   const vienna = getScoreById('vienna');
   assert.ok(vienna && isClassification(vienna));
   assert.deepEqual(
@@ -1434,11 +1480,12 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.ok(hasAlgorithmFlow(wasp));
   assert.ok(hasAlgorithmFlow(mesda));
   assert.ok(hasAlgorithmFlow(toya));
-  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc]) {
+  assert.ok(hasAlgorithmFlow(kikuchiMebi));
+  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc, uchiyama, ampMacro]) {
     assert.equal(hasAlgorithmFlow(score), false, score.id);
   }
 
-  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc]) {
+  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, kikuchiMebi, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc, uchiyama, ampMacro]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -1773,7 +1820,7 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(toyaFig.figures?.[1]?.src, undefined);
   assert.match(toyaFig.figures?.[1]?.href ?? '', /den\.12282/);
   assert.equal(toyaFig.figures?.[1]?.hrefLabel, 'Kikuchi 2014');
-  assert.equal(toyaFig.figures?.[1]?.pubmed, KIKUCHI_2014_PUBMED);
+  assert.equal(toyaFig.figures?.[1]?.pubmed, KIKUCHI_LINK_PUBMED);
 
   const viennaFig = getScoreById('vienna');
   assert.ok(viennaFig && isClassification(viennaFig));
@@ -2115,13 +2162,15 @@ test('既定言語は英語で、計算は最低点から始まる', () => {
   });
 });
 
-test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', () => {
+test('WASP / MESDA-G / Toya / Kikuchi ME-NBI のフローは選択すると診断まで進む', () => {
   const wasp = getScoreById('wasp');
   const mesda = getScoreById('mesda-g');
   const toya = getScoreById('toya');
+  const kikuchiMebi = getScoreById('kikuchi-mebi');
   assert.ok(hasAlgorithmFlow(wasp));
   assert.ok(hasAlgorithmFlow(mesda));
   assert.ok(hasAlgorithmFlow(toya));
+  assert.ok(hasAlgorithmFlow(kikuchiMebi));
 
   const waspHp = walkAlgorithmFlow(wasp.flow, { nice: 'type1', ssl1: 'lt2' });
   assert.equal(waspHp.result?.entryLabel, 'Type 1 + <2 SSL features');
@@ -2187,6 +2236,7 @@ test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', (
     ...mapLabels(wasp.flow.map),
     ...mapLabels(mesda.flow.map),
     ...mapLabels(toya.flow.map),
+    ...mapLabels(kikuchiMebi.flow.map),
   ]) {
     assert.doesNotMatch(label, mapJapanese, label);
   }
@@ -2253,6 +2303,18 @@ test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', (
   assert.equal(englishToya.flow.map.label, 'SNADET · ME-CV');
   assert.equal(englishToya.figures?.[0]?.src, undefined);
   assert.match(englishToya.figures?.[0]?.note ?? '', /not CC/);
+
+  const kikuchiMixed = walkAlgorithmFlow(kikuchiMebi.flow, { surface: 'mixed' });
+  assert.equal(findEntryForResult(kikuchiMebi.entries, kikuchiMixed.result)?.label, 'Mixed type');
+
+  const kikuchiNet = walkAlgorithmFlow(kikuchiMebi.flow, { surface: 'mono', vessels: 'network' });
+  assert.equal(findEntryForResult(kikuchiMebi.entries, kikuchiNet.result)?.label, 'Network');
+
+  const kikuchiUncl = walkAlgorithmFlow(kikuchiMebi.flow, { surface: 'mono', vessels: 'unclassified' });
+  assert.equal(findEntryForResult(kikuchiMebi.entries, kikuchiUncl.result)?.label, 'Unclassified vessels');
+
+  const englishKikuchi = localizeScore(kikuchiMebi, 'en');
+  assert.equal(englishKikuchi.flow?.map.label, 'SNADET · ME-NBI');
 });
 
 test('PWA 更新はユーザー操作まで waiting のままにする', () => {

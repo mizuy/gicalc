@@ -21,7 +21,7 @@ export const toyaScore: ClassificationDefinition = {
     'Surface features of non-ampullary duodenal epithelial tumors under magnifying endoscopy with crystal violet staining (ME-CV) are classified as convoluted, leaf-like, reticular/sulciolar, or pinecone. Lesions displaying a single surface pattern are monotype; those displaying multiple surface patterns are mixed type (multiplicity). Monotypes with a pinecone pattern, monotypes with an irregular pattern, and mixed-type (multiple) surface patterns are classified as Vienna category 4/5. Except for the pinecone pattern, monotypes with a regular (monotonous) pattern are classified as category 3.',
   reference: 'Toya Y et al. Dig Endosc 2020;32:1066-1073. ME-NBI: Kikuchi D et al. Dig Endosc 2014;26:16-22',
   pubmed: TOYA_2020_PUBMED,
-  note: 'Toya 原著のアルゴリズムは ME-CV（クリスタルバイオレット拡大）であり、ME-NBI ではない。ME-NBI アルゴリズムは Kikuchi 2014。WOS で血管が見えにくい十二指腸では表面構造を重視する。',
+  note: 'Toya 原著のアルゴリズムは ME-CV（クリスタルバイオレット拡大）であり、ME-NBI ではない。ME-NBI は Kikuchi 2014（/score/kikuchi-mebi）。WOS で血管が見えにくい十二指腸では表面構造を重視する。',
   figures: [
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.13640',

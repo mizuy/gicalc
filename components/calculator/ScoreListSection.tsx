@@ -3,7 +3,11 @@ import { StyleSheet, View } from 'react-native';
 
 import { ScoreListItem } from '@/components/calculator/ScoreListItem';
 import { Text, useThemeColor } from '@/components/Themed';
-import { groupScoresByListPhase, navCategoryUsesListPhases } from '@/data/scores/list-sections';
+import {
+  groupScoresByDuodenumSite,
+  groupScoresByListPhase,
+  navCategoryUsesListPhases,
+} from '@/data/scores/list-sections';
 import { useLocale } from '@/lib/i18n';
 import type { ListNavCategory, ScoreDefinition } from '@/types/score';
 
@@ -26,10 +30,33 @@ export function ScoreListSection({ scores, category }: Props) {
   const textSecondary = useThemeColor({}, 'textSecondary');
   const { t } = useLocale();
   const usePhases = navCategoryUsesListPhases(category);
+  const useDuodenumSites = category === 'duodenum';
 
-  const groups = useMemo(() => (usePhases ? groupScoresByListPhase(scores) : null), [scores, usePhases]);
+  const phaseGroups = useMemo(
+    () => (usePhases ? groupScoresByListPhase(scores) : null),
+    [scores, usePhases],
+  );
+  const duodenumGroups = useMemo(
+    () => (useDuodenumSites ? groupScoresByDuodenumSite(scores) : null),
+    [scores, useDuodenumSites],
+  );
 
-  if (!groups) {
+  if (duodenumGroups) {
+    return (
+      <View style={styles.wrap}>
+        {duodenumGroups.map((group) => (
+          <View key={group.site} style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: textSecondary }]}>
+              {t.duodenumSite[group.site]}
+            </Text>
+            <ScoreCards scores={group.scores} />
+          </View>
+        ))}
+      </View>
+    );
+  }
+
+  if (!phaseGroups) {
     return (
       <View style={styles.wrap}>
         <ScoreCards scores={scores} />
@@ -39,7 +66,7 @@ export function ScoreListSection({ scores, category }: Props) {
 
   return (
     <View style={styles.wrap}>
-      {groups.map((group) => (
+      {phaseGroups.map((group) => (
         <View key={group.phase} style={styles.section}>
           <Text style={[styles.sectionTitle, { color: textSecondary }]}>{t.listPhase[group.phase]}</Text>
           <ScoreCards scores={group.scores} />

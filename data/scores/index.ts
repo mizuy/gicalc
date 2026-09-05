@@ -1,5 +1,6 @@
 import { ORGAN_LABELS, ORGAN_ORDER, type ScoreOrgan, type ScoreDefinition } from '../../types/score';
 import { getScoresGroupedByNavCategory, type ScoreNavGroup } from './nav-categories';
+import { ampullaryMacroscopicScore } from './ampullary-macroscopic';
 import { appendicealOrificeScore } from './appendiceal-orifice';
 import { apcsModifiedScore } from './apcs-modified';
 import { apcsScore } from './apcs';
@@ -23,6 +24,7 @@ import { jnetScore } from './jnet';
 import { jsphVaricesScore } from './jsph-varices';
 import { kajiwaraNomogram } from './kajiwara-nomogram';
 import { kakushimaScore } from './kakushima';
+import { kikuchiMebiScore } from './kikuchi-mebi';
 import { kimuraTakemotoScore } from './kimura-takemoto';
 import { kudoTsurutaScore } from './kudo-tsuruta';
 import { kyotoScore } from './kyoto';
@@ -41,6 +43,7 @@ import { siewertScore } from './siewert';
 import { spigelmanScore } from './spigelman';
 import { spsScore } from './sps';
 import { toyaScore } from './toya';
+import { uchiyamaScore } from './uchiyama';
 import { viennaScore } from './vienna';
 import { whoSerratedScore } from './who-serrated';
 import { itbcgBuddingScore } from './itbcg-budding';
@@ -73,7 +76,10 @@ export const ALL_SCORE_DEFINITIONS: ScoreDefinition[] = [
   modifiedSpigelmanScore,
   ishiiScore,
   kakushimaScore,
+  kikuchiMebiScore,
   toyaScore,
+  uchiyamaScore,
+  ampullaryMacroscopicScore,
   apcsScore,
   apcsModifiedScore,
   spsScore,
@@ -128,6 +134,11 @@ export function getScoresGroupedByOrgan(): ScoreOrganGroup[] {
 }
 
 export { getScoresGroupedByNavCategory, type ScoreNavGroup };
+export {
+  groupScoresByDuodenumSite,
+  getDuodenumSite,
+  type ScoreDuodenumSiteGroup,
+} from './list-sections';
 export function getScoresGroupedForHome(): ScoreNavGroup[] {
   return getScoresGroupedByNavCategory(SCORES);
 }

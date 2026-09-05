@@ -74,8 +74,37 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
     { id: 'kimura-takemoto', hint: { ja: '萎縮境界', en: 'Atrophic border' } },
   ],
   spigelman: [
-    { id: 'ishii', hint: { ja: 'FAP ポリープの C 分類', en: 'C classification for FAP polyps' } },
-    { id: 'kakushima', hint: { ja: 'FAP ポリープの C 分類（改変）', en: 'Modified C classification for FAP' } },
+    { id: 'ishii', hint: { ja: 'SNADET C3 vs C4/5', en: 'SNADET C3 vs C4/5' } },
+    { id: 'uchiyama', hint: { ja: '乳头部 ME-NBI（別評価）', en: 'Ampullary ME-NBI (assess papilla separately)' } },
+  ],
+  ishii: [
+    { id: 'kikuchi-mebi', hint: { ja: 'ME-NBI アルゴリズム', en: 'ME-NBI algorithm' } },
+    { id: 'kakushima', hint: { ja: 'WLI のみスコア', en: 'WLI-only score' } },
+    { id: 'toya', hint: { ja: 'ME-CV アルゴリズム', en: 'ME-CV algorithm' } },
+    { id: 'vienna', hint: { ja: 'Vienna C3 / C4 / C5', en: 'Vienna C3 / C4 / C5' } },
+  ],
+  kakushima: [
+    { id: 'ishii', hint: { ja: 'NBI 拡大を加えた Ishii', en: 'Ishii with magnifying NBI' } },
+    { id: 'kikuchi-mebi', hint: { ja: 'ME-NBI アルゴリズム', en: 'ME-NBI algorithm' } },
+    { id: 'vienna', hint: { ja: 'Vienna C3 / C4 / C5', en: 'Vienna C3 / C4 / C5' } },
+  ],
+  'kikuchi-mebi': [
+    { id: 'ishii', hint: { ja: '0–5 点スコア', en: '0–5 point score' } },
+    { id: 'toya', hint: { ja: 'ME-CV アルゴリズム', en: 'ME-CV algorithm' } },
+    { id: 'vienna', hint: { ja: 'Vienna C3 / C4 / C5', en: 'Vienna C3 / C4 / C5' } },
+  ],
+  toya: [
+    { id: 'kikuchi-mebi', hint: { ja: 'ME-NBI アルゴリズム', en: 'ME-NBI algorithm' } },
+    { id: 'ishii', hint: { ja: '0–5 点スコア', en: '0–5 point score' } },
+    { id: 'vienna', hint: { ja: 'Vienna C3 / C4 / C5', en: 'Vienna C3 / C4 / C5' } },
+  ],
+  uchiyama: [
+    { id: 'ampullary-macroscopic', hint: { ja: '乳头部癌肉眼型', en: 'Ampullary macroscopic types' } },
+    { id: 'spigelman', hint: { ja: 'FAP 十二指腸腺腫（非乳头部）', en: 'FAP duodenal adenoma (non-ampullary)' } },
+  ],
+  'ampullary-macroscopic': [
+    { id: 'uchiyama', hint: { ja: '乳头部 ME-NBI', en: 'Ampullary ME-NBI' } },
+    { id: 'spigelman', hint: { ja: 'FAP 腺腫（乳头部は別評価）', en: 'FAP adenoma (papilla assessed separately)' } },
   ],
   nice: [
     { id: 'jnet', hint: { ja: 'NBI 拡大の JNET 分類', en: 'JNET on magnifying NBI' } },

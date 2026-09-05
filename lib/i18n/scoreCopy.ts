@@ -917,8 +917,8 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     name: 'Toya classification (SNADET, ME-CV)',
     shortName: 'Toya ME-CV',
     description:
-      'ME-CV algorithm (Toya 2020) for SNADET. Monotype vs mixed surface, then pinecone / irregular / monotonous, to separate Vienna C3 from C4/5. ME-NBI algorithm is Kikuchi 2014.',
-    note: 'Toya’s published algorithm is crystal-violet magnifying endoscopy (ME-CV), not NBI. Kikuchi 2014 is the ME-NBI algorithm. Duodenal WOS often hides vessels, so surface pattern is prioritized.',
+      'ME-CV algorithm (Toya 2020) for SNADET. Monotype vs mixed surface, then pinecone / irregular / monotonous, to separate Vienna C3 from C4/5. ME-NBI algorithm is Kikuchi 2014 (/score/kikuchi-mebi).',
+    note: 'Toya’s published algorithm is crystal-violet magnifying endoscopy (ME-CV), not NBI. See Kikuchi ME-NBI for the NBI algorithm. Duodenal WOS often hides vessels, so surface pattern is prioritized.',
     groups: {
       表面: 'Surface',
       判定: 'Diagnosis',
@@ -961,6 +961,100 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         c3: 'C3',
       },
     },
+  },
+  'kikuchi-mebi': {
+    name: 'Kikuchi ME-NBI (SNADET)',
+    shortName: 'Kikuchi ME-NBI',
+    description:
+      'ME-NBI algorithm (Kikuchi 2014) for SNADET. Monotype vs mixed surface, then vascular pattern (network / ISV / absent / unclassified) to estimate Vienna C3 vs C4/5. ME-CV is Toya 2020.',
+    note: 'ME-NBI only. Toya 2020 is the crystal-violet (ME-CV) algorithm. WOS often obscures duodenal vessels — prioritize surface pattern when needed.',
+    groups: {
+      表面: 'Surface',
+      血管: 'Vessels',
+    },
+    comments: {
+      'Mixed type': 'Multiple surface patterns → C4/5.',
+      'Unclassified vessels': 'Monotype with unclassified vessels → C4/5.',
+      ISV: 'Intrastructural vascular pattern → C4/5 likely.',
+      Network: 'Regular network → C3 in the Kikuchi series.',
+      'Absent vessels': 'Often C3; some C4/5 — confirm with biopsy.',
+    },
+    figureNotes: [
+      'Kikuchi 2014 Fig. 10. Wiley / Digestive Endoscopy copyright; not CC — link to the paper.',
+    ],
+    flow: {
+      title: 'Algorithm',
+      steps: {
+        surface: {
+          prompt: 'Is the surface pattern single or multiple?',
+          hint: 'ME-NBI. Single = monotype. Multiple = mixed / multiplicity.',
+          options: { mixed: 'Multiple (mixed)', mono: 'Single (monotype)' },
+        },
+        vessels: {
+          prompt: 'Which vascular pattern?',
+          hint: 'Unclassified / ISV → C4/5. Network → C3. Absent → C3 likely.',
+          options: {
+            unclassified: 'Unclassified',
+            isv: 'ISV',
+            network: 'Network',
+            absent: 'Absent',
+          },
+        },
+      },
+      map: {
+        start: 'SNADET · ME-NBI',
+        'surface-gate': 'Surface type',
+        mixed: 'Mixed',
+        mono: 'Monotype',
+        'vessel-gate': 'Vessels',
+        'uncl-opt': 'Unclassified',
+        'isv-opt': 'ISV',
+        'net-opt': 'Network',
+        'abs-opt': 'Absent',
+        'c45-mixed': 'C4/5',
+        'c45-uncl': 'C4/5',
+        'c45-isv': 'C4/5',
+        'c3-net': 'C3',
+        'c3-abs': 'C3',
+      },
+    },
+  },
+  uchiyama: {
+    name: 'Uchiyama ME-NBI classification (ampulla)',
+    shortName: 'Uchiyama ME-NBI',
+    description:
+      'ME-NBI classification of ampullary tumors by surface structure (Type I / II / III) and abnormal vessels. Type I suggests inflammation or hyperplasia; Type II/III suggests adenoma or carcinoma; abnormal vessels suggest adenocarcinoma.',
+    note: 'Small original series — further validation needed. For non-ampullary SNADET see Ishii / Kikuchi ME-NBI.',
+    groups: {
+      表面: 'Surface',
+      血管: 'Vessels',
+    },
+    comments: {
+      'Type II': 'Neoplastic — confirm with biopsy.',
+      'Type III': 'Neoplastic — confirm with biopsy.',
+      'Abnormal vessels': 'Useful to differentiate adenoma from adenocarcinoma; evaluate with surface type.',
+    },
+    figureNotes: [
+      'Uchiyama 2006 original. Springer copyright; not CC — link to the paper.',
+    ],
+  },
+  'ampullary-macroscopic': {
+    name: 'JSBS macroscopic types (ampullary carcinoma)',
+    shortName: 'Ampullary macroscopic',
+    description:
+      'Macroscopic types of ampillary carcinoma per the Japanese Society of Biliary Surgery General Rules: protruding, ulcerative, mixed, and others (normal, polypoid, special). Record on endoscopy before biopsy and staging.',
+    note: 'Final macroscopic type may be assigned on the fixed resected specimen. JSCO 2015 biliary guideline recommends endoscopic macroscopic description.',
+    groups: {
+      主型: 'Main types',
+      その他: 'Others',
+    },
+    comments: {
+      正常型: 'Tumor may be non-exposed; papillotomy may be needed before biopsy.',
+      ポリープ型: 'May be exposed into the lumen or non-exposed with intraductal growth.',
+    },
+    figureNotes: [
+      'JSCO 2015 biliary tract cancer guideline (macroscopic types). Not CC — link to the guideline.',
+    ],
   },
   sps: {
     name: 'SPS diagnostic criteria (serrated polyposis syndrome)',

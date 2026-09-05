@@ -1,4 +1,4 @@
-import type { ListClinicalPhase, ListNavCategory, ScoreCategory, ScoreOrgan } from '../../types/score';
+import type { DuodenumSite, ListClinicalPhase, ListNavCategory, ScoreCategory, ScoreOrgan } from '../../types/score';
 import type { Locale } from './types';
 
 export type UiStrings = {
@@ -6,6 +6,7 @@ export type UiStrings = {
   back: string;
   homeLead: string;
   listPhase: Record<ListClinicalPhase, string>;
+  duodenumSite: Record<DuodenumSite, string>;
   navCategoryLead: Record<ListNavCategory, string>;
   reference: string;
   source: string;
@@ -94,10 +95,15 @@ export const UI: Record<Locale, UiStrings> = {
       diagnosis: '診断',
       treatment: '治療',
     },
+    duodenumSite: {
+      'non-ampullary': 'Non-ampullary',
+      ampulla: 'Ampulla',
+    },
     navCategoryLead: {
       esophagus: '食道の内視鏡分類、拡大診断、ESD 後の判定。',
       stomach: '胃の萎縮・静脈瘤・拡大診断、胃炎リスク、早期癌のスコアと ESD 後判定。',
-      duodenum: '十二指腸の FAP 腺腫ステージと SNADET 関連ツール。',
+      duodenum:
+        '非乳头部（FAP 腺腫・SNADET）と乳头部（ME-NBI・肉眼型）のツール。Non-ampullary / Ampulla で分けています。',
       colorectum: '大腸の分類、検診、T1 予測、ESD 後判定、前処置。',
       pathology: '消化管上皮性腫瘍・鋸歯状病変・腫瘍芽・NET・胃癌組織型などの病理分類。',
       bleeding: '潰瘍出血の内視鏡所見と上下部出血スコア。',
@@ -181,7 +187,7 @@ export const UI: Record<Locale, UiStrings> = {
         '木村–竹本（萎縮分類）、Hill（胃食道フラップ弁）、Sarin（胃静脈瘤 GOV / IGV。Lg とガイドラインの注釈つき）、MESDA-G（早期胃癌の拡大診断アルゴリズム）、京都 / 改変京都 / EGGIM（胃炎リスク）、eCura 判定（ESD 後・JGES/JGCA ガイドライン）、eCura スコア / Sekiguchi（LNM）、BEST-J（ESD後出血）。',
       duodenum: '十二指腸',
       duodenumBody:
-        'Spigelman / Modified Spigelman（FAP 十二指腸腺腫の Stage）。Ishii（SNADET C3 vs C4/5）、Kakushima WLI（LGA vs HGA/癌）、Toya ME-CV（SNADET アルゴリズム。ME-NBI は Kikuchi 2014）。',
+        'Non-ampullary: Spigelman / Modified Spigelman（FAP）、Ishii・Kakushima（SNADET）、Kikuchi ME-NBI・Toya ME-CV。Ampulla: Uchiyama ME-NBI、日本胆道外科学会の乳头部癌肉眼型。',
       colorectum: '大腸',
       colorectumBody:
         'APCS（検診）、SPS（鋸歯状ポリープ症候群・WHO 2019 診断基準）、Vienna（消化管上皮性腫瘍の病理分類）、Paris（肉眼型）、LST（側方発育）、虫垂開口部 Type（Toyonaga）、工藤–鶴田（pit pattern）、ESD-F（大腸 ESD 粘膜下層線維化 F0–F2）、治癒切除判定（大腸 ESD 後・JGES/JSCCR 5 項目）、EC（超拡大・EC/EC-V）、NICE（NBI非拡大）、WASP（HP / SSL / 腺腫）、JNET（NBI拡大）、T1 Nomogram（Kajiwara）、BBPS / Aronchick（前処置）。',
@@ -219,10 +225,15 @@ export const UI: Record<Locale, UiStrings> = {
       diagnosis: 'Diagnosis',
       treatment: 'Treatment',
     },
+    duodenumSite: {
+      'non-ampullary': 'Non-ampullary',
+      ampulla: 'Ampulla',
+    },
     navCategoryLead: {
       esophagus: 'Esophageal classifications, magnifying findings, and post-ESD curability.',
       stomach: 'Gastric atrophy, varices, magnifying EGC tools, gastritis risk, and post-ESD scores.',
-      duodenum: 'Duodenal FAP adenoma staging and SNADET-related tools.',
+      duodenum:
+        'Non-ampullary (FAP adenoma, SNADET) and ampullary (ME-NBI, macroscopic type) tools, grouped by site.',
       colorectum: 'Colorectal classifications, screening, T1 prediction, post-ESD curability, and bowel prep.',
       pathology: 'Pathological classifications: epithelial neoplasia, serrated lesions, tumor budding, NET grade, and Lauren gastric types.',
       bleeding: 'Ulcer stigmata and upper / lower GI bleeding scores.',
@@ -306,7 +317,7 @@ export const UI: Record<Locale, UiStrings> = {
         'Kimura–Takemoto (atrophy), Hill (gastroesophageal flap valve), Sarin (gastric varices GOV / IGV, with Lg and guideline notes), MESDA-G (magnifying algorithm for EGC), Kyoto / modified Kyoto / EGGIM (gastritis risk), eCura curability (post-ESD, JGES/JGCA guidelines), eCura score / Sekiguchi (LNM), BEST-J (post-ESD bleeding).',
       duodenum: 'Duodenum',
       duodenumBody:
-        'Spigelman / Modified Spigelman (FAP duodenal-adenoma stage). Ishii (SNADET C3 vs C4/5), Kakushima WLI (LGA vs HGA/cancer), Toya ME-CV (SNADET algorithm; ME-NBI is Kikuchi 2014).',
+        'Non-ampullary: Spigelman / Modified Spigelman (FAP), Ishii & Kakushima (SNADET), Kikuchi ME-NBI & Toya ME-CV. Ampulla: Uchiyama ME-NBI and JSBS macroscopic types for ampullary carcinoma.',
       colorectum: 'Colorectum',
       colorectumBody:
         'APCS (screening), SPS (serrated polyposis syndrome — WHO 2019 criteria), Vienna (pathological classification of GI epithelial neoplasia), Paris (morphology), LST (laterally spreading), appendiceal orifice type (Toyonaga), Kudo–Tsuruta (pit pattern), ESD-F (colorectal ESD submucosal fibrosis F0–F2), curability after colorectal ESD (JGES five criteria / JSCCR), EC (ultra-magnifying EC / EC-V), NICE (NBI, non-magnifying), WASP (HP / SSL / adenoma), JNET (NBI magnifying), T1 Nomogram (Kajiwara), BBPS / Aronchick (bowel prep).',
