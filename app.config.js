@@ -5,7 +5,7 @@ module.exports = {
   expo: {
     name: 'GI Calc',
     slug: 'gicalc',
-    version: '1.0.3',
+    version: '1.0.4',
     orientation: 'portrait',
     icon: './assets/images/icon.png',
     scheme: 'gicalc',

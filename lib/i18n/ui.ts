@@ -1,10 +1,11 @@
-import type { ScoreCategory, ScoreOrgan } from '../../types/score';
+import type { ListClinicalPhase, ScoreCategory, ScoreOrgan } from '../../types/score';
 import type { Locale } from './types';
 
 export type UiStrings = {
   tabs: { scores: string; about: string };
   back: string;
   homeLead: string;
+  listPhase: Record<ListClinicalPhase, string>;
   organLead: Record<ScoreOrgan, string>;
   reference: string;
   source: string;
@@ -85,6 +86,12 @@ export const UI: Record<Locale, UiStrings> = {
     tabs: { scores: 'ホーム', about: 'About' },
     back: '戻る',
     homeLead: '臓器を選んでください。スコア名は略称を大きく、正式名称はその下に表示します。',
+    listPhase: {
+      screening: 'スクリーニング',
+      examination: '検査',
+      diagnosis: '診断',
+      treatment: '治療',
+    },
     organLead: {
       esophagus: '食道の内視鏡分類、拡大診断、ESD 後の判定。',
       stomach: '胃の萎縮・静脈瘤・拡大診断、胃炎リスク、早期癌のスコアと ESD 後判定。',
@@ -194,6 +201,12 @@ export const UI: Record<Locale, UiStrings> = {
     tabs: { scores: 'Home', about: 'About' },
     back: 'Back',
     homeLead: 'Choose an organ first. Short names are shown large; full names appear underneath.',
+    listPhase: {
+      screening: 'Screening',
+      examination: 'Examination',
+      diagnosis: 'Diagnosis',
+      treatment: 'Treatment',
+    },
     organLead: {
       esophagus: 'Esophageal classifications, magnifying findings, and post-ESD curability.',
       stomach: 'Gastric atrophy, varices, magnifying EGC tools, gastritis risk, and post-ESD scores.',

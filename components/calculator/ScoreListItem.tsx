@@ -9,12 +9,12 @@ import { getToolKind, isJapanDeveloped, type ScoreDefinition } from '@/types/sco
 
 type Props = {
   score: ScoreDefinition;
-  last?: boolean;
 };
 
-export const ScoreListItem = memo(function ScoreListItem({ score, last }: Props) {
+export const ScoreListItem = memo(function ScoreListItem({ score }: Props) {
   const tint = useThemeColor({}, 'tint');
   const border = useThemeColor({}, 'border');
+  const surface = useThemeColor({}, 'surface');
   const textSecondary = useThemeColor({}, 'textSecondary');
 
   return (
@@ -22,9 +22,8 @@ export const ScoreListItem = memo(function ScoreListItem({ score, last }: Props)
       <Pressable
         accessibilityRole="link"
         style={({ pressed }) => [
-          styles.row,
-          { borderBottomColor: border, opacity: pressed ? 0.72 : 1 },
-          last ? styles.rowLast : null,
+          styles.card,
+          { backgroundColor: surface, borderColor: border, opacity: pressed ? 0.82 : 1 },
         ]}>
         <View style={styles.body}>
           <View style={styles.titleRow}>
@@ -49,13 +48,11 @@ export const ScoreListItem = memo(function ScoreListItem({ score, last }: Props)
 });
 
 const styles = StyleSheet.create({
-  row: {
-    paddingVertical: 12,
-    paddingHorizontal: 14,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  rowLast: {
-    borderBottomWidth: 0,
+  card: {
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
   },
   body: {
     gap: 4,

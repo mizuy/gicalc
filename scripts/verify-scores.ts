@@ -56,6 +56,8 @@ import {
   resolveScoreRoute,
   SCORE_VARIANT_GROUPS,
 } from '../data/scores/variant-groups';
+import { getScoreListPhase, groupScoresByListPhase } from '../data/scores/list-sections';
+import { LIST_CLINICAL_PHASE_ORDER } from '../types/score';
 import { ISHII_2021_PUBMED } from '../data/scores/ishii';
 import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
 import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
@@ -188,6 +190,44 @@ test('variant ルーティングは pageId と default を返す', () => {
   assert.deepEqual(resolveScoreRoute('apcs-modified'), { pageId: 'apcs', variantId: 'apcs-modified' });
   assert.deepEqual(resolveScoreRoute('jes'), { pageId: 'jes', variantId: 'jes' });
   assert.deepEqual(getVariantGroup('kyoto')?.defaultVariantId, 'kyoto-modified');
+});
+
+test('一覧はスクリーニング→検査→診断→治療の順でフェーズ分けする', () => {
+  assert.deepEqual(LIST_CLINICAL_PHASE_ORDER, ['screening', 'examination', 'diagnosis', 'treatment']);
+  assert.equal(getScoreListPhase('apcs'), 'screening');
+  assert.equal(getScoreListPhase('bbps'), 'examination');
+  assert.equal(getScoreListPhase('jes'), 'diagnosis');
+  assert.equal(getScoreListPhase('colorectal-esd-curability'), 'treatment');
+
+  const colorectum = getScoresGroupedByOrgan().find((group) => group.organ === 'colorectum')!.scores;
+  assert.deepEqual(
+    groupScoresByListPhase(colorectum).map((group) => [group.phase, group.scores.map((score) => score.id)]),
+    [
+      ['screening', ['apcs']],
+      ['examination', ['bbps', 'aronchick']],
+      [
+        'diagnosis',
+        [
+          'sps',
+          'vienna',
+          'paris',
+          'lst',
+          'appendiceal-orifice',
+          'kudo-tsuruta',
+          'colorectal-ec',
+          'nice',
+          'wasp',
+          'jnet',
+          'kajiwara-nomogram',
+        ],
+      ],
+      ['treatment', ['esd-fibrosis', 'colorectal-esd-curability']],
+    ],
+  );
+
+  for (const score of SCORES) {
+    assert.ok(LIST_CLINICAL_PHASE_ORDER.includes(getScoreListPhase(score.id)), `${score.id} の list phase`);
+  }
 });
 
 test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM のいずれか', () => {
@@ -2111,7 +2151,7 @@ test('PWA 更新はユーザー操作まで waiting のままにする', () => {
 
 test('アプリバージョンは expo 設定と一致する', () => {
   const appConfig = require('../app.config.js') as { expo: { version: string } };
-  assert.equal(appConfig.expo.version, '1.0.3');
+  assert.equal(appConfig.expo.version, '1.0.4');
 });
 
 test('PWA 更新バナーの文言と検知', () => {
