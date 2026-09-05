@@ -9,6 +9,7 @@ import {
   applyAlgorithmAnswer,
   buildAlgorithmNodeFlags,
   findEntryForResult,
+  outcomeFeedIds,
   walkAlgorithmFlow,
   type AlgorithmNodeFlags,
 } from '@/lib/scores/algorithmFlow';
@@ -157,30 +158,9 @@ function FlowOutcomeConnectors({
   const egcActive = irregularOnPath || egcFlags.onPath;
   const ncColor = ncActive ? tint : connector;
   const egcColor = egcActive ? tint : connector;
-  const stemH = compact ? 12 : 16;
 
   return (
     <View style={styles.outcomeConnectors}>
-      <View style={[styles.outcomeTopologyRow, compact ? styles.outcomeTopologyRowCompact : null]}>
-        <View style={styles.outcomeHalf}>
-          <View style={[styles.outcomeCol, { alignItems: 'center' }]}>
-            <View style={[styles.stem, { height: stemH, backgroundColor: ncColor }]} />
-          </View>
-        </View>
-        <View style={[styles.outcomeHalf, styles.outcomeNested]}>
-          <View style={styles.outcomeQuarter}>
-            <View style={[styles.outcomeCol, { alignItems: 'center' }]}>
-              <View style={[styles.stem, { height: stemH, backgroundColor: ncColor }]} />
-            </View>
-          </View>
-          <View style={styles.outcomeQuarter}>
-            <View style={[styles.outcomeCol, { alignItems: 'center' }]}>
-              <View style={[styles.stem, { height: stemH, backgroundColor: egcColor }]} />
-            </View>
-          </View>
-        </View>
-      </View>
-
       <View style={styles.outcomeMergeRow}>
         <View style={[styles.outcomeHalf, styles.outcomeMergeHalf]}>
           <View style={[styles.mergeBarSegment, styles.mergeBarRight, { backgroundColor: ncColor }]} />
@@ -226,11 +206,13 @@ function FlowTree({
   nodeFlags,
   onChoose,
   compact,
+  feedIds,
 }: {
   node: AlgorithmMapNode;
   nodeFlags: Map<string, AlgorithmNodeFlags>;
   onChoose: (stepId: string, optionId: string) => void;
   compact?: boolean;
+  feedIds?: Set<string>;
 }) {
   const flags = nodeFlags.get(node.id) ?? { onPath: false, current: false, isResult: false };
   const { onPath, current, isResult } = flags;
@@ -238,9 +220,11 @@ function FlowTree({
   const tint = useThemeColor({}, 'tint');
   const connector = '#6B8A8C';
   const hasChildren = Boolean(node.children?.length);
+  const childFeedIds = node.outcomeRow ? outcomeFeedIds(node.outcomeRow) : feedIds;
+  const isFeedNode = Boolean(!hasChildren && childFeedIds?.has(node.id));
 
   return (
-    <View style={[styles.tree, compact ? styles.treeCompact : null]}>
+    <View style={[styles.tree, compact ? styles.treeCompact : null, isFeedNode ? styles.treeFeedNode : null]}>
       <FlowNodeChip
         node={node}
         onPath={onPath}
@@ -249,6 +233,9 @@ function FlowTree({
         compact={compact}
         onPress={canPress ? () => onChoose(node.stepId!, node.optionId!) : undefined}
       />
+      {isFeedNode ? (
+        <View style={[styles.feedOutcomeStem, { backgroundColor: onPath ? tint : connector }]} />
+      ) : null}
       {hasChildren ? (
         <View style={styles.treeChildren}>
           <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: onPath ? tint : connector }]} />
@@ -289,6 +276,7 @@ function FlowTree({
                     nodeFlags={nodeFlags}
                     onChoose={onChoose}
                     compact={compact}
+                    feedIds={childFeedIds}
                   />
                 </View>
               );
@@ -463,6 +451,15 @@ const styles = StyleSheet.create({
   treeCompact: {
     alignItems: 'stretch',
   },
+  treeFeedNode: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  feedOutcomeStem: {
+    width: 3,
+    height: 12,
+    alignSelf: 'center',
+  },
   treeChildren: {
     alignItems: 'center',
     width: '100%',
@@ -513,13 +510,6 @@ const styles = StyleSheet.create({
   },
   outcomeConnectors: {
     width: '100%',
-  },
-  outcomeTopologyRow: {
-    flexDirection: 'row',
-    width: '100%',
-  },
-  outcomeTopologyRowCompact: {
-    gap: 4,
   },
   outcomeHalf: {
     flex: 1,
