@@ -1,5 +1,10 @@
-import type { ListClinicalPhase, ScoreDefinition, ListNavCategory } from '../../types/score';
-import { LIST_CLINICAL_PHASE_ORDER } from '../../types/score';
+import type {
+  DuodenumSite,
+  ListClinicalPhase,
+  ListNavCategory,
+  ScoreDefinition,
+} from '../../types/score';
+import { DUODENUM_SITE_ORDER, LIST_CLINICAL_PHASE_ORDER } from '../../types/score';
 
 /** 一覧ページの臨床フェーズ（表示順は LIST_CLINICAL_PHASE_ORDER） */
 export { LIST_CLINICAL_PHASE_ORDER };
@@ -39,7 +44,41 @@ export type ScoreListPhaseGroup = {
 };
 
 export function navCategoryUsesListPhases(category: ListNavCategory): boolean {
-  return category !== 'bleeding' && category !== 'pathology';
+  return category !== 'bleeding' && category !== 'pathology' && category !== 'duodenum';
+}
+
+const DUODENUM_SITE: Record<string, DuodenumSite> = {
+  spigelman: 'non-ampullary',
+  ishii: 'non-ampullary',
+  kakushima: 'non-ampullary',
+  'kikuchi-mebi': 'non-ampullary',
+  toya: 'non-ampullary',
+  uchiyama: 'ampulla',
+  'ampullary-macroscopic': 'ampulla',
+};
+
+export function getDuodenumSite(id: string): DuodenumSite {
+  return DUODENUM_SITE[id] ?? 'non-ampullary';
+}
+
+export type ScoreDuodenumSiteGroup = {
+  site: DuodenumSite;
+  scores: ScoreDefinition[];
+};
+
+/** 十二指腸は非乳頭部 / 乳頭部でグループ化（既存順序を保持） */
+export function groupScoresByDuodenumSite(scores: ScoreDefinition[]): ScoreDuodenumSiteGroup[] {
+  const buckets = new Map<DuodenumSite, ScoreDefinition[]>();
+  for (const site of DUODENUM_SITE_ORDER) {
+    buckets.set(site, []);
+  }
+  for (const score of scores) {
+    buckets.get(getDuodenumSite(score.id))!.push(score);
+  }
+  return DUODENUM_SITE_ORDER.map((site) => ({
+    site,
+    scores: buckets.get(site)!,
+  })).filter((group) => group.scores.length > 0);
 }
 
 /** 大カテゴリ内の既存順序を保ちつつ、フェーズ別にグループ化する */
