@@ -1,4 +1,4 @@
-import type { ListClinicalPhase, ScoreDefinition, ScoreOrgan } from '../../types/score';
+import type { ListClinicalPhase, ScoreDefinition, ListNavCategory } from '../../types/score';
 import { LIST_CLINICAL_PHASE_ORDER } from '../../types/score';
 
 /** 一覧ページの臨床フェーズ（表示順は LIST_CLINICAL_PHASE_ORDER） */
@@ -16,8 +16,6 @@ const SCORE_LIST_PHASE: Record<string, ListClinicalPhase> = {
   'kimura-takemoto': 'background-mucosa',
   kyoto: 'background-mucosa',
   eggim: 'background-mucosa',
-  // 病理
-  vienna: 'pathology',
   // 治療
   'esophagus-esd-curability': 'treatment',
   'gastric-esd-curability': 'treatment',
@@ -40,11 +38,11 @@ export type ScoreListPhaseGroup = {
   scores: ScoreDefinition[];
 };
 
-export function organUsesListPhases(organ: ScoreOrgan): boolean {
-  return organ !== 'bleeding';
+export function navCategoryUsesListPhases(category: ListNavCategory): boolean {
+  return category !== 'bleeding' && category !== 'pathology';
 }
 
-/** 臓器内の既存順序を保ちつつ、フェーズ別にグループ化する */
+/** 大カテゴリ内の既存順序を保ちつつ、フェーズ別にグループ化する */
 export function groupScoresByListPhase(scores: ScoreDefinition[]): ScoreListPhaseGroup[] {
   const buckets = new Map<ListClinicalPhase, ScoreDefinition[]>();
   for (const phase of LIST_CLINICAL_PHASE_ORDER) {

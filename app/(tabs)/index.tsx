@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { OrganPickerCard } from '@/components/calculator/OrganPickerCard';
 import { Text, useThemeColor } from '@/components/Themed';
 import { PwaInstallBanner } from '@/components/web/PwaInstallBanner';
-import { getScoresGroupedByOrgan } from '@/data/scores';
+import { getScoresGroupedForHome } from '@/data/scores';
 import { useLocale } from '@/lib/i18n';
 
 export default function HomeScreen() {
@@ -14,7 +14,7 @@ export default function HomeScreen() {
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
   const { t } = useLocale();
-  const groups = useMemo(() => getScoresGroupedByOrgan(), []);
+  const groups = useMemo(() => getScoresGroupedForHome(), []);
 
   return (
     <ScrollView style={[styles.scroll, { backgroundColor: background }]} contentContainerStyle={styles.content}>
@@ -36,9 +36,9 @@ export default function HomeScreen() {
       <View style={[styles.table, { backgroundColor: surface, borderColor: border }]}>
         {groups.map((group, index) => (
           <OrganPickerCard
-            key={group.organ}
-            organ={group.organ}
-            label={t.organ[group.organ]}
+            key={group.category}
+            category={group.category}
+            label={t.navCategory[group.category]}
             count={group.scores.length}
             last={index === groups.length - 1}
           />

@@ -47,7 +47,8 @@ import { computeKakushima } from '../lib/scores/kakushima';
 import { computeModifiedSpigelman, computeSpigelman } from '../lib/scores/spigelman';
 import { lowestFieldValues } from '../lib/scores/initialValues';
 import { getRelatedScores } from '../lib/scores/relatedScores';
-import { getScoreById, getScoresGroupedByOrgan, SCORES, ALL_SCORE_DEFINITIONS } from '../data/scores';
+import { getScoreById, getScoresGroupedForHome, SCORES, ALL_SCORE_DEFINITIONS } from '../data/scores';
+import { getScoreNavCategory } from '../data/scores/nav-categories';
 import { RELATED_SCORES } from '../data/scores/related-scores';
 import {
   getScoreRouteIds,
@@ -56,8 +57,8 @@ import {
   resolveScoreRoute,
   SCORE_VARIANT_GROUPS,
 } from '../data/scores/variant-groups';
-import { getScoreListPhase, groupScoresByListPhase, organUsesListPhases } from '../data/scores/list-sections';
-import { LIST_CLINICAL_PHASE_ORDER } from '../types/score';
+import { getScoreListPhase, groupScoresByListPhase, navCategoryUsesListPhases } from '../data/scores/list-sections';
+import { LIST_CLINICAL_PHASE_ORDER, LIST_NAV_CATEGORY_ORDER } from '../types/score';
 import { ISHII_2021_PUBMED } from '../data/scores/ishii';
 import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
 import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
@@ -141,7 +142,7 @@ test('登録スコアは40種で臓器順に並ぶ', () => {
     ],
   );
   assert.deepEqual(
-    getScoresGroupedByOrgan().map((group) => [group.organ, group.scores.map((score) => score.id)]),
+    getScoresGroupedForHome().map((group) => [group.category, group.scores.map((score) => score.id)]),
     [
       ['esophagus', ['jes', 'la', 'prague', 'siewert', 'erefs', 'jsph-varices', 'esophagus-esd-curability']],
       [
@@ -162,11 +163,29 @@ test('登録スコアは40種で臓器順に並ぶ', () => {
       ['duodenum', ['spigelman', 'ishii', 'kakushima', 'toya']],
       [
         'colorectum',
-        ['apcs', 'sps', 'vienna', 'paris', 'lst', 'appendiceal-orifice', 'kudo-tsuruta', 'esd-fibrosis', 'colorectal-esd-curability', 'colorectal-ec', 'nice', 'wasp', 'jnet', 'kajiwara-nomogram', 'bbps', 'aronchick'],
+        [
+          'apcs',
+          'sps',
+          'paris',
+          'lst',
+          'appendiceal-orifice',
+          'kudo-tsuruta',
+          'esd-fibrosis',
+          'colorectal-esd-curability',
+          'colorectal-ec',
+          'nice',
+          'wasp',
+          'jnet',
+          'kajiwara-nomogram',
+          'bbps',
+          'aronchick',
+        ],
       ],
+      ['pathology', ['vienna']],
       ['bleeding', ['forrest', 'gbs', 'noblads']],
     ],
   );
+  assert.equal(getScoreNavCategory(getScoreById('vienna')!), 'pathology');
 });
 
 test('variant 専用 id は一覧から隠し、全定義43種を保持する', () => {
@@ -192,25 +211,34 @@ test('variant ルーティングは pageId と default を返す', () => {
   assert.deepEqual(getVariantGroup('kyoto')?.defaultVariantId, 'kyoto-modified');
 });
 
-test('一覧はフェーズ別にグループ化し、出血はサブカテゴリなし', () => {
+test('一覧はフェーズ別にグループ化し、出血・病理はサブカテゴリなし', () => {
   assert.deepEqual(LIST_CLINICAL_PHASE_ORDER, [
     'screening',
     'examination',
     'background-mucosa',
     'diagnosis',
-    'pathology',
     'treatment',
+  ]);
+  assert.deepEqual(LIST_NAV_CATEGORY_ORDER, [
+    'esophagus',
+    'stomach',
+    'duodenum',
+    'colorectum',
+    'pathology',
+    'bleeding',
   ]);
   assert.equal(getScoreListPhase('apcs'), 'screening');
   assert.equal(getScoreListPhase('bbps'), 'examination');
   assert.equal(getScoreListPhase('kyoto'), 'background-mucosa');
-  assert.equal(getScoreListPhase('vienna'), 'pathology');
+  assert.equal(getScoreListPhase('vienna'), 'diagnosis');
+  assert.equal(getScoreNavCategory(getScoreById('vienna')!), 'pathology');
   assert.equal(getScoreListPhase('sekiguchi'), 'treatment');
   assert.equal(getScoreListPhase('kajiwara-nomogram'), 'treatment');
   assert.equal(getScoreListPhase('jes'), 'diagnosis');
-  assert.equal(organUsesListPhases('bleeding'), false);
+  assert.equal(navCategoryUsesListPhases('bleeding'), false);
+  assert.equal(navCategoryUsesListPhases('pathology'), false);
 
-  const stomach = getScoresGroupedByOrgan().find((group) => group.organ === 'stomach')!.scores;
+  const stomach = getScoresGroupedForHome().find((group) => group.category === 'stomach')!.scores;
   assert.deepEqual(
     groupScoresByListPhase(stomach).map((group) => [group.phase, group.scores.map((score) => score.id)]),
     [
@@ -220,7 +248,7 @@ test('一覧はフェーズ別にグループ化し、出血はサブカテゴ�
     ],
   );
 
-  const colorectum = getScoresGroupedByOrgan().find((group) => group.organ === 'colorectum')!.scores;
+  const colorectum = getScoresGroupedForHome().find((group) => group.category === 'colorectum')!.scores;
   assert.deepEqual(
     groupScoresByListPhase(colorectum).map((group) => [group.phase, group.scores.map((score) => score.id)]),
     [
@@ -240,7 +268,6 @@ test('一覧はフェーズ別にグループ化し、出血はサブカテゴ�
           'jnet',
         ],
       ],
-      ['pathology', ['vienna']],
       ['treatment', ['esd-fibrosis', 'colorectal-esd-curability', 'kajiwara-nomogram']],
     ],
   );
@@ -2171,7 +2198,7 @@ test('PWA 更新はユーザー操作まで waiting のままにする', () => {
 
 test('アプリバージョンは expo 設定と一致する', () => {
   const appConfig = require('../app.config.js') as { expo: { version: string } };
-  assert.equal(appConfig.expo.version, '1.0.5');
+  assert.equal(appConfig.expo.version, '1.0.6');
 });
 
 test('PWA 更新バナーの文言と検知', () => {

@@ -1,12 +1,23 @@
 export type ScoreOrgan = 'esophagus' | 'stomach' | 'duodenum' | 'colorectum' | 'bleeding';
 
-/** 一覧ページの臨床フェーズ */
+/** ホーム・一覧の大カテゴリ（臓器 + 病理） */
+export type ListNavCategory = ScoreOrgan | 'pathology';
+
+export const LIST_NAV_CATEGORY_ORDER: ListNavCategory[] = [
+  'esophagus',
+  'stomach',
+  'duodenum',
+  'colorectum',
+  'pathology',
+  'bleeding',
+];
+
+/** 一覧ページの臨床フェーズ（大カテゴリ内のサブ見出し） */
 export type ListClinicalPhase =
   | 'screening'
   | 'examination'
   | 'background-mucosa'
   | 'diagnosis'
-  | 'pathology'
   | 'treatment';
 
 export const LIST_CLINICAL_PHASE_ORDER: ListClinicalPhase[] = [
@@ -14,7 +25,6 @@ export const LIST_CLINICAL_PHASE_ORDER: ListClinicalPhase[] = [
   'examination',
   'background-mucosa',
   'diagnosis',
-  'pathology',
   'treatment',
 ];
 
@@ -220,6 +230,11 @@ export const ORGAN_LABELS: Record<ScoreOrgan, string> = {
   duodenum: '十二指腸',
   colorectum: '大腸',
   bleeding: '出血',
+};
+
+export const LIST_NAV_CATEGORY_LABELS: Record<ListNavCategory, string> = {
+  ...ORGAN_LABELS,
+  pathology: '病理',
 };
 
 export const ORGAN_ORDER: ScoreOrgan[] = ['esophagus', 'stomach', 'duodenum', 'colorectum', 'bleeding'];

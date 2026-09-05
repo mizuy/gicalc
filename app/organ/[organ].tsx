@@ -4,34 +4,35 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { ScoreListSection } from '@/components/calculator/ScoreListSection';
 import { Text, useThemeColor } from '@/components/Themed';
-import { getScoresGroupedByOrgan } from '@/data/scores';
+import { getScoresGroupedForHome } from '@/data/scores';
 import { localizeScore, useLocale } from '@/lib/i18n';
-import { ORGAN_ORDER, type ScoreOrgan } from '@/types/score';
+import { LIST_NAV_CATEGORY_ORDER, type ListNavCategory } from '@/types/score';
 
-function isScoreOrgan(value: string): value is ScoreOrgan {
-  return ORGAN_ORDER.includes(value as ScoreOrgan);
+function isListNavCategory(value: string): value is ListNavCategory {
+  return LIST_NAV_CATEGORY_ORDER.includes(value as ListNavCategory);
 }
 
 export function generateStaticParams() {
-  return ORGAN_ORDER.map((organ) => ({ organ }));
+  return LIST_NAV_CATEGORY_ORDER.map((organ) => ({ organ }));
 }
 
 export default function OrganScoresScreen() {
-  const { organ: organParam } = useLocalSearchParams<{ organ: string }>();
+  const { organ: categoryParam } = useLocalSearchParams<{ organ: string }>();
   const background = useThemeColor({}, 'background');
   const textSecondary = useThemeColor({}, 'textSecondary');
   const { locale, t } = useLocale();
 
-  const organ = typeof organParam === 'string' && isScoreOrgan(organParam) ? organParam : undefined;
+  const category =
+    typeof categoryParam === 'string' && isListNavCategory(categoryParam) ? categoryParam : undefined;
 
   const scores = useMemo(() => {
-    if (!organ) return undefined;
-    const group = getScoresGroupedByOrgan().find((item) => item.organ === organ);
+    if (!category) return undefined;
+    const group = getScoresGroupedForHome().find((item) => item.category === category);
     if (!group) return undefined;
     return group.scores.map((score) => localizeScore(score, locale));
-  }, [locale, organ]);
+  }, [locale, category]);
 
-  if (!organ || !scores) {
+  if (!category || !scores) {
     return (
       <View style={[styles.missing, { backgroundColor: background }]}>
         <Stack.Screen options={{ title: t.missingTitle, headerBackTitle: t.back }} />
@@ -42,12 +43,12 @@ export default function OrganScoresScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: t.organ[organ], headerBackTitle: t.back }} />
+      <Stack.Screen options={{ title: t.navCategory[category], headerBackTitle: t.back }} />
       <ScrollView
         style={[styles.scroll, { backgroundColor: background }]}
         contentContainerStyle={styles.content}>
-        <Text style={[styles.lead, { color: textSecondary }]}>{t.organLead[organ]}</Text>
-        <ScoreListSection scores={scores} organ={organ} />
+        <Text style={[styles.lead, { color: textSecondary }]}>{t.navCategoryLead[category]}</Text>
+        <ScoreListSection scores={scores} category={category} />
       </ScrollView>
     </>
   );

@@ -1,4 +1,5 @@
 import { ORGAN_LABELS, ORGAN_ORDER, type ScoreOrgan, type ScoreDefinition } from '../../types/score';
+import { getScoresGroupedByNavCategory, type ScoreNavGroup } from './nav-categories';
 import { appendicealOrificeScore } from './appendiceal-orifice';
 import { apcsModifiedScore } from './apcs-modified';
 import { apcsScore } from './apcs';
@@ -109,10 +110,16 @@ export type ScoreOrganGroup = {
   scores: ScoreDefinition[];
 };
 
+/** @deprecated 大カテゴリ分けは getScoresGroupedByNavCategory を使う */
 export function getScoresGroupedByOrgan(): ScoreOrganGroup[] {
   return ORGAN_ORDER.map((organ) => ({
     organ,
     label: ORGAN_LABELS[organ],
     scores: SCORES.filter((score) => score.organ === organ),
   })).filter((group) => group.scores.length > 0);
+}
+
+export { getScoresGroupedByNavCategory, type ScoreNavGroup };
+export function getScoresGroupedForHome(): ScoreNavGroup[] {
+  return getScoresGroupedByNavCategory(SCORES);
 }

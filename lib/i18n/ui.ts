@@ -1,4 +1,4 @@
-import type { ListClinicalPhase, ScoreCategory, ScoreOrgan } from '../../types/score';
+import type { ListClinicalPhase, ListNavCategory, ScoreCategory, ScoreOrgan } from '../../types/score';
 import type { Locale } from './types';
 
 export type UiStrings = {
@@ -6,7 +6,7 @@ export type UiStrings = {
   back: string;
   homeLead: string;
   listPhase: Record<ListClinicalPhase, string>;
-  organLead: Record<ScoreOrgan, string>;
+  navCategoryLead: Record<ListNavCategory, string>;
   reference: string;
   source: string;
   license: string;
@@ -36,6 +36,7 @@ export type UiStrings = {
   relatedScores: string;
   japanDeveloped: string;
   organ: Record<ScoreOrgan, string>;
+  navCategory: Record<ListNavCategory, string>;
   category: Record<ScoreCategory, string>;
   pwa: {
     title: string;
@@ -85,20 +86,20 @@ export const UI: Record<Locale, UiStrings> = {
   ja: {
     tabs: { scores: 'ホーム', about: 'About' },
     back: '戻る',
-    homeLead: '臓器を選んでください。スコア名は略称を大きく、正式名称はその下に表示します。',
+    homeLead: 'カテゴリを選んでください。スコア名は略称を大きく、正式名称はその下に表示します。',
     listPhase: {
       screening: 'スクリーニング',
       examination: '検査',
       'background-mucosa': '背景粘膜',
       diagnosis: '診断',
-      pathology: '病理',
       treatment: '治療',
     },
-    organLead: {
+    navCategoryLead: {
       esophagus: '食道の内視鏡分類、拡大診断、ESD 後の判定。',
       stomach: '胃の萎縮・静脈瘤・拡大診断、胃炎リスク、早期癌のスコアと ESD 後判定。',
       duodenum: '十二指腸の FAP 腺腫ステージと SNADET 関連ツール。',
       colorectum: '大腸の分類、検診、T1 予測、ESD 後判定、前処置。',
+      pathology: '消化管上皮性腫瘍の病理分類（食道・胃・大腸共通）。',
       bleeding: '潰瘍出血の内視鏡所見と上下部出血スコア。',
     },
     reference: '文献',
@@ -135,6 +136,14 @@ export const UI: Record<Locale, UiStrings> = {
       stomach: '胃',
       duodenum: '十二指腸',
       colorectum: '大腸',
+      bleeding: '出血',
+    },
+    navCategory: {
+      esophagus: '食道',
+      stomach: '胃',
+      duodenum: '十二指腸',
+      colorectum: '大腸',
+      pathology: '病理',
       bleeding: '出血',
     },
     category: {
@@ -202,20 +211,20 @@ export const UI: Record<Locale, UiStrings> = {
   en: {
     tabs: { scores: 'Home', about: 'About' },
     back: 'Back',
-    homeLead: 'Choose an organ first. Short names are shown large; full names appear underneath.',
+    homeLead: 'Choose a category. Short names are shown large; full names appear underneath.',
     listPhase: {
       screening: 'Screening',
       examination: 'Examination',
       'background-mucosa': 'Background mucosa',
       diagnosis: 'Diagnosis',
-      pathology: 'Pathology',
       treatment: 'Treatment',
     },
-    organLead: {
+    navCategoryLead: {
       esophagus: 'Esophageal classifications, magnifying findings, and post-ESD curability.',
       stomach: 'Gastric atrophy, varices, magnifying EGC tools, gastritis risk, and post-ESD scores.',
       duodenum: 'Duodenal FAP adenoma staging and SNADET-related tools.',
       colorectum: 'Colorectal classifications, screening, T1 prediction, post-ESD curability, and bowel prep.',
+      pathology: 'Pathological classification of GI epithelial neoplasia (esophagus, stomach, and colorectum).',
       bleeding: 'Ulcer stigmata and upper / lower GI bleeding scores.',
     },
     reference: 'Reference',
@@ -252,6 +261,14 @@ export const UI: Record<Locale, UiStrings> = {
       stomach: 'Stomach',
       duodenum: 'Duodenum',
       colorectum: 'Colorectum',
+      bleeding: 'Bleeding',
+    },
+    navCategory: {
+      esophagus: 'Esophagus',
+      stomach: 'Stomach',
+      duodenum: 'Duodenum',
+      colorectum: 'Colorectum',
+      pathology: 'Pathology',
       bleeding: 'Bleeding',
     },
     category: {

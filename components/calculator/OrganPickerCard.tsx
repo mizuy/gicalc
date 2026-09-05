@@ -2,23 +2,23 @@ import { Link } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
-import type { ScoreOrgan } from '@/types/score';
+import type { ListNavCategory } from '@/types/score';
 
 type Props = {
-  organ: ScoreOrgan;
+  category: ListNavCategory;
   label: string;
   count: number;
   last?: boolean;
 };
 
-export function OrganPickerCard({ organ, label, count, last }: Props) {
+export function OrganPickerCard({ category, label, count, last }: Props) {
   const tint = useThemeColor({}, 'tint');
   const border = useThemeColor({}, 'border');
   const surface = useThemeColor({}, 'surface');
   const textSecondary = useThemeColor({}, 'textSecondary');
 
   return (
-    <Link href={`/organ/${organ}`} asChild>
+    <Link href={`/organ/${category}`} asChild>
       <Pressable
         accessibilityRole="link"
         style={({ pressed }) => [

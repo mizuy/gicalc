@@ -3,13 +3,13 @@ import { StyleSheet, View } from 'react-native';
 
 import { ScoreListItem } from '@/components/calculator/ScoreListItem';
 import { Text, useThemeColor } from '@/components/Themed';
-import { groupScoresByListPhase, organUsesListPhases } from '@/data/scores/list-sections';
+import { groupScoresByListPhase, navCategoryUsesListPhases } from '@/data/scores/list-sections';
 import { useLocale } from '@/lib/i18n';
-import type { ScoreDefinition, ScoreOrgan } from '@/types/score';
+import type { ListNavCategory, ScoreDefinition } from '@/types/score';
 
 type Props = {
   scores: ScoreDefinition[];
-  organ: ScoreOrgan;
+  category: ListNavCategory;
 };
 
 function ScoreCards({ scores }: { scores: ScoreDefinition[] }) {
@@ -22,10 +22,10 @@ function ScoreCards({ scores }: { scores: ScoreDefinition[] }) {
   );
 }
 
-export function ScoreListSection({ scores, organ }: Props) {
+export function ScoreListSection({ scores, category }: Props) {
   const textSecondary = useThemeColor({}, 'textSecondary');
   const { t } = useLocale();
-  const usePhases = organUsesListPhases(organ);
+  const usePhases = navCategoryUsesListPhases(category);
 
   const groups = useMemo(() => (usePhases ? groupScoresByListPhase(scores) : null), [scores, usePhases]);
 
