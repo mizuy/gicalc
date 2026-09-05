@@ -13,11 +13,11 @@ import {
   getToolKind,
   isClassification,
   isJapanDeveloped,
-  type ClassificationFigure,
+  type ClassificationFigure as ClassificationFigureData,
   type ScoreDefinition,
 } from '@/types/score';
 
-function pageLevelFigures(score: ScoreDefinition): ClassificationFigure[] {
+function pageLevelFigures(score: ScoreDefinition): ClassificationFigureData[] {
   const figures = score.figures ?? [];
   if (!isClassification(score)) return figures;
   const hasCrops = score.entries.some((entry) => entry.figures?.some((figure) => figure.src));
