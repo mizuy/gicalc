@@ -240,7 +240,7 @@ function FlowTree({
         <View style={styles.treeChildren}>
           <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: onPath ? tint : connector }]} />
           {node.children!.length > 1 ? (
-            <View style={styles.treeHBarTrack}>
+            <View style={[styles.treeHBarTrack, compact ? styles.treeHBarTrackCompact : null]}>
               <View
                 collapsable={false}
                 style={[
@@ -248,7 +248,7 @@ function FlowTree({
                   {
                     backgroundColor: connector,
                     borderTopColor: connector,
-                    width: `${((node.children!.length - 1) / node.children!.length) * 100}%`,
+                    width: node.outcomeRow ? '100%' : `${((node.children!.length - 1) / node.children!.length) * 100}%`,
                   },
                 ]}
               />
@@ -270,7 +270,10 @@ function FlowTree({
                     compact ? styles.treeBranchCompact : null,
                     node.outcomeRow ? styles.treeBranchOutcome : null,
                   ]}>
-                  <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: childOnPath ? tint : connector }]} />
+                  {node.outcomeRow ? <View style={styles.treeBranchSpacer} /> : null}
+                  <View
+                    style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: childOnPath ? tint : connector }]}
+                  />
                   <FlowTree
                     node={child}
                     nodeFlags={nodeFlags}
@@ -475,6 +478,7 @@ const styles = StyleSheet.create({
   },
   treeRowOutcome: {
     alignItems: 'stretch',
+    gap: 0,
   },
   treeBranch: {
     flex: 1,
@@ -487,13 +491,19 @@ const styles = StyleSheet.create({
   },
   treeBranchOutcome: {
     alignItems: 'stretch',
-    justifyContent: 'flex-end',
+  },
+  treeBranchSpacer: {
+    flex: 1,
+    minHeight: 0,
   },
   treeHBarTrack: {
     width: '100%',
     height: 3,
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
+  },
+  treeHBarTrackCompact: {
+    paddingHorizontal: 0,
   },
   treeHBar: {
     height: 3,
