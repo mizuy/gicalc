@@ -1334,7 +1334,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Type 3': 'Deep SM invasion is ≥1000 μm. Consider additional surgery.',
     },
     figureNotes: [
-      'Hamada 2021 BMC Gastroenterol Fig. 1 (CC BY 4.0). Teaching images for NICE Types 1–3. Non-magnifying NBI. Separate from JNET.',
+      'Crops are on each type card. The original plate is not hosted — link to Hamada 2021 Fig. 1. License: CC BY 4.0. Non-magnifying NBI. Separate from JNET.',
       'Hayashi 2013 original Fig. 1. Elsevier / GIE copyright; not CC — link opens the publisher Fig. 1 image.',
     ],
     entryFigureNotes: {

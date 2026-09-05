@@ -1453,7 +1453,8 @@ test('分類は原著の図を出典付きで持つ', () => {
   const nice = getScoreById('nice');
   assert.ok(nice && isClassification(nice));
   assert.equal(nice.figures?.length, 2);
-  assert.match(nice.figures?.[0]?.src ?? '', /nice-hamada2021-fig1/);
+  assertOriginalPlateIsLinkOnly(nice);
+  assert.match(nice.figures?.[0]?.href ?? '', /s12876-021-01898-z/);
   assert.match(nice.figures?.[0]?.caption ?? '', /Fig\. 1/);
   assert.match(nice.figures?.[0]?.source ?? '', /Hamada Y/);
   assert.equal(nice.figures?.[0]?.pubmed, NICE_HAMADA_2021_PUBMED);

@@ -42,7 +42,8 @@ export const niceScore: ClassificationDefinition = {
   pubmed: NICE_2013_PUBMED,
   figures: [
     {
-      src: '/figures/nice-hamada2021-fig1.webp',
+      href: 'https://bmcgastroenterol.biomedcentral.com/articles/10.1186/s12876-021-01898-z/figures/1',
+      hrefLabel: 'Fig. 1',
       alt: 'NICE classification Type 1, Type 2, and Type 3 (Hamada 2021 Fig. 1)',
       caption: 'Fig. 1. Narrow-band imaging International colorectal endoscopic classification',
       source: HAMADA_SOURCE,
@@ -50,8 +51,7 @@ export const niceScore: ClassificationDefinition = {
       pubmed: NICE_HAMADA_2021_PUBMED,
       license: 'CC BY 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-      note: 'Hamada 2021 BMC Gastroenterol Fig. 1（CC BY 4.0）。NICE Type 1–3 の teaching 図。拡大なし NBI。JNET とは別分類。',
-      aspectRatio: 1956 / 1285,
+      note: '各 Type カードに切り抜きを掲載。原図は埋め込まず Hamada 2021 Fig. 1 へリンクする。ライセンスは CC BY 4.0。',
     },
     {
       href: 'https://ars.els-cdn.com/content/image/1-s2.0-S0016510713018531-gr1_lrg.jpg',
@@ -62,7 +62,7 @@ export const niceScore: ClassificationDefinition = {
         'Hayashi N, Tanaka S, Hewett DG, et al. Endoscopic prediction of deep submucosal invasive carcinoma: validation of the Narrow-Band Imaging International Colorectal Endoscopic (NICE) classification. Gastrointest Endosc. 2013;78:625-632. Fig. 1.',
       doi: 'https://doi.org/10.1016/j.gie.2013.04.185',
       pubmed: NICE_2013_PUBMED,
-      note: 'Hayashi 2013 原著 Fig. 1。Elsevier / GIE の著作権。CC ではないので画像は置かず、出版社の Fig. 1 へリンクする。',
+      note: 'Hayashi 2013 原著 Fig. 1。Elsevier / GIE の著作権。CC ではないので埋め込まず、出版社の Fig. 1 へリンクする。',
     },
   ],
   entries: [
