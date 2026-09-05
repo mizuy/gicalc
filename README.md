@@ -88,6 +88,8 @@ npm run preview:pages
 
 図と原著のライセンスは出版社ページと Crossref で確認した。
 
+**模式図を自作する前の参考図リスト**: [docs/schematic-figure-references.md](docs/schematic-figure-references.md)（Paris / LST / pit pattern 等の原著 Fig・CC 再掲を整理）
+
 **Creative Commons**
 
 - JES（Oyama 2017, *Esophagus*）の図: **CC BY 4.0**
