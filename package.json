@@ -19,6 +19,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@dagrejs/dagre": "^3.1.1",
     "expo": "~57.0.18",
     "expo-constants": "~57.0.16",
     "expo-font": "~57.0.2",

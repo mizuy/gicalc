@@ -64,6 +64,7 @@ import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
 import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
 import { APPENDICEAL_ORIFICE_2016_PUBMED, OUNG_2020_PUBMED } from '../data/scores/appendiceal-orifice';
 import { LST_2008_PUBMED } from '../data/scores/lst';
+import { buildAlgorithmFlowGraph } from '../lib/scores/algorithmFlowGraph';
 import { MESDA_G_2016_PUBMED } from '../data/scores/mesda-g';
 import { ESD_FIBROSIS_2010_PUBMED, ESD_FIBROSIS_2016_PUBMED } from '../data/scores/esd-fibrosis';
 import { EREFS_2013_PUBMED } from '../data/scores/erefs';
@@ -2202,6 +2203,14 @@ test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', (
   assert.equal(mapLabels(mesda.flow.map).filter((label) => label === 'EGC').length, 1);
   assert.equal(mesda.flow.map.children?.[0]?.outcomeRow?.outcomes[0]?.feedFrom.join(','), 'absent,regular');
   assert.equal(mesda.flow.map.children?.[0]?.outcomeRow?.outcomes[1]?.feedFrom.join(','), 'irregular');
+
+  const mesdaGraph = buildAlgorithmFlowGraph(mesda.flow.map, true);
+  assert.ok(mesdaGraph.nodes.some((node) => node.id === 'absent'));
+  assert.ok(mesdaGraph.nodes.some((node) => node.id === 'noncancer'));
+  assert.ok(mesdaGraph.edges.some((edge) => edge.source === 'dl-gate' && edge.target === 'absent'));
+  assert.ok(mesdaGraph.edges.some((edge) => edge.source === 'absent' && edge.target === 'noncancer'));
+  assert.ok(mesdaGraph.edges.some((edge) => edge.source === 'regular' && edge.target === 'noncancer'));
+  assert.ok(mesdaGraph.edges.some((edge) => edge.source === 'irregular' && edge.target === 'egc'));
 
   const englishWasp = localizeScore(wasp, 'en');
   assert.ok(hasAlgorithmFlow(englishWasp));
