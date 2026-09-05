@@ -2364,33 +2364,33 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.11');
+  assert.equal(pkg.version, '1.0.12');
 });
 
 test('PWA 更新確認はサーバー上の version.json と比較する', () => {
-  assert.equal(isRemoteVersionNewer('1.0.10', '1.0.11'), true);
-  assert.equal(isRemoteVersionNewer('1.0.11', '1.0.11'), false);
-  assert.equal(isRemoteVersionNewer('1.0.11', null), false);
+  assert.equal(isRemoteVersionNewer('1.0.11', '1.0.12'), true);
+  assert.equal(isRemoteVersionNewer('1.0.12', '1.0.12'), false);
+  assert.equal(isRemoteVersionNewer('1.0.12', null), false);
 
   assert.equal(
     shouldReportUpdateAvailable({
-      runningVersion: '1.0.10',
-      remoteVersion: '1.0.11',
+      runningVersion: '1.0.11',
+      remoteVersion: '1.0.12',
       swUpdateDetected: false,
     }),
     true,
   );
   assert.equal(
     shouldReportUpdateAvailable({
-      runningVersion: '1.0.11',
-      remoteVersion: '1.0.11',
+      runningVersion: '1.0.12',
+      remoteVersion: '1.0.12',
       swUpdateDetected: false,
     }),
     false,
   );
   assert.equal(
     shouldReportUpdateAvailable({
-      runningVersion: '1.0.11',
+      runningVersion: '1.0.12',
       remoteVersion: null,
       swUpdateDetected: true,
     }),
