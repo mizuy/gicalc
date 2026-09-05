@@ -9,8 +9,10 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  useWindowDimensions,
   type ImageStyle,
   type StyleProp,
+  type ViewStyle,
 } from 'react-native';
 
 import { CitationLink } from '@/components/calculator/CitationLink';
@@ -36,10 +38,36 @@ type FigureImageProps = {
   aspectRatio: number;
   compact: boolean;
   imageStyle?: StyleProp<ImageStyle>;
+  shellStyle?: StyleProp<ViewStyle>;
+  /** ライトボックス等、表示領域いっぱいにフィットさせるときのピクセルサイズ */
+  displaySize?: { width: number; height: number };
   lazy?: boolean;
 };
 
-function FigureImage({ uri, alt, aspectRatio, compact, imageStyle, lazy = false }: FigureImageProps) {
+function fitWithinBounds(aspectRatio: number, maxWidth: number, maxHeight: number) {
+  let width = maxWidth;
+  let height = width / aspectRatio;
+  if (height > maxHeight) {
+    height = maxHeight;
+    width = height * aspectRatio;
+  }
+  return { width: Math.floor(width), height: Math.floor(height) };
+}
+
+const LIGHTBOX_PADDING_TOP = 56;
+const LIGHTBOX_PADDING_BOTTOM = 24;
+const LIGHTBOX_PADDING_HORIZONTAL = 32;
+
+function FigureImage({
+  uri,
+  alt,
+  aspectRatio,
+  compact,
+  imageStyle,
+  shellStyle,
+  displaySize,
+  lazy = false,
+}: FigureImageProps) {
   const border = useThemeColor({}, 'border');
   const textSecondary = useThemeColor({}, 'textSecondary');
   const tint = useThemeColor({}, 'tint');
@@ -58,7 +86,14 @@ function FigureImage({ uri, alt, aspectRatio, compact, imageStyle, lazy = false 
       : {};
 
   return (
-    <View style={[styles.imageShell, { aspectRatio }]}>
+    <View
+      style={[
+        styles.imageShell,
+        displaySize
+          ? { width: displaySize.width, height: displaySize.height }
+          : { aspectRatio, width: '100%' },
+        shellStyle,
+      ]}>
       {!loaded && !failed ? (
         <View style={[styles.placeholder, { borderColor: border, backgroundColor: '#FFFFFF' }]}>
           <ActivityIndicator color={tint} size="small" />
@@ -75,7 +110,13 @@ function FigureImage({ uri, alt, aspectRatio, compact, imageStyle, lazy = false 
           style={[
             styles.image,
             imageStyle,
-            { aspectRatio, opacity: loaded ? 1 : 0 },
+            displaySize
+              ? {
+                  width: displaySize.width,
+                  height: displaySize.height,
+                  opacity: loaded ? 1 : 0,
+                }
+              : { aspectRatio, opacity: loaded ? 1 : 0 },
           ]}
           resizeMode="contain"
           onLoad={() => setLoaded(true)}
@@ -89,6 +130,7 @@ function FigureImage({ uri, alt, aspectRatio, compact, imageStyle, lazy = false 
 
 export function ClassificationFigure({ figure, compact = false }: Props) {
   const [open, setOpen] = useState(false);
+  const { height: windowHeight, width: windowWidth } = useWindowDimensions();
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
   const textSecondary = useThemeColor({}, 'textSecondary');
@@ -96,6 +138,9 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
   const { t } = useLocale();
   const uri = figure.src ? publicPath(figure.src) : undefined;
   const aspectRatio = figure.aspectRatio ?? 16 / 9;
+  const lightboxMaxHeight = windowHeight - LIGHTBOX_PADDING_TOP - LIGHTBOX_PADDING_BOTTOM;
+  const lightboxMaxWidth = windowWidth - LIGHTBOX_PADDING_HORIZONTAL;
+  const lightboxSize = fitWithinBounds(aspectRatio, lightboxMaxWidth, lightboxMaxHeight);
 
   return (
     <View
@@ -157,7 +202,7 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
                   alt={figure.alt}
                   aspectRatio={aspectRatio}
                   compact={false}
-                  imageStyle={styles.lightboxImage}
+                  displaySize={lightboxSize}
                 />
               </ScrollView>
             </ScrollView>
@@ -311,10 +356,8 @@ const styles = StyleSheet.create({
   lightboxHContent: {
     paddingHorizontal: 16,
     alignItems: 'center',
-  },
-  lightboxImage: {
-    width: 1000,
-    maxWidth: 1000,
+    justifyContent: 'center',
+    minHeight: '100%',
   },
   closeButton: {
     position: 'absolute',
