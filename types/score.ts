@@ -155,12 +155,16 @@ export type AlgorithmResult = {
   entryLabel: string;
 };
 
-export type AlgorithmMapMergeResult = {
+export type AlgorithmMapOutcome = {
   id: string;
   label: string;
   resultId: string;
-  /** 合流元となる map ノード id（例: absent, regular） */
+  /** この結果ボックスへつなぐ map ノード id */
   feedFrom: string[];
+};
+
+export type AlgorithmMapOutcomeRow = {
+  outcomes: AlgorithmMapOutcome[];
 };
 
 export type AlgorithmMapNode = {
@@ -170,10 +174,8 @@ export type AlgorithmMapNode = {
   stepId?: string;
   optionId?: string;
   resultId?: string;
-  /** 親の mergeResult へ合流する末端ノード */
-  mergeFeed?: boolean;
-  /** 子ツリーの下に共通結果ボックスを描画する */
-  mergeResult?: AlgorithmMapMergeResult;
+  /** 子ツリーの下に並列の結果ボックス（Non-cancer | EGC 等）を描画 */
+  outcomeRow?: AlgorithmMapOutcomeRow;
 };
 
 export type AlgorithmFlowMapLayout = 'compact' | 'scroll';

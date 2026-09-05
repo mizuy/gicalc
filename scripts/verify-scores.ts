@@ -2089,12 +2089,18 @@ test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', (
   const mapLabels = (node: {
     label: string;
     children?: unknown[];
-    mergeResult?: { label: string };
+    outcomeRow?: { outcomes: Array<{ label: string }> };
   }): string[] => [
     node.label,
-    ...(node.mergeResult ? [node.mergeResult.label] : []),
+    ...(node.outcomeRow?.outcomes.map((outcome) => outcome.label) ?? []),
     ...(node.children ?? []).flatMap((child) =>
-      mapLabels(child as { label: string; children?: unknown[]; mergeResult?: { label: string } }),
+      mapLabels(
+        child as {
+          label: string;
+          children?: unknown[];
+          outcomeRow?: { outcomes: Array<{ label: string }> };
+        },
+      ),
     ),
   ];
   for (const label of [
@@ -2115,7 +2121,9 @@ test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', (
   assert.ok(mapLabels(mesda.flow.map).includes('Both regular'));
   assert.ok(mapLabels(mesda.flow.map).includes('EGC'));
   assert.equal(mapLabels(mesda.flow.map).filter((label) => label === 'Non-cancer').length, 1);
-  assert.equal(mesda.flow.map.children?.[0]?.mergeResult?.feedFrom.join(','), 'absent,regular');
+  assert.equal(mapLabels(mesda.flow.map).filter((label) => label === 'EGC').length, 1);
+  assert.equal(mesda.flow.map.children?.[0]?.outcomeRow?.outcomes[0]?.feedFrom.join(','), 'absent,regular');
+  assert.equal(mesda.flow.map.children?.[0]?.outcomeRow?.outcomes[1]?.feedFrom.join(','), 'irregular');
 
   const englishWasp = localizeScore(wasp, 'en');
   assert.ok(hasAlgorithmFlow(englishWasp));

@@ -20,10 +20,12 @@ function localizeMapNode(node: AlgorithmMapNode, labels?: Record<string, string>
   return {
     ...node,
     label: labels?.[node.id] ?? node.label,
-    mergeResult: node.mergeResult
+    outcomeRow: node.outcomeRow
       ? {
-          ...node.mergeResult,
-          label: labels?.[node.mergeResult.id] ?? node.mergeResult.label,
+          outcomes: node.outcomeRow.outcomes.map((outcome) => ({
+            ...outcome,
+            label: labels?.[outcome.id] ?? outcome.label,
+          })),
         }
       : undefined,
     children: node.children?.map((child) => localizeMapNode(child, labels)),

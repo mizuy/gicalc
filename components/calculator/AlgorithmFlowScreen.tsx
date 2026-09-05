@@ -9,14 +9,14 @@ import {
   applyAlgorithmAnswer,
   buildAlgorithmNodeFlags,
   findEntryForResult,
-  mergeFeedDepths,
+  outcomeFeedIds,
   walkAlgorithmFlow,
   type AlgorithmNodeFlags,
 } from '@/lib/scores/algorithmFlow';
 import {
   type AlgorithmFlow,
-  type AlgorithmMapMergeResult,
   type AlgorithmMapNode,
+  type AlgorithmMapOutcomeRow,
   type ClassificationDefinition,
   type ClassificationEntry,
 } from '@/types/score';
@@ -133,14 +133,69 @@ function FlowNodeChip({
   );
 }
 
-type MergeContext = {
-  merge: AlgorithmMapMergeResult;
-  depths: Map<string, number>;
-  maxDepth: number;
+type OutcomeContext = {
+  row: AlgorithmMapOutcomeRow;
+  feedIds: Set<string>;
 };
 
-function mergeLevelHeight(compact?: boolean) {
-  return compact ? 40 : 48;
+function FlowOutcomeSection({
+  outcomeRow,
+  nodeFlags,
+  compact,
+}: {
+  outcomeRow: AlgorithmMapOutcomeRow;
+  nodeFlags: Map<string, AlgorithmNodeFlags>;
+  compact?: boolean;
+}) {
+  const tint = useThemeColor({}, 'tint');
+  const connector = '#6B8A8C';
+  const noncancer = outcomeRow.outcomes.find((outcome) => outcome.resultId === 'noncancer');
+  const egc = outcomeRow.outcomes.find((outcome) => outcome.resultId === 'egc');
+  if (!noncancer || !egc) return null;
+
+  const absentOnPath = nodeFlags.get('absent')?.onPath ?? false;
+  const regularOnPath = nodeFlags.get('regular')?.onPath ?? false;
+  const irregularOnPath = nodeFlags.get('irregular')?.onPath ?? false;
+  const ncFlags = nodeFlags.get(noncancer.id) ?? { onPath: false, isResult: false };
+  const egcFlags = nodeFlags.get(egc.id) ?? { onPath: false, isResult: false };
+  const ncActive = absentOnPath || regularOnPath || ncFlags.onPath;
+  const egcActive = irregularOnPath || egcFlags.onPath;
+  const ncColor = ncActive ? tint : connector;
+  const egcColor = egcActive ? tint : connector;
+
+  return (
+    <View style={styles.outcomeSection}>
+      <View style={[styles.treeRow, compact ? styles.treeRowCompact : null, styles.outcomeResultRow]}>
+        <View style={[styles.treeBranch, compact ? styles.treeBranchCompact : null, styles.outcomeNcPane]}>
+          <View style={styles.outcomeNcMergeTrack}>
+            <View
+              collapsable={false}
+              style={[styles.outcomeNcMergeBar, { backgroundColor: ncColor, borderTopColor: ncColor }]}
+            />
+          </View>
+          <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: ncColor }]} />
+          <FlowNodeChip
+            node={{ label: noncancer.label }}
+            onPath={ncFlags.onPath}
+            current={false}
+            isResult={ncFlags.isResult}
+            compact={compact}
+            wide
+          />
+        </View>
+        <View style={[styles.treeBranch, compact ? styles.treeBranchCompact : null, styles.outcomeEgcPane]}>
+          <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: egcColor }]} />
+          <FlowNodeChip
+            node={{ label: egc.label }}
+            onPath={egcFlags.onPath}
+            current={false}
+            isResult={egcFlags.isResult}
+            compact={compact}
+          />
+        </View>
+      </View>
+    </View>
+  );
 }
 
 function FlowTree({
@@ -148,42 +203,27 @@ function FlowTree({
   nodeFlags,
   onChoose,
   compact,
-  mergeContext,
+  outcomeContext,
 }: {
   node: AlgorithmMapNode;
   nodeFlags: Map<string, AlgorithmNodeFlags>;
   onChoose: (stepId: string, optionId: string) => void;
   compact?: boolean;
-  mergeContext?: MergeContext;
+  outcomeContext?: OutcomeContext;
 }) {
   const flags = nodeFlags.get(node.id) ?? { onPath: false, current: false, isResult: false };
   const { onPath, current, isResult } = flags;
   const canPress = Boolean(node.stepId && node.optionId);
   const tint = useThemeColor({}, 'tint');
   const connector = '#6B8A8C';
-  const childMergeContext: MergeContext | undefined = node.mergeResult
-    ? {
-        merge: node.mergeResult,
-        depths: mergeFeedDepths(node, node.mergeResult.feedFrom),
-        maxDepth: Math.max(...mergeFeedDepths(node, node.mergeResult.feedFrom).values()),
-      }
-    : mergeContext;
-  const mergeFlags = node.mergeResult ? nodeFlags.get(node.mergeResult.id) : undefined;
-  const mergeOnPath = mergeFlags?.onPath ?? false;
+  const childOutcomeContext: OutcomeContext | undefined = node.outcomeRow
+    ? { row: node.outcomeRow, feedIds: outcomeFeedIds(node.outcomeRow) }
+    : outcomeContext;
   const hasChildren = Boolean(node.children?.length);
-  const mergeFeedDepth = mergeContext?.depths.get(node.id);
-  const mergeSpacerLevels =
-    node.mergeFeed && mergeContext && mergeFeedDepth != null
-      ? mergeContext.maxDepth - mergeFeedDepth
-      : 0;
+  const isOutcomeFeed = Boolean(outcomeContext?.feedIds.has(node.id) && !hasChildren);
 
   return (
-    <View
-      style={[
-        styles.tree,
-        compact ? styles.treeCompact : null,
-        node.mergeFeed && compact ? styles.treeMergeFeedColumn : null,
-      ]}>
+    <View style={[styles.tree, compact ? styles.treeCompact : null, isOutcomeFeed ? styles.treeOutcomeFeed : null]}>
       <FlowNodeChip
         node={node}
         onPath={onPath}
@@ -214,68 +254,37 @@ function FlowTree({
             style={[
               styles.treeRow,
               compact ? styles.treeRowCompact : null,
-              node.mergeResult ? styles.treeRowMerge : null,
+              node.outcomeRow ? styles.treeRowOutcome : null,
             ]}>
             {node.children!.map((child) => {
               const childOnPath = nodeFlags.get(child.id)?.onPath ?? false;
               return (
-                <View key={child.id} style={[styles.treeBranch, compact ? styles.treeBranchCompact : null]}>
+                <View
+                  key={child.id}
+                  style={[
+                    styles.treeBranch,
+                    compact ? styles.treeBranchCompact : null,
+                    node.outcomeRow ? styles.treeBranchOutcome : null,
+                  ]}>
                   <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: childOnPath ? tint : connector }]} />
                   <FlowTree
                     node={child}
                     nodeFlags={nodeFlags}
                     onChoose={onChoose}
                     compact={compact}
-                    mergeContext={childMergeContext}
+                    outcomeContext={childOutcomeContext}
                   />
                 </View>
               );
             })}
           </View>
-          {node.mergeResult ? (
-            <View style={styles.mergeZone}>
-              <View style={styles.mergeHBarTrack}>
-                <View
-                  collapsable={false}
-                  style={[
-                    styles.mergeHBar,
-                    {
-                      backgroundColor: mergeOnPath ? tint : connector,
-                      borderTopColor: mergeOnPath ? tint : connector,
-                    },
-                  ]}
-                />
-              </View>
-              <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: mergeOnPath ? tint : connector }]} />
-              <FlowNodeChip
-                node={{ label: node.mergeResult.label }}
-                onPath={mergeFlags?.onPath ?? false}
-                current={false}
-                isResult={mergeFlags?.isResult ?? false}
-                compact={compact}
-                wide
-              />
-            </View>
+          {node.outcomeRow ? (
+            <FlowOutcomeSection outcomeRow={node.outcomeRow} nodeFlags={nodeFlags} compact={compact} />
           ) : null}
         </View>
       ) : null}
-      {!hasChildren && node.mergeFeed && mergeContext ? (
-        <>
-          <View
-            style={{
-              flex: 1,
-              minHeight: mergeSpacerLevels * mergeLevelHeight(compact),
-              width: '100%',
-            }}
-          />
-          <View
-            style={[
-              styles.mergeFeedStem,
-              compact ? styles.stemCompact : null,
-              { backgroundColor: onPath ? tint : connector },
-            ]}
-          />
-        </>
+      {isOutcomeFeed ? (
+        <View style={[styles.outcomeDownStem, { backgroundColor: onPath ? tint : connector }]} />
       ) : null}
     </View>
   );
@@ -441,7 +450,7 @@ const styles = StyleSheet.create({
   treeCompact: {
     alignItems: 'stretch',
   },
-  treeMergeFeedColumn: {
+  treeOutcomeFeed: {
     flex: 1,
     width: '100%',
   },
@@ -458,7 +467,7 @@ const styles = StyleSheet.create({
   treeRowCompact: {
     gap: 4,
   },
-  treeRowMerge: {
+  treeRowOutcome: {
     alignItems: 'stretch',
   },
   treeBranch: {
@@ -468,6 +477,9 @@ const styles = StyleSheet.create({
   },
   treeBranchCompact: {
     minWidth: 0,
+    alignItems: 'stretch',
+  },
+  treeBranchOutcome: {
     alignItems: 'stretch',
   },
   treeHBarTrack: {
@@ -489,22 +501,32 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 12,
   },
-  mergeFeedStem: {
+  outcomeDownStem: {
     width: 3,
-    height: 12,
+    flex: 1,
     alignSelf: 'center',
+    minHeight: 8,
   },
-  mergeZone: {
+  outcomeSection: {
     width: '100%',
+  },
+  outcomeResultRow: {
+    alignItems: 'flex-start',
+  },
+  outcomeNcPane: {
+    flex: 1.5,
+  },
+  outcomeEgcPane: {
+    flex: 1,
     alignItems: 'center',
   },
-  mergeHBarTrack: {
+  outcomeNcMergeTrack: {
     width: '100%',
     height: 3,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  mergeHBar: {
+  outcomeNcMergeBar: {
     width: '72%',
     height: 3,
     minHeight: 3,

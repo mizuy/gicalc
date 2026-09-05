@@ -117,14 +117,16 @@ export function buildAlgorithmNodeFlags(
       if (visit(child)) onPath = true;
     }
 
-    if (node.mergeResult) {
-      const mergeOnPath = walk.result?.id === node.mergeResult.resultId;
-      flags.set(node.mergeResult.id, {
-        onPath: mergeOnPath,
-        current: false,
-        isResult: mergeOnPath,
-      });
-      if (mergeOnPath) onPath = true;
+    if (node.outcomeRow) {
+      for (const outcome of node.outcomeRow.outcomes) {
+        const outcomeOnPath = walk.result?.id === outcome.resultId;
+        flags.set(outcome.id, {
+          onPath: outcomeOnPath,
+          current: false,
+          isResult: outcomeOnPath,
+        });
+        if (outcomeOnPath) onPath = true;
+      }
     }
 
     flags.set(node.id, { onPath, current, isResult });
@@ -147,23 +149,7 @@ export function findEntryForResult(
   return entries.find((entry) => entry.label === result.entryLabel);
 }
 
-/** mergeResult.feedFrom に含まれる各ノードの、親からの深さ（1 始まり） */
-export function mergeFeedDepths(
-  node: AlgorithmMapNode,
-  feedFrom: string[],
-  depth = 0,
-): Map<string, number> {
-  const depths = new Map<string, number>();
-  const walk = (current: AlgorithmMapNode, currentDepth: number) => {
-    if (feedFrom.includes(current.id)) {
-      depths.set(current.id, currentDepth);
-    }
-    for (const child of current.children ?? []) {
-      walk(child, currentDepth + 1);
-    }
-  };
-  for (const child of node.children ?? []) {
-    walk(child, depth + 1);
-  }
-  return depths;
+/** outcomeRow に含まれる feed ノード id の集合 */
+export function outcomeFeedIds(outcomeRow: { outcomes: { feedFrom: string[] }[] }): Set<string> {
+  return new Set(outcomeRow.outcomes.flatMap((outcome) => outcome.feedFrom));
 }
