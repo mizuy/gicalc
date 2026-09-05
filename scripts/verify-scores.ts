@@ -2040,6 +2040,8 @@ test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', (
   assert.ok(mapLabels(wasp.flow.map).includes('SSA/P-like features'));
   assert.ok(mapLabels(wasp.flow.map).includes('Hyperplastic polyp'));
   assert.equal(mesda.flow.map.label, 'Suspicious lesion');
+  assert.equal(mesda.flow.mapLayout, 'compact');
+  assert.notEqual(wasp.flow.mapLayout, 'compact');
   assert.ok(mapLabels(mesda.flow.map).includes('IMVP and/or IMSP'));
   assert.ok(mapLabels(mesda.flow.map).includes('EGC'));
 

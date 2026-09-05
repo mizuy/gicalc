@@ -77,12 +77,14 @@ function FlowNodeChip({
   current,
   isResult,
   onPress,
+  compact,
 }: {
   node: AlgorithmMapNode;
   onPath: boolean;
   current: boolean;
   isResult: boolean;
   onPress?: () => void;
+  compact?: boolean;
 }) {
   const tint = useThemeColor({}, 'tint');
   const border = useThemeColor({}, 'border');
@@ -95,6 +97,7 @@ function FlowNodeChip({
     <View
       style={[
         styles.chip,
+        compact ? styles.chipCompact : null,
         {
           backgroundColor: selected ? `${tint}18` : surface,
           borderColor: current ? tint : selected ? tint : border,
@@ -104,6 +107,7 @@ function FlowNodeChip({
       <Text
         style={[
           styles.chipText,
+          compact ? styles.chipTextCompact : null,
           { color: selected || current ? tint : textSecondary, fontWeight: selected || current ? '800' : '600' },
         ]}>
         {node.label}
@@ -129,11 +133,13 @@ function FlowTree({
   flow,
   answers,
   onChoose,
+  compact,
 }: {
   node: AlgorithmMapNode;
   flow: AlgorithmFlow;
   answers: Record<string, string>;
   onChoose: (stepId: string, optionId: string) => void;
+  compact?: boolean;
 }) {
   const walk = walkAlgorithmFlow(flow, answers);
   const onPath = isMapNodeOnPath(node, walk, answers);
@@ -144,17 +150,18 @@ function FlowTree({
   const connector = '#6B8A8C';
 
   return (
-    <View style={styles.tree}>
+    <View style={[styles.tree, compact ? styles.treeCompact : null]}>
       <FlowNodeChip
         node={node}
         onPath={onPath}
         current={current}
         isResult={isResult}
+        compact={compact}
         onPress={canPress ? () => onChoose(node.stepId!, node.optionId!) : undefined}
       />
       {node.children?.length ? (
         <View style={styles.treeChildren}>
-          <View style={[styles.stem, { backgroundColor: onPath ? tint : connector }]} />
+          <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: onPath ? tint : connector }]} />
           {node.children.length > 1 ? (
             <View style={styles.treeHBarTrack}>
               <View
@@ -170,13 +177,13 @@ function FlowTree({
               />
             </View>
           ) : null}
-          <View style={styles.treeRow}>
+          <View style={[styles.treeRow, compact ? styles.treeRowCompact : null]}>
             {node.children.map((child) => {
               const childOnPath = isMapNodeOnPath(child, walk, answers);
               return (
-                <View key={child.id} style={styles.treeBranch}>
-                  <View style={[styles.stem, { backgroundColor: childOnPath ? tint : connector }]} />
-                  <FlowTree node={child} flow={flow} answers={answers} onChoose={onChoose} />
+                <View key={child.id} style={[styles.treeBranch, compact ? styles.treeBranchCompact : null]}>
+                  <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: childOnPath ? tint : connector }]} />
+                  <FlowTree node={child} flow={flow} answers={answers} onChoose={onChoose} compact={compact} />
                 </View>
               );
             })}
@@ -197,6 +204,7 @@ export function AlgorithmFlowScreen({ score }: Props) {
   const border = useThemeColor({}, 'border');
   const { t } = useLocale();
   const flow = score.flow;
+  const mapCompact = flow.mapLayout === 'compact';
   const walk = useMemo(() => walkAlgorithmFlow(flow, answers), [answers, flow]);
   const diagnosis = findEntryForResult(score.entries, walk.result);
   const currentStep = walk.currentStep;
@@ -211,11 +219,17 @@ export function AlgorithmFlowScreen({ score }: Props) {
       <Text style={[styles.hint, { color: textSecondary }]}>{t.algorithmHint}</Text>
 
       <View style={[styles.mapBox, { backgroundColor: surface, borderColor: border }]}>
-        <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator={false}>
-          <View style={styles.mapInner}>
-            <FlowTree node={flow.map} flow={flow} answers={answers} onChoose={choose} />
+        {mapCompact ? (
+          <View style={[styles.mapInner, styles.mapInnerCompact]}>
+            <FlowTree node={flow.map} flow={flow} answers={answers} onChoose={choose} compact />
           </View>
-        </ScrollView>
+        ) : (
+          <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator={false}>
+            <View style={styles.mapInner}>
+              <FlowTree node={flow.map} flow={flow} answers={answers} onChoose={choose} />
+            </View>
+          </ScrollView>
+        )}
       </View>
 
       {currentStep ? (
@@ -325,9 +339,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     alignItems: 'stretch',
   },
+  mapInnerCompact: {
+    minWidth: 0,
+    paddingHorizontal: 4,
+  },
   tree: {
     alignItems: 'center',
     width: '100%',
+  },
+  treeCompact: {
+    alignItems: 'stretch',
   },
   treeChildren: {
     alignItems: 'center',
@@ -339,10 +360,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: '100%',
   },
+  treeRowCompact: {
+    gap: 4,
+  },
   treeBranch: {
     flex: 1,
     alignItems: 'center',
     minWidth: 96,
+  },
+  treeBranchCompact: {
+    minWidth: 0,
+    alignItems: 'stretch',
   },
   treeHBarTrack: {
     width: '100%',
@@ -359,6 +387,10 @@ const styles = StyleSheet.create({
     width: 3,
     height: 16,
   },
+  stemCompact: {
+    alignSelf: 'center',
+    height: 12,
+  },
   chip: {
     borderRadius: 10,
     paddingHorizontal: 10,
@@ -366,9 +398,20 @@ const styles = StyleSheet.create({
     minWidth: 72,
     alignItems: 'center',
   },
+  chipCompact: {
+    minWidth: 0,
+    width: '100%',
+    paddingHorizontal: 6,
+    paddingVertical: 6,
+    borderRadius: 8,
+  },
   chipText: {
     fontSize: 12,
     textAlign: 'center',
+  },
+  chipTextCompact: {
+    fontSize: 10,
+    lineHeight: 13,
   },
   stepBox: {
     borderWidth: 2,

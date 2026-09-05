@@ -215,6 +215,7 @@ export const mesdaGScore: ClassificationDefinition = {
   ],
   flow: {
     title: 'アルゴリズム',
+    mapLayout: 'compact',
     start: 'dl',
     steps: {
       dl: {
