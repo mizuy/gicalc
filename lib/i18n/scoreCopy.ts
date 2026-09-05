@@ -1093,6 +1093,65 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: ['Original 2000 Gut paper. BMJ copyright; not CC — link to the paper.'],
   },
+  'who-serrated': {
+    name: 'WHO 2019 serrated lesion histology',
+    shortName: 'WHO Serrated',
+    description:
+      'WHO 5th edition (2019) histological subtypes of colorectal serrated lesions. Common pathology language linked to WASP and SPS.',
+    note: 'SSL with dysplasia shows conventional adenomatous dysplasia. TSA can occur outside the colon. Unclassified = serrated lesion not fitting HP, SSL, SSL-D, or TSA.',
+    groups: {
+      非腫瘍性: 'Non-neoplastic',
+      腫瘍性: 'Neoplastic',
+      その他: 'Other',
+    },
+    comments: {
+      SSL: 'Precursor of the serrated pathway. Management depends on size, margins, and dysplasia.',
+    },
+    figureNotes: ['IARC WHO Blue Book (5th ed). Not CC — link only.'],
+  },
+  'itbcg-budding': {
+    name: 'ITBCG tumor budding (BD1–BD3)',
+    shortName: 'ITBCG Budding',
+    description:
+      'International Tumor Budding Consensus Conference (2016) grading of tumor buds at the invasive front of colorectal cancer. Count in one 0.785 mm² hotspot.',
+    note: 'Count at the invasive front (intratumoral budding is a separate concept). Report on H&E. Relevant for T1 cancer LNM risk.',
+    groups: {
+      ITBCG: 'ITBCG',
+    },
+    comments: {
+      BD3: 'Associated with higher LNM risk in T1 colorectal cancer. Separate from the Kajiwara nomogram.',
+    },
+    figureNotes: ['Mod Pathol 2017 ITBCC paper. Not CC — link to the publisher.'],
+  },
+  'net-grade': {
+    name: 'WHO 2019 GI NET grade (G1–G3)',
+    shortName: 'NET G1–G3',
+    description:
+      'WHO 2019 grading of well-differentiated gastroenteropancreatic neuroendocrine tumours by mitotic count and Ki-67 index.',
+    note: 'Well-differentiated NET G3 is separate from poorly differentiated NEC. Functional vs non-functional is independent of grade.',
+    groups: {
+      NET: 'NET',
+      NEC: 'NEC',
+    },
+    comments: {
+      G3: 'Poorly differentiated NEC is also high grade but a distinct entity from well-differentiated NET G3.',
+    },
+    figureNotes: ['IARC WHO Blue Book (Endocrine, 5th ed). Not CC — link only.'],
+  },
+  lauren: {
+    name: 'Lauren classification (gastric adenocarcinoma)',
+    shortName: 'Lauren',
+    description:
+      'Pathological subtypes of gastric adenocarcinoma: intestinal, diffuse, and mixed (Lauren 1965).',
+    note: 'Still reported in WHO 2019 gastric adenocarcinoma. Mixed type requires substantial components of both intestinal and diffuse types.',
+    groups: {
+      Lauren: 'Lauren',
+    },
+    comments: {
+      Diffuse: 'May present as linitis plastica. CDH1 loss is common.',
+    },
+    figureNotes: ['Lauren 1965 original. Not CC — link to PubMed.'],
+  },
   paris: {
     name: 'Paris classification (superficial morphology)',
     description:

@@ -89,6 +89,7 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
   wasp: [
     { id: 'jnet', hint: { ja: 'JNET 分類', en: 'JNET classification' } },
     { id: 'mesda-g', hint: { ja: 'MESDA-G アルゴリズム', en: 'MESDA-G algorithm' } },
+    { id: 'who-serrated', hint: { ja: 'WHO 鋸歯状組織型', en: 'WHO serrated histology' } },
   ],
   'mesda-g': [
     { id: 'wasp', hint: { ja: 'WASP 分類', en: 'WASP classification' } },
@@ -99,7 +100,27 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
     { id: 'vienna', hint: { ja: 'Vienna 分類', en: 'Vienna classification' } },
   ],
   lst: [{ id: 'paris', hint: { ja: 'Paris 分類', en: 'Paris classification' } }],
-  vienna: [{ id: 'paris', hint: { ja: 'Paris 分類', en: 'Paris classification' } }],
+  vienna: [
+    { id: 'paris', hint: { ja: 'Paris 分類', en: 'Paris classification' } },
+    { id: 'who-serrated', hint: { ja: 'WHO 鋸歯状組織型', en: 'WHO serrated histology' } },
+  ],
+  'who-serrated': [
+    { id: 'wasp', hint: { ja: 'WASP 内視鏡分類', en: 'WASP endoscopic classification' } },
+    { id: 'vienna', hint: { ja: 'Vienna 分類', en: 'Vienna classification' } },
+    { id: 'sps', hint: { ja: 'SPS 診断基準', en: 'SPS diagnostic criteria' } },
+  ],
+  'itbcg-budding': [
+    {
+      id: 'kajiwara-nomogram',
+      hint: { ja: 'T1 LNM 予測（別因子）', en: 'T1 LNM prediction (separate factor)' },
+    },
+    { id: 'vienna', hint: { ja: 'Vienna 分類', en: 'Vienna classification' } },
+  ],
+  'net-grade': [{ id: 'lauren', hint: { ja: 'Lauren 胃癌組織型', en: 'Lauren gastric histology' } }],
+  lauren: [
+    { id: 'net-grade', hint: { ja: 'NET G1–G3', en: 'NET G1–G3' } },
+    { id: 'kyoto', hint: { ja: '萎縮・化生背景', en: 'Atrophy / metaplasia background' } },
+  ],
   bbps: [{ id: 'aronchick', hint: { ja: 'Aronchick 分類', en: 'Aronchick classification' } }],
   aronchick: [{ id: 'bbps', hint: { ja: 'BBPS スコア', en: 'BBPS score' } }],
   gbs: [{ id: 'forrest', hint: { ja: 'Forrest 分類', en: 'Forrest classification' } }],

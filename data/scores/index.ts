@@ -42,6 +42,10 @@ import { spigelmanScore } from './spigelman';
 import { spsScore } from './sps';
 import { toyaScore } from './toya';
 import { viennaScore } from './vienna';
+import { whoSerratedScore } from './who-serrated';
+import { itbcgBuddingScore } from './itbcg-budding';
+import { netGradeScore } from './net-grade';
+import { laurenScore } from './lauren';
 import { waspScore } from './wasp';
 import { HIDDEN_LIST_SCORE_IDS } from './variant-groups';
 
@@ -74,6 +78,10 @@ export const ALL_SCORE_DEFINITIONS: ScoreDefinition[] = [
   apcsModifiedScore,
   spsScore,
   viennaScore,
+  whoSerratedScore,
+  itbcgBuddingScore,
+  netGradeScore,
+  laurenScore,
   parisScore,
   lstScore,
   appendicealOrificeScore,

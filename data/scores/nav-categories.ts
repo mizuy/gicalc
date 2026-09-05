@@ -1,13 +1,18 @@
 import type { ListNavCategory, ScoreDefinition } from '../../types/score';
 import { LIST_NAV_CATEGORY_ORDER, LIST_NAV_CATEGORY_LABELS } from '../../types/score';
 
-/** 定義上の organ とは別に、一覧の大カテゴリへ割り当てる id */
-const NAV_CATEGORY_OVERRIDE: Record<string, ListNavCategory> = {
-  vienna: 'pathology',
-};
+/** 病理大カテゴリに載せる id（定義上の organ とは独立） */
+const PATHOLOGY_NAV_SCORE_IDS = new Set<string>([
+  'vienna',
+  'who-serrated',
+  'itbcg-budding',
+  'net-grade',
+  'lauren',
+]);
 
 export function getScoreNavCategory(score: ScoreDefinition): ListNavCategory {
-  return NAV_CATEGORY_OVERRIDE[score.id] ?? score.organ;
+  if (PATHOLOGY_NAV_SCORE_IDS.has(score.id)) return 'pathology';
+  return score.organ;
 }
 
 export type ScoreNavGroup = {

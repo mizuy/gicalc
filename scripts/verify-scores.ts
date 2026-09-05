@@ -83,6 +83,10 @@ import { DEKKER_2020_PUBMED, MCWHINNEY_2023_PUBMED } from '../data/scores/sps';
 import { KUDO_EC_2011_PUBMED, MAEDA_EC_REVIEW_2021_PUBMED } from '../data/scores/colorectal-ec';
 import { KIKUCHI_2014_PUBMED, TOYA_2020_PUBMED } from '../data/scores/toya';
 import { VIENNA_2000_PUBMED } from '../data/scores/vienna';
+import { WHO_DIGESTIVE_2019_PUBMED } from '../data/scores/who-serrated';
+import { ITBCG_BUDDING_PUBMED } from '../data/scores/itbcg-budding';
+import { WHO_NET_2019_PUBMED } from '../data/scores/net-grade';
+import { LAUREN_1965_PUBMED } from '../data/scores/lauren';
 import { WASP_2016_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
@@ -95,7 +99,7 @@ import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '..
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 import { classificationOriginalLocale } from '../lib/i18n/localize';
 
-test('登録スコアは40種で臓器順に並ぶ', () => {
+test('登録スコアは44種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -123,6 +127,10 @@ test('登録スコアは40種で臓器順に並ぶ', () => {
       'apcs',
       'sps',
       'vienna',
+      'who-serrated',
+      'itbcg-budding',
+      'net-grade',
+      'lauren',
       'paris',
       'lst',
       'appendiceal-orifice',
@@ -181,16 +189,16 @@ test('登録スコアは40種で臓器順に並ぶ', () => {
           'aronchick',
         ],
       ],
-      ['pathology', ['vienna']],
+      ['pathology', ['vienna', 'who-serrated', 'itbcg-budding', 'net-grade', 'lauren']],
       ['bleeding', ['forrest', 'gbs', 'noblads']],
     ],
   );
   assert.equal(getScoreNavCategory(getScoreById('vienna')!), 'pathology');
 });
 
-test('variant 専用 id は一覧から隠し、全定義43種を保持する', () => {
+test('variant 専用 id は一覧から隠し、全定義47種を保持する', () => {
   assert.deepEqual([...HIDDEN_LIST_SCORE_IDS].sort(), ['apcs-modified', 'kyoto-modified', 'modified-spigelman']);
-  assert.equal(ALL_SCORE_DEFINITIONS.length, 43);
+  assert.equal(ALL_SCORE_DEFINITIONS.length, 47);
   assert.ok(getScoreById('kyoto-modified'));
   assert.ok(getScoreById('modified-spigelman'));
   assert.ok(getScoreById('apcs-modified'));
@@ -303,6 +311,10 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     apcs: 'score',
     sps: 'classification',
     vienna: 'classification',
+    'who-serrated': 'classification',
+    'itbcg-budding': 'classification',
+    'net-grade': 'classification',
+    lauren: 'classification',
     paris: 'classification',
     lst: 'classification',
     'appendiceal-orifice': 'classification',
@@ -367,6 +379,10 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'apcs',
     'sps',
     'vienna',
+    'who-serrated',
+    'itbcg-budding',
+    'net-grade',
+    'lauren',
     'paris',
     'nice',
     'wasp',
@@ -1386,14 +1402,41 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(vienna.pubmed, VIENNA_2000_PUBMED);
   assert.equal(vienna.organ, 'colorectum');
 
+  const whoSerrated = getScoreById('who-serrated');
+  assert.ok(whoSerrated && isClassification(whoSerrated));
+  assert.deepEqual(
+    whoSerrated.entries.map((entry) => entry.label),
+    ['HP', 'SSL', 'SSL-D', 'TSA', 'Unclassified'],
+  );
+  assert.equal(whoSerrated.pubmed, WHO_DIGESTIVE_2019_PUBMED);
+  assert.equal(getScoreNavCategory(whoSerrated), 'pathology');
+
+  const itbcg = getScoreById('itbcg-budding');
+  assert.ok(itbcg && isClassification(itbcg));
+  assert.deepEqual(itbcg.entries.map((entry) => entry.label), ['BD1', 'BD2', 'BD3', 'Method']);
+  assert.equal(itbcg.pubmed, ITBCG_BUDDING_PUBMED);
+  assert.equal(getScoreNavCategory(itbcg), 'pathology');
+
+  const netGrade = getScoreById('net-grade');
+  assert.ok(netGrade && isClassification(netGrade));
+  assert.deepEqual(netGrade.entries.map((entry) => entry.label), ['G1', 'G2', 'G3', 'NEC', 'Rule']);
+  assert.equal(netGrade.pubmed, WHO_NET_2019_PUBMED);
+  assert.equal(getScoreNavCategory(netGrade), 'pathology');
+
+  const lauren = getScoreById('lauren');
+  assert.ok(lauren && isClassification(lauren));
+  assert.deepEqual(lauren.entries.map((entry) => entry.label), ['Intestinal', 'Diffuse', 'Mixed']);
+  assert.equal(lauren.pubmed, LAUREN_1965_PUBMED);
+  assert.equal(getScoreNavCategory(lauren), 'pathology');
+
   assert.ok(hasAlgorithmFlow(wasp));
   assert.ok(hasAlgorithmFlow(mesda));
   assert.ok(hasAlgorithmFlow(toya));
-  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna, sps, colorectalEc]) {
+  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc]) {
     assert.equal(hasAlgorithmFlow(score), false, score.id);
   }
 
-  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, vienna, sps, colorectalEc]) {
+  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -1738,6 +1781,14 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(viennaFig.figures?.[0]?.pubmed, VIENNA_2000_PUBMED);
   assert.equal(viennaFig.figures?.[0]?.license, undefined);
   assert.match(viennaFig.figures?.[0]?.note ?? '', /CC ではない/);
+
+  for (const id of ['who-serrated', 'itbcg-budding', 'net-grade', 'lauren'] as const) {
+    const score = getScoreById(id);
+    assert.ok(score && isClassification(score));
+    assertOriginalPlateIsLinkOnly(score);
+    assert.equal(score.figures?.[0]?.src, undefined);
+    assert.equal(score.figures?.[0]?.license, undefined);
+  }
 
   const spigelman = getScoreById('spigelman');
   assert.ok(spigelman);
@@ -2198,7 +2249,7 @@ test('PWA 更新はユーザー操作まで waiting のままにする', () => {
 
 test('アプリバージョンは expo 設定と一致する', () => {
   const appConfig = require('../app.config.js') as { expo: { version: string } };
-  assert.equal(appConfig.expo.version, '1.0.6');
+  assert.equal(appConfig.expo.version, '1.0.7');
 });
 
 test('PWA 更新バナーの文言と検知', () => {
