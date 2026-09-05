@@ -7,7 +7,7 @@ export const laScore: ClassificationDefinition = {
   id: 'la',
   kind: 'classification',
   name: 'Los Angeles分類（逆流性食道炎）',
-  shortName: 'LA',
+  shortName: 'GERD LA',
   organ: 'esophagus',
   category: 'classification',
   categoryLabel: '内視鏡分類',

@@ -13,7 +13,7 @@ export const jsphVaricesScore: ClassificationDefinition = {
   id: 'jsph-varices',
   kind: 'classification',
   name: '門脈圧亢進症学会分類（F / L / C）',
-  shortName: 'F / L / C',
+  shortName: 'Varix F/L/C',
   developedInJapan: true,
   originalLocale: 'ja',
   organ: 'esophagus',

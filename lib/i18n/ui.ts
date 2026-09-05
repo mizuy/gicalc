@@ -89,7 +89,9 @@ export const UI: Record<Locale, UiStrings> = {
     listPhase: {
       screening: 'スクリーニング',
       examination: '検査',
+      'background-mucosa': '背景粘膜',
       diagnosis: '診断',
+      pathology: '病理',
       treatment: '治療',
     },
     organLead: {
@@ -204,7 +206,9 @@ export const UI: Record<Locale, UiStrings> = {
     listPhase: {
       screening: 'Screening',
       examination: 'Examination',
+      'background-mucosa': 'Background mucosa',
       diagnosis: 'Diagnosis',
+      pathology: 'Pathology',
       treatment: 'Treatment',
     },
     organLead: {

@@ -3,30 +3,46 @@ import { StyleSheet, View } from 'react-native';
 
 import { ScoreListItem } from '@/components/calculator/ScoreListItem';
 import { Text, useThemeColor } from '@/components/Themed';
-import { groupScoresByListPhase } from '@/data/scores/list-sections';
+import { groupScoresByListPhase, organUsesListPhases } from '@/data/scores/list-sections';
 import { useLocale } from '@/lib/i18n';
-import type { ScoreDefinition } from '@/types/score';
+import type { ScoreDefinition, ScoreOrgan } from '@/types/score';
 
 type Props = {
   scores: ScoreDefinition[];
+  organ: ScoreOrgan;
 };
 
-export function ScoreListSection({ scores }: Props) {
+function ScoreCards({ scores }: { scores: ScoreDefinition[] }) {
+  return (
+    <View style={styles.cards}>
+      {scores.map((score) => (
+        <ScoreListItem key={score.id} score={score} />
+      ))}
+    </View>
+  );
+}
+
+export function ScoreListSection({ scores, organ }: Props) {
   const textSecondary = useThemeColor({}, 'textSecondary');
   const { t } = useLocale();
+  const usePhases = organUsesListPhases(organ);
 
-  const groups = useMemo(() => groupScoresByListPhase(scores), [scores]);
+  const groups = useMemo(() => (usePhases ? groupScoresByListPhase(scores) : null), [scores, usePhases]);
+
+  if (!groups) {
+    return (
+      <View style={styles.wrap}>
+        <ScoreCards scores={scores} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.wrap}>
       {groups.map((group) => (
         <View key={group.phase} style={styles.section}>
           <Text style={[styles.sectionTitle, { color: textSecondary }]}>{t.listPhase[group.phase]}</Text>
-          <View style={styles.cards}>
-            {group.scores.map((score) => (
-              <ScoreListItem key={score.id} score={score} />
-            ))}
-          </View>
+          <ScoreCards scores={group.scores} />
         </View>
       ))}
     </View>

@@ -63,7 +63,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
   },
   la: {
     name: 'Los Angeles classification (reflux esophagitis)',
-    shortName: 'LA',
+    shortName: 'GERD LA',
     description:
       'Grades A–D of reflux esophagitis by the extent of mucosal breaks. So-called minimal changes are not included.',
     groups: {
@@ -129,7 +129,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
   },
   'jsph-varices': {
     name: 'JSPH classification (F / L / C)',
-    shortName: 'F / L / C',
+    shortName: 'Varix F/L/C',
     description:
       'Japan Society for Portal Hypertension rules for recording esophageal and gastric varices. Daily axes are form (F), location (L / Lg), and color (C), then red color signs (RC). The international gastric scheme is Sarin (GOV / IGV), on a separate page.',
     officialLinkLabel: 'JSGE/JSH cirrhosis guideline 2020 (EG varices)',

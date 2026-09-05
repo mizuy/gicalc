@@ -1,12 +1,20 @@
 export type ScoreOrgan = 'esophagus' | 'stomach' | 'duodenum' | 'colorectum' | 'bleeding';
 
 /** 一覧ページの臨床フェーズ */
-export type ListClinicalPhase = 'screening' | 'examination' | 'diagnosis' | 'treatment';
+export type ListClinicalPhase =
+  | 'screening'
+  | 'examination'
+  | 'background-mucosa'
+  | 'diagnosis'
+  | 'pathology'
+  | 'treatment';
 
 export const LIST_CLINICAL_PHASE_ORDER: ListClinicalPhase[] = [
   'screening',
   'examination',
+  'background-mucosa',
   'diagnosis',
+  'pathology',
   'treatment',
 ];
 

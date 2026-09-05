@@ -47,7 +47,7 @@ export default function OrganScoresScreen() {
         style={[styles.scroll, { backgroundColor: background }]}
         contentContainerStyle={styles.content}>
         <Text style={[styles.lead, { color: textSecondary }]}>{t.organLead[organ]}</Text>
-        <ScoreListSection scores={scores} />
+        <ScoreListSection scores={scores} organ={organ} />
       </ScrollView>
     </>
   );

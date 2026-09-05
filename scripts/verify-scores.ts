@@ -56,7 +56,7 @@ import {
   resolveScoreRoute,
   SCORE_VARIANT_GROUPS,
 } from '../data/scores/variant-groups';
-import { getScoreListPhase, groupScoresByListPhase } from '../data/scores/list-sections';
+import { getScoreListPhase, groupScoresByListPhase, organUsesListPhases } from '../data/scores/list-sections';
 import { LIST_CLINICAL_PHASE_ORDER } from '../types/score';
 import { ISHII_2021_PUBMED } from '../data/scores/ishii';
 import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
@@ -192,12 +192,33 @@ test('variant ルーティングは pageId と default を返す', () => {
   assert.deepEqual(getVariantGroup('kyoto')?.defaultVariantId, 'kyoto-modified');
 });
 
-test('一覧はスクリーニング→検査→診断→治療の順でフェーズ分けする', () => {
-  assert.deepEqual(LIST_CLINICAL_PHASE_ORDER, ['screening', 'examination', 'diagnosis', 'treatment']);
+test('一覧はフェーズ別にグループ化し、出血はサブカテゴリなし', () => {
+  assert.deepEqual(LIST_CLINICAL_PHASE_ORDER, [
+    'screening',
+    'examination',
+    'background-mucosa',
+    'diagnosis',
+    'pathology',
+    'treatment',
+  ]);
   assert.equal(getScoreListPhase('apcs'), 'screening');
   assert.equal(getScoreListPhase('bbps'), 'examination');
+  assert.equal(getScoreListPhase('kyoto'), 'background-mucosa');
+  assert.equal(getScoreListPhase('vienna'), 'pathology');
+  assert.equal(getScoreListPhase('sekiguchi'), 'treatment');
+  assert.equal(getScoreListPhase('kajiwara-nomogram'), 'treatment');
   assert.equal(getScoreListPhase('jes'), 'diagnosis');
-  assert.equal(getScoreListPhase('colorectal-esd-curability'), 'treatment');
+  assert.equal(organUsesListPhases('bleeding'), false);
+
+  const stomach = getScoresGroupedByOrgan().find((group) => group.organ === 'stomach')!.scores;
+  assert.deepEqual(
+    groupScoresByListPhase(stomach).map((group) => [group.phase, group.scores.map((score) => score.id)]),
+    [
+      ['background-mucosa', ['kimura-takemoto', 'kyoto', 'eggim']],
+      ['diagnosis', ['hill', 'sarin', 'mesda-g']],
+      ['treatment', ['gastric-esd-curability', 'ecura-hatta', 'sekiguchi', 'best-j']],
+    ],
+  );
 
   const colorectum = getScoresGroupedByOrgan().find((group) => group.organ === 'colorectum')!.scores;
   assert.deepEqual(
@@ -209,7 +230,6 @@ test('一覧はスクリーニング→検査→診断→治療の順でフェ�
         'diagnosis',
         [
           'sps',
-          'vienna',
           'paris',
           'lst',
           'appendiceal-orifice',
@@ -218,10 +238,10 @@ test('一覧はスクリーニング→検査→診断→治療の順でフェ�
           'nice',
           'wasp',
           'jnet',
-          'kajiwara-nomogram',
         ],
       ],
-      ['treatment', ['esd-fibrosis', 'colorectal-esd-curability']],
+      ['pathology', ['vienna']],
+      ['treatment', ['esd-fibrosis', 'colorectal-esd-curability', 'kajiwara-nomogram']],
     ],
   );
 
@@ -1249,7 +1269,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     ['F / L / C', 'Ls', 'Lm', 'Li', 'Lg', 'F0', 'F1', 'F2', 'F3', 'Cw', 'Cb', 'RC', 'RC type', 'Bleeding', 'Mucosa', 'Guideline'],
   );
   assert.equal(jsphVarices.name, '門脈圧亢進症学会分類（F / L / C）');
-  assert.equal(jsphVarices.shortName, 'F / L / C');
+  assert.equal(jsphVarices.shortName, 'Varix F/L/C');
   assert.equal(jsphVarices.entries[6]?.meaning, 'Straight, small-caliber');
   assert.equal(jsphVarices.entries[8]?.meaning, 'Nodular or tumor-shaped');
   assert.match(jsphVarices.originalLead ?? '', /straight, small-caliber varices/);
@@ -2151,7 +2171,7 @@ test('PWA 更新はユーザー操作まで waiting のままにする', () => {
 
 test('アプリバージョンは expo 設定と一致する', () => {
   const appConfig = require('../app.config.js') as { expo: { version: string } };
-  assert.equal(appConfig.expo.version, '1.0.4');
+  assert.equal(appConfig.expo.version, '1.0.5');
 });
 
 test('PWA 更新バナーの文言と検知', () => {
