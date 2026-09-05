@@ -170,7 +170,7 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
       ) : null}
       <Text style={[styles.note, { color: textSecondary }]}>{figure.note}</Text>
 
-      {uri ? (
+      {uri && open ? (
         <Modal
           visible={open}
           transparent
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   placeholder: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,

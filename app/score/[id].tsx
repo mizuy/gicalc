@@ -57,6 +57,15 @@ export default function ScoreScreen() {
   const pageScore = route ? getScoreById(route.pageId) : undefined;
   const activeScore = route ? getScoreById(route.variantId) : undefined;
 
+  const localizedPage = useMemo(
+    () => (pageScore ? localizeScore(pageScore, locale) : undefined),
+    [pageScore, locale],
+  );
+  const localizedActive = useMemo(
+    () => (activeScore ? localizeScore(activeScore, locale) : undefined),
+    [activeScore, locale],
+  );
+
   const handleVariantSelect = useCallback(
     (variantId: string) => {
       if (!route?.group) return;
@@ -65,7 +74,7 @@ export default function ScoreScreen() {
     [route?.group, route?.pageId],
   );
 
-  if (!route || !pageScore || !activeScore) {
+  if (!route || !pageScore || !activeScore || !localizedPage || !localizedActive) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 }}>
         <Stack.Screen options={{ title: t.missingTitle, headerBackTitle: t.back }} />
@@ -74,8 +83,6 @@ export default function ScoreScreen() {
     );
   }
 
-  const localizedPage = localizeScore(pageScore, locale);
-  const localizedActive = localizeScore(activeScore, locale);
   const CurabilityScreen = CURABILITY_SCREENS[localizedActive.id];
 
   const variantTabs = route.group ? (

@@ -7,10 +7,10 @@ import { SeverityColors } from '@/constants/Colors';
 import { useLocale } from '@/lib/i18n';
 import {
   applyAlgorithmAnswer,
+  buildAlgorithmNodeFlags,
   findEntryForResult,
-  isMapNodeCurrent,
-  isMapNodeOnPath,
   walkAlgorithmFlow,
+  type AlgorithmNodeFlags,
 } from '@/lib/scores/algorithmFlow';
 import {
   type AlgorithmFlow,
@@ -130,21 +130,17 @@ function FlowNodeChip({
 
 function FlowTree({
   node,
-  flow,
-  answers,
+  nodeFlags,
   onChoose,
   compact,
 }: {
   node: AlgorithmMapNode;
-  flow: AlgorithmFlow;
-  answers: Record<string, string>;
+  nodeFlags: Map<string, AlgorithmNodeFlags>;
   onChoose: (stepId: string, optionId: string) => void;
   compact?: boolean;
 }) {
-  const walk = walkAlgorithmFlow(flow, answers);
-  const onPath = isMapNodeOnPath(node, walk, answers);
-  const current = isMapNodeCurrent(node, walk);
-  const isResult = Boolean(node.resultId && walk.result?.id === node.resultId);
+  const flags = nodeFlags.get(node.id) ?? { onPath: false, current: false, isResult: false };
+  const { onPath, current, isResult } = flags;
   const canPress = Boolean(node.stepId && node.optionId);
   const tint = useThemeColor({}, 'tint');
   const connector = '#6B8A8C';
@@ -179,11 +175,11 @@ function FlowTree({
           ) : null}
           <View style={[styles.treeRow, compact ? styles.treeRowCompact : null]}>
             {node.children.map((child) => {
-              const childOnPath = isMapNodeOnPath(child, walk, answers);
+              const childOnPath = nodeFlags.get(child.id)?.onPath ?? false;
               return (
                 <View key={child.id} style={[styles.treeBranch, compact ? styles.treeBranchCompact : null]}>
                   <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: childOnPath ? tint : connector }]} />
-                  <FlowTree node={child} flow={flow} answers={answers} onChoose={onChoose} compact={compact} />
+                  <FlowTree node={child} nodeFlags={nodeFlags} onChoose={onChoose} compact={compact} />
                 </View>
               );
             })}
@@ -206,6 +202,10 @@ export function AlgorithmFlowScreen({ score }: Props) {
   const flow = score.flow;
   const mapCompact = flow.mapLayout === 'compact';
   const walk = useMemo(() => walkAlgorithmFlow(flow, answers), [answers, flow]);
+  const nodeFlags = useMemo(
+    () => buildAlgorithmNodeFlags(flow.map, walk, answers),
+    [answers, flow.map, walk],
+  );
   const diagnosis = findEntryForResult(score.entries, walk.result);
   const currentStep = walk.currentStep;
 
@@ -221,12 +221,12 @@ export function AlgorithmFlowScreen({ score }: Props) {
       <View style={[styles.mapBox, { backgroundColor: surface, borderColor: border }]}>
         {mapCompact ? (
           <View style={[styles.mapInner, styles.mapInnerCompact]}>
-            <FlowTree node={flow.map} flow={flow} answers={answers} onChoose={choose} compact />
+            <FlowTree node={flow.map} nodeFlags={nodeFlags} onChoose={choose} compact />
           </View>
         ) : (
           <ScrollView horizontal nestedScrollEnabled showsHorizontalScrollIndicator={false}>
             <View style={styles.mapInner}>
-              <FlowTree node={flow.map} flow={flow} answers={answers} onChoose={choose} />
+              <FlowTree node={flow.map} nodeFlags={nodeFlags} onChoose={choose} />
             </View>
           </ScrollView>
         )}

@@ -12,6 +12,12 @@ export type AlgorithmWalk = {
   path: Array<{ stepId: string; optionId: string }>;
 };
 
+export type AlgorithmNodeFlags = {
+  onPath: boolean;
+  current: boolean;
+  isResult: boolean;
+};
+
 export function walkAlgorithmFlow(
   flow: AlgorithmFlow,
   answers: Record<string, string>,
@@ -83,6 +89,40 @@ export function isMapNodeOnPath(
     return true;
   }
   return (node.children ?? []).some((child) => isMapNodeOnPath(child, walk, answers));
+}
+
+export function buildAlgorithmNodeFlags(
+  root: AlgorithmMapNode,
+  walk: AlgorithmWalk,
+  answers: Record<string, string>,
+): Map<string, AlgorithmNodeFlags> {
+  const flags = new Map<string, AlgorithmNodeFlags>();
+
+  function visit(node: AlgorithmMapNode): boolean {
+    const isResult = Boolean(node.resultId && walk.result?.id === node.resultId);
+    const current = isMapNodeCurrent(node, walk);
+
+    let onPath: boolean;
+    if (node.resultId) {
+      onPath = isResult;
+    } else if (node.stepId && node.optionId) {
+      onPath = answers[node.stepId] === node.optionId;
+    } else if (node.stepId && walk.currentStep?.id === node.stepId) {
+      onPath = true;
+    } else {
+      onPath = false;
+    }
+
+    for (const child of node.children ?? []) {
+      if (visit(child)) onPath = true;
+    }
+
+    flags.set(node.id, { onPath, current, isResult });
+    return onPath;
+  }
+
+  visit(root);
+  return flags;
 }
 
 export function isMapNodeCurrent(node: AlgorithmMapNode, walk: AlgorithmWalk): boolean {
