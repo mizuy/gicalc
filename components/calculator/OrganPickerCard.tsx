@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   iconWrap: {
     width: '100%',
-    aspectRatio: 450 / 399,
+    aspectRatio: 1,
   },
   icon: {
     width: '100%',
