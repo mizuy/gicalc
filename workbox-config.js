@@ -11,7 +11,7 @@ function buildPageUrlPattern() {
   }
 
   const prefix = escapeRegExp(baseUrl);
-  const staticAsset = '(?:_expo|assets|figures|sw\\.js|workbox-|manifest\\.json|logo\\d+\\.png|favicon\\.ico)';
+  const staticAsset = '(?:_expo|assets|figures|sw\\.js|workbox-|manifest\\.json|version\\.json|logo\\d+\\.png|favicon\\.ico)';
   return new RegExp(`^${prefix}(?:/)?(?:$|/(?!${staticAsset})[^?#]+/?$|/.*\\.html$)`);
 }
 
@@ -25,6 +25,10 @@ module.exports = {
   clientsClaim: true,
   skipWaiting: false,
   runtimeCaching: [
+    {
+      urlPattern: /\/version\.json$/,
+      handler: 'NetworkOnly',
+    },
     {
       urlPattern: pageUrlPattern,
       handler: 'NetworkFirst',
