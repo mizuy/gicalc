@@ -88,25 +88,17 @@ export const mesdaGScore: ClassificationDefinition = {
       comment: '境界線がなければ非癌。あれば DL 内の微小血管と微小表面を別々に評価する。',
     },
     {
-      label: 'DL absent',
+      label: 'Non-cancer',
       meaning: 'Non-cancer',
       group: '判定',
       severity: 'none',
       rows: [
         {
-          heading: 'Diagnosis',
+          heading: 'DL absent',
           text: 'If a DL is absent, the diagnosis of a benign lesion may be made.',
         },
-      ],
-    },
-    {
-      label: 'Regular MV and MS within DL',
-      meaning: 'Non-cancer',
-      group: '判定',
-      severity: 'none',
-      rows: [
         {
-          heading: 'Diagnosis',
+          heading: 'Regular MV and MS within DL',
           text: 'Inside the demarcation line, there are regular microvascular and regular microsurface patterns. Because neither an irregular microvascular nor irregular microsurface pattern is present, this lesion can be diagnosed as non-cancer.',
         },
       ],
@@ -223,7 +215,7 @@ export const mesdaGScore: ClassificationDefinition = {
         prompt: '境界線（DL）はありますか',
         hint: '病変と背景粘膜のあいだで、微小血管または微小表面が急に変わる線。なければ非癌。あれば DL 内を次にみる。',
         options: [
-          { id: 'absent', label: 'なし', next: 'noncancer-dl' },
+          { id: 'absent', label: 'なし', next: 'noncancer' },
           { id: 'present', label: 'あり', next: 'mvms' },
         ],
       },
@@ -232,14 +224,13 @@ export const mesdaGScore: ClassificationDefinition = {
         prompt: 'DL 内の微小血管（MV）と微小表面（MS）はどうですか',
         hint: '両方 regular なら非癌。不整 MV および／または不整 MS があれば早期胃癌（EGC）。',
         options: [
-          { id: 'regular', label: '両方 regular', next: 'noncancer-regular' },
+          { id: 'regular', label: '両方 regular', next: 'noncancer' },
           { id: 'irregular', label: '不整 MV および／または MS', next: 'egc' },
         ],
       },
     },
     results: {
-      'noncancer-dl': { id: 'noncancer-dl', entryLabel: 'DL absent' },
-      'noncancer-regular': { id: 'noncancer-regular', entryLabel: 'Regular MV and MS within DL' },
+      noncancer: { id: 'noncancer', entryLabel: 'Non-cancer' },
       egc: { id: 'egc', entryLabel: 'Irregular MV and/or MS within DL' },
     },
     map: {
@@ -256,7 +247,6 @@ export const mesdaGScore: ClassificationDefinition = {
               label: 'Absent',
               stepId: 'dl',
               optionId: 'absent',
-              children: [{ id: 'noncancer-dl', label: 'Non-cancer', resultId: 'noncancer-dl' }],
             },
             {
               id: 'present',
@@ -271,14 +261,13 @@ export const mesdaGScore: ClassificationDefinition = {
                   children: [
                     {
                       id: 'regular',
-                      label: 'Absent',
+                      label: 'Both regular',
                       stepId: 'mvms',
                       optionId: 'regular',
-                      children: [{ id: 'noncancer-regular', label: 'Non-cancer', resultId: 'noncancer-regular' }],
                     },
                     {
                       id: 'irregular',
-                      label: 'Present',
+                      label: 'Irregular MV and/or MS',
                       stepId: 'mvms',
                       optionId: 'irregular',
                       children: [{ id: 'egc', label: 'EGC', resultId: 'egc' }],

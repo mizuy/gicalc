@@ -1135,8 +1135,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     [
       'Suspicious lesion',
       'Demarcation line (DL)',
-      'DL absent',
-      'Regular MV and MS within DL',
+      'Non-cancer',
       'Irregular MV and/or MS within DL',
       'Regular MV',
       'Irregular MV',
@@ -1146,11 +1145,11 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
       'Absent MS',
     ],
   );
-  assert.equal(mesda.entries[4]?.meaning, 'EGC');
   assert.equal(mesda.entries[2]?.meaning, 'Non-cancer');
+  assert.equal(mesda.entries[3]?.meaning, 'EGC');
   assert.match(mesda.originalLead ?? '', /demarcation line \(DL\)/);
   assert.match(
-    mesda.entries[4]?.rows.find((row) => row.heading === 'Criteria')?.text ?? '',
+    mesda.entries[3]?.rows.find((row) => row.heading === 'Criteria')?.text ?? '',
     /irregular MV pattern with a DL/,
   );
   assert.doesNotMatch(mesda.entries.map((entry) => entry.label).join(' '), /Type 1|2A|2B|NICE|JNET/);
@@ -2008,6 +2007,7 @@ test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', (
   assert.equal(walkAlgorithmFlow(wasp.flow, switched).currentStep?.id, 'ssl2');
 
   const mesdaNoncancer = walkAlgorithmFlow(mesda.flow, { dl: 'absent' });
+  assert.equal(mesdaNoncancer.result?.entryLabel, 'Non-cancer');
   assert.equal(findEntryForResult(mesda.entries, mesdaNoncancer.result)?.meaning, 'Non-cancer');
   assert.equal(mesdaNoncancer.currentStep, null);
 
@@ -2019,6 +2019,7 @@ test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', (
   assert.equal(findEntryForResult(mesda.entries, mesdaEgc.result)?.meaning, 'EGC');
 
   const mesdaRegular = walkAlgorithmFlow(mesda.flow, { dl: 'present', mvms: 'regular' });
+  assert.equal(mesdaRegular.result?.entryLabel, 'Non-cancer');
   assert.equal(findEntryForResult(mesda.entries, mesdaRegular.result)?.meaning, 'Non-cancer');
 
   const dropped = applyAlgorithmAnswer(mesda.flow, { dl: 'present', mvms: 'irregular' }, 'dl', 'absent');
@@ -2043,7 +2044,9 @@ test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', (
   assert.equal(mesda.flow.mapLayout, 'compact');
   assert.notEqual(wasp.flow.mapLayout, 'compact');
   assert.ok(mapLabels(mesda.flow.map).includes('IMVP and/or IMSP'));
+  assert.ok(mapLabels(mesda.flow.map).includes('Both regular'));
   assert.ok(mapLabels(mesda.flow.map).includes('EGC'));
+  assert.equal(mapLabels(mesda.flow.map).filter((label) => label === 'Non-cancer').length, 0);
 
   const englishWasp = localizeScore(wasp, 'en');
   assert.ok(hasAlgorithmFlow(englishWasp));

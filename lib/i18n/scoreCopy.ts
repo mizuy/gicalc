@@ -328,6 +328,8 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         'Look for subtle color or morphological change on white-light imaging. Stomach only. Separate from colorectal JNET / NICE.',
       'Demarcation line (DL)':
         'If the demarcation line is absent, diagnose non-cancer. If present, evaluate MV and MS separately within the DL.',
+      'Non-cancer':
+        'Non-cancer if the DL is absent, or if both MV and MS patterns within the DL are regular.',
       'Irregular MV and/or MS within DL':
         'The original paper reports that 97% of EGC cases fit these criteria. Diagnostic yield for undifferentiated (diffuse-type) EGC was unclear. Contact bleeding or mucus can prevent a clear image.',
       'Irregular MV':
@@ -361,11 +363,9 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         'dl-gate': 'DL',
         absent: 'Absent',
         present: 'Present',
-        'noncancer-dl': 'Non-cancer',
         'mvms-gate': 'IMVP and/or IMSP',
-        regular: 'Absent',
-        irregular: 'Present',
-        'noncancer-regular': 'Non-cancer',
+        regular: 'Both regular',
+        irregular: 'Irregular MV and/or MS',
         egc: 'EGC',
       },
     },
