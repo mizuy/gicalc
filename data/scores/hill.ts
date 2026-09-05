@@ -39,6 +39,20 @@ export const hillScore: ClassificationDefinition = {
     'The gastroesophageal flap valve is graded in retroflexion. Grade I: a prominent fold of tissue along the lesser curvature that is closely apposed to the endoscope through all phases of respiration. Grade II: the fold is present but not as prominent; there are periods of rapid opening and closing around the endoscope. Grade III: the fold is not prominent and the endoscope is not tightly gripped by the tissue; a hiatal hernia is present in nearly all of these patients. Grade IV: essentially no fold, and the lumen of the esophagus is wide open, allowing the squamous epithelium to be viewed from below.',
   reference: 'Hill LD et al. Gastrointest Endosc 1996;44:541-547',
   pubmed: HILL_1996_PUBMED,
+  figures: [
+    {
+      href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10653650/figure/F0001/',
+      hrefLabel: 'Fig. 1',
+      alt: 'Hill classification grades I–IV of the gastroesophageal flap valve (Ge 2023 Fig. 1)',
+      caption: 'Fig. 1. Sample images of the Hill classification standard (Ge et al. Ann Med 2023)',
+      source: GE_SOURCE,
+      doi: GE_DOI,
+      pubmed: HILL_GE_2023_PUBMED,
+      license: 'CC BY-NC 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
+      note: '各 grade カードに切り抜きを掲載。原図は埋め込まず PMC の Fig. 1 へリンクする。ライセンスは CC BY-NC 4.0。Hill 1996 GIE 原著は CC ではない。',
+    },
+  ],
   entries: [
     {
       label: 'Grade I',

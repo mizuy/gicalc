@@ -1,5 +1,5 @@
 import { Link, type Href } from 'expo-router';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { JapanMark } from '@/components/calculator/JapanMark';
 import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
@@ -10,9 +10,10 @@ import { getToolKind, isJapanDeveloped } from '@/types/score';
 
 type Props = {
   scoreId: string;
+  style?: StyleProp<ViewStyle>;
 };
 
-export function RelatedScoresPanel({ scoreId }: Props) {
+export function RelatedScoresPanel({ scoreId, style }: Props) {
   const { locale, t } = useLocale();
   const tint = useThemeColor({}, 'tint');
   const textSecondary = useThemeColor({}, 'textSecondary');
@@ -23,7 +24,7 @@ export function RelatedScoresPanel({ scoreId }: Props) {
   if (related.length === 0) return null;
 
   return (
-    <View style={[styles.box, { backgroundColor: surface, borderColor: border }]}>
+    <View style={[styles.box, { backgroundColor: surface, borderColor: border }, style]}>
       <Text style={[styles.title, { color: tint }]}>{t.relatedScores}</Text>
       {related.map((item, index) => (
         <Link key={item.href} href={item.href as Href} asChild>

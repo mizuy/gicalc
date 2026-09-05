@@ -7,6 +7,14 @@ function hostedFigureExists(src: string): boolean {
   return existsSync(join(process.cwd(), 'public', src.replace(/^\//, '')));
 }
 
+function assertOriginalPlateIsLinkOnly(score: { id: string; figures?: { src?: string; href?: string }[] }) {
+  assert.ok(score.figures?.length, `${score.id} に原図リンクがない`);
+  for (const figure of score.figures ?? []) {
+    assert.equal(figure.src, undefined, `${score.id} の原図が埋め込まれている`);
+    assert.ok(figure.href, `${score.id} の原図 href がない`);
+  }
+}
+
 import {
   NOMOGRAM_ITEM_POINTS,
   nomogramTotalPoints,
@@ -1100,7 +1108,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(appendicealOrifice.originalLead ?? '', /Type 3a denotes deep invasion/);
   assert.equal(appendicealOrifice.pubmed, APPENDICEAL_ORIFICE_2016_PUBMED);
   assert.equal(appendicealOrifice.developedInJapan, true);
-  assert.equal(appendicealOrifice.figures, undefined);
+  assertOriginalPlateIsLinkOnly(appendicealOrifice);
   assert.equal(appendicealOrifice.entries[0]?.figures?.length, 1);
   assert.match(appendicealOrifice.entries[0]?.figures?.[0]?.src ?? '', /type-0/);
   assert.equal(appendicealOrifice.entries[0]?.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
@@ -1344,7 +1352,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const colorectalEcFig = getScoreById('colorectal-ec');
   assert.ok(colorectalEcFig && isClassification(colorectalEcFig));
-  assert.equal(colorectalEcFig.figures, undefined);
+  assertOriginalPlateIsLinkOnly(colorectalEcFig);
   assert.equal(colorectalEcFig.entries[0]?.figures?.length, 1);
   assert.equal(colorectalEcFig.entries[5]?.figures?.length, 1);
   assert.match(colorectalEcFig.entries[0]?.figures?.[0]?.src ?? '', /fig2-ec1a/);
@@ -1358,7 +1366,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const jes = getScoreById('jes');
   assert.ok(jes && isClassification(jes));
-  assert.equal(jes.figures, undefined);
+  assertOriginalPlateIsLinkOnly(jes);
   assert.equal(jes.entries[0]?.figures?.length, 1);
   assert.equal(jes.entries[1]?.figures?.length, 1);
   assert.equal(jes.entries[2]?.figures?.length, 1);
@@ -1416,7 +1424,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const lst = getScoreById('lst');
   assert.ok(lst && isClassification(lst));
-  assert.equal(lst.figures, undefined);
+  assertOriginalPlateIsLinkOnly(lst);
   assert.equal(lst.entries[0]?.figures?.length, 1);
   assert.match(lst.entries[0]?.figures?.[0]?.src ?? '', /g-homogeneous/);
   assert.match(lst.entries[1]?.figures?.[0]?.src ?? '', /g-mixed/);
@@ -1431,7 +1439,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const appendicealOrificeFig = getScoreById('appendiceal-orifice');
   assert.ok(appendicealOrificeFig && isClassification(appendicealOrificeFig));
-  assert.equal(appendicealOrificeFig.figures, undefined);
+  assertOriginalPlateIsLinkOnly(appendicealOrificeFig);
   assert.equal(appendicealOrificeFig.entries[0]?.figures?.length, 1);
   assert.match(appendicealOrificeFig.entries[0]?.figures?.[0]?.src ?? '', /type-0/);
   assert.match(appendicealOrificeFig.entries[1]?.figures?.[0]?.src ?? '', /type-1/);
@@ -1513,7 +1521,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const erefsFig = getScoreById('erefs');
   assert.ok(erefsFig && isClassification(erefsFig));
-  assert.equal(erefsFig.figures, undefined);
+  assertOriginalPlateIsLinkOnly(erefsFig);
   assert.equal(erefsFig.entries[0]?.figures?.length, 1);
   assert.equal(erefsFig.entries[4]?.figures?.length, 2);
   assert.equal(erefsFig.entries[5]?.figures, undefined);
@@ -1527,7 +1535,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const hillFig = getScoreById('hill');
   assert.ok(hillFig && isClassification(hillFig));
-  assert.equal(hillFig.figures, undefined);
+  assertOriginalPlateIsLinkOnly(hillFig);
   assert.equal(hillFig.entries[0]?.figures?.length, 1);
   assert.match(hillFig.entries[0]?.figures?.[0]?.src ?? '', /grade-i/);
   assert.match(hillFig.entries[3]?.figures?.[0]?.src ?? '', /grade-iv/);
@@ -1538,7 +1546,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const forrestFig = getScoreById('forrest');
   assert.ok(forrestFig && isClassification(forrestFig));
-  assert.equal(forrestFig.figures, undefined);
+  assertOriginalPlateIsLinkOnly(forrestFig);
   assert.equal(forrestFig.entries[0]?.figures?.length, 2);
   assert.match(forrestFig.entries[0]?.figures?.[0]?.src ?? '', /ia-top/);
   assert.match(forrestFig.entries[5]?.figures?.[1]?.src ?? '', /iii-bottom/);
@@ -2143,6 +2151,18 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsNotCcBody, /Dekker 2020/);
   assert.match(UI.ja.about.citationsCcBody, /Misawa 2021/);
   assert.match(UI.ja.about.citationsNotCcBody, /Kudo 2011/);
+});
+
+test('切り抜きがある分類は原図を埋め込まずリンクだけにする', () => {
+  for (const score of SCORES) {
+    if (!isClassification(score)) continue;
+    const hasCrops = score.entries.some((entry) => entry.figures?.some((figure) => figure.src));
+    if (!hasCrops) continue;
+    assertOriginalPlateIsLinkOnly(score);
+    for (const figure of score.figures ?? []) {
+      assert.match(figure.note ?? '', /埋め込まず/, score.id);
+    }
+  }
 });
 
 test('関連スコア: 登録 id は有効で colorectal ↔ nomogram が双方向', () => {

@@ -39,6 +39,20 @@ export const forrestScore: ClassificationDefinition = {
     'Endoscopic stigmata of peptic ulcer hemorrhage are classified as Forrest I (active hemorrhage), Forrest II (signs of recent hemorrhage), and Forrest III (lesions without signs of recent hemorrhage). Forrest Ia: spurting hemorrhage. Forrest Ib: oozing hemorrhage. Forrest IIa: non-bleeding visible vessel. Forrest IIb: adherent clot. Forrest IIc: flat pigmented haematin (coffee-ground) spot on the ulcer base. Forrest III: clean ulcer base without stigmata of recent hemorrhage.',
   reference: 'Forrest JA, Finlayson ND, Shearman DJ. Lancet 1974;2:394-397',
   pubmed: FORREST_1974_PUBMED,
+  figures: [
+    {
+      href: ZHOU_DOI,
+      hrefLabel: 'Fig. 1',
+      alt: 'Forrest classification Ia–III (Zhou 2025 Fig. 1)',
+      caption: 'Fig. 1. Representative endoscopic images of peptic ulcers in the 6 Forrest grades (Zhou et al. 2025)',
+      source: ZHOU_SOURCE,
+      doi: ZHOU_DOI,
+      pubmed: FORREST_ZHOU_2025_PUBMED,
+      license: 'CC BY-NC-ND 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
+      note: '各型カードに切り抜きを掲載。原図は埋め込まず Zhou 2025 Fig. 1 へリンクする。ライセンスは CC BY-NC-ND 4.0。Forrest 1974 Lancet 原著は CC ではない。',
+    },
+  ],
   entries: [
     {
       label: 'Ia',

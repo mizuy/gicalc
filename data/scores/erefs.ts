@@ -39,6 +39,20 @@ export const erefsScore: ClassificationDefinition = {
     'The EoE Endoscopic Reference Score (EREFS) grades five major esophageal features: edema, rings, exudates, furrows, and stricture. Fixed rings: grade 0 none; grade 1 mild (subtle circumferential ridges); grade 2 moderate (distinct rings that do not impair passage of a standard adult endoscope); grade 3 severe (distinct rings that do not permit passage of a diagnostic endoscope). Exudates: grade 0 none; grade 1 mild (lesions involving ≤10% of the esophageal surface area); grade 2 severe (>10%). Furrows: grade 0 absent; grade 1 present. Edema: grade 0 absent (visible vascular markings); grade 1 loss of clarity or absence of vascular markings. Stricture: grade 0 absent; grade 1 present. Crepe-paper esophagus is a minor feature (absent or present). Report the highest score from the area of greatest involvement. The classification is not a substitute for esophageal biopsies.',
   reference: 'Hirano I et al. Gut 2013;62:489-495',
   pubmed: EREFS_2013_PUBMED,
+  figures: [
+    {
+      href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9777529/figure/diagnostics-12-03202-f002/',
+      hrefLabel: 'Fig. 2',
+      alt: 'EREFS findings: edema, rings, exudates, furrows, stricture, and narrow-caliber esophagus (Abe 2022 Fig. 2)',
+      caption: 'Fig. 2. Characteristic endoscopic findings of EoE (Abe et al. Diagnostics 2022)',
+      source: ABE_SOURCE,
+      doi: ABE_DOI,
+      pubmed: EREFS_ABE_2022_PUBMED,
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: '各所見カードに切り抜きを掲載。原図は埋め込まず PMC の Fig. 2 へリンクする。ライセンスは CC BY 4.0。Hirano 2013 Gut 原著の表は CC ではない。',
+    },
+  ],
   entries: [
     {
       label: 'Edema',
