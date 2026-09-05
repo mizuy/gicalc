@@ -2211,6 +2211,15 @@ test('WASP / MESDA-G / Toya のフローは選択すると診断まで進む', (
   assert.ok(mesdaGraph.edges.some((edge) => edge.source === 'absent' && edge.target === 'noncancer'));
   assert.ok(mesdaGraph.edges.some((edge) => edge.source === 'regular' && edge.target === 'noncancer'));
   assert.ok(mesdaGraph.edges.some((edge) => edge.source === 'irregular' && edge.target === 'egc'));
+  const absentNode = mesdaGraph.nodes.find((node) => node.id === 'absent');
+  const presentNode = mesdaGraph.nodes.find((node) => node.id === 'present');
+  const regularNode = mesdaGraph.nodes.find((node) => node.id === 'regular');
+  const irregularNode = mesdaGraph.nodes.find((node) => node.id === 'irregular');
+  assert.ok(absentNode && presentNode && regularNode && irregularNode);
+  assert.equal(absentNode.level, presentNode.level);
+  assert.equal(absentNode.y, presentNode.y);
+  assert.equal(regularNode.level, irregularNode.level);
+  assert.equal(regularNode.y, irregularNode.y);
 
   const englishWasp = localizeScore(wasp, 'en');
   assert.ok(hasAlgorithmFlow(englishWasp));

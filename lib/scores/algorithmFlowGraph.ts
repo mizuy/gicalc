@@ -9,6 +9,8 @@ export type FlowGraphNode = {
   stepId?: string;
   optionId?: string;
   resultId?: string;
+  /** map ツリー上の深さ（同一 level = 同一 y） */
+  level: number;
   x: number;
   y: number;
   width: number;
@@ -37,17 +39,23 @@ function layoutWithDagre(
 ): FlowGraphNode[] {
   const graph = new dagre.graphlib.Graph();
   graph.setDefaultEdgeLabel(() => ({}));
+  const ranksep = compact ? 44 : 56;
   graph.setGraph({
     rankdir: 'TB',
     nodesep: compact ? 20 : 28,
-    ranksep: compact ? 44 : 56,
+    ranksep,
     marginx: compact ? 8 : 16,
     marginy: compact ? 12 : 16,
+    ranker: 'tight-tree',
   });
 
   for (const node of nodes) {
     const width = estimateNodeWidth(node.label, compact);
-    graph.setNode(node.id, { width, height: NODE_HEIGHT });
+    graph.setNode(node.id, {
+      width,
+      height: NODE_HEIGHT,
+      rank: node.level,
+    });
   }
   for (const edge of edges) {
     graph.setEdge(edge.source, edge.target);
@@ -63,7 +71,7 @@ function layoutWithDagre(
       width,
       height: NODE_HEIGHT,
       x: box.x - width / 2,
-      y: box.y - NODE_HEIGHT / 2,
+      y: node.level * (NODE_HEIGHT + ranksep),
     };
   });
 }
@@ -74,6 +82,7 @@ export function buildAlgorithmFlowGraph(
   compact?: boolean,
 ): { nodes: FlowGraphNode[]; edges: FlowGraphEdge[] } {
   const nodeById = new Map<string, Omit<FlowGraphNode, 'x' | 'y' | 'width' | 'height'>>();
+  const levels = new Map<string, number>();
   const edges: FlowGraphEdge[] = [];
 
   const addNode = (id: string, data: Omit<FlowGraphNode, 'x' | 'y' | 'width' | 'height'>) => {
@@ -87,7 +96,8 @@ export function buildAlgorithmFlowGraph(
     edges.push({ id: edgeId, source, target });
   };
 
-  function walk(node: AlgorithmMapNode, parentId?: string) {
+  function walk(node: AlgorithmMapNode, parentId: string | undefined, depth: number) {
+    levels.set(node.id, depth);
     addNode(node.id, {
       id: node.id,
       label: node.label,
@@ -95,20 +105,25 @@ export function buildAlgorithmFlowGraph(
       stepId: node.stepId,
       optionId: node.optionId,
       resultId: node.resultId,
+      level: depth,
     });
     if (parentId) addEdge(parentId, node.id);
 
     for (const child of node.children ?? []) {
-      walk(child, node.id);
+      walk(child, node.id, depth + 1);
     }
 
     if (node.outcomeRow) {
       for (const outcome of node.outcomeRow.outcomes) {
+        const feedLevel = Math.max(...outcome.feedFrom.map((feedId) => levels.get(feedId) ?? 0));
+        const outcomeLevel = feedLevel + 1;
+        levels.set(outcome.id, outcomeLevel);
         addNode(outcome.id, {
           id: outcome.id,
           label: outcome.label,
           mapNodeId: outcome.id,
           resultId: outcome.resultId,
+          level: outcomeLevel,
         });
         for (const feedId of outcome.feedFrom) {
           addEdge(feedId, outcome.id);
@@ -117,7 +132,7 @@ export function buildAlgorithmFlowGraph(
     }
   }
 
-  walk(root);
+  walk(root, undefined, 0);
   return {
     nodes: layoutWithDagre([...nodeById.values()], edges, compact),
     edges,
