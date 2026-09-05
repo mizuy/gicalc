@@ -9,7 +9,6 @@ import {
   applyAlgorithmAnswer,
   buildAlgorithmNodeFlags,
   findEntryForResult,
-  outcomeFeedIds,
   walkAlgorithmFlow,
   type AlgorithmNodeFlags,
 } from '@/lib/scores/algorithmFlow';
@@ -133,12 +132,8 @@ function FlowNodeChip({
   );
 }
 
-type OutcomeContext = {
-  row: AlgorithmMapOutcomeRow;
-  feedIds: Set<string>;
-};
-
-function FlowOutcomeSection({
+/** Mirrors the 1:1 → 1:1 branch flex so feed stems meet outcome chips. */
+function FlowOutcomeConnectors({
   outcomeRow,
   nodeFlags,
   compact,
@@ -162,17 +157,44 @@ function FlowOutcomeSection({
   const egcActive = irregularOnPath || egcFlags.onPath;
   const ncColor = ncActive ? tint : connector;
   const egcColor = egcActive ? tint : connector;
+  const stemH = compact ? 12 : 16;
 
   return (
-    <View style={styles.outcomeSection}>
-      <View style={[styles.treeRow, compact ? styles.treeRowCompact : null, styles.outcomeResultRow]}>
-        <View style={[styles.treeBranch, compact ? styles.treeBranchCompact : null, styles.outcomeNcPane]}>
-          <View style={styles.outcomeNcMergeTrack}>
-            <View
-              collapsable={false}
-              style={[styles.outcomeNcMergeBar, { backgroundColor: ncColor, borderTopColor: ncColor }]}
-            />
+    <View style={styles.outcomeConnectors}>
+      <View style={[styles.outcomeTopologyRow, compact ? styles.outcomeTopologyRowCompact : null]}>
+        <View style={styles.outcomeHalf}>
+          <View style={[styles.outcomeCol, { alignItems: 'center' }]}>
+            <View style={[styles.stem, { height: stemH, backgroundColor: ncColor }]} />
           </View>
+        </View>
+        <View style={[styles.outcomeHalf, styles.outcomeNested]}>
+          <View style={styles.outcomeQuarter}>
+            <View style={[styles.outcomeCol, { alignItems: 'center' }]}>
+              <View style={[styles.stem, { height: stemH, backgroundColor: ncColor }]} />
+            </View>
+          </View>
+          <View style={styles.outcomeQuarter}>
+            <View style={[styles.outcomeCol, { alignItems: 'center' }]}>
+              <View style={[styles.stem, { height: stemH, backgroundColor: egcColor }]} />
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.outcomeMergeRow}>
+        <View style={[styles.outcomeHalf, styles.outcomeMergeHalf]}>
+          <View style={[styles.mergeBarSegment, styles.mergeBarRight, { backgroundColor: ncColor }]} />
+        </View>
+        <View style={[styles.outcomeHalf, styles.outcomeNested]}>
+          <View style={styles.outcomeQuarter}>
+            <View style={[styles.mergeBarSegment, styles.mergeBarLeft, { backgroundColor: ncColor }]} />
+          </View>
+          <View style={styles.outcomeQuarter} />
+        </View>
+      </View>
+
+      <View style={styles.outcomeChipRow}>
+        <View style={[styles.outcomeNcAnchor, compact ? styles.outcomeNcAnchorCompact : null]}>
           <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: ncColor }]} />
           <FlowNodeChip
             node={{ label: noncancer.label }}
@@ -183,7 +205,8 @@ function FlowOutcomeSection({
             wide
           />
         </View>
-        <View style={[styles.treeBranch, compact ? styles.treeBranchCompact : null, styles.outcomeEgcPane]}>
+        <View style={styles.outcomeChipSpacer} />
+        <View style={styles.outcomeEgcCol}>
           <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: egcColor }]} />
           <FlowNodeChip
             node={{ label: egc.label }}
@@ -203,27 +226,21 @@ function FlowTree({
   nodeFlags,
   onChoose,
   compact,
-  outcomeContext,
 }: {
   node: AlgorithmMapNode;
   nodeFlags: Map<string, AlgorithmNodeFlags>;
   onChoose: (stepId: string, optionId: string) => void;
   compact?: boolean;
-  outcomeContext?: OutcomeContext;
 }) {
   const flags = nodeFlags.get(node.id) ?? { onPath: false, current: false, isResult: false };
   const { onPath, current, isResult } = flags;
   const canPress = Boolean(node.stepId && node.optionId);
   const tint = useThemeColor({}, 'tint');
   const connector = '#6B8A8C';
-  const childOutcomeContext: OutcomeContext | undefined = node.outcomeRow
-    ? { row: node.outcomeRow, feedIds: outcomeFeedIds(node.outcomeRow) }
-    : outcomeContext;
   const hasChildren = Boolean(node.children?.length);
-  const isOutcomeFeed = Boolean(outcomeContext?.feedIds.has(node.id) && !hasChildren);
 
   return (
-    <View style={[styles.tree, compact ? styles.treeCompact : null, isOutcomeFeed ? styles.treeOutcomeFeed : null]}>
+    <View style={[styles.tree, compact ? styles.treeCompact : null]}>
       <FlowNodeChip
         node={node}
         onPath={onPath}
@@ -272,19 +289,15 @@ function FlowTree({
                     nodeFlags={nodeFlags}
                     onChoose={onChoose}
                     compact={compact}
-                    outcomeContext={childOutcomeContext}
                   />
                 </View>
               );
             })}
           </View>
           {node.outcomeRow ? (
-            <FlowOutcomeSection outcomeRow={node.outcomeRow} nodeFlags={nodeFlags} compact={compact} />
+            <FlowOutcomeConnectors outcomeRow={node.outcomeRow} nodeFlags={nodeFlags} compact={compact} />
           ) : null}
         </View>
-      ) : null}
-      {isOutcomeFeed ? (
-        <View style={[styles.outcomeDownStem, { backgroundColor: onPath ? tint : connector }]} />
       ) : null}
     </View>
   );
@@ -450,10 +463,6 @@ const styles = StyleSheet.create({
   treeCompact: {
     alignItems: 'stretch',
   },
-  treeOutcomeFeed: {
-    flex: 1,
-    width: '100%',
-  },
   treeChildren: {
     alignItems: 'center',
     width: '100%',
@@ -481,6 +490,7 @@ const styles = StyleSheet.create({
   },
   treeBranchOutcome: {
     alignItems: 'stretch',
+    justifyContent: 'flex-end',
   },
   treeHBarTrack: {
     width: '100%',
@@ -501,36 +511,67 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 12,
   },
-  outcomeDownStem: {
-    width: 3,
-    flex: 1,
-    alignSelf: 'center',
-    minHeight: 8,
-  },
-  outcomeSection: {
+  outcomeConnectors: {
     width: '100%',
   },
-  outcomeResultRow: {
-    alignItems: 'flex-start',
+  outcomeTopologyRow: {
+    flexDirection: 'row',
+    width: '100%',
   },
-  outcomeNcPane: {
-    flex: 1.5,
+  outcomeTopologyRowCompact: {
+    gap: 4,
   },
-  outcomeEgcPane: {
+  outcomeHalf: {
     flex: 1,
+  },
+  outcomeNested: {
+    flexDirection: 'row',
+  },
+  outcomeQuarter: {
+    flex: 1,
+  },
+  outcomeCol: {
     alignItems: 'center',
   },
-  outcomeNcMergeTrack: {
+  outcomeMergeRow: {
+    flexDirection: 'row',
     width: '100%',
     height: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  outcomeNcMergeBar: {
-    width: '72%',
+  outcomeMergeHalf: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  mergeBarSegment: {
     height: 3,
     minHeight: 3,
-    borderTopWidth: 3,
+  },
+  mergeBarRight: {
+    width: '50%',
+  },
+  mergeBarLeft: {
+    width: '50%',
+  },
+  outcomeChipRow: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'flex-start',
+  },
+  outcomeNcAnchor: {
+    width: '37.5%',
+    marginLeft: '25%',
+    alignItems: 'center',
+  },
+  outcomeNcAnchorCompact: {
+    width: '38%',
+    marginLeft: '24%',
+  },
+  outcomeChipSpacer: {
+    flex: 1,
+  },
+  outcomeEgcCol: {
+    width: '25%',
+    alignItems: 'center',
   },
   chip: {
     borderRadius: 10,
