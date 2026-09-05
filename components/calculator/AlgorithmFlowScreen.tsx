@@ -9,12 +9,14 @@ import {
   applyAlgorithmAnswer,
   buildAlgorithmNodeFlags,
   findEntryForResult,
+  outcomeFeedIds,
   walkAlgorithmFlow,
   type AlgorithmNodeFlags,
 } from '@/lib/scores/algorithmFlow';
 import {
   type AlgorithmFlow,
   type AlgorithmMapNode,
+  type AlgorithmMapOutcomeRow,
   type ClassificationDefinition,
   type ClassificationEntry,
 } from '@/types/score';
@@ -78,13 +80,15 @@ function FlowNodeChip({
   isResult,
   onPress,
   compact,
+  wide,
 }: {
-  node: AlgorithmMapNode;
+  node: Pick<AlgorithmMapNode, 'label'>;
   onPath: boolean;
   current: boolean;
   isResult: boolean;
   onPress?: () => void;
   compact?: boolean;
+  wide?: boolean;
 }) {
   const tint = useThemeColor({}, 'tint');
   const border = useThemeColor({}, 'border');
@@ -98,6 +102,7 @@ function FlowNodeChip({
       style={[
         styles.chip,
         compact ? styles.chipCompact : null,
+        wide ? styles.chipWide : null,
         {
           backgroundColor: selected ? `${tint}18` : surface,
           borderColor: current ? tint : selected ? tint : border,
@@ -128,25 +133,97 @@ function FlowNodeChip({
   );
 }
 
+type OutcomeContext = {
+  row: AlgorithmMapOutcomeRow;
+  feedIds: Set<string>;
+};
+
+function FlowOutcomeSection({
+  outcomeRow,
+  nodeFlags,
+  compact,
+}: {
+  outcomeRow: AlgorithmMapOutcomeRow;
+  nodeFlags: Map<string, AlgorithmNodeFlags>;
+  compact?: boolean;
+}) {
+  const tint = useThemeColor({}, 'tint');
+  const connector = '#6B8A8C';
+  const noncancer = outcomeRow.outcomes.find((outcome) => outcome.resultId === 'noncancer');
+  const egc = outcomeRow.outcomes.find((outcome) => outcome.resultId === 'egc');
+  if (!noncancer || !egc) return null;
+
+  const absentOnPath = nodeFlags.get('absent')?.onPath ?? false;
+  const regularOnPath = nodeFlags.get('regular')?.onPath ?? false;
+  const irregularOnPath = nodeFlags.get('irregular')?.onPath ?? false;
+  const ncFlags = nodeFlags.get(noncancer.id) ?? { onPath: false, isResult: false };
+  const egcFlags = nodeFlags.get(egc.id) ?? { onPath: false, isResult: false };
+  const ncActive = absentOnPath || regularOnPath || ncFlags.onPath;
+  const egcActive = irregularOnPath || egcFlags.onPath;
+  const ncColor = ncActive ? tint : connector;
+  const egcColor = egcActive ? tint : connector;
+
+  return (
+    <View style={styles.outcomeSection}>
+      <View style={[styles.treeRow, compact ? styles.treeRowCompact : null, styles.outcomeResultRow]}>
+        <View style={[styles.treeBranch, compact ? styles.treeBranchCompact : null, styles.outcomeNcPane]}>
+          <View style={styles.outcomeNcMergeTrack}>
+            <View
+              collapsable={false}
+              style={[styles.outcomeNcMergeBar, { backgroundColor: ncColor, borderTopColor: ncColor }]}
+            />
+          </View>
+          <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: ncColor }]} />
+          <FlowNodeChip
+            node={{ label: noncancer.label }}
+            onPath={ncFlags.onPath}
+            current={false}
+            isResult={ncFlags.isResult}
+            compact={compact}
+            wide
+          />
+        </View>
+        <View style={[styles.treeBranch, compact ? styles.treeBranchCompact : null, styles.outcomeEgcPane]}>
+          <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: egcColor }]} />
+          <FlowNodeChip
+            node={{ label: egc.label }}
+            onPath={egcFlags.onPath}
+            current={false}
+            isResult={egcFlags.isResult}
+            compact={compact}
+          />
+        </View>
+      </View>
+    </View>
+  );
+}
+
 function FlowTree({
   node,
   nodeFlags,
   onChoose,
   compact,
+  outcomeContext,
 }: {
   node: AlgorithmMapNode;
   nodeFlags: Map<string, AlgorithmNodeFlags>;
   onChoose: (stepId: string, optionId: string) => void;
   compact?: boolean;
+  outcomeContext?: OutcomeContext;
 }) {
   const flags = nodeFlags.get(node.id) ?? { onPath: false, current: false, isResult: false };
   const { onPath, current, isResult } = flags;
   const canPress = Boolean(node.stepId && node.optionId);
   const tint = useThemeColor({}, 'tint');
   const connector = '#6B8A8C';
+  const childOutcomeContext: OutcomeContext | undefined = node.outcomeRow
+    ? { row: node.outcomeRow, feedIds: outcomeFeedIds(node.outcomeRow) }
+    : outcomeContext;
+  const hasChildren = Boolean(node.children?.length);
+  const isOutcomeFeed = Boolean(outcomeContext?.feedIds.has(node.id) && !hasChildren);
 
   return (
-    <View style={[styles.tree, compact ? styles.treeCompact : null]}>
+    <View style={[styles.tree, compact ? styles.treeCompact : null, isOutcomeFeed ? styles.treeOutcomeFeed : null]}>
       <FlowNodeChip
         node={node}
         onPath={onPath}
@@ -155,10 +232,10 @@ function FlowTree({
         compact={compact}
         onPress={canPress ? () => onChoose(node.stepId!, node.optionId!) : undefined}
       />
-      {node.children?.length ? (
+      {hasChildren ? (
         <View style={styles.treeChildren}>
           <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: onPath ? tint : connector }]} />
-          {node.children.length > 1 ? (
+          {node.children!.length > 1 ? (
             <View style={styles.treeHBarTrack}>
               <View
                 collapsable={false}
@@ -167,24 +244,47 @@ function FlowTree({
                   {
                     backgroundColor: connector,
                     borderTopColor: connector,
-                    width: `${((node.children.length - 1) / node.children.length) * 100}%`,
+                    width: `${((node.children!.length - 1) / node.children!.length) * 100}%`,
                   },
                 ]}
               />
             </View>
           ) : null}
-          <View style={[styles.treeRow, compact ? styles.treeRowCompact : null]}>
-            {node.children.map((child) => {
+          <View
+            style={[
+              styles.treeRow,
+              compact ? styles.treeRowCompact : null,
+              node.outcomeRow ? styles.treeRowOutcome : null,
+            ]}>
+            {node.children!.map((child) => {
               const childOnPath = nodeFlags.get(child.id)?.onPath ?? false;
               return (
-                <View key={child.id} style={[styles.treeBranch, compact ? styles.treeBranchCompact : null]}>
+                <View
+                  key={child.id}
+                  style={[
+                    styles.treeBranch,
+                    compact ? styles.treeBranchCompact : null,
+                    node.outcomeRow ? styles.treeBranchOutcome : null,
+                  ]}>
                   <View style={[styles.stem, compact ? styles.stemCompact : null, { backgroundColor: childOnPath ? tint : connector }]} />
-                  <FlowTree node={child} nodeFlags={nodeFlags} onChoose={onChoose} compact={compact} />
+                  <FlowTree
+                    node={child}
+                    nodeFlags={nodeFlags}
+                    onChoose={onChoose}
+                    compact={compact}
+                    outcomeContext={childOutcomeContext}
+                  />
                 </View>
               );
             })}
           </View>
+          {node.outcomeRow ? (
+            <FlowOutcomeSection outcomeRow={node.outcomeRow} nodeFlags={nodeFlags} compact={compact} />
+          ) : null}
         </View>
+      ) : null}
+      {isOutcomeFeed ? (
+        <View style={[styles.outcomeDownStem, { backgroundColor: onPath ? tint : connector }]} />
       ) : null}
     </View>
   );
@@ -350,6 +450,10 @@ const styles = StyleSheet.create({
   treeCompact: {
     alignItems: 'stretch',
   },
+  treeOutcomeFeed: {
+    flex: 1,
+    width: '100%',
+  },
   treeChildren: {
     alignItems: 'center',
     width: '100%',
@@ -363,6 +467,9 @@ const styles = StyleSheet.create({
   treeRowCompact: {
     gap: 4,
   },
+  treeRowOutcome: {
+    alignItems: 'stretch',
+  },
   treeBranch: {
     flex: 1,
     alignItems: 'center',
@@ -370,6 +477,9 @@ const styles = StyleSheet.create({
   },
   treeBranchCompact: {
     minWidth: 0,
+    alignItems: 'stretch',
+  },
+  treeBranchOutcome: {
     alignItems: 'stretch',
   },
   treeHBarTrack: {
@@ -391,6 +501,37 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 12,
   },
+  outcomeDownStem: {
+    width: 3,
+    flex: 1,
+    alignSelf: 'center',
+    minHeight: 8,
+  },
+  outcomeSection: {
+    width: '100%',
+  },
+  outcomeResultRow: {
+    alignItems: 'flex-start',
+  },
+  outcomeNcPane: {
+    flex: 1.5,
+  },
+  outcomeEgcPane: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  outcomeNcMergeTrack: {
+    width: '100%',
+    height: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  outcomeNcMergeBar: {
+    width: '72%',
+    height: 3,
+    minHeight: 3,
+    borderTopWidth: 3,
+  },
   chip: {
     borderRadius: 10,
     paddingHorizontal: 10,
@@ -404,6 +545,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 6,
     borderRadius: 8,
+  },
+  chipWide: {
+    width: '100%',
+    minWidth: 0,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
   },
   chipText: {
     fontSize: 12,

@@ -165,6 +165,18 @@ export type AlgorithmResult = {
   entryLabel: string;
 };
 
+export type AlgorithmMapOutcome = {
+  id: string;
+  label: string;
+  resultId: string;
+  /** この結果ボックスへつなぐ map ノード id */
+  feedFrom: string[];
+};
+
+export type AlgorithmMapOutcomeRow = {
+  outcomes: AlgorithmMapOutcome[];
+};
+
 export type AlgorithmMapNode = {
   id: string;
   label: string;
@@ -172,6 +184,8 @@ export type AlgorithmMapNode = {
   stepId?: string;
   optionId?: string;
   resultId?: string;
+  /** 子ツリーの下に並列の結果ボックス（Non-cancer | EGC 等）を描画 */
+  outcomeRow?: AlgorithmMapOutcomeRow;
 };
 
 export type AlgorithmFlowMapLayout = 'compact' | 'scroll';

@@ -117,6 +117,18 @@ export function buildAlgorithmNodeFlags(
       if (visit(child)) onPath = true;
     }
 
+    if (node.outcomeRow) {
+      for (const outcome of node.outcomeRow.outcomes) {
+        const outcomeOnPath = walk.result?.id === outcome.resultId;
+        flags.set(outcome.id, {
+          onPath: outcomeOnPath,
+          current: false,
+          isResult: outcomeOnPath,
+        });
+        if (outcomeOnPath) onPath = true;
+      }
+    }
+
     flags.set(node.id, { onPath, current, isResult });
     return onPath;
   }
@@ -135,4 +147,9 @@ export function findEntryForResult(
 ): ClassificationEntry | undefined {
   if (!result) return undefined;
   return entries.find((entry) => entry.label === result.entryLabel);
+}
+
+/** outcomeRow に含まれる feed ノード id の集合 */
+export function outcomeFeedIds(outcomeRow: { outcomes: { feedFrom: string[] }[] }): Set<string> {
+  return new Set(outcomeRow.outcomes.flatMap((outcome) => outcome.feedFrom));
 }

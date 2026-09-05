@@ -239,8 +239,24 @@ export const mesdaGScore: ClassificationDefinition = {
       children: [
         {
           id: 'dl-gate',
-          label: 'DL',
+          label: 'Demarcation line (DL)',
           stepId: 'dl',
+          outcomeRow: {
+            outcomes: [
+              {
+                id: 'noncancer',
+                label: 'Non-cancer',
+                resultId: 'noncancer',
+                feedFrom: ['absent', 'regular'],
+              },
+              {
+                id: 'egc',
+                label: 'EGC',
+                resultId: 'egc',
+                feedFrom: ['irregular'],
+              },
+            ],
+          },
           children: [
             {
               id: 'absent',
@@ -270,7 +286,6 @@ export const mesdaGScore: ClassificationDefinition = {
                       label: 'Irregular MV and/or MS',
                       stepId: 'mvms',
                       optionId: 'irregular',
-                      children: [{ id: 'egc', label: 'EGC', resultId: 'egc' }],
                     },
                   ],
                 },
