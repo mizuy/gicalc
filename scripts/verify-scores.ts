@@ -2284,7 +2284,7 @@ test('PWA 更新はユーザー操作まで waiting のままにする', () => {
 
 test('アプリバージョンは expo 設定と一致する', () => {
   const appConfig = require('../app.config.js') as { expo: { version: string } };
-  assert.equal(appConfig.expo.version, '1.0.7');
+  assert.equal(appConfig.expo.version, '1.0.8');
 });
 
 test('PWA 更新バナーの文言と検知', () => {
