@@ -2364,7 +2364,17 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.12');
+  assert.equal(pkg.version, '1.0.13');
+});
+
+test('ホームの臓器カテゴリにはアイコン画像がある', () => {
+  const { existsSync } = require('node:fs') as typeof import('node:fs');
+  const { join } = require('node:path') as typeof import('node:path');
+  const { LIST_NAV_CATEGORY_ORDER } = require('../types/score') as typeof import('../types/score');
+
+  for (const category of LIST_NAV_CATEGORY_ORDER) {
+    assert.ok(existsSync(join(process.cwd(), 'assets/images/nav', `${category}.webp`)), `${category}.webp`);
+  }
 });
 
 test('PWA 更新確認はサーバー上の version.json と比較する', () => {

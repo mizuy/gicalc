@@ -11,8 +11,6 @@ export default function HomeScreen() {
   const background = useThemeColor({}, 'background');
   const tint = useThemeColor({}, 'tint');
   const textSecondary = useThemeColor({}, 'textSecondary');
-  const surface = useThemeColor({}, 'surface');
-  const border = useThemeColor({}, 'border');
   const { t } = useLocale();
   const groups = useMemo(() => getScoresGroupedForHome(), []);
 
@@ -33,15 +31,15 @@ export default function HomeScreen() {
 
       <PwaInstallBanner />
 
-      <View style={[styles.table, { backgroundColor: surface, borderColor: border }]}>
-        {groups.map((group, index) => (
-          <OrganPickerCard
-            key={group.category}
-            category={group.category}
-            label={t.navCategory[group.category]}
-            count={group.scores.length}
-            last={index === groups.length - 1}
-          />
+      <View style={styles.grid}>
+        {groups.map((group) => (
+          <View key={group.category} style={styles.gridItem}>
+            <OrganPickerCard
+              category={group.category}
+              label={t.navCategory[group.category]}
+              count={group.scores.length}
+            />
+          </View>
         ))}
       </View>
     </ScrollView>
@@ -83,9 +81,13 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     marginBottom: 20,
   },
-  table: {
-    borderWidth: 1,
-    borderRadius: 14,
-    overflow: 'hidden',
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    rowGap: 20,
+  },
+  gridItem: {
+    width: '47%',
   },
 });

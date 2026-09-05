@@ -1,74 +1,65 @@
 import { Link } from 'expo-router';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
+import { NAV_CATEGORY_ICONS } from '@/lib/navCategoryIcons';
 import type { ListNavCategory } from '@/types/score';
 
 type Props = {
   category: ListNavCategory;
   label: string;
   count: number;
-  last?: boolean;
 };
 
-export function OrganPickerCard({ category, label, count, last }: Props) {
-  const tint = useThemeColor({}, 'tint');
-  const border = useThemeColor({}, 'border');
-  const surface = useThemeColor({}, 'surface');
+export function OrganPickerCard({ category, label, count }: Props) {
+  const text = useThemeColor({}, 'text');
   const textSecondary = useThemeColor({}, 'textSecondary');
 
   return (
     <Link href={`/organ/${category}`} asChild>
       <Pressable
         accessibilityRole="link"
-        style={({ pressed }) => [
-          styles.row,
-          { backgroundColor: surface, borderColor: border, opacity: pressed ? 0.72 : 1 },
-          last ? styles.rowLast : null,
-        ]}>
-        <View style={styles.body}>
-          <Text style={[styles.label, { color: tint }]}>{label}</Text>
-          <Text style={[styles.count, { color: textSecondary }]}>
-            {count}
-          </Text>
+        accessibilityLabel={label}
+        style={({ pressed }) => [styles.tile, { opacity: pressed ? 0.82 : 1 }]}>
+        <View style={styles.iconWrap}>
+          <Image
+            accessibilityIgnoresInvertColors
+            source={NAV_CATEGORY_ICONS[category]}
+            style={styles.icon}
+            resizeMode="contain"
+          />
         </View>
-        <Text style={[styles.chevron, { color: textSecondary }]}>›</Text>
+        <Text style={[styles.label, { color: text }]}>{label}</Text>
+        <Text style={[styles.count, { color: textSecondary }]}>{count}</Text>
       </Pressable>
     </Link>
   );
 }
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
+  tile: {
     alignItems: 'center',
-    gap: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    gap: 8,
+    paddingVertical: 4,
   },
-  rowLast: {
-    borderBottomWidth: 0,
+  iconWrap: {
+    width: '100%',
+    aspectRatio: 450 / 399,
   },
-  body: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    justifyContent: 'space-between',
-    gap: 12,
+  icon: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 18,
   },
   label: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '800',
-    letterSpacing: 0.3,
+    textAlign: 'center',
+    letterSpacing: 0.2,
   },
   count: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
-  },
-  chevron: {
-    fontSize: 24,
-    fontWeight: '300',
-    lineHeight: 24,
+    textAlign: 'center',
   },
 });
