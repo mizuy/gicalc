@@ -5,9 +5,6 @@ export type UiStrings = {
   tabs: { scores: string; about: string };
   back: string;
   homeLead: string;
-  secondaryTools: string;
-  secondaryExpand: string;
-  secondaryCollapse: string;
   organLead: Record<ScoreOrgan, string>;
   reference: string;
   source: string;
@@ -88,9 +85,6 @@ export const UI: Record<Locale, UiStrings> = {
     tabs: { scores: 'ホーム', about: 'About' },
     back: '戻る',
     homeLead: '臓器を選んでください。スコア名は略称を大きく、正式名称はその下に表示します。',
-    secondaryTools: 'その他・参考',
-    secondaryExpand: '表示',
-    secondaryCollapse: '閉じる',
     organLead: {
       esophagus: '食道の内視鏡分類、拡大診断、ESD 後の判定。',
       stomach: '胃の萎縮・静脈瘤・拡大診断、胃炎リスク、早期癌のスコアと ESD 後判定。',
@@ -200,9 +194,6 @@ export const UI: Record<Locale, UiStrings> = {
     tabs: { scores: 'Home', about: 'About' },
     back: 'Back',
     homeLead: 'Choose an organ first. Short names are shown large; full names appear underneath.',
-    secondaryTools: 'Other / reference',
-    secondaryExpand: 'Show',
-    secondaryCollapse: 'Hide',
     organLead: {
       esophagus: 'Esophageal classifications, magnifying findings, and post-ESD curability.',
       stomach: 'Gastric atrophy, varices, magnifying EGC tools, gastritis risk, and post-ESD scores.',
