@@ -1,7 +1,7 @@
 {
   "name": "gicalc",
   "main": "expo-router/entry",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "private": true,
   "homepage": "https://mizuy.github.io/gicalc/",
   "scripts": {
@@ -9,8 +9,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "web:export": "expo export -p web",
-    "build:web": "expo export -p web && node scripts/prepare-pages.mjs && npx workbox-cli generateSW workbox-config.js",
+    "web:export": "node scripts/export-web.mjs",
+    "build:web": "node scripts/export-web.mjs && node scripts/prepare-pages.mjs && npx workbox-cli generateSW workbox-config.js",
     "build:pages": "EXPO_PUBLIC_BASE_URL=/gicalc npm run build:web",
     "preview:web": "npx serve dist",
     "preview:pages": "node scripts/preview-pages.mjs",

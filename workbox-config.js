@@ -11,7 +11,7 @@ function buildPageUrlPattern() {
   }
 
   const prefix = escapeRegExp(baseUrl);
-  const staticAsset = '(?:_expo|assets|figures|sw\\.js|workbox-|manifest\\.json|logo\\d+\\.png|favicon\\.ico)';
+  const staticAsset = '(?:_expo|assets|figures|sw\\.js|workbox-|manifest\\.json|version\\.json|logo\\d+\\.png|favicon\\.ico)';
   return new RegExp(`^${prefix}(?:/)?(?:$|/(?!${staticAsset})[^?#]+/?$|/.*\\.html$)`);
 }
 
@@ -26,6 +26,10 @@ module.exports = {
   skipWaiting: false,
   runtimeCaching: [
     {
+      urlPattern: /\/version\.json$/,
+      handler: 'NetworkOnly',
+    },
+    {
       urlPattern: pageUrlPattern,
       handler: 'NetworkFirst',
       options: {
@@ -39,12 +43,13 @@ module.exports = {
     },
     {
       urlPattern: /\/_expo\/static\/js\/web\/entry-[^/]+\.js$/,
-      handler: 'CacheFirst',
+      handler: 'NetworkFirst',
       options: {
         cacheName: 'gicalc-entry-js',
+        networkTimeoutSeconds: 4,
         expiration: {
           maxEntries: 4,
-          maxAgeSeconds: 30 * 24 * 60 * 60,
+          maxAgeSeconds: 7 * 24 * 60 * 60,
         },
       },
     },

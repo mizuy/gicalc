@@ -25,3 +25,7 @@ export function isPwaUpdateAvailable(input: {
 export function shouldOfferUpdateAfterControllerChange(hadControllerBeforeChange: boolean): boolean {
   return hadControllerBeforeChange;
 }
+
+export const UPDATE_CHECK_TIMEOUT_MS = 12_000;
+
+export const RUNTIME_CACHE_NAMES = ['gicalc-entry-js', 'gicalc-pages'] as const;

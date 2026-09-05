@@ -97,6 +97,7 @@ import {
   walkAlgorithmFlow,
 } from '../lib/scores/algorithmFlow';
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
+import { isRemoteVersionNewer, shouldReportUpdateAvailable } from '../lib/web/pwaVersionCheck';
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 import { classificationOriginalLocale } from '../lib/i18n/localize';
 
@@ -2274,6 +2275,20 @@ test('PWA 更新はユーザー操作まで waiting のままにする', () => {
       workbox.runtimeCaching.some((rule) => rule.handler === 'NetworkFirst' && rule.urlPattern.test('/gicalc/about')),
       true,
     );
+    assert.equal(
+      workbox.runtimeCaching.some(
+        (rule) =>
+          rule.handler === 'NetworkFirst' &&
+          rule.urlPattern.test('/gicalc/_expo/static/js/web/entry-deadbeef.js'),
+      ),
+      true,
+    );
+    assert.equal(
+      workbox.runtimeCaching.some(
+        (rule) => rule.handler === 'NetworkOnly' && rule.urlPattern.test('/gicalc/version.json'),
+      ),
+      true,
+    );
     assert.equal(workbox.globPatterns.every((pattern) => !pattern.includes('html')), true);
   } finally {
     if (previousBaseUrl === undefined) delete process.env.EXPO_PUBLIC_BASE_URL;
@@ -2282,9 +2297,43 @@ test('PWA 更新はユーザー操作まで waiting のままにする', () => {
   }
 });
 
-test('アプリバージョンは expo 設定と一致する', () => {
+test('アプリバージョンは package.json と expo 設定で一致する', () => {
+  delete require.cache[require.resolve('../app.config.js')];
+  const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
-  assert.equal(appConfig.expo.version, '1.0.8');
+  assert.equal(appConfig.expo.version, pkg.version);
+  assert.equal(pkg.version, '1.0.10');
+});
+
+test('PWA 更新確認はサーバー上の version.json と比較する', () => {
+  assert.equal(isRemoteVersionNewer('1.0.9', '1.0.10'), true);
+  assert.equal(isRemoteVersionNewer('1.0.10', '1.0.10'), false);
+  assert.equal(isRemoteVersionNewer('1.0.10', null), false);
+
+  assert.equal(
+    shouldReportUpdateAvailable({
+      runningVersion: '1.0.9',
+      remoteVersion: '1.0.10',
+      swUpdateDetected: false,
+    }),
+    true,
+  );
+  assert.equal(
+    shouldReportUpdateAvailable({
+      runningVersion: '1.0.10',
+      remoteVersion: '1.0.10',
+      swUpdateDetected: false,
+    }),
+    false,
+  );
+  assert.equal(
+    shouldReportUpdateAvailable({
+      runningVersion: '1.0.10',
+      remoteVersion: null,
+      swUpdateDetected: true,
+    }),
+    true,
+  );
 });
 
 test('PWA 更新バナーの文言と検知', () => {
