@@ -14,6 +14,8 @@ import { SCORE_EN, type FlowCopy, type ScoreCopy } from './scoreCopy';
 import { UI } from './ui';
 import type { Locale } from './types';
 
+const localizeScoreCache = new Map<string, ScoreDefinition>();
+
 function localizeMapNode(node: AlgorithmMapNode, labels?: Record<string, string>): AlgorithmMapNode {
   return {
     ...node,
@@ -156,7 +158,7 @@ function localizeClassificationDefinition(
   };
 }
 
-export function localizeScore<T extends ScoreDefinition>(score: T, locale: Locale): T {
+function localizeScoreUncached<T extends ScoreDefinition>(score: T, locale: Locale): T {
   if (isClassification(score)) {
     return localizeClassificationDefinition(score, locale) as T;
   }
@@ -187,4 +189,14 @@ export function localizeScore<T extends ScoreDefinition>(score: T, locale: Local
     })),
   };
   return localized as T;
+}
+
+export function localizeScore<T extends ScoreDefinition>(score: T, locale: Locale): T {
+  const cacheKey = `${score.id}:${locale}`;
+  const cached = localizeScoreCache.get(cacheKey);
+  if (cached) return cached as T;
+
+  const localized = localizeScoreUncached(score, locale);
+  localizeScoreCache.set(cacheKey, localized);
+  return localized;
 }

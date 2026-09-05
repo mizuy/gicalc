@@ -1,4 +1,5 @@
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { useMemo } from 'react';
 
 import { ScoreListItem } from '@/components/calculator/ScoreListItem';
 import { Text, useThemeColor } from '@/components/Themed';
@@ -13,7 +14,15 @@ export default function HomeScreen() {
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
   const { locale, t } = useLocale();
-  const groups = getScoresGroupedByOrgan();
+  const groups = useMemo(() => getScoresGroupedByOrgan(), []);
+  const localizedGroups = useMemo(
+    () =>
+      groups.map((group) => ({
+        ...group,
+        scores: group.scores.map((score) => localizeScore(score, locale)),
+      })),
+    [groups, locale],
+  );
 
   return (
     <ScrollView style={[styles.scroll, { backgroundColor: background }]} contentContainerStyle={styles.content}>
@@ -32,7 +41,7 @@ export default function HomeScreen() {
 
       <PwaInstallBanner />
 
-      {groups.map((group) => (
+      {localizedGroups.map((group) => (
         <View key={group.organ} style={styles.section}>
           <View style={styles.sectionHead}>
             <Text style={[styles.sectionTitle, { color: tint }]}>{t.organ[group.organ]}</Text>
@@ -42,7 +51,7 @@ export default function HomeScreen() {
             {group.scores.map((score, index) => (
               <ScoreListItem
                 key={score.id}
-                score={localizeScore(score, locale)}
+                score={score}
                 last={index === group.scores.length - 1}
               />
             ))}

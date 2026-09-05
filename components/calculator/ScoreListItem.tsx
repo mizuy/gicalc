@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -11,7 +12,7 @@ type Props = {
   last?: boolean;
 };
 
-export function ScoreListItem({ score, last }: Props) {
+export const ScoreListItem = memo(function ScoreListItem({ score, last }: Props) {
   const tint = useThemeColor({}, 'tint');
   const border = useThemeColor({}, 'border');
   const textSecondary = useThemeColor({}, 'textSecondary');
@@ -47,7 +48,7 @@ export function ScoreListItem({ score, last }: Props) {
       </Pressable>
     </Link>
   );
-}
+});
 
 const styles = StyleSheet.create({
   row: {

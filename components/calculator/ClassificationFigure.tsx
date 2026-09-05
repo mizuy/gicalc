@@ -62,7 +62,7 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
       ) : null}
       <Text style={[styles.note, { color: textSecondary }]}>{figure.note}</Text>
 
-      {uri ? (
+      {uri && open ? (
         <Modal
           visible={open}
           transparent

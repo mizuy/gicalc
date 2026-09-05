@@ -1,4 +1,3 @@
-import { usePathname } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 
@@ -11,7 +10,7 @@ import {
 } from '@/lib/web/pwaUpdate';
 
 const DISMISS_KEY = 'gicalc.pwaUpdate.dismissed';
-const UPDATE_POLL_MS = 20_000;
+const UPDATE_POLL_MS = 5 * 60_000;
 
 function readDismissed(): boolean {
   if (typeof window === 'undefined') return false;
@@ -64,7 +63,6 @@ export function PwaUpdateBanner() {
   const [dismissed, setDismissed] = useState(false);
   const registrationRef = useRef<ServiceWorkerRegistration | null>(null);
   const hadControllerRef = useRef(false);
-  const pathname = usePathname();
 
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
@@ -133,18 +131,6 @@ export function PwaUpdateBanner() {
       window.removeEventListener('focus', requestUpdate);
     };
   }, []);
-
-  useEffect(() => {
-    if (Platform.OS !== 'web') return;
-    const registration = registrationRef.current;
-    if (!registration) return;
-    registration
-      .update()
-      .then(() => {
-        applyIncomingWorker(registration, () => setAvailable(true));
-      })
-      .catch(() => {});
-  }, [pathname]);
 
   if (Platform.OS !== 'web' || !available || dismissed) {
     return null;

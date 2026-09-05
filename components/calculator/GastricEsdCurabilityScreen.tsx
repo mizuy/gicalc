@@ -69,10 +69,9 @@ export function GastricEsdCurabilityScreen({ score }: Props) {
 
   const handleReset = () => setValues({});
 
-  const requiredCount = getGastricEsdCurabilityRequiredFields(values).length;
-  const filledCount = getGastricEsdCurabilityRequiredFields(values).filter(
-    (id) => values[id] !== undefined,
-  ).length;
+  const requiredFields = useMemo(() => getGastricEsdCurabilityRequiredFields(values), [values]);
+  const requiredCount = requiredFields.length;
+  const filledCount = requiredFields.filter((id) => values[id] !== undefined).length;
 
   return (
     <ScrollView

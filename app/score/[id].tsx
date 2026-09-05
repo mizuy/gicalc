@@ -1,5 +1,6 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
 import type { ComponentType } from 'react';
+import { useMemo } from 'react';
 
 import { AlgorithmFlowScreen } from '@/components/calculator/AlgorithmFlowScreen';
 import { ClassificationReferenceScreen } from '@/components/calculator/ClassificationReferenceScreen';
@@ -27,7 +28,12 @@ export default function ScoreScreen() {
   const { locale, t } = useLocale();
   const score = typeof id === 'string' ? getScoreById(id) : undefined;
 
-  if (!score) {
+  const localized = useMemo(
+    () => (score ? localizeScore(score, locale) : undefined),
+    [score, locale],
+  );
+
+  if (!score || !localized) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 }}>
         <Stack.Screen options={{ title: t.missingTitle, headerBackTitle: t.back }} />
@@ -36,20 +42,20 @@ export default function ScoreScreen() {
     );
   }
 
-  const localized = localizeScore(score, locale);
-  const CurabilityScreen = CURABILITY_SCREENS[localized.id];
+  const localizedScore = localized;
+  const CurabilityScreen = CURABILITY_SCREENS[localizedScore.id];
 
   return (
     <>
-      <Stack.Screen options={{ title: localized.shortName, headerBackTitle: t.back }} />
-      {hasAlgorithmFlow(localized) ? (
-        <AlgorithmFlowScreen key={localized.id} score={localized} />
-      ) : isClassification(localized) && !CurabilityScreen ? (
-        <ClassificationReferenceScreen score={localized} />
-      ) : CurabilityScreen && !isClassification(localized) ? (
-        <CurabilityScreen key={localized.id} score={localized} />
-      ) : !isClassification(localized) ? (
-        <ScoreCalculatorScreen key={localized.id} score={localized} />
+      <Stack.Screen options={{ title: localizedScore.shortName, headerBackTitle: t.back }} />
+      {hasAlgorithmFlow(localizedScore) ? (
+        <AlgorithmFlowScreen key={localizedScore.id} score={localizedScore} />
+      ) : isClassification(localizedScore) && !CurabilityScreen ? (
+        <ClassificationReferenceScreen score={localizedScore} />
+      ) : CurabilityScreen && !isClassification(localizedScore) ? (
+        <CurabilityScreen key={localizedScore.id} score={localizedScore} />
+      ) : !isClassification(localizedScore) ? (
+        <ScoreCalculatorScreen key={localizedScore.id} score={localizedScore} />
       ) : null}
     </>
   );
