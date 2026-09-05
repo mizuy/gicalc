@@ -80,6 +80,10 @@ function RootLayoutNav() {
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen
+            name="organ/[organ]"
+            options={{ headerBackTitle: t.back, headerRight: () => <LanguageToggle /> }}
+          />
+          <Stack.Screen
             name="score/[id]"
             options={{ headerBackTitle: t.back, headerRight: () => <LanguageToggle /> }}
           />

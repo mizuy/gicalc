@@ -5,6 +5,10 @@ export type UiStrings = {
   tabs: { scores: string; about: string };
   back: string;
   homeLead: string;
+  secondaryTools: string;
+  secondaryExpand: string;
+  secondaryCollapse: string;
+  organLead: Record<ScoreOrgan, string>;
   reference: string;
   source: string;
   license: string;
@@ -81,9 +85,19 @@ export type UiStrings = {
 
 export const UI: Record<Locale, UiStrings> = {
   ja: {
-    tabs: { scores: 'スコア一覧', about: 'About' },
+    tabs: { scores: 'ホーム', about: 'About' },
     back: '戻る',
-    homeLead: '消化管内視鏡向けのスコア、臨床尺度、内視鏡分類。食道、胃、十二指腸、大腸、出血の順です。',
+    homeLead: '臓器を選んでください。スコア名は略称を大きく、正式名称はその下に表示します。',
+    secondaryTools: 'その他・参考',
+    secondaryExpand: '表示',
+    secondaryCollapse: '閉じる',
+    organLead: {
+      esophagus: '食道の内視鏡分類、拡大診断、ESD 後の判定。',
+      stomach: '胃の萎縮・静脈瘤・拡大診断、胃炎リスク、早期癌のスコアと ESD 後判定。',
+      duodenum: '十二指腸の FAP 腺腫ステージと SNADET 関連ツール。',
+      colorectum: '大腸の分類、検診、T1 予測、ESD 後判定、前処置。',
+      bleeding: '潰瘍出血の内視鏡所見と上下部出血スコア。',
+    },
     reference: '文献',
     source: '出典',
     license: 'ライセンス',
@@ -106,7 +120,7 @@ export const UI: Record<Locale, UiStrings> = {
     missingBody: '指定されたスコアは見つかりません。',
     notFoundTitle: 'ページが見つかりません',
     notFoundBody: 'この画面は存在しません。',
-    notFoundLink: 'スコア一覧へ戻る',
+    notFoundLink: 'ホームへ戻る',
     languageJa: '日本語',
     languageEn: 'English',
     variantTabModified: '改変版',
@@ -183,10 +197,19 @@ export const UI: Record<Locale, UiStrings> = {
     },
   },
   en: {
-    tabs: { scores: 'Scores', about: 'About' },
+    tabs: { scores: 'Home', about: 'About' },
     back: 'Back',
-    homeLead:
-      'Scores, clinical scales, and endoscopic classifications for GI endoscopy. Listed as esophagus, stomach, duodenum, colorectum, then bleeding.',
+    homeLead: 'Choose an organ first. Short names are shown large; full names appear underneath.',
+    secondaryTools: 'Other / reference',
+    secondaryExpand: 'Show',
+    secondaryCollapse: 'Hide',
+    organLead: {
+      esophagus: 'Esophageal classifications, magnifying findings, and post-ESD curability.',
+      stomach: 'Gastric atrophy, varices, magnifying EGC tools, gastritis risk, and post-ESD scores.',
+      duodenum: 'Duodenal FAP adenoma staging and SNADET-related tools.',
+      colorectum: 'Colorectal classifications, screening, T1 prediction, post-ESD curability, and bowel prep.',
+      bleeding: 'Ulcer stigmata and upper / lower GI bleeding scores.',
+    },
     reference: 'Reference',
     source: 'Source',
     license: 'License',
@@ -209,7 +232,7 @@ export const UI: Record<Locale, UiStrings> = {
     missingBody: 'This score is not registered.',
     notFoundTitle: 'Page not found',
     notFoundBody: 'This screen does not exist.',
-    notFoundLink: 'Back to scores',
+    notFoundLink: 'Back to home',
     languageJa: '日本語',
     languageEn: 'English',
     variantTabModified: 'Modified',

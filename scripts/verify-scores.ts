@@ -56,6 +56,7 @@ import {
   resolveScoreRoute,
   SCORE_VARIANT_GROUPS,
 } from '../data/scores/variant-groups';
+import { isSecondaryListScore, SECONDARY_LIST_SCORE_IDS } from '../data/scores/list-tiers';
 import { ISHII_2021_PUBMED } from '../data/scores/ishii';
 import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
 import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
@@ -174,6 +175,23 @@ test('variant 専用 id は一覧から隠し、全定義43種を保持する', 
   assert.ok(getScoreById('modified-spigelman'));
   assert.ok(getScoreById('apcs-modified'));
   assert.equal(getScoreRouteIds().length, 6);
+});
+
+test('参考ツールは secondary 一覧に分類し、variant 専用 id は含めない', () => {
+  assert.deepEqual(
+    [...SECONDARY_LIST_SCORE_IDS].sort(),
+    ['appendiceal-orifice', 'aronchick', 'colorectal-ec', 'esd-fibrosis', 'ishii', 'kakushima', 'sps'],
+  );
+  for (const id of SECONDARY_LIST_SCORE_IDS) {
+    assert.ok(SCORES.some((score) => score.id === id), `${id} は一覧に存在する`);
+    assert.ok(!HIDDEN_LIST_SCORE_IDS.has(id), `${id} は hidden ではない`);
+    assert.ok(isSecondaryListScore(id));
+  }
+  for (const score of SCORES) {
+    if (HIDDEN_LIST_SCORE_IDS.has(score.id)) continue;
+    const expected = SECONDARY_LIST_SCORE_IDS.has(score.id);
+    assert.equal(isSecondaryListScore(score.id), expected, `${score.id} の secondary 判定`);
+  }
 });
 
 test('variant ルーティングは pageId と default を返す', () => {

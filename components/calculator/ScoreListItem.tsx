@@ -26,18 +26,16 @@ export const ScoreListItem = memo(function ScoreListItem({ score, last }: Props)
           { borderBottomColor: border, opacity: pressed ? 0.72 : 1 },
           last ? styles.rowLast : null,
         ]}>
-        <View style={[styles.badge, { backgroundColor: `${tint}18` }]}>
-          <Text style={[styles.badgeText, { color: tint }]} numberOfLines={1}>
-            {score.shortName}
-          </Text>
-        </View>
         <View style={styles.body}>
-          <View style={styles.nameRow}>
-            <Text style={styles.name} numberOfLines={1}>
-              {score.name}
+          <View style={styles.titleRow}>
+            <Text style={[styles.shortName, { color: tint }]} numberOfLines={2}>
+              {score.shortName}
             </Text>
             {isJapanDeveloped(score) ? <JapanMark compact /> : null}
           </View>
+          <Text style={[styles.fullName, { color: textSecondary }]} numberOfLines={2}>
+            {score.name}
+          </Text>
           <View style={styles.meta}>
             <ToolKindBadge kind={getToolKind(score)} />
             <Text style={[styles.category, { color: textSecondary }]} numberOfLines={1}>
@@ -52,46 +50,38 @@ export const ScoreListItem = memo(function ScoreListItem({ score, last }: Props)
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 10,
-    paddingVertical: 11,
-    paddingHorizontal: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   rowLast: {
     borderBottomWidth: 0,
   },
-  badge: {
-    borderRadius: 999,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    minWidth: 72,
-    alignItems: 'center',
-  },
-  badgeText: {
-    fontSize: 11,
-    fontWeight: '700',
-  },
   body: {
-    flex: 1,
-    minWidth: 0,
     gap: 4,
   },
-  nameRow: {
+  titleRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    flexWrap: 'wrap',
     gap: 6,
   },
-  name: {
+  shortName: {
     flexShrink: 1,
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: '800',
+    lineHeight: 24,
+  },
+  fullName: {
+    fontSize: 12,
+    lineHeight: 18,
+    fontWeight: '500',
   },
   meta: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+    marginTop: 2,
   },
   category: {
     fontSize: 11,

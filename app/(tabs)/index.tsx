@@ -1,11 +1,11 @@
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { useMemo } from 'react';
 
-import { ScoreListItem } from '@/components/calculator/ScoreListItem';
+import { OrganPickerCard } from '@/components/calculator/OrganPickerCard';
 import { Text, useThemeColor } from '@/components/Themed';
 import { PwaInstallBanner } from '@/components/web/PwaInstallBanner';
 import { getScoresGroupedByOrgan } from '@/data/scores';
-import { localizeScore, useLocale } from '@/lib/i18n';
+import { useLocale } from '@/lib/i18n';
 
 export default function HomeScreen() {
   const background = useThemeColor({}, 'background');
@@ -13,16 +13,8 @@ export default function HomeScreen() {
   const textSecondary = useThemeColor({}, 'textSecondary');
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
-  const { locale, t } = useLocale();
+  const { t } = useLocale();
   const groups = useMemo(() => getScoresGroupedByOrgan(), []);
-  const localizedGroups = useMemo(
-    () =>
-      groups.map((group) => ({
-        ...group,
-        scores: group.scores.map((score) => localizeScore(score, locale)),
-      })),
-    [groups, locale],
-  );
 
   return (
     <ScrollView style={[styles.scroll, { backgroundColor: background }]} contentContainerStyle={styles.content}>
@@ -41,23 +33,17 @@ export default function HomeScreen() {
 
       <PwaInstallBanner />
 
-      {localizedGroups.map((group) => (
-        <View key={group.organ} style={styles.section}>
-          <View style={styles.sectionHead}>
-            <Text style={[styles.sectionTitle, { color: tint }]}>{t.organ[group.organ]}</Text>
-            <Text style={[styles.sectionCount, { color: textSecondary }]}>{group.scores.length}</Text>
-          </View>
-          <View style={[styles.table, { backgroundColor: surface, borderColor: border }]}>
-            {group.scores.map((score, index) => (
-              <ScoreListItem
-                key={score.id}
-                score={score}
-                last={index === group.scores.length - 1}
-              />
-            ))}
-          </View>
-        </View>
-      ))}
+      <View style={[styles.table, { backgroundColor: surface, borderColor: border }]}>
+        {groups.map((group, index) => (
+          <OrganPickerCard
+            key={group.organ}
+            organ={group.organ}
+            label={t.organ[group.organ]}
+            count={group.scores.length}
+            last={index === groups.length - 1}
+          />
+        ))}
+      </View>
     </ScrollView>
   );
 }
@@ -96,25 +82,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
     marginBottom: 20,
-  },
-  section: {
-    marginBottom: 18,
-  },
-  sectionHead: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-    paddingHorizontal: 2,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '800',
-    letterSpacing: 0.4,
-  },
-  sectionCount: {
-    fontSize: 12,
-    fontWeight: '600',
   },
   table: {
     borderWidth: 1,
