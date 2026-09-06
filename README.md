@@ -41,6 +41,7 @@
 | 大腸 | WASP（IJspeert 2016） | HP / SSL / 腺腫（<10 mm） | 定義一覧（文言。図は原著へリンク） |
 | 大腸 | JNET（Sano 2016） | NBI 拡大 | 定義一覧（文言。図は原著へリンク） |
 | 大腸 | T1 Nomogram（Kajiwara 2023） | 大腸T1癌の LNM 確率 | 確率（%）と nomogram 点 |
+| 大腸 | e-T2 Score（Koyama 2022） | 大腸 T1b vs T2 の内視鏡鑑別 | 点数 0–11 |
 | 大腸 | BBPS（Lai 2009） | 腸管前処置（洗浄後・3区域） | 点数 0–9（Kim 2024 CC 図例） |
 | 大腸 | Aronchick | 腸管前処置（洗浄前・全体） | 5段階（JGES 2020 Table 11 準拠） |
 | 出血 | Forrest（1974） | 消化性潰瘍出血の所見 | 定義一覧（Zhou 2025 の図・文言） |
@@ -131,6 +132,7 @@ npm run preview:pages
 - GBS（Blatchford 2000, *Lancet*）: CC ではない
 - NOBLADS（Aoki 2016, *CGH*）: CC ではない
 - T1 Nomogram（Kajiwara 2023, *GIE*）: CC ではない。図は埋め込まず、原著 Fig. 2 へリンクする
+- e-T2 Score（Koyama 2022, *GIE*）: CC ではない。図は埋め込まず、論文へリンクする
 - Spigelman（Spigelman 1989, *Lancet*）: CC ではない。点数表は GeneReviews Table 5 へリンクする
 - Modified Spigelman（Saurin 2004, *JCO*）: CC ではない。論文へリンクする
 - Ishii スコア（Ishii 2021, *Dig Endosc*）: CC ではない。論文へリンクする

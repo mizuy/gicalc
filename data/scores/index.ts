@@ -23,6 +23,7 @@ import { jesScore } from './jes';
 import { jnetScore } from './jnet';
 import { jsphVaricesScore } from './jsph-varices';
 import { kajiwaraNomogram } from './kajiwara-nomogram';
+import { koyamaEt2Score } from './koyama-et2';
 import { kakushimaScore } from './kakushima';
 import { kikuchiMebiScore } from './kikuchi-mebi';
 import { kimuraTakemotoScore } from './kimura-takemoto';
@@ -99,6 +100,7 @@ export const ALL_SCORE_DEFINITIONS: ScoreDefinition[] = [
   waspScore,
   jnetScore,
   kajiwaraNomogram,
+  koyamaEt2Score,
   bbpsScore,
   aronchickScore,
   forrestScore,

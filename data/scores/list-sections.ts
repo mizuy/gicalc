@@ -30,6 +30,7 @@ const SCORE_LIST_PHASE: Record<string, ListClinicalPhase> = {
   'esd-fibrosis': 'treatment',
   'colorectal-esd-curability': 'treatment',
   'kajiwara-nomogram': 'treatment',
+  'koyama-et2': 'treatment',
 };
 
 const DEFAULT_LIST_PHASE: ListClinicalPhase = 'diagnosis';

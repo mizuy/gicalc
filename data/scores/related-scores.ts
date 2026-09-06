@@ -25,6 +25,13 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
         en: 'LNM probability when considering additional resection',
       },
     },
+    {
+      id: 'koyama-et2',
+      hint: {
+        ja: 'T1b vs T2 の内視鏡鑑別（ESD 前）',
+        en: 'Endoscopic T1b vs T2 distinction (before ESD)',
+      },
+    },
   ],
   'kajiwara-nomogram': [
     {
@@ -32,6 +39,36 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
       hint: {
         ja: '内視鏡的治癒切除の 5 項目判定',
         en: 'Five-criteria endoscopic curative resection',
+      },
+    },
+    {
+      id: 'koyama-et2',
+      hint: {
+        ja: 'T1b vs T2 の内視鏡鑑別',
+        en: 'Endoscopic T1b vs T2 distinction',
+      },
+    },
+  ],
+  'koyama-et2': [
+    {
+      id: 'colorectal-esd-curability',
+      hint: {
+        ja: 'ESD 後の治癒切除判定',
+        en: 'Curative resection after ESD',
+      },
+    },
+    {
+      id: 'kajiwara-nomogram',
+      hint: {
+        ja: 'T1 LNM 確率（病理後）',
+        en: 'T1 LNM probability (after pathology)',
+      },
+    },
+    {
+      id: 'paris',
+      hint: {
+        ja: 'Paris 肉眼型',
+        en: 'Paris macroscopic type',
       },
     },
   ],
