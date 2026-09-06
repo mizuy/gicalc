@@ -1643,6 +1643,59 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       },
     },
   },
+  'koyama-et2': {
+    name: 'e-T2 Score (Koyama / colorectal T1b vs T2)',
+    shortName: 'e-T2',
+    description:
+      '0–11 points to distinguish deep SM invasion (T1b, ≥1000 μm) from T2 (muscularis propria) on endoscopy. Five-factor score from Koyama 2022 (GIE; derivation n=411). ≥7 points suggests T2.',
+    note:
+      'Assess with white-light and indigo carmine images together. Pedunculated lesions are excluded. For fold convergency, score present when ≥4 folds converge toward the tumor under adequate insufflation and extension until perilesional vessels are delineated.',
+    figureNotes: [
+      'Original Fig. 2. Elsevier / GIE copyright; not CC, so the figure is not hosted. Link opens the paper.',
+    ],
+    fields: {
+      deepDepression: {
+        label: 'Deep depression',
+        description: '>3-mm vertical depression (by evaluator observation)',
+        options: [
+          { label: 'Absent', description: pts(0, false) },
+          { label: 'Present', description: pts(1) },
+        ],
+      },
+      demarcatedDepression: {
+        label: 'Demarcated depressed area',
+        description: 'Definite depression with a circumferential margin',
+        options: [
+          { label: 'Absent', description: pts(0, false) },
+          { label: 'Present', description: pts(2) },
+        ],
+      },
+      foldConvergency: {
+        label: 'Fold convergency',
+        description: '≥4 folds converging toward the tumor under adequate insufflation and extension',
+        options: [
+          { label: 'Absent (<4 folds)', description: pts(0, false) },
+          { label: 'Present (≥4 folds)', description: pts(2) },
+        ],
+      },
+      erosionWhitePlaque: {
+        label: 'Erosion or white plaque',
+        description: 'White covering not easily removed after lavage',
+        options: [
+          { label: 'Absent', description: pts(0, false) },
+          { label: 'Present', description: pts(3) },
+        ],
+      },
+      borrmannType23: {
+        label: 'Borrmann type 2 or 3',
+        description: 'Type 2: ulcerated with sharply demarcated raised margins. Type 3: ulcerated infiltrating without definite limits',
+        options: [
+          { label: 'Absent', description: pts(0, false) },
+          { label: 'Present', description: pts(3) },
+        ],
+      },
+    },
+  },
   bbps: {
     name: 'Boston Bowel Preparation Scale (BBPS)',
     description:

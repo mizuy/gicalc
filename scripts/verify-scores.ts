@@ -43,6 +43,7 @@ import { computeAronchick } from '../lib/scores/aronchick';
 import { computeBbps } from '../lib/scores/bbps';
 import { computeSekiguchi } from '../lib/scores/sekiguchi';
 import { computeIshii } from '../lib/scores/ishii';
+import { computeKoyamaEt2 } from '../lib/scores/koyama-et2';
 import { computeKakushima } from '../lib/scores/kakushima';
 import { computeModifiedSpigelman, computeSpigelman } from '../lib/scores/spigelman';
 import { lowestFieldValues } from '../lib/scores/initialValues';
@@ -60,6 +61,7 @@ import {
 import { getScoreListPhase, groupScoresByDuodenumSite, groupScoresByListPhase, navCategoryUsesListPhases } from '../data/scores/list-sections';
 import { LIST_CLINICAL_PHASE_ORDER, LIST_NAV_CATEGORY_ORDER } from '../types/score';
 import { ISHII_2021_PUBMED } from '../data/scores/ishii';
+import { KOYAMA_ET2_2022_PUBMED } from '../data/scores/koyama-et2';
 import { KAKUSHIMA_2017_PUBMED } from '../data/scores/kakushima';
 import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
 import { APPENDICEAL_ORIFICE_2016_PUBMED, OUNG_2020_PUBMED } from '../data/scores/appendiceal-orifice';
@@ -103,7 +105,7 @@ import { isRemoteVersionNewer, shouldReportUpdateAvailable } from '../lib/web/pw
 import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
 import { classificationOriginalLocale } from '../lib/i18n/localize';
 
-test('登録スコアは47種で臓器順に並ぶ', () => {
+test('登録スコアは48種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -149,6 +151,7 @@ test('登録スコアは47種で臓器順に並ぶ', () => {
       'wasp',
       'jnet',
       'kajiwara-nomogram',
+      'koyama-et2',
       'bbps',
       'aronchick',
       'forrest',
@@ -192,6 +195,7 @@ test('登録スコアは47種で臓器順に並ぶ', () => {
           'wasp',
           'jnet',
           'kajiwara-nomogram',
+          'koyama-et2',
           'bbps',
           'aronchick',
         ],
@@ -203,9 +207,9 @@ test('登録スコアは47種で臓器順に並ぶ', () => {
   assert.equal(getScoreNavCategory(getScoreById('vienna')!), 'pathology');
 });
 
-test('variant 専用 id は一覧から隠し、全定義50種を保持する', () => {
+test('variant 専用 id は一覧から隠し、全定義51種を保持する', () => {
   assert.deepEqual([...HIDDEN_LIST_SCORE_IDS].sort(), ['apcs-modified', 'kyoto-modified', 'modified-spigelman']);
-  assert.equal(ALL_SCORE_DEFINITIONS.length, 50);
+  assert.equal(ALL_SCORE_DEFINITIONS.length, 51);
   assert.ok(getScoreById('kyoto-modified'));
   assert.ok(getScoreById('modified-spigelman'));
   assert.ok(getScoreById('apcs-modified'));
@@ -249,6 +253,7 @@ test('一覧はフェーズ別にグループ化し、出血・病理はサブ�
   assert.equal(getScoreNavCategory(getScoreById('vienna')!), 'pathology');
   assert.equal(getScoreListPhase('sekiguchi'), 'treatment');
   assert.equal(getScoreListPhase('kajiwara-nomogram'), 'treatment');
+  assert.equal(getScoreListPhase('koyama-et2'), 'treatment');
   assert.equal(getScoreListPhase('jes'), 'diagnosis');
   assert.equal(navCategoryUsesListPhases('bleeding'), false);
   assert.equal(navCategoryUsesListPhases('pathology'), false);
@@ -293,7 +298,7 @@ test('一覧はフェーズ別にグループ化し、出血・病理はサブ�
           'jnet',
         ],
       ],
-      ['treatment', ['esd-fibrosis', 'colorectal-esd-curability', 'kajiwara-nomogram']],
+      ['treatment', ['esd-fibrosis', 'colorectal-esd-curability', 'kajiwara-nomogram', 'koyama-et2']],
     ],
   );
 
@@ -346,6 +351,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     wasp: 'classification',
     jnet: 'classification',
     'kajiwara-nomogram': 'prediction',
+    'koyama-et2': 'prediction',
     bbps: 'score',
     aronchick: 'score',
     forrest: 'classification',
@@ -388,6 +394,7 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'colorectal-ec',
     'jnet',
     'kajiwara-nomogram',
+    'koyama-et2',
     'noblads',
   ];
   const international = [
@@ -726,6 +733,38 @@ test('Ishii / Kakushima: ≥3 点で C4/5、未満は C3', () => {
 
   const kakuMax = computeKakushima({ diameter: 1, color: 2, macro: 1, nodularity: 1 });
   assert.equal(kakuMax.total, 5);
+});
+
+test('Koyama e-T2: ≥7 点で T2、未満は T1b', () => {
+  const low = computeKoyamaEt2({
+    deepDepression: 0,
+    demarcatedDepression: 0,
+    foldConvergency: 0,
+    erosionWhitePlaque: 0,
+    borrmannType23: 0,
+  });
+  assert.equal(low.total, 0);
+  assert.equal(low.maxScore, 11);
+  assert.equal(low.interpretation, '深在性 SM 浸潤（T1b）の可能性');
+
+  const cutoff = computeKoyamaEt2({
+    deepDepression: 1,
+    demarcatedDepression: 0,
+    foldConvergency: 0,
+    erosionWhitePlaque: 1,
+    borrmannType23: 1,
+  });
+  assert.equal(cutoff.total, 7);
+  assert.equal(cutoff.interpretation, 'T2（固有筋層浸潤）を疑う');
+
+  const max = computeKoyamaEt2({
+    deepDepression: 1,
+    demarcatedDepression: 1,
+    foldConvergency: 1,
+    erosionWhitePlaque: 1,
+    borrmannType23: 1,
+  });
+  assert.equal(max.total, 11);
 });
 
 test('各スコア定義の compute がフィールド経由で動く', () => {
@@ -1856,6 +1895,13 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(ishii.pubmed, ISHII_2021_PUBMED);
   assert.equal(ishii.figures?.[0]?.src, undefined);
 
+  const koyamaEt2 = getScoreById('koyama-et2');
+  assert.ok(koyamaEt2);
+  assert.equal(koyamaEt2.pubmed, KOYAMA_ET2_2022_PUBMED);
+  assert.equal(koyamaEt2.figures?.[0]?.src, undefined);
+  assert.match(koyamaEt2.figures?.[0]?.source ?? '', /Koyama Y/);
+  assert.match(koyamaEt2.figures?.[0]?.doi ?? '', /gie\.2022\.03\.002/);
+
   const kakushima = getScoreById('kakushima');
   assert.ok(kakushima);
   assert.equal(kakushima.pubmed, KAKUSHIMA_2017_PUBMED);
@@ -2114,6 +2160,19 @@ test('英語結果は解釈だけ訳し、点数は変えない', () => {
   assert.equal(ishiiEn.interpretation, 'Suggests VCL C4/5 (HGA / cancer)');
   assert.doesNotMatch(ishiiEn.details?.join(' ') ?? '', japaneseChars);
 
+  const koyamaEn = localizeResult(
+    computeKoyamaEt2({
+      deepDepression: 1,
+      demarcatedDepression: 0,
+      foldConvergency: 0,
+      erosionWhitePlaque: 1,
+      borrmannType23: 1,
+    }),
+    'en',
+  );
+  assert.equal(koyamaEn.interpretation, 'Suggests T2 (muscularis propria invasion)');
+  assert.doesNotMatch(koyamaEn.details?.join(' ') ?? '', japaneseChars);
+
   const kakushimaEn = localizeResult(
     computeKakushima({ diameter: 0, color: 0, macro: 0, nodularity: 0 }),
     'en',
@@ -2151,6 +2210,16 @@ test('既定言語は英語で、計算は最低点から始まる', () => {
   const ishii = getScoreById('ishii');
   assert.ok(ishii && !isClassification(ishii));
   assert.deepEqual(lowestFieldValues(ishii.fields), { color: 0, size: 0, surface: 0, vessels: 0 });
+
+  const koyamaEt2 = getScoreById('koyama-et2');
+  assert.ok(koyamaEt2 && !isClassification(koyamaEt2));
+  assert.deepEqual(lowestFieldValues(koyamaEt2.fields), {
+    deepDepression: 0,
+    demarcatedDepression: 0,
+    foldConvergency: 0,
+    erosionWhitePlaque: 0,
+    borrmannType23: 0,
+  });
 
   const kakushima = getScoreById('kakushima');
   assert.ok(kakushima && !isClassification(kakushima));
@@ -2364,7 +2433,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.15');
+  assert.equal(pkg.version, '1.0.16');
 });
 
 test('ホームの臓器カテゴリにはアイコン画像がある', () => {
@@ -2458,6 +2527,7 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsNotCcBody, /WASP/);
   assert.match(UI.ja.about.citationsNotCcBody, /Prague/);
   assert.match(UI.ja.about.citationsNotCcBody, /Kajiwara/);
+  assert.match(UI.ja.about.citationsNotCcBody, /Koyama 2022/);
   assert.match(UI.ja.about.citationsNotCcBody, /埋め込まず/);
   assert.match(UI.ja.about.esophagusBody, /Siewert/);
   assert.match(UI.ja.about.esophagusBody, /西分類/);
@@ -2517,11 +2587,17 @@ test('関連スコア: 登録 id は有効で colorectal ↔ nomogram が双方�
 
   const coloLinks = getRelatedScores('colorectal-esd-curability', 'ja');
   assert.ok(coloLinks.some((item) => item.score.id === 'kajiwara-nomogram'));
+  assert.ok(coloLinks.some((item) => item.score.id === 'koyama-et2'));
   assert.equal(coloLinks[0]?.href, '/score/kajiwara-nomogram');
 
   const nomoLinks = getRelatedScores('kajiwara-nomogram', 'en');
   assert.ok(nomoLinks.some((item) => item.score.id === 'colorectal-esd-curability'));
+  assert.ok(nomoLinks.some((item) => item.score.id === 'koyama-et2'));
   assert.match(nomoLinks[0]?.hint ?? '', /curative resection/i);
+
+  const et2Links = getRelatedScores('koyama-et2', 'ja');
+  assert.ok(et2Links.some((item) => item.score.id === 'colorectal-esd-curability'));
+  assert.ok(et2Links.some((item) => item.score.id === 'kajiwara-nomogram'));
 
   const kyotoLinks = getRelatedScores('kyoto-modified', 'ja');
   assert.ok(kyotoLinks.length > 0);

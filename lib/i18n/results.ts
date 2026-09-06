@@ -23,6 +23,8 @@ const INTERPRETATION_EN: Record<string, string> = {
   'Stage IV': 'Stage IV',
   'VCL C4/5（HGA / 癌）を疑う': 'Suggests VCL C4/5 (HGA / cancer)',
   'VCL C3（LGA）を疑う': 'Suggests VCL C3 (LGA)',
+  'T2（固有筋層浸潤）を疑う': 'Suggests T2 (muscularis propria invasion)',
+  '深在性 SM 浸潤（T1b）の可能性': 'Possible deep SM invasion (T1b)',
   'VCL 4 以上（HGA / 癌）を疑う': 'Suggests VCL 4 or higher (HGA / cancer)',
   'VCL 3（LGA）を疑う': 'Suggests VCL 3 (LGA)',
   'Excellent（優）': 'Excellent',
@@ -103,6 +105,14 @@ const DETAIL_EXACT_EN: Record<string, string> = {
   'カットオフ ≥3 点。導出コホートの正診率 92%、感度 95%、特異度 93%。':
     'Cutoff ≥3. Derivation-cohort accuracy 92%, sensitivity 95%, specificity 93%.',
   '色調は白光、表面・血管は NBI 拡大で評価する。': 'Score color on WLI; surface and vessels on magnifying NBI.',
+  'カットオフ ≥7 点。開発コホート感度 82%、特異度 83%。':
+    'Cutoff ≥7. Derivation-cohort sensitivity 82%, specificity 83%.',
+  'T2 疑いでは ESD は不適当なことが多く、外科切除を検討する。':
+    'Suspected T2 often makes ESD inappropriate; consider surgical resection.',
+  'カットオフ <7 点。T1b（SM 浸潤 ≥1000 μm）の可能性。':
+    'Cutoff <7. Possible T1b (SM invasion ≥1000 μm).',
+  '深在性 SM 癌としての ESD 適応は個別判断（組織型・リンパ節転移リスク等）。':
+    'ESD for deep SM cancer requires individual judgment (histology, LNM risk, etc.).',
   'カットオフ <3 点。低異型度腺腫の見込み。': 'Cutoff <3. Favors low-grade adenoma.',
   'カットオフ ≥3 点。検証コホートの感度 88%、特異度 79%、正診率 86%。':
     'Cutoff ≥3. Validation sensitivity 88%, specificity 79%, accuracy 86%.',
