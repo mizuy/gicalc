@@ -1273,11 +1273,10 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(appendicealOrifice.originalLead ?? '', /Type 3a denotes deep invasion/);
   assert.equal(appendicealOrifice.pubmed, APPENDICEAL_ORIFICE_2016_PUBMED);
   assert.equal(appendicealOrifice.developedInJapan, true);
-  assertOriginalPlateIsLinkOnly(appendicealOrifice);
-  assert.equal(appendicealOrifice.entries[0]?.figures?.length, 1);
-  assert.match(appendicealOrifice.entries[0]?.figures?.[0]?.src ?? '', /type-0/);
-  assert.equal(appendicealOrifice.entries[0]?.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
-  assert.equal(appendicealOrifice.entries[0]?.figures?.[0]?.pubmed, OUNG_2020_PUBMED);
+  assert.match(appendicealOrifice.figures?.[0]?.src ?? '', /oung2020-fig2\.webp/);
+  assert.equal(appendicealOrifice.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.equal(appendicealOrifice.figures?.[0]?.pubmed, OUNG_2020_PUBMED);
+  assert.equal(appendicealOrifice.entries.every((entry) => entry.figures === undefined), true);
   assert.match(appendicealOrifice.entries[0]?.comment ?? '', /Type 0/);
 
   const nice = getScoreById('nice');
@@ -1656,16 +1655,13 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const appendicealOrificeFig = getScoreById('appendiceal-orifice');
   assert.ok(appendicealOrificeFig && isClassification(appendicealOrificeFig));
-  assertOriginalPlateIsLinkOnly(appendicealOrificeFig);
-  assert.equal(appendicealOrificeFig.entries[0]?.figures?.length, 1);
-  assert.match(appendicealOrificeFig.entries[0]?.figures?.[0]?.src ?? '', /type-0/);
-  assert.match(appendicealOrificeFig.entries[1]?.figures?.[0]?.src ?? '', /type-1/);
-  assert.match(appendicealOrificeFig.entries[4]?.figures?.[0]?.src ?? '', /type-3a/);
-  assert.match(appendicealOrificeFig.entries[0]?.figures?.[0]?.caption ?? '', /Fig\. 2/);
-  assert.match(appendicealOrificeFig.entries[0]?.figures?.[0]?.source ?? '', /Oung B/);
-  assert.equal(appendicealOrificeFig.entries[0]?.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
-  assert.match(appendicealOrificeFig.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
-  assert.match(appendicealOrificeFig.entries[0]?.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
+  assert.equal(appendicealOrificeFig.figures?.length, 1);
+  assert.match(appendicealOrificeFig.figures?.[0]?.src ?? '', /oung2020-fig2\.webp/);
+  assert.match(appendicealOrificeFig.figures?.[0]?.caption ?? '', /Fig\. 2/);
+  assert.match(appendicealOrificeFig.figures?.[0]?.source ?? '', /Oung B/);
+  assert.equal(appendicealOrificeFig.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.match(appendicealOrificeFig.figures?.[0]?.note ?? '', /改変・切り抜きせず/);
+  assert.equal(appendicealOrificeFig.entries.every((entry) => entry.figures === undefined), true);
 
   const nice = getScoreById('nice');
   assert.ok(nice && isClassification(nice));
@@ -1764,13 +1760,12 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const forrestFig = getScoreById('forrest');
   assert.ok(forrestFig && isClassification(forrestFig));
-  assertOriginalPlateIsLinkOnly(forrestFig);
-  assert.equal(forrestFig.entries[0]?.figures?.length, 2);
-  assert.match(forrestFig.entries[0]?.figures?.[0]?.src ?? '', /ia-top/);
-  assert.match(forrestFig.entries[5]?.figures?.[1]?.src ?? '', /iii-bottom/);
-  assert.match(forrestFig.entries[0]?.figures?.[0]?.source ?? '', /Forrest JA/);
-  assert.equal(forrestFig.entries[0]?.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
-  assert.match(forrestFig.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
+  assert.equal(forrestFig.figures?.length, 1);
+  assert.match(forrestFig.figures?.[0]?.src ?? '', /forrest-jsmu2025-fig1\.webp/);
+  assert.match(forrestFig.figures?.[0]?.source ?? '', /Forrest JA/);
+  assert.equal(forrestFig.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.match(forrestFig.figures?.[0]?.note ?? '', /改変・切り抜きせず/);
+  assert.equal(forrestFig.entries.every((entry) => entry.figures === undefined), true);
   assert.equal(forrestFig.pubmed, FORREST_1974_PUBMED);
 
   const jsphFig = getScoreById('jsph-varices');
@@ -2580,6 +2575,25 @@ test('切り抜きがある分類は原図を埋め込まずリンクだけに�
     for (const figure of score.figures ?? []) {
       assert.match(figure.note ?? '', /埋め込まず/, score.id);
     }
+  }
+});
+
+test('NoDerivatives の図は分類カード用に切り抜かない', () => {
+  for (const score of SCORES) {
+    if (!isClassification(score)) continue;
+    for (const entry of score.entries) {
+      for (const figure of entry.figures ?? []) {
+        assert.doesNotMatch(figure.license ?? '', /-ND(?:\s|$)/, `${score.id} ${entry.label}`);
+      }
+    }
+  }
+
+  for (const id of ['forrest', 'appendiceal-orifice']) {
+    const score = getScoreById(id);
+    assert.ok(score && isClassification(score));
+    assert.equal(score.entries.every((entry) => entry.figures === undefined), true, id);
+    assert.match(score.figures?.[0]?.src ?? '', /fig[12]\.webp$/, id);
+    assert.match(score.figures?.[0]?.note ?? '', /改変・切り抜きせず/, id);
   }
 });
 
