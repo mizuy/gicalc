@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ScoreListItem } from '@/components/calculator/ScoreListItem';
+import { ListPhaseSectionHeader } from '@/components/calculator/ListPhaseSectionHeader';
 import { Text, useThemeColor } from '@/components/Themed';
 import {
   groupScoresByDuodenumSite,
@@ -68,7 +69,7 @@ export function ScoreListSection({ scores, category }: Props) {
     <View style={styles.wrap}>
       {phaseGroups.map((group) => (
         <View key={group.phase} style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: textSecondary }]}>{t.listPhase[group.phase]}</Text>
+          <ListPhaseSectionHeader phase={group.phase} label={t.listPhase[group.phase]} />
           <ScoreCards scores={group.scores} />
         </View>
       ))}
