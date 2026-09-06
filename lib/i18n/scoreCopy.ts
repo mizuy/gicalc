@@ -1321,25 +1321,8 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         'Short residual stump favors en-bloc resection. Included with Type 3 in Oung 2020 DCT-ESD series; traction helps.',
     },
     figureNotes: [
-      'Crops are on each type card. The original plate is not hosted — link to Oung 2020 Fig. 2. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
+      'Oung 2020 Fig. 2 is shown in full without alteration or cropping. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
     ],
-    entryFigureNotes: {
-      'Type 0': [
-        'Cropped from original Fig. 2 (Type 0). Endosc Int Open. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
-      ],
-      'Type 1': [
-        'Cropped from original Fig. 2 (Type 1). Endosc Int Open. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
-      ],
-      'Type 2': [
-        'Cropped from original Fig. 2 (Type 2). Endosc Int Open. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
-      ],
-      'Type 3': [
-        'Cropped from original Fig. 2 (Type 3). Endosc Int Open. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
-      ],
-      'Type 3a': [
-        'Cropped from original Fig. 2 (Type 3a). Endosc Int Open. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
-      ],
-    },
   },
   'esd-fibrosis': {
     name: 'ESD submucosal fibrosis classification (F0–F2)',
@@ -1773,34 +1756,8 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       IIc: 'IIc / III are usually observed without endoscopic therapy for the stigma itself.',
     },
     figureNotes: [
-      'Crops are on each type card. The original plate is not hosted — link to Zhou 2025 Fig. 1. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
+      'Zhou 2025 Fig. 1 is shown in full without alteration or cropping. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
     ],
-    entryFigureNotes: {
-      Ia: [
-        'Cropped from original Fig. 1A (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-        'Cropped from original Fig. 1A (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-      ],
-      Ib: [
-        'Cropped from original Fig. 1B (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-        'Cropped from original Fig. 1B (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-      ],
-      IIa: [
-        'Cropped from original Fig. 1C (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-        'Cropped from original Fig. 1C (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-      ],
-      IIb: [
-        'Cropped from original Fig. 1D (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-        'Cropped from original Fig. 1D (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-      ],
-      IIc: [
-        'Cropped from original Fig. 1E (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-        'Cropped from original Fig. 1E (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-      ],
-      III: [
-        'Cropped from original Fig. 1F (upper). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-        'Cropped from original Fig. 1F (lower). J South Med Univ. License: CC BY-NC-ND 4.0. The Forrest 1974 Lancet original is not CC.',
-      ],
-    },
   },
   gbs: {
     name: 'Glasgow-Blatchford Score (upper GI bleeding)',

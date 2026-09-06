@@ -102,11 +102,12 @@ npm run preview:pages
 - JES（Oyama 2017, *Esophagus*）の図: **CC BY 4.0**
 - EREFS の図（Abe 2022, *Diagnostics* Fig. 2）: **CC BY 4.0**
 - Hill の図（Ge 2023, *Ann Med* Fig. 1）: **CC BY-NC 4.0**
-- Forrest の図（Zhou 2025, *J South Med Univ* Fig. 1）: **CC BY-NC-ND 4.0**
+- Forrest の図（Zhou 2025, *J South Med Univ* Fig. 1）: **CC BY-NC-ND 4.0**（改変・切り抜きなしで原図全体を掲載）
 - MESDA-G（Muto 2016, *Dig Endosc*）の図: **CC BY-NC-ND 4.0**
 - 木村–竹本の図（Quach 2019, *Clin Endosc* Fig. 2）: **CC BY-NC 3.0**
 - Paris の図（Kim 2025, *Clin Endosc* Fig. 2）: **CC BY-NC 4.0**（Johnson 2023 *Can J Surg* は CC BY-NC-ND 4.0）
 - LST の図（Kim 2025, *Clin Endosc* Fig. 3）: **CC BY-NC 4.0**（Castillo-Regalado 2022 *WJGE* は CC BY-NC 4.0）
+- 虫垂開口部 Type 分類の図（Oung 2020, *Endosc Int Open* Fig. 2）: **CC BY-NC-ND 4.0**（改変・切り抜きなしで原図全体を掲載）
 - BEST-J（Hatta 2021, *Gut*）: **CC BY-NC 4.0**
 - NICE teaching 図（Hamada 2021, *BMC Gastroenterol* Fig. 1）: **CC BY 4.0**（各 Type に Endoscopic image 行から切り抜きを掲載。Hayashi 2013 原著 Fig. 1 は Elsevier 著作権のためリンクのみ）
 - BBPS 区域スコア例（Kim 2024, *Sci Rep* Fig. 1）: **CC BY 4.0**（Lai 2009 原著 Fig. 1 は Elsevier 著作権）
