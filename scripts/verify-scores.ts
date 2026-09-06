@@ -207,7 +207,7 @@ test('登録スコアは48種で臓器順に並ぶ', () => {
   assert.equal(getScoreNavCategory(getScoreById('vienna')!), 'pathology');
 });
 
-test('variant 専用 id は一覧から隠し、全定義50種を保持する', () => {
+test('variant 専用 id は一覧から隠し、全定義51種を保持する', () => {
   assert.deepEqual([...HIDDEN_LIST_SCORE_IDS].sort(), ['apcs-modified', 'kyoto-modified', 'modified-spigelman']);
   assert.equal(ALL_SCORE_DEFINITIONS.length, 51);
   assert.ok(getScoreById('kyoto-modified'));
