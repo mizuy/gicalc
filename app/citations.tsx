@@ -26,7 +26,14 @@ export default function CitationsScreen() {
               router.replace('/(tabs)/about');
             }
           }}
-          style={({ pressed }) => ({ opacity: pressed ? 0.65 : 1 })}>
+          style={({ pressed }) => [
+            styles.backButton,
+            {
+              backgroundColor: surface,
+              borderColor: border,
+              opacity: pressed ? 0.65 : 1,
+            },
+          ]}>
           <Text style={[styles.back, { color: tint }]}>‹ {t.back}</Text>
         </Pressable>
         <LanguageToggle />
@@ -68,11 +75,20 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   navigation: {
-    minHeight: 36,
+    minHeight: 44,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 8,
+  },
+  backButton: {
+    minWidth: 88,
+    minHeight: 40,
+    borderWidth: 1,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
   },
   back: {
     fontSize: 14,
