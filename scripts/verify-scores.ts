@@ -16,6 +16,7 @@ function assertOriginalPlateIsLinkOnly(score: { id: string; figures?: { src?: st
 }
 
 import {
+  interpretLnmProbability,
   NOMOGRAM_ITEM_POINTS,
   nomogramTotalPoints,
   predictLnmProbability,
@@ -514,7 +515,7 @@ test('Kajiwara: 多変量係数の代表組み合わせ', () => {
   }
 });
 
-test('Kajiwara: 高リスク組み合わせは 15% 以上', () => {
+test('Kajiwara: 高係数の組み合わせでも治療推奨を表示しない', () => {
   const probability = predictLnmProbability({
     sex: 'female',
     location: 'rsra',
@@ -523,8 +524,25 @@ test('Kajiwara: 高リスク組み合わせは 15% 以上', () => {
     smDepth: 'sm2000plus',
     budding: 'bd23',
   });
-  assert.ok(probability >= 15);
   assert.equal(probability, 56.3);
+
+  const result = interpretLnmProbability(probability);
+  assert.equal(result.interpretation, 'LNM予測確率');
+  assert.equal(result.severity, 'none');
+  assert.doesNotMatch(result.details.join(' '), /経過観察|追加.*切除|推奨します/);
+  assert.match(result.details.join(' '), /治療推奨の閾値ではありません/);
+
+  const english = localizeResult(
+    {
+      total: probability,
+      probability,
+      displayMode: 'probability',
+      ...result,
+    },
+    'en',
+  );
+  assert.equal(english.interpretation, 'Predicted LNM probability');
+  assert.doesNotMatch(english.details?.join(' ') ?? '', /observation|resection|recommended/i);
 });
 
 test('Kajiwara: フィールド値 0 は参照カテゴリに写像される', () => {
@@ -645,6 +663,12 @@ test('eCura: 0–1 低リスク / 2–4 中リスク / 5–7 高リスク', () =
   assert.equal(high.total, 7);
   assert.equal(high.severity, 'severe');
   assert.match(high.details?.[0] ?? '', /26\.7%/);
+  for (const result of [zero, low, mid, high]) {
+    assert.equal(result.details?.length, 2);
+    assert.doesNotMatch(result.details?.join(' ') ?? '', /選択肢|追加治療|胃切除|推奨/);
+    const english = localizeResult(result, 'en');
+    assert.doesNotMatch(english.details?.join(' ') ?? '', /option|treatment|gastrectomy|recommended/i);
+  }
   assert.equal(Object.keys(ECURA_LNM_BY_SCORE).length, 8);
 });
 

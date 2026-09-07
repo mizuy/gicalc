@@ -99,29 +99,15 @@ export function predictLnmProbability(input: NomogramInput): number {
   return Math.round(probability * 1000) / 10;
 }
 
-export function interpretLnmProbability(probability: number): {
+export function interpretLnmProbability(_probability: number): {
   interpretation: string;
   severity: 'none' | 'moderate' | 'severe';
   details: string[];
 } {
-  if (probability < 5) {
-    return {
-      interpretation: '低リスク',
-      severity: 'none',
-      details: ['リンパ節転移リスクは 5% 未満です。', '経過観察も選択肢です。'],
-    };
-  }
-  if (probability < 15) {
-    return {
-      interpretation: '中等度リスク',
-      severity: 'moderate',
-      details: ['リンパ節転移リスクは 5–15% です。', '追加外科切除を慎重に検討してください。'],
-    };
-  }
   return {
-    interpretation: '高リスク',
-    severity: 'severe',
-    details: ['リンパ節転移リスクは 15% 以上です。', '追加腸切除＋リンパ節郭清を強く検討してください。'],
+    interpretation: 'LNM予測確率',
+    severity: 'none',
+    details: ['Kajiwara 2023 ノモグラムによる予測値です。治療推奨の閾値ではありません。'],
   };
 }
 
