@@ -10,6 +10,7 @@ const INTERPRETATION_EN: Record<string, string> = {
   超高リスク: 'Very high risk',
   超低リスク: 'Very low risk',
   '低リスク群（0–4）': 'Low-risk group (0–4)',
+  LNM予測確率: 'Predicted LNM probability',
   腸上皮化生なし: 'No intestinal metaplasia',
   '低リスク（0–4）': 'Low risk (0–4)',
   '高リスク（5–8）': 'High risk (5–8)',
@@ -56,13 +57,12 @@ const DETAIL_EXACT_EN: Record<string, string> = {
   'ESD後遅発性出血率 29.7%': 'Delayed post-ESD bleeding rate 29.7%',
   'LNM率 2.5%（CSS 99.6%）': 'LNM rate 2.5% (CSS 99.6%)',
   'リスク区分の LNM率 2.5%（CSS 99.6%）': 'Risk-group LNM rate 2.5% (CSS 99.6%)',
-  'ESD単独も選択肢です。': 'ESD alone is also an option.',
   'LNM率 6.7%（CSS 96.0%）': 'LNM rate 6.7% (CSS 96.0%)',
   'リスク区分の LNM率 6.7%（CSS 96.0%）': 'Risk-group LNM rate 6.7% (CSS 96.0%)',
-  '追加治療は個別判断してください。': 'Decide additional treatment case by case.',
   'LNM率 22.7%（CSS 90.1%）': 'LNM rate 22.7% (CSS 90.1%)',
   'リスク区分の LNM率 22.7%（CSS 90.1%）': 'Risk-group LNM rate 22.7% (CSS 90.1%)',
-  '救済胃切除＋リンパ節郭清を推奨します。': 'Salvage gastrectomy with lymphadenectomy is recommended.',
+  'Kajiwara 2023 ノモグラムによる予測値です。治療推奨の閾値ではありません。':
+    'This is a prediction from the Kajiwara 2023 nomogram, not a treatment-recommendation threshold.',
   '介入不要の見込みが高いです。': 'Intervention is unlikely to be needed.',
   'ESGE では GBS 0–1 を外来管理の候補とします。': 'ESGE considers GBS 0–1 a candidate for outpatient care.',
   '入院・早期内視鏡を検討してください。': 'Consider admission and early endoscopy.',
@@ -153,13 +153,6 @@ const DETAIL_EXACT_EN: Record<string, string> = {
   '1つでも区域が 0–1 なら inadequate とするのが一般的です。再検査間隔の短縮を検討してください。':
     'Any segment of 0–1 is generally inadequate. Consider a shorter recall interval.',
   '洗浄・吸引後の抜去時に評価します。': 'Score during withdrawal after washing and suction.',
-  'リンパ節転移リスクは 5% 未満です。': 'Lymph-node metastasis risk is below 5%.',
-  '経過観察も選択肢です。': 'Observation is also an option.',
-  'リンパ節転移リスクは 5–15% です。': 'Lymph-node metastasis risk is 5–15%.',
-  '追加外科切除を慎重に検討してください。': 'Carefully consider additional surgical resection.',
-  'リンパ節転移リスクは 15% 以上です。': 'Lymph-node metastasis risk is 15% or higher.',
-  '追加腸切除＋リンパ節郭清を強く検討してください。':
-    'Strongly consider additional bowel resection with lymphadenectomy.',
   '追加胃切除は個別判断してください。': 'Decide additional gastrectomy case by case.',
   '胃切除＋リンパ節郭清を強く検討してください。': 'Strongly consider gastrectomy with lymphadenectomy.',
   'JGES 胃癌 ESD/EMR ガイドライン第2版・胃癌治療ガイドライン第7版（2025年3月改訂）に基づく内視鏡的根治度です。':

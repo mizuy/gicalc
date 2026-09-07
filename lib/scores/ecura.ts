@@ -30,7 +30,7 @@ export function computeEcura(values: Record<string, number>): ScoreResult {
       displayMode: 'points',
       severity: 'none',
       interpretation: '低リスク',
-      details: [scoreLine, 'リスク区分の LNM率 2.5%（CSS 99.6%）', 'ESD単独も選択肢です。'],
+      details: [scoreLine, 'リスク区分の LNM率 2.5%（CSS 99.6%）'],
     };
   }
 
@@ -41,7 +41,7 @@ export function computeEcura(values: Record<string, number>): ScoreResult {
       displayMode: 'points',
       severity: 'moderate',
       interpretation: '中リスク',
-      details: [scoreLine, 'リスク区分の LNM率 6.7%（CSS 96.0%）', '追加治療は個別判断してください。'],
+      details: [scoreLine, 'リスク区分の LNM率 6.7%（CSS 96.0%）'],
     };
   }
 
@@ -51,6 +51,6 @@ export function computeEcura(values: Record<string, number>): ScoreResult {
     displayMode: 'points',
     severity: 'severe',
     interpretation: '高リスク',
-    details: [scoreLine, 'リスク区分の LNM率 22.7%（CSS 90.1%）', '救済胃切除＋リンパ節郭清を推奨します。'],
+    details: [scoreLine, 'リスク区分の LNM率 22.7%（CSS 90.1%）'],
   };
 }
