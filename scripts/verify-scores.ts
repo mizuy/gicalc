@@ -67,12 +67,12 @@ import { QUACH_2019_PUBMED } from '../data/scores/kimura-takemoto';
 import { APPENDICEAL_ORIFICE_2016_PUBMED, OUNG_2020_PUBMED } from '../data/scores/appendiceal-orifice';
 import { LST_2008_PUBMED } from '../data/scores/lst';
 import { buildAlgorithmFlowGraph } from '../lib/scores/algorithmFlowGraph';
-import { MESDA_G_2016_PUBMED } from '../data/scores/mesda-g';
+import { MESDA_G_2016_PUBMED, MESDA_KURUMI_2021_PUBMED } from '../data/scores/mesda-g';
 import { ESD_FIBROSIS_2010_PUBMED, ESD_FIBROSIS_2016_PUBMED } from '../data/scores/esd-fibrosis';
 import { EREFS_2013_PUBMED } from '../data/scores/erefs';
 import { FORREST_1974_PUBMED } from '../data/scores/forrest';
 import { HILL_1996_PUBMED } from '../data/scores/hill';
-import { LA_1999_PUBMED } from '../data/scores/la';
+import { LA_1999_PUBMED, LA_JUNG_2025_PUBMED } from '../data/scores/la';
 import { SAURIN_2004_PUBMED } from '../data/scores/modified-spigelman';
 import { NICE_2013_PUBMED, NICE_HAMADA_2021_PUBMED } from '../data/scores/nice';
 import { BBPS_SCIREP_2024_PUBMED } from '../data/scores/bbps';
@@ -1724,15 +1724,24 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(mesda.figures?.[0]?.caption ?? '', /Fig\. 1/);
   assert.match(mesda.figures?.[0]?.source ?? '', /Muto M/);
   assert.match(mesda.figures?.[0]?.note ?? '', /埋め込まず/);
-  assert.match(mesda.figures?.[1]?.src ?? '', /mesda-g-muto2016-fig13/);
-  assert.match(mesda.figures?.[1]?.caption ?? '', /Fig\. 13/);
+  assert.equal(mesda.figures?.[1]?.src, undefined);
+  assert.match(mesda.figures?.[1]?.href ?? '', /jcm-10-02918-f005/);
+  assert.match(mesda.figures?.[1]?.caption ?? '', /Fig\. 5/);
   assert.equal(mesda.pubmed, MESDA_G_2016_PUBMED);
   assert.equal(mesda.figures?.[0]?.pubmed, MESDA_G_2016_PUBMED);
-  assert.equal(mesda.figures?.[1]?.pubmed, MESDA_G_2016_PUBMED);
+  assert.equal(mesda.figures?.[1]?.pubmed, MESDA_KURUMI_2021_PUBMED);
   assert.equal(mesda.license, 'CC BY-NC-ND 4.0');
   assert.equal(mesda.figures?.[0]?.license, 'CC BY-NC-ND 4.0');
-  assert.equal(mesda.figures?.[1]?.license, 'CC BY-NC-ND 4.0');
+  assert.equal(mesda.figures?.[1]?.license, 'CC BY 4.0');
   assert.match(mesda.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
+  for (const label of ['Regular MV', 'Irregular MV', 'Absent MV', 'Regular MS', 'Irregular MS', 'Absent MS']) {
+    const entry = mesda.entries.find((candidate) => candidate.label === label);
+    assert.equal(entry?.figures?.length, 1);
+    assert.match(entry?.figures?.[0]?.src ?? '', /mesda-g-kurumi2021-/);
+    assert.equal(entry?.figures?.[0]?.license, 'CC BY 4.0');
+    assert.equal(entry?.figures?.[0]?.pubmed, MESDA_KURUMI_2021_PUBMED);
+    assert.match(entry?.figures?.[0]?.note ?? '', /切り抜き/);
+  }
 
   const erefsFig = getScoreById('erefs');
   assert.ok(erefsFig && isClassification(erefsFig));
@@ -1829,9 +1838,17 @@ test('分類は原著の図を出典付きで持つ', () => {
   const laFig = getScoreById('la');
   assert.ok(laFig && isClassification(laFig));
   assert.equal(laFig.figures?.[0]?.src, undefined);
-  assert.match(laFig.figures?.[0]?.href ?? '', /S2212-0971\(13\)70046-3/);
-  assert.equal(laFig.figures?.[0]?.license, undefined);
-  assert.match(laFig.figures?.[0]?.note ?? '', /CC ではない/);
+  assert.match(laFig.figures?.[0]?.href ?? '', /f1-kjhugr-2025-0001/);
+  assert.equal(laFig.figures?.[0]?.license, 'CC BY-NC 4.0');
+  assert.equal(laFig.figures?.[0]?.pubmed, LA_JUNG_2025_PUBMED);
+  assert.match(laFig.figures?.[0]?.note ?? '', /切り抜き/);
+  for (const [index, grade] of ['a', 'b', 'c', 'd'].entries()) {
+    const figure = laFig.entries[index]?.figures?.[0];
+    assert.match(figure?.src ?? '', new RegExp(`la-jung2025-grade-${grade}`));
+    assert.equal(figure?.license, 'CC BY-NC 4.0');
+    assert.equal(figure?.pubmed, LA_JUNG_2025_PUBMED);
+    assert.match(figure?.note ?? '', /切り抜き/);
+  }
   assert.equal(laFig.pubmed, LA_1999_PUBMED);
 
   const waspFig = getScoreById('wasp');

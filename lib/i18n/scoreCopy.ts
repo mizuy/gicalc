@@ -74,8 +74,14 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Grade C': 'Many guidelines treat A/B as mild and C/D as severe.',
     },
     figureNotes: [
-      'VideoGIE 2013 is a CC BY-NC-ND 4.0 video. No complete A–D still-image teaching panel was confirmed as CC, so the figure is not hosted. Link opens the video article. The Lundell 1999 Gut original is not CC.',
+      'Crops from Fig. 1A–D are on each Grade card. The original plate is not hosted — link to PMC Fig. 1. License: CC BY-NC 4.0. Panels E (peptic stricture) and F (Barrett esophagus) are not used. The Lundell 1999 Gut original is not CC.',
     ],
+    entryFigureNotes: {
+      'Grade A': ['Cropped from Jung 2025 Fig. 1A (LA Grade A). License: CC BY-NC 4.0.'],
+      'Grade B': ['Cropped from Jung 2025 Fig. 1B (LA Grade B). License: CC BY-NC 4.0.'],
+      'Grade C': ['Cropped from Jung 2025 Fig. 1C (LA Grade C). License: CC BY-NC 4.0.'],
+      'Grade D': ['Cropped from Jung 2025 Fig. 1D (LA Grade D). License: CC BY-NC 4.0.'],
+    },
   },
   prague: {
     name: 'Prague C & M (Barrett esophagus)',
@@ -339,8 +345,16 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Same algorithm as the on-screen flowchart, so the image is not hosted — link to original Fig. 1. Wiley / JGES Open Access, CC BY-NC-ND 4.0. Magnifying algorithm for the stomach. Separate from JNET / NICE.',
-      'Original Fig. 13. Wiley / JGES Open Access, CC BY-NC-ND 4.0. Microvascular (V) and microsurface (S) patterns as regular / irregular / absent. Arrows mark the demarcation line (DL).',
+      'Crops from Kurumi 2021 Fig. 5 are on each VS classification card. The original plate is not hosted — link to PMC Fig. 5. License: CC BY 4.0.',
     ],
+    entryFigureNotes: {
+      'Regular MV': ['Cropped from the regular MVP panel in the lower row of Kurumi 2021 Fig. 5. License: CC BY 4.0.'],
+      'Irregular MV': ['Cropped from the irregular MVP panel in the lower row of Kurumi 2021 Fig. 5. License: CC BY 4.0.'],
+      'Absent MV': ['Cropped from the absent MVP panel in the lower row of Kurumi 2021 Fig. 5. License: CC BY 4.0.'],
+      'Regular MS': ['Cropped from the regular MSP panel in the upper row of Kurumi 2021 Fig. 5. License: CC BY 4.0.'],
+      'Irregular MS': ['Cropped from the irregular MSP panel in the upper row of Kurumi 2021 Fig. 5. License: CC BY 4.0.'],
+      'Absent MS': ['Cropped from the absent MSP panel in the upper row of Kurumi 2021 Fig. 5. License: CC BY 4.0.'],
+    },
     flow: {
       title: 'Algorithm',
       steps: {
