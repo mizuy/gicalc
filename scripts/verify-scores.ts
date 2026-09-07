@@ -525,7 +525,7 @@ test('Kajiwara: 高係数の組み合わせでも治療推奨を表示しない'
   const result = interpretLnmProbability(probability);
   assert.equal(result.interpretation, 'LNM予測確率');
   assert.equal(result.severity, 'none');
-  assert.doesNotMatch(result.details.join(' '), /経過観察|追加.*切除|推奨/);
+  assert.doesNotMatch(result.details.join(' '), /経過観察|追加.*切除|推奨します/);
   assert.match(result.details.join(' '), /治療推奨の閾値ではありません/);
 
   const english = localizeResult(
