@@ -8,16 +8,17 @@ import {
 } from './pwaUpdate';
 import { shouldReportUpdateAvailable } from './pwaVersionCheck';
 
-export type PwaUpdateCheckResult = 'available' | 'current' | 'unsupported';
+export type PwaUpdateCheckResult = 'preparing' | 'available' | 'current' | 'unsupported';
+export type PwaUpdateState = 'none' | 'preparing' | 'ready';
 
 const DISMISS_KEY = 'gicalc.pwaUpdate.dismissed';
 const UPDATE_POLL_MS = 5 * 60_000;
 
-type UpdateListener = (available: boolean) => void;
+type UpdateListener = (state: PwaUpdateState) => void;
 
 let registration: ServiceWorkerRegistration | null = null;
 let initCount = 0;
-let updateAvailable = false;
+let updateState: PwaUpdateState = 'none';
 let hadController = false;
 const listeners = new Set<UpdateListener>();
 
@@ -34,13 +35,20 @@ function readDismissed(): boolean {
 
 function notifyListeners() {
   for (const listener of listeners) {
-    listener(updateAvailable);
+    listener(updateState);
   }
 }
 
-function markAvailable() {
-  if (!updateAvailable) {
-    updateAvailable = true;
+function markPreparing() {
+  if (updateState === 'none') {
+    updateState = 'preparing';
+    notifyListeners();
+  }
+}
+
+function markReady() {
+  if (updateState !== 'ready') {
+    updateState = 'ready';
     notifyListeners();
   }
 }
@@ -53,7 +61,7 @@ function applyIncomingWorker(reg: ServiceWorkerRegistration): void {
       installingState: reg.installing?.state,
     })
   ) {
-    markAvailable();
+    markReady();
   }
 
   const incoming = reg.installing ?? reg.waiting;
@@ -66,7 +74,7 @@ function applyIncomingWorker(reg: ServiceWorkerRegistration): void {
         installingState: incoming.state,
       })
     ) {
-      markAvailable();
+      markReady();
     }
   });
 }
@@ -195,7 +203,7 @@ export function initPwaUpdateService(): () => void {
 
   const onControllerChange = () => {
     if (shouldOfferUpdateAfterControllerChange(hadController)) {
-      markAvailable();
+      markReady();
       return;
     }
     hadController = true;
@@ -221,7 +229,7 @@ export function initPwaUpdateService(): () => void {
     () => window.removeEventListener('focus', onFocus),
     () => {
       registration = null;
-      updateAvailable = false;
+      updateState = 'none';
     },
   ];
 
@@ -238,12 +246,12 @@ function runCleanup() {
 
 export function subscribePwaUpdate(listener: UpdateListener): () => void {
   listeners.add(listener);
-  listener(updateAvailable);
+  listener(updateState);
   return () => listeners.delete(listener);
 }
 
 export function isPwaUpdateAvailableNow(): boolean {
-  return updateAvailable;
+  return updateState !== 'none';
 }
 
 export function isPwaUpdateDismissed(): boolean {
@@ -278,9 +286,12 @@ export async function checkPwaUpdate(): Promise<PwaUpdateCheckResult> {
 
   if (remoteVersion !== null) {
     monitorServiceWorkerUpdate(reg, workerRefresh);
-    if (shouldReportUpdateAvailable({ runningVersion, remoteVersion, swUpdateDetected: updateAvailable })) {
-      markAvailable();
+    if (updateState === 'ready') {
       return 'available';
+    }
+    if (shouldReportUpdateAvailable({ runningVersion, remoteVersion, swUpdateDetected: false })) {
+      markPreparing();
+      return 'preparing';
     }
     return 'current';
   }
@@ -292,11 +303,11 @@ export async function checkPwaUpdate(): Promise<PwaUpdateCheckResult> {
   const available = shouldReportUpdateAvailable({
     runningVersion,
     remoteVersion,
-    swUpdateDetected: swDetected || updateAvailable,
+    swUpdateDetected: swDetected || updateState === 'ready',
   });
 
   if (available) {
-    markAvailable();
+    markReady();
     return 'available';
   }
 
