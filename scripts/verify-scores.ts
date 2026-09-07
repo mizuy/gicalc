@@ -1259,6 +1259,11 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(paris.originalLead ?? '', /Type 0 is divided into three categories/);
   assert.doesNotMatch(paris.entries.map((entry) => entry.label).join(' '), /Isp/);
   assert.equal(paris.pubmed, PARIS_2003_PUBMED);
+  assert.deepEqual(
+    paris.hierarchy?.map((node) => node.label),
+    ['0-I · Protruding', '0-II · Nonprotruding and nonexcavated', '0-III · Excavated family'],
+  );
+  assert.equal(paris.hierarchy?.[1]?.children?.length, 5);
 
   const sps = getScoreById('sps');
   assert.ok(sps && isClassification(sps));
@@ -1291,6 +1296,11 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(lst.entries[3]?.meaning, 'Basin-like depression');
   assert.match(lst.originalLead ?? '', /at least 10 mm/);
   assert.equal(lst.pubmed, LST_2008_PUBMED);
+  assert.deepEqual(
+    lst.hierarchy?.map((node) => node.label),
+    ['LST-G · Granular type', 'LST-NG · Nongranular type'],
+  );
+  assert.equal(lst.hierarchy?.every((node) => node.children?.length === 2), true);
 
   const appendicealOrifice = getScoreById('appendiceal-orifice');
   assert.ok(appendicealOrifice && isClassification(appendicealOrifice));
@@ -1516,6 +1526,9 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(vienna.originalLead ?? '', /negative for neoplasia\/dysplasia/);
   assert.equal(vienna.pubmed, VIENNA_2000_PUBMED);
   assert.equal(vienna.organ, 'colorectum');
+  assert.equal(vienna.hierarchy?.length, 5);
+  assert.equal(vienna.hierarchy?.[3]?.children?.length, 4);
+  assert.equal(vienna.hierarchy?.[4]?.children?.length, 2);
 
   const whoSerrated = getScoreById('who-serrated');
   assert.ok(whoSerrated && isClassification(whoSerrated));
@@ -2577,7 +2590,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.28');
+  assert.equal(pkg.version, '1.0.29');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {

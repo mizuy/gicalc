@@ -23,6 +23,8 @@ export type ScoreCopy = {
   description: string;
   fields?: Record<string, FieldCopy>;
   groups?: Record<string, string>;
+  /** 分類全体像ツリーの英語ラベル。キーは ClassificationHierarchyNode.id */
+  hierarchyLabels?: Record<string, string>;
   comments?: Record<string, string>;
   meanings?: Record<string, string>;
   figureNotes?: string[];

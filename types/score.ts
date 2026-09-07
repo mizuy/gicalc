@@ -146,6 +146,13 @@ export type ClassificationEntry = {
   figures?: ClassificationFigure[];
 };
 
+export type ClassificationHierarchyNode = {
+  /** 翻訳とReact keyに使う分類内で一意のID */
+  id: string;
+  label: string;
+  children?: ClassificationHierarchyNode[];
+};
+
 export type CalculatorDefinition = ToolBase & {
   kind?: 'calculator';
   fields: ScoreField[];
@@ -211,6 +218,8 @@ export type ClassificationDefinition = ToolBase & {
   kind: 'classification';
   /** 原著の定義文。画面末尾の文献ブロックに出す */
   originalLead?: string;
+  /** 親子関係を持つ分類で、カード前に示す全体像 */
+  hierarchy?: ClassificationHierarchyNode[];
   entries: ClassificationEntry[];
   /** WASP / MESDA-G のような手順付きアルゴリズムだけ付ける */
   flow?: AlgorithmFlow;

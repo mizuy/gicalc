@@ -12,6 +12,7 @@ export type UiStrings = {
   original: string;
   note: string;
   reset: string;
+  classificationOverview: string;
   algorithmFlow: string;
   algorithmNext: string;
   algorithmDiagnosis: string;
@@ -94,6 +95,7 @@ export const UI: Record<Locale, UiStrings> = {
     original: '原著',
     note: '注',
     reset: 'リセット',
+    classificationOverview: '分類の全体像',
     algorithmFlow: 'アルゴリズム',
     algorithmNext: '次の判定',
     algorithmDiagnosis: '診断',
@@ -207,6 +209,7 @@ export const UI: Record<Locale, UiStrings> = {
     original: 'Original',
     note: 'Note',
     reset: 'Reset',
+    classificationOverview: 'Classification overview',
     algorithmFlow: 'Algorithm',
     algorithmNext: 'Next step',
     algorithmDiagnosis: 'Diagnosis',

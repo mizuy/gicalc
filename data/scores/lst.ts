@@ -40,6 +40,24 @@ export const lstScore: ClassificationDefinition = {
     'Laterally spreading tumors (LSTs) are nonpolypoid neoplastic lesions of the colorectal mucosa that extend laterally and circumferentially along the colonic wall rather than vertically, and are at least 10 mm in diameter. LSTs are classified into a granular type (homogeneous or nodular mixed) and a nongranular type (flat elevated or pseudodepressed). Pure sessile lesions (Paris 0-Is) are not classified as LST.',
   reference: 'Kudo S, Lambert R, Allen JI, et al. Gastrointest Endosc 2008;68:S3-S47',
   pubmed: LST_2008_PUBMED,
+  hierarchy: [
+    {
+      id: 'lst-g',
+      label: 'LST-G · Granular type',
+      children: [
+        { id: 'lst-g-homogeneous', label: 'Homogeneous · Even granules' },
+        { id: 'lst-g-mixed', label: 'Mixed nodular · One or more large nodules' },
+      ],
+    },
+    {
+      id: 'lst-ng',
+      label: 'LST-NG · Nongranular type',
+      children: [
+        { id: 'lst-ng-flat', label: 'Flat elevated · Smooth surface' },
+        { id: 'lst-ng-pseudodepressed', label: 'Pseudodepressed · Basin-like depression' },
+      ],
+    },
+  ],
   figures: [
     {
       href: 'https://www.e-ce.org/journal/view.php?doi=10.5946/ce.2024.263#f3-ce-2024-263',

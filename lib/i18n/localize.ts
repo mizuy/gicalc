@@ -3,6 +3,7 @@ import type {
   AlgorithmMapNode,
   CalculatorDefinition,
   ClassificationDefinition,
+  ClassificationHierarchyNode,
   OriginalLocale,
   ScoreDefinition,
   ScoreField,
@@ -58,6 +59,17 @@ function localizeFlow(flow: AlgorithmFlow, copy?: FlowCopy): AlgorithmFlow {
   };
 }
 
+function localizeHierarchyNode(
+  node: ClassificationHierarchyNode,
+  labels?: Record<string, string>,
+): ClassificationHierarchyNode {
+  return {
+    ...node,
+    label: labels?.[node.id] ?? node.label,
+    children: node.children?.map((child) => localizeHierarchyNode(child, labels)),
+  };
+}
+
 export function classificationOriginalLocale(score: ClassificationDefinition): OriginalLocale {
   return score.originalLocale ?? 'en';
 }
@@ -66,12 +78,13 @@ function applyEnglishClassificationBody(
   score: ClassificationDefinition,
   copy: ScoreCopy | undefined,
   options: { translateComments: boolean },
-): Pick<ClassificationDefinition, 'description' | 'entries' | 'flow'> {
+): Pick<ClassificationDefinition, 'description' | 'entries' | 'flow' | 'hierarchy'> {
   if (!copy) {
     return {
       description: score.description,
       entries: score.entries,
       flow: score.flow,
+      hierarchy: score.hierarchy,
     };
   }
 
@@ -93,6 +106,9 @@ function applyEnglishClassificationBody(
       })),
     })),
     flow: score.flow ? localizeFlow(score.flow, copy.flow) : score.flow,
+    hierarchy: score.hierarchy?.map((node) =>
+      localizeHierarchyNode(node, copy.hierarchyLabels),
+    ),
   };
 }
 
@@ -158,6 +174,7 @@ function localizeClassificationDefinition(
     officialLinkLabel: copy?.officialLinkLabel ?? score.officialLinkLabel,
     note: copy?.note ?? score.note,
     entries: englishBody.entries,
+    hierarchy: englishBody.hierarchy,
     figures: score.figures?.map((figure, index) => ({
       ...figure,
       note: copy?.figureNotes?.[index] ?? figure.note,

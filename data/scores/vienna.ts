@@ -18,6 +18,29 @@ export const viennaScore: ClassificationDefinition = {
   reference: 'Schlemper RJ et al. Gut 2000;47:251-255. Revised grouping: Dixon 2002 Gut',
   pubmed: VIENNA_2000_PUBMED,
   note: '2002 改訂では粘膜内癌を 4.4 に移し、Category 5 を粘膜下以深のみとする。SNADET の C4 は HGA + 粘膜内癌、C5 は SM 以深、という使い方が多い。',
+  hierarchy: [
+    { id: 'vienna-1', label: 'Category 1 · Negative for neoplasia/dysplasia' },
+    { id: 'vienna-2', label: 'Category 2 · Indefinite for neoplasia/dysplasia' },
+    { id: 'vienna-3', label: 'Category 3 · Non-invasive low-grade neoplasia' },
+    {
+      id: 'vienna-4',
+      label: 'Category 4 · Non-invasive high-grade neoplasia',
+      children: [
+        { id: 'vienna-4-1', label: '4.1 · High-grade adenoma/dysplasia' },
+        { id: 'vienna-4-2', label: '4.2 · Non-invasive carcinoma (carcinoma in situ)' },
+        { id: 'vienna-4-3', label: '4.3 · Suspicion of invasive carcinoma' },
+        { id: 'vienna-4-4', label: '4.4 (2002 revision) · Intramucosal carcinoma' },
+      ],
+    },
+    {
+      id: 'vienna-5',
+      label: 'Category 5 · Invasive neoplasia',
+      children: [
+        { id: 'vienna-5-1', label: '5.1 (2000) · Intramucosal carcinoma' },
+        { id: 'vienna-5-2', label: '5.2 · Submucosal carcinoma or beyond' },
+      ],
+    },
+  ],
   figures: [
     {
       href: 'https://gut.bmj.com/content/47/2/251',

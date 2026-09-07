@@ -41,6 +41,36 @@ export const parisScore: ClassificationDefinition = {
   reference:
     'The Paris endoscopic classification. Gastrointest Endosc 2003;58:S3-S43. Endoscopic Classification Review Group. Endoscopy 2005;37:570-578',
   pubmed: PARIS_2003_PUBMED,
+  hierarchy: [
+    {
+      id: 'paris-0-i',
+      label: '0-I · Protruding',
+      children: [
+        { id: 'paris-0-ip', label: '0-Ip · Pedunculated' },
+        { id: 'paris-0-is', label: '0-Is · Sessile' },
+      ],
+    },
+    {
+      id: 'paris-0-ii',
+      label: '0-II · Nonprotruding and nonexcavated',
+      children: [
+        { id: 'paris-0-iia', label: '0-IIa · Slightly elevated' },
+        { id: 'paris-0-iib', label: '0-IIb · Completely flat' },
+        { id: 'paris-0-iic', label: '0-IIc · Slightly depressed' },
+        { id: 'paris-0-iic-iia', label: '0-IIc+IIa · Depressed with elevated rim' },
+        { id: 'paris-0-iia-iic', label: '0-IIa+IIc · Elevated with central depression' },
+      ],
+    },
+    {
+      id: 'paris-0-iii-family',
+      label: '0-III · Excavated family',
+      children: [
+        { id: 'paris-0-iii', label: '0-III · Excavated (ulcer)' },
+        { id: 'paris-0-iic-iii', label: '0-IIc+III · Depressed with central ulcer' },
+        { id: 'paris-0-iii-iic', label: '0-III+IIc · Ulcer with depressed margin' },
+      ],
+    },
+  ],
   figures: [
     {
       href: 'https://www.e-ce.org/journal/view.php?number=8021#F2',
