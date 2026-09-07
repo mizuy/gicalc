@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
+import { ReportIssueButton } from '@/components/ReportIssueButton';
 import { Text, useThemeColor } from '@/components/Themed';
 import { PwaCheckUpdate } from '@/components/web/PwaCheckUpdate';
 import { useLocale } from '@/lib/i18n';
@@ -71,6 +72,8 @@ export default function AboutScreen() {
         <Text style={[styles.body, { color: textSecondary }]}>{t.about.disclaimerBody}</Text>
         <Text style={[styles.body, { color: textSecondary }]}>{t.about.disclaimerGuide}</Text>
       </View>
+
+      <ReportIssueButton pageTitle="GI Calc / About" />
     </ScrollView>
   );
 }

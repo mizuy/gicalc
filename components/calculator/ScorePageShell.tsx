@@ -6,6 +6,7 @@ import { ClassificationFigure } from '@/components/calculator/ClassificationFigu
 import { JapanMark } from '@/components/calculator/JapanMark';
 import { RelatedScoresPanel } from '@/components/calculator/RelatedScoresPanel';
 import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
+import { ReportIssueButton } from '@/components/ReportIssueButton';
 import { Text, useThemeColor } from '@/components/Themed';
 import { useLocale } from '@/lib/i18n';
 import {
@@ -114,6 +115,8 @@ function ScorePageFooter({ score }: { score: ScoreDefinition }) {
       ) : null}
 
       <RelatedScoresPanel scoreId={score.id} style={styles.related} />
+
+      <ReportIssueButton pageTitle={score.name} />
 
       <Text style={[styles.footnote, { color: textSecondary }]}>{t.footnote}</Text>
     </View>

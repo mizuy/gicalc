@@ -95,6 +95,7 @@ import { LAUREN_1965_PUBMED } from '../data/scores/lauren';
 import { WASP_2016_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
+import { buildReportFormUrl, reportEnvironment, REPORT_FORM_URL } from '../lib/reportIssue';
 import {
   applyAlgorithmAnswer,
   findEntryForResult,
@@ -2428,7 +2429,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.18');
+  assert.equal(pkg.version, '1.0.19');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2483,6 +2484,34 @@ test('PWA 更新確認はサーバー上の version.json と比較する', () =>
     }),
     true,
   );
+});
+
+test('不具合報告フォームはページと利用環境を自動入力する', () => {
+  const chrome =
+    'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/140.0.0.0 Mobile Safari/537.36';
+  assert.equal(reportEnvironment('1.0.18', chrome), 'GI Calc 1.0.18 / Chrome 140.0.0.0 / Android 14');
+
+  const reportUrl = new URL(
+    buildReportFormUrl({
+      pageTitle: 'Forrest classification',
+      pageUrl: 'https://mizuy.github.io/gicalc/score/forrest',
+      appVersion: '1.0.18',
+      userAgent: chrome,
+    }),
+  );
+  assert.equal(`${reportUrl.origin}${reportUrl.pathname}`, REPORT_FORM_URL);
+  assert.equal(reportUrl.searchParams.get('usp'), 'pp_url');
+  assert.equal(
+    reportUrl.searchParams.get('entry.503972996'),
+    'Forrest classification — https://mizuy.github.io/gicalc/score/forrest',
+  );
+  assert.equal(
+    reportUrl.searchParams.get('entry.1136097801'),
+    'GI Calc 1.0.18 / Chrome 140.0.0.0 / Android 14',
+  );
+  assert.equal(reportUrl.searchParams.has('entry.1707444884'), false);
+  assert.equal(UI.ja.reportIssue, '不具合・その他を報告');
+  assert.match(UI.en.reportPrivacyNote, /patient information/);
 });
 
 test('PWA 更新バナーの文言と検知', () => {
