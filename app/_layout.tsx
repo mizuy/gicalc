@@ -87,6 +87,14 @@ function RootLayoutNav() {
             name="score/[id]"
             options={{ headerBackTitle: t.back, headerRight: () => <LanguageToggle /> }}
           />
+          <Stack.Screen
+            name="citations"
+            options={{
+              title: t.about.citationsTitle,
+              headerBackTitle: t.back,
+              headerRight: () => <LanguageToggle />,
+            }}
+          />
         </Stack>
       </View>
     </ThemeProvider>
