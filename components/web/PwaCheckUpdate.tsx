@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Platform, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
 import { useLocale } from '@/lib/i18n';
@@ -53,13 +53,19 @@ export function PwaCheckUpdate() {
       </Text>
       <Pressable
         accessibilityRole="button"
+        accessibilityState={{ busy: state === 'checking', disabled: state === 'checking' }}
         disabled={state === 'checking'}
         onPress={handleCheck}
         style={({ pressed }) => [
           styles.button,
           { backgroundColor: tint, opacity: state === 'checking' ? 0.6 : pressed ? 0.85 : 1 },
         ]}>
-        <Text style={styles.buttonText}>{t.pwa.checkUpdate}</Text>
+        <View style={styles.buttonContent}>
+          {state === 'checking' ? <ActivityIndicator color="#FFFFFF" size="small" /> : null}
+          <Text style={styles.buttonText}>
+            {state === 'checking' ? t.pwa.checking : t.pwa.checkUpdate}
+          </Text>
+        </View>
       </Pressable>
       {statusMessage ? (
         <Text style={[styles.status, { color: textSecondary }]}>{statusMessage}</Text>
@@ -98,6 +104,11 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '700',
     fontSize: 14,
+  },
+  buttonContent: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 8,
   },
   status: {
     fontSize: 14,
