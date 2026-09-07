@@ -1732,7 +1732,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const esdFibrosisFig = getScoreById('esd-fibrosis');
   assert.ok(esdFibrosisFig && isClassification(esdFibrosisFig));
-  assert.equal(esdFibrosisFig.figures?.length, 1);
+  assert.equal(esdFibrosisFig.figures?.length, 2);
   assert.equal(esdFibrosisFig.figures?.[0]?.src, undefined);
   assert.match(esdFibrosisFig.figures?.[0]?.href ?? '', /irjournal\.org/);
   assert.equal(esdFibrosisFig.figures?.[0]?.hrefLabel, 'Fig. 1');
@@ -1821,7 +1821,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const sarinFig = getScoreById('sarin');
   assert.ok(sarinFig && isClassification(sarinFig));
-  assert.equal(sarinFig.figures?.length, 1);
+  assert.equal(sarinFig.figures?.length, 2);
   assert.equal(sarinFig.figures?.[0]?.src, undefined);
   assert.match(sarinFig.figures?.[0]?.href ?? '', /10\.1002\/hep\.1840160607/);
   assert.equal(sarinFig.figures?.[0]?.hrefLabel, '1992 paper');
@@ -1831,6 +1831,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const pragueFig = getScoreById('prague');
   assert.ok(pragueFig && isClassification(pragueFig));
+  assert.equal(pragueFig.figures?.length, 2);
   assert.equal(pragueFig.figures?.[0]?.src, undefined);
   assert.match(pragueFig.figures?.[0]?.href ?? '', /S0016508506017914-gr3\.jpg/);
   assert.equal(pragueFig.figures?.[0]?.hrefLabel, 'Fig. 3');
@@ -2457,7 +2458,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.20');
+  assert.equal(pkg.version, '1.0.21');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
