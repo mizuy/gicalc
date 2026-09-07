@@ -1,4 +1,4 @@
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { LanguageToggle } from '@/components/LanguageToggle';
@@ -6,6 +6,7 @@ import { Text, useThemeColor } from '@/components/Themed';
 import { useLocale } from '@/lib/i18n';
 
 export default function CitationsScreen() {
+  const router = useRouter();
   const background = useThemeColor({}, 'background');
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
@@ -16,11 +17,18 @@ export default function CitationsScreen() {
   return (
     <ScrollView style={[styles.scroll, { backgroundColor: background }]} contentContainerStyle={styles.content}>
       <View style={styles.navigation}>
-        <Link href="/about" asChild>
-          <Pressable accessibilityRole="link" style={({ pressed }) => ({ opacity: pressed ? 0.65 : 1 })}>
-            <Text style={[styles.back, { color: tint }]}>‹ {t.back}</Text>
-          </Pressable>
-        </Link>
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => {
+            if (router.canGoBack()) {
+              router.back();
+            } else {
+              router.replace('/(tabs)/about');
+            }
+          }}
+          style={({ pressed }) => ({ opacity: pressed ? 0.65 : 1 })}>
+          <Text style={[styles.back, { color: tint }]}>‹ {t.back}</Text>
+        </Pressable>
         <LanguageToggle />
       </View>
 
