@@ -1661,7 +1661,7 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
   assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
   assert.equal(paris.figures?.[1]?.src, undefined);
-  assert.equal(paris.figures?.[1]?.href, '/figures/paris-user2026-original.webp');
+  assert.equal(paris.figures?.[1]?.href, '/figures/paris-user2026-original.svg');
   assert.equal(paris.figures?.[1]?.isSecondarySource, true);
   assert.equal(paris.figures?.[1]?.license, 'Used with permission');
   const parisCrops = paris.entries.flatMap((entry) => entry.figures ?? []);

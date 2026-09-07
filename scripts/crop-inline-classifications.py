@@ -2,7 +2,7 @@
 """改変可能な複合図を各型カード用に切り出す。
 
 対象: 大腸EC / LST / Hill / EREFS / NICE / MESDA-G / GERD LA /
-Toya ME-CV / WASP / ITBCC / Paris。
+Toya ME-CV / WASP / ITBCC。
 """
 
 from pathlib import Path
@@ -23,7 +23,6 @@ WASP = ROOT / 'wasp-quach2024-fig4.webp'
 ITBCC = ROOT / 'itbcc-zlobec2021-fig1.webp'
 MESDA = ROOT / 'mesda-g-kurumi2021-fig5.webp'
 LA = ROOT / 'la-jung2025-fig1.webp'
-PARIS = ROOT / 'paris-user2026-original.webp'
 
 # box = (left, top, right, bottom)
 CROPS: dict[str, tuple[Path, tuple[int, int, int, int]]] = {
@@ -84,18 +83,6 @@ CROPS: dict[str, tuple[Path, tuple[int, int, int, int]]] = {
     'la-jung2025-grade-b.jpg': (LA, (247, 0, 491, 220)),
     'la-jung2025-grade-c.jpg': (LA, (493, 0, 736, 220)),
     'la-jung2025-grade-d.jpg': (LA, (0, 222, 244, 442)),
-    # Paris: ユーザー自作模式図。文字を除き形態部分だけを切り出す。
-    'paris-user2026-0-ip.png': (PARIS, (2, 9, 56, 41)),
-    'paris-user2026-0-is.png': (PARIS, (57, 9, 111, 41)),
-    'paris-user2026-0-iia.png': (PARIS, (111, 9, 165, 41)),
-    'paris-user2026-0-iib.png': (PARIS, (2, 56, 56, 76)),
-    'paris-user2026-0-iic.png': (PARIS, (57, 56, 111, 76)),
-    'paris-user2026-0-iic-iia.png': (PARIS, (111, 56, 165, 76)),
-    'paris-user2026-0-iia-iic-1.png': (PARIS, (2, 88, 56, 108)),
-    'paris-user2026-0-iia-iic-2.png': (PARIS, (57, 88, 111, 108)),
-    'paris-user2026-0-iii.png': (PARIS, (111, 88, 165, 108)),
-    'paris-user2026-0-iic-iii.png': (PARIS, (28, 123, 82, 142)),
-    'paris-user2026-0-iii-iic.png': (PARIS, (82, 123, 136, 142)),
 }
 
 
@@ -107,8 +94,6 @@ def main() -> None:
             image = Image.open(src)
             cache[src] = image
         crop = image.crop(box)
-        if name.startswith('paris-user2026-'):
-            crop = crop.resize((crop.width * 8, crop.height * 8), Image.Resampling.NEAREST)
         dest = ROOT / name
         crop.save(dest, quality=92, optimize=True)
         print(dest.name, crop.size)

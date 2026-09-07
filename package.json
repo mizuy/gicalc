@@ -16,6 +16,7 @@
     "preview:pages": "node scripts/preview-pages.mjs",
     "test": "tsx --test scripts/verify-scores.ts",
     "optimize:figures": "python3 scripts/optimize-figures.py",
+    "rasterize:paris": "python3 scripts/rasterize-paris-svg.py",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

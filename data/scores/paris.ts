@@ -4,7 +4,7 @@ import type { ClassificationDefinition, ClassificationFigure } from '../../types
 export const PARIS_2003_PUBMED = '14652541';
 export const PARIS_2005_PUBMED = '15933932';
 
-const PARIS_USER_FIGURE_PATH = '/figures/paris-user2026-original.webp';
+const PARIS_USER_FIGURE_PATH = '/figures/paris-user2026-original.svg';
 
 function userSchematicCrop(
   file: string,
@@ -80,7 +80,7 @@ export const parisScore: ClassificationDefinition = {
           text: 'Protruding vs slightly elevated: 2.5 mm (columnar epithelium; closed biopsy forceps) or 1.2 mm (esophageal squamous epithelium)',
         },
       ],
-      figures: [userSchematicCrop('0-ip', '0-Ip', 'Pedunculated', 432 / 256)],
+      figures: [userSchematicCrop('0-ip', '0-Ip', 'Pedunculated', 1200 / 680)],
     },
     {
       label: '0-Is',
@@ -96,7 +96,7 @@ export const parisScore: ClassificationDefinition = {
         },
       ],
       comment: '大腸の無茎隆起は SM 浸潤が比較的多い（2005 年 Table 4: 大腸 0-Is 34%）。',
-      figures: [userSchematicCrop('0-is', '0-Is', 'Sessile', 432 / 256)],
+      figures: [userSchematicCrop('0-is', '0-Is', 'Sessile', 1200 / 680)],
     },
     {
       label: '0-IIa',
@@ -111,7 +111,7 @@ export const parisScore: ClassificationDefinition = {
           text: 'Elevation less than 2.5 mm from the adjacent mucosa in columnar epithelium (less than 1.2 mm in the esophagus)',
         },
       ],
-      figures: [userSchematicCrop('0-iia', '0-IIa', 'Slightly elevated', 432 / 256)],
+      figures: [userSchematicCrop('0-iia', '0-IIa', 'Slightly elevated', 1200 / 680)],
     },
     {
       label: '0-IIb',
@@ -123,7 +123,7 @@ export const parisScore: ClassificationDefinition = {
         { heading: 'Morphology', text: 'Completely flat' },
       ],
       comment: '大腸ではきわめて稀。',
-      figures: [userSchematicCrop('0-iib', '0-IIb', 'Completely flat', 432 / 160)],
+      figures: [userSchematicCrop('0-iib', '0-IIb', 'Completely flat', 1200 / 680)],
     },
     {
       label: '0-IIc',
@@ -139,7 +139,7 @@ export const parisScore: ClassificationDefinition = {
         },
       ],
       comment: '陥凹は SM 浸潤リスクが高い（2005 年 Table 4: 大腸 0-IIc 61%）。',
-      figures: [userSchematicCrop('0-iic', '0-IIc', 'Slightly depressed', 432 / 160)],
+      figures: [userSchematicCrop('0-iic', '0-IIc', 'Slightly depressed', 1200 / 680)],
     },
     {
       label: '0-IIc+IIa',
@@ -154,7 +154,7 @@ export const parisScore: ClassificationDefinition = {
         },
       ],
       figures: [
-        userSchematicCrop('0-iic-iia', '0-IIc+IIa', 'Depressed with an elevated segment', 432 / 160),
+        userSchematicCrop('0-iic-iia', '0-IIc+IIa', 'Depressed with an elevated segment', 1200 / 680),
       ],
     },
     {
@@ -174,8 +174,8 @@ export const parisScore: ClassificationDefinition = {
         },
       ],
       figures: [
-        userSchematicCrop('0-iia-iic-1', '0-IIa+IIc', 'Elevated with central depression, variant 1', 432 / 160),
-        userSchematicCrop('0-iia-iic-2', '0-IIa+IIc', 'Elevated with central depression, variant 2', 432 / 160),
+        userSchematicCrop('0-iia-iic-1', '0-IIa+IIc', 'Elevated with central depression, variant 1', 1200 / 680),
+        userSchematicCrop('0-iia-iic-2', '0-IIa+IIc', 'Elevated with central depression, variant 2', 1200 / 680),
       ],
     },
     {
@@ -188,7 +188,7 @@ export const parisScore: ClassificationDefinition = {
         { heading: 'Morphology', text: 'Ulcer' },
       ],
       comment: '大腸ではほとんど見ない。',
-      figures: [userSchematicCrop('0-iii', '0-III', 'Excavated (ulcer)', 432 / 160)],
+      figures: [userSchematicCrop('0-iii', '0-III', 'Excavated (ulcer)', 1200 / 680)],
     },
     {
       label: '0-IIc+III',
@@ -200,7 +200,7 @@ export const parisScore: ClassificationDefinition = {
         { heading: 'Morphology', text: 'A depressed lesion with a central ulcer' },
       ],
       figures: [
-        userSchematicCrop('0-iic-iii', '0-IIc+III', 'Depressed with central ulcer', 432 / 152),
+        userSchematicCrop('0-iic-iii', '0-IIc+III', 'Depressed with central ulcer', 1200 / 680),
       ],
     },
     {
@@ -213,7 +213,7 @@ export const parisScore: ClassificationDefinition = {
         { heading: 'Morphology', text: 'An ulcer with short depressed margins' },
       ],
       figures: [
-        userSchematicCrop('0-iii-iic', '0-III+IIc', 'Ulcer with depressed margin', 432 / 152),
+        userSchematicCrop('0-iii-iic', '0-III+IIc', 'Ulcer with depressed margin', 1200 / 680),
       ],
     },
   ],
