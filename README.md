@@ -101,9 +101,10 @@ npm run preview:pages
 
 - JES（Oyama 2017, *Esophagus*）の図: **CC BY 4.0**
 - EREFS の図（Abe 2022, *Diagnostics* Fig. 2）: **CC BY 4.0**
+- GERD LA分類の図（Jung 2025, *Korean J Helicobacter Up Gastrointest Res* Fig. 1A–D）: **CC BY-NC 4.0**（各 Grade に切り抜きを掲載）
 - Hill の図（Ge 2023, *Ann Med* Fig. 1）: **CC BY-NC 4.0**
 - Forrest の図（Zhou 2025, *J South Med Univ* Fig. 1）: **CC BY-NC-ND 4.0**（改変・切り抜きなしで原図全体を掲載）
-- MESDA-G（Muto 2016, *Dig Endosc*）の図: **CC BY-NC-ND 4.0**
+- MESDA-G の VS 分類例（Kurumi 2021, *J Clin Med* Fig. 5）: **CC BY 4.0**（MS / MV の各型に切り抜きを掲載。Muto 2016 原著は CC BY-NC-ND 4.0）
 - 木村–竹本の図（Quach 2019, *Clin Endosc* Fig. 2）: **CC BY-NC 3.0**
 - Paris の図（Kim 2025, *Clin Endosc* Fig. 2）: **CC BY-NC 4.0**（Johnson 2023 *Can J Surg* は CC BY-NC-ND 4.0）
 - LST の図（Kim 2025, *Clin Endosc* Fig. 3）: **CC BY-NC 4.0**（Castillo-Regalado 2022 *WJGE* は CC BY-NC 4.0）
@@ -120,7 +121,7 @@ npm run preview:pages
 - NICE（Hayashi 2013, *GIE*）: Elsevier 著作権。原著 Fig. 1 は埋め込まずリンクする（CC 図は Hamada 2021 *BMC Gastroenterol* Fig. 1 を埋め込み）
 - WASP（IJspeert 2016, *Gut*）: BMJ 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
 - Prague（Sharma 2006, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 3 へリンクする
-- LA 原著（Lundell 1999, *Gut*）: CC ではない。A–D 揃いの静止画は置かず、VideoGIE 2013（CC BY-NC-ND 4.0 の動画）へリンクする
+- LA 原著（Lundell 1999, *Gut*）: CC ではない（CC 図は Jung 2025 Fig. 1A–D の切り抜きを掲載）
 - 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。図は埋め込まず、*Clin Endosc* 2025 Fig. 4 へリンクする（記事自体は CC BY-NC、原図は許諾再掲）
 - Paris 原著（2003 *GIE* / 2005 *Endoscopy*）: CC ではない
 - LST 原著（Kudo 2008, *GIE*）: CC ではない

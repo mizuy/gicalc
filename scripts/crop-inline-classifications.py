@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""改変可能な複合図を各型カード用に切り出す（大腸EC / LST / Hill / EREFS / NICE）。"""
+"""改変可能な複合図を各型カード用に切り出す。
+
+対象: 大腸EC / LST / Hill / EREFS / NICE / MESDA-G / GERD LA。
+"""
 
 from pathlib import Path
 
@@ -14,6 +17,8 @@ LST = ROOT / 'lst-ce2025-fig3.webp'
 EC2 = ROOT / 'ec-maeda2021-fig2.webp'
 EC3 = ROOT / 'ec-maeda2021-fig3.webp'
 NICE = ROOT / 'nice-hamada2021-fig1.webp'
+MESDA = ROOT / 'mesda-g-kurumi2021-fig5.webp'
+LA = ROOT / 'la-jung2025-fig1.webp'
 
 # box = (left, top, right, bottom)
 CROPS: dict[str, tuple[Path, tuple[int, int, int, int]]] = {
@@ -49,6 +54,18 @@ CROPS: dict[str, tuple[Path, tuple[int, int, int, int]]] = {
     'nice-hamada2021-type1.jpg': (NICE, (250, 396, 511, 629)),
     'nice-hamada2021-type2.jpg': (NICE, (576, 396, 841, 629)),
     'nice-hamada2021-type3.jpg': (NICE, (907, 396, 1175, 629)),
+    # MESDA-G / VS: 上段 MSP、下段 MVP。各段は regular / irregular / absent。
+    'mesda-g-kurumi2021-ms-regular.jpg': (MESDA, (151, 4, 347, 200)),
+    'mesda-g-kurumi2021-ms-irregular.jpg': (MESDA, (351, 4, 550, 200)),
+    'mesda-g-kurumi2021-ms-absent.jpg': (MESDA, (554, 4, 750, 200)),
+    'mesda-g-kurumi2021-mv-regular.jpg': (MESDA, (151, 208, 347, 397)),
+    'mesda-g-kurumi2021-mv-irregular.jpg': (MESDA, (351, 208, 550, 397)),
+    'mesda-g-kurumi2021-mv-absent.jpg': (MESDA, (554, 208, 750, 397)),
+    # GERD LA: Fig. 1 左上から A / B / C、左下が D（E / F は別疾患）。
+    'la-jung2025-grade-a.jpg': (LA, (0, 0, 244, 220)),
+    'la-jung2025-grade-b.jpg': (LA, (247, 0, 491, 220)),
+    'la-jung2025-grade-c.jpg': (LA, (493, 0, 736, 220)),
+    'la-jung2025-grade-d.jpg': (LA, (0, 222, 244, 442)),
 }
 
 
