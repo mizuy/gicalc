@@ -1,7 +1,30 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
 
 /** Muto 2016 Dig Endosc（PMID 26896760）。胃の拡大診断アルゴリズム。JNET / NICE とは別。 */
 export const MESDA_G_2016_PUBMED = '26896760';
+/** Kurumi 2021 J Clin Med（PMID 34209939）。CC BY 4.0 の VS 分類例。 */
+export const MESDA_KURUMI_2021_PUBMED = '34209939';
+
+const KURUMI_SOURCE =
+  'Kurumi H, Nonaka K, Ikebuchi Y, et al. Fundamentals, Diagnostic Capabilities, and Perspective of Narrow Band Imaging for Early Gastric Cancer. J Clin Med. 2021;10:2918. Fig. 5. MESDA-G: Muto M, Yao K, Kaise M, et al. Dig Endosc. 2016;28:379-393.';
+const KURUMI_DOI = 'https://doi.org/10.3390/jcm10132918';
+
+function kurumiCrop(figure: {
+  src: string;
+  alt: string;
+  caption: string;
+  note: string;
+  aspectRatio: number;
+}): ClassificationFigure {
+  return {
+    ...figure,
+    source: KURUMI_SOURCE,
+    doi: KURUMI_DOI,
+    pubmed: MESDA_KURUMI_2021_PUBMED,
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+  };
+}
 
 export const mesdaGScore: ClassificationDefinition = {
   id: 'mesda-g',
@@ -36,16 +59,16 @@ export const mesdaGScore: ClassificationDefinition = {
       note: '画面のフローチャートと同じ手順なので埋め込まず、原著 Fig. 1 へリンクする。Wiley / JGES の Open Access。ライセンスは CC BY-NC-ND 4.0。胃の拡大診断アルゴリズム。JNET / NICE とは別。',
     },
     {
-      src: '/figures/mesda-g-muto2016-fig13.webp',
-      alt: 'VS classification: microvascular and microsurface patterns regular, irregular, or absent (Muto 2016 Fig. 13)',
-      caption: 'Fig. 13. Vessels plus surface (VS) classification',
-      source: 'Muto M, Yao K, Kaise M, et al. Dig Endosc. 2016;28:379-393. Fig. 13.',
-      doi: 'https://doi.org/10.1111/den.12638',
-      pubmed: MESDA_G_2016_PUBMED,
-      license: 'CC BY-NC-ND 4.0',
-      licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
-      note: '原著 Fig. 13。Wiley / JGES の Open Access。ライセンスは CC BY-NC-ND 4.0。微小血管（V）と微小表面（S）を regular / irregular / absent に分ける。矢印は境界線（DL）。',
-      aspectRatio: 2280 / 1550,
+      href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8269063/figure/jcm-10-02918-f005/',
+      hrefLabel: 'Fig. 5',
+      alt: 'VS classification examples: microvascular and microsurface patterns regular, irregular, or absent (Kurumi 2021 Fig. 5)',
+      caption: 'Fig. 5. Regular, irregular, and absent microsurface and microvascular patterns',
+      source: KURUMI_SOURCE,
+      doi: KURUMI_DOI,
+      pubmed: MESDA_KURUMI_2021_PUBMED,
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: '各 VS 分類カードに Kurumi 2021 Fig. 5 の切り抜きを掲載。原図は埋め込まず PMC の Fig. 5 へリンクする。ライセンスは CC BY 4.0。',
     },
   ],
   entries: [
@@ -126,6 +149,15 @@ export const mesdaGScore: ClassificationDefinition = {
       meaning: 'Regular',
       group: 'VS分類・微小血管',
       severity: 'none',
+      figures: [
+        kurumiCrop({
+          src: '/figures/mesda-g-kurumi2021-mv-regular.webp',
+          alt: 'Regular microvascular pattern (Kurumi 2021 Fig. 5)',
+          caption: 'Fig. 5 regular MVP',
+          note: 'Kurumi 2021 Fig. 5 下段 regular MVP から切り抜き。ライセンスは CC BY 4.0。',
+          aspectRatio: 196 / 189,
+        }),
+      ],
       rows: [
         {
           heading: 'MV',
@@ -138,6 +170,15 @@ export const mesdaGScore: ClassificationDefinition = {
       meaning: 'Irregular',
       group: 'VS分類・微小血管',
       severity: 'severe',
+      figures: [
+        kurumiCrop({
+          src: '/figures/mesda-g-kurumi2021-mv-irregular.webp',
+          alt: 'Irregular microvascular pattern (Kurumi 2021 Fig. 5)',
+          caption: 'Fig. 5 irregular MVP',
+          note: 'Kurumi 2021 Fig. 5 下段 irregular MVP から切り抜き。ライセンスは CC BY 4.0。',
+          aspectRatio: 199 / 189,
+        }),
+      ],
       rows: [
         {
           heading: 'MV',
@@ -156,6 +197,15 @@ export const mesdaGScore: ClassificationDefinition = {
       meaning: 'Absent',
       group: 'VS分類・微小血管',
       severity: 'mild',
+      figures: [
+        kurumiCrop({
+          src: '/figures/mesda-g-kurumi2021-mv-absent.webp',
+          alt: 'Absent microvascular pattern (Kurumi 2021 Fig. 5)',
+          caption: 'Fig. 5 absent MVP',
+          note: 'Kurumi 2021 Fig. 5 下段 absent MVP から切り抜き。ライセンスは CC BY 4.0。',
+          aspectRatio: 196 / 189,
+        }),
+      ],
       rows: [
         {
           heading: 'MV',
@@ -173,6 +223,15 @@ export const mesdaGScore: ClassificationDefinition = {
       meaning: 'Regular',
       group: 'VS分類・微小表面',
       severity: 'none',
+      figures: [
+        kurumiCrop({
+          src: '/figures/mesda-g-kurumi2021-ms-regular.webp',
+          alt: 'Regular microsurface pattern (Kurumi 2021 Fig. 5)',
+          caption: 'Fig. 5 regular MSP',
+          note: 'Kurumi 2021 Fig. 5 上段 regular MSP から切り抜き。ライセンスは CC BY 4.0。',
+          aspectRatio: 1,
+        }),
+      ],
       rows: [
         {
           heading: 'MS',
@@ -185,6 +244,15 @@ export const mesdaGScore: ClassificationDefinition = {
       meaning: 'Irregular',
       group: 'VS分類・微小表面',
       severity: 'severe',
+      figures: [
+        kurumiCrop({
+          src: '/figures/mesda-g-kurumi2021-ms-irregular.webp',
+          alt: 'Irregular microsurface pattern (Kurumi 2021 Fig. 5)',
+          caption: 'Fig. 5 irregular MSP',
+          note: 'Kurumi 2021 Fig. 5 上段 irregular MSP から切り抜き。ライセンスは CC BY 4.0。',
+          aspectRatio: 199 / 196,
+        }),
+      ],
       rows: [
         {
           heading: 'MS',
@@ -197,6 +265,15 @@ export const mesdaGScore: ClassificationDefinition = {
       meaning: 'Absent',
       group: 'VS分類・微小表面',
       severity: 'mild',
+      figures: [
+        kurumiCrop({
+          src: '/figures/mesda-g-kurumi2021-ms-absent.webp',
+          alt: 'Absent microsurface pattern (Kurumi 2021 Fig. 5)',
+          caption: 'Fig. 5 absent MSP',
+          note: 'Kurumi 2021 Fig. 5 上段 absent MSP から切り抜き。ライセンスは CC BY 4.0。',
+          aspectRatio: 1,
+        }),
+      ],
       rows: [
         {
           heading: 'MS',

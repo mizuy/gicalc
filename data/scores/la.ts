@@ -1,7 +1,30 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
 
 /** Lundell 1999 Gut（PMID 10403727）。1994 提案、1999 が確定稿。 */
 export const LA_1999_PUBMED = '10403727';
+/** Jung 2025 KJHUGR（PMID 40550541）。CC BY-NC 4.0 の A–D 画像。 */
+export const LA_JUNG_2025_PUBMED = '40550541';
+
+const JUNG_SOURCE =
+  'Jung K. Reflux Esophagitis. Korean J Helicobacter Up Gastrointest Res. 2025;25:98-107. Fig. 1. Original definitions: Lundell LR, Dent J, Bennett JR, et al. Gut. 1999;45:172-180.';
+const JUNG_DOI = 'https://doi.org/10.7704/kjhugr.2025.0001';
+
+function jungCrop(figure: {
+  src: string;
+  alt: string;
+  caption: string;
+  note: string;
+  aspectRatio: number;
+}): ClassificationFigure {
+  return {
+    ...figure,
+    source: JUNG_SOURCE,
+    doi: JUNG_DOI,
+    pubmed: LA_JUNG_2025_PUBMED,
+    license: 'CC BY-NC 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
+  };
+}
 
 export const laScore: ClassificationDefinition = {
   id: 'la',
@@ -19,14 +42,16 @@ export const laScore: ClassificationDefinition = {
   pubmed: LA_1999_PUBMED,
   figures: [
     {
-      href: 'https://www.videogie.org/article/S2212-0971(13)70046-3/fulltext',
-      hrefLabel: 'VideoGIE',
-      alt: 'Video demonstration of Los Angeles classification grades A–D',
-      caption: 'Video encyclopedia of the Los Angeles classification of GERD (Sami & Ragunath 2013)',
-      source:
-        'Sami SS, Ragunath K. The Los Angeles Classification of Gastroesophageal Reflux Disease. Video Journal and Encyclopedia of GI Endoscopy. 2013;1:103-104. Original definitions: Lundell LR, Dent J, Bennett JR, et al. Endoscopic assessment of oesophagitis: clinical and functional correlates and further validation of the Los Angeles classification. Gut. 1999;45:172-180.',
-      doi: 'https://doi.org/10.1016/S2212-0971(13)70046-3',
-      note: 'VideoGIE 2013 は CC BY-NC-ND 4.0 の動画。A–D が揃った教科書用の静止画パネルは CC で確認できなかったので画像は置かず、動画記事へリンクする。Lundell 1999 Gut 原著は CC ではない。',
+      href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12173581/figure/f1-kjhugr-2025-0001/',
+      hrefLabel: 'Fig. 1',
+      alt: 'Los Angeles classification Grade A–D endoscopic examples (Jung 2025 Fig. 1)',
+      caption: 'Fig. 1 A–D. Endoscopic findings of reflux esophagitis',
+      source: JUNG_SOURCE,
+      doi: JUNG_DOI,
+      pubmed: LA_JUNG_2025_PUBMED,
+      license: 'CC BY-NC 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
+      note: '各 Grade カードに Fig. 1 A–D の切り抜きを掲載。原図は埋め込まず PMC の Fig. 1 へリンクする。ライセンスは CC BY-NC 4.0。E（消化性狭窄）と F（Barrett 食道）は使用しない。Lundell 1999 Gut 原著は CC ではない。',
     },
   ],
   entries: [
@@ -35,6 +60,15 @@ export const laScore: ClassificationDefinition = {
       meaning: 'Mucosal break ≤5 mm, not bridging folds',
       group: '軽症',
       severity: 'mild',
+      figures: [
+        jungCrop({
+          src: '/figures/la-jung2025-grade-a.webp',
+          alt: 'Los Angeles Grade A reflux esophagitis (Jung 2025 Fig. 1A)',
+          caption: 'Fig. 1A LA Grade A',
+          note: 'Jung 2025 Fig. 1A（LA Grade A）から切り抜き。ライセンスは CC BY-NC 4.0。',
+          aspectRatio: 244 / 220,
+        }),
+      ],
       rows: [
         {
           heading: 'Definition',
@@ -47,6 +81,15 @@ export const laScore: ClassificationDefinition = {
       meaning: 'Mucosal break >5 mm, not bridging folds',
       group: '軽症',
       severity: 'mild',
+      figures: [
+        jungCrop({
+          src: '/figures/la-jung2025-grade-b.webp',
+          alt: 'Los Angeles Grade B reflux esophagitis (Jung 2025 Fig. 1B)',
+          caption: 'Fig. 1B LA Grade B',
+          note: 'Jung 2025 Fig. 1B（LA Grade B）から切り抜き。ライセンスは CC BY-NC 4.0。',
+          aspectRatio: 244 / 220,
+        }),
+      ],
       rows: [
         {
           heading: 'Definition',
@@ -59,6 +102,15 @@ export const laScore: ClassificationDefinition = {
       meaning: 'Breaks bridging folds, <75% circumference',
       group: '重症',
       severity: 'moderate',
+      figures: [
+        jungCrop({
+          src: '/figures/la-jung2025-grade-c.webp',
+          alt: 'Los Angeles Grade C reflux esophagitis (Jung 2025 Fig. 1C)',
+          caption: 'Fig. 1C LA Grade C',
+          note: 'Jung 2025 Fig. 1C（LA Grade C）から切り抜き。ライセンスは CC BY-NC 4.0。',
+          aspectRatio: 243 / 220,
+        }),
+      ],
       rows: [
         {
           heading: 'Definition',
@@ -72,6 +124,15 @@ export const laScore: ClassificationDefinition = {
       meaning: 'Breaks involving ≥75% circumference',
       group: '重症',
       severity: 'severe',
+      figures: [
+        jungCrop({
+          src: '/figures/la-jung2025-grade-d.webp',
+          alt: 'Los Angeles Grade D reflux esophagitis (Jung 2025 Fig. 1D)',
+          caption: 'Fig. 1D LA Grade D',
+          note: 'Jung 2025 Fig. 1D（LA Grade D）から切り抜き。ライセンスは CC BY-NC 4.0。',
+          aspectRatio: 244 / 220,
+        }),
+      ],
       rows: [
         {
           heading: 'Definition',
