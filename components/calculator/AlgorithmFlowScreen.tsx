@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { AlgorithmFlowMap } from '@/components/calculator/AlgorithmFlowMap';
+import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
 import { ScorePageShell } from '@/components/calculator/ScorePageShell';
 import { Text, useThemeColor } from '@/components/Themed';
 import { SeverityColors } from '@/constants/Colors';
@@ -12,7 +13,12 @@ import {
   findEntryForResult,
   walkAlgorithmFlow,
 } from '@/lib/scores/algorithmFlow';
-import { type AlgorithmFlow, type ClassificationDefinition, type ClassificationEntry } from '@/types/score';
+import {
+  figureKey,
+  type AlgorithmFlow,
+  type ClassificationDefinition,
+  type ClassificationEntry,
+} from '@/types/score';
 
 type Props = {
   score: ClassificationDefinition & { flow: AlgorithmFlow };
@@ -51,6 +57,13 @@ function EntryCard({
           <Text style={styles.badgeText}>{entry.meaning}</Text>
         </View>
       </View>
+      {entry.figures?.length ? (
+        <View style={styles.entryFigures}>
+          {entry.figures.map((figure) => (
+            <ClassificationFigure key={figureKey(figure)} figure={figure} compact />
+          ))}
+        </View>
+      ) : null}
       {entry.rows.map((row) => (
         <View key={`${entry.label}-${row.heading}`} style={styles.row}>
           <Text style={[styles.rowHeading, { color: textSecondary }]}>{row.heading}</Text>
@@ -293,6 +306,12 @@ const styles = StyleSheet.create({
     gap: 10,
     marginBottom: 10,
     flexWrap: 'wrap',
+  },
+  entryFigures: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 12,
   },
   entryLabel: {
     fontSize: 18,
