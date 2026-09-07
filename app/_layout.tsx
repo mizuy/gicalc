@@ -90,9 +90,7 @@ function RootLayoutNav() {
           <Stack.Screen
             name="citations"
             options={{
-              title: t.about.citationsTitle,
-              headerBackTitle: t.back,
-              headerRight: () => <LanguageToggle />,
+              headerShown: false,
             }}
           />
         </Stack>

@@ -1,5 +1,7 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Link } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
+import { LanguageToggle } from '@/components/LanguageToggle';
 import { Text, useThemeColor } from '@/components/Themed';
 import { useLocale } from '@/lib/i18n';
 
@@ -13,6 +15,15 @@ export default function CitationsScreen() {
 
   return (
     <ScrollView style={[styles.scroll, { backgroundColor: background }]} contentContainerStyle={styles.content}>
+      <View style={styles.navigation}>
+        <Link href="/about" asChild>
+          <Pressable accessibilityRole="link" style={({ pressed }) => ({ opacity: pressed ? 0.65 : 1 })}>
+            <Text style={[styles.back, { color: tint }]}>‹ {t.back}</Text>
+          </Pressable>
+        </Link>
+        <LanguageToggle />
+      </View>
+
       <Text style={styles.title}>{t.about.citationsTitle}</Text>
       <Text style={[styles.intro, { color: textSecondary }]}>{t.about.citationsIntro}</Text>
 
@@ -47,6 +58,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 20,
     paddingBottom: 40,
+  },
+  navigation: {
+    minHeight: 36,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  back: {
+    fontSize: 14,
+    fontWeight: '700',
   },
   title: {
     fontSize: 24,
