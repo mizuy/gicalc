@@ -2589,11 +2589,14 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsCcBody, /西分類/);
   assert.match(UI.ja.about.citationsNotCcBody, /Siewert 1998/);
   assert.match(UI.ja.about.citationsCcBody, /Quach 2019/);
-  assert.match(UI.ja.about.citationsCcBody, /Fig\. 13/);
+  assert.match(UI.ja.about.citationsCcBody, /Kurumi 2021/);
+  assert.match(UI.ja.about.citationsCcBody, /Fig\. 5/);
+  assert.match(UI.ja.about.citationsCcBody, /Jung 2025/);
   assert.match(UI.ja.about.citationsCcBody, /埋め込まず/);
   assert.doesNotMatch(UI.ja.about.citationsNotCcBody, /1969/);
   assert.match(UI.en.about.citationsCcBody, /CC BY-NC-ND 4\.0/);
-  assert.match(UI.en.about.citationsCcBody, /Fig\. 13/);
+  assert.match(UI.en.about.citationsCcBody, /Kurumi 2021/);
+  assert.match(UI.en.about.citationsCcBody, /Jung 2025/);
   assert.match(UI.en.about.citationsNotCcBody, /not CC/);
   assert.match(UI.en.about.citationsNotCcBody, /not hosted/);
   assert.doesNotMatch(UI.en.about.citationsNotCcBody, /1969/);
