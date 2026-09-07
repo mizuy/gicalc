@@ -2176,7 +2176,7 @@ test('英語結果は解釈だけ訳し、点数は変えない', () => {
   assert.doesNotMatch(kakushimaEn.details?.join(' ') ?? '', japaneseChars);
 });
 
-test('既定言語は英語で、計算は最低点から始まる', () => {
+test('既定言語は英語で、最低点選択肢を正しく取得する', () => {
   assert.equal(DEFAULT_LOCALE, 'en');
 
   const ecura = getScoreById('ecura-hatta');
