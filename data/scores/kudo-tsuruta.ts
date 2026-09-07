@@ -42,7 +42,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
         'Kudo S, Tamura S, Nakajima T, et al. Diagnosis of colorectal tumorous lesions by magnifying endoscopy. Gastrointest Endosc. 1996;44:8-14. Figure as published in Kim OZ. Classification of image-enhanced endoscopy in colon tumors. Clin Endosc. 2025;58:337-351, Fig. 4 (adapted from Tanaka S et al. Dig Endosc. 2004;16:S161-S164).',
       doi: 'https://doi.org/10.5946/ce.2024.263',
       pubmed: '40336268',
-      note: 'Type I–VN。原図 Tanaka 2004 Dig Endosc は CC ではないので画像は置かず、Clin Endosc 2025 Fig. 4（許諾再掲）へリンクする。',
+      note: 'Type I–VN。原図 Tanaka 2004 Dig Endosc は CC ではないので埋め込まず、Clin Endosc 2025 Fig. 4（許諾再掲）へリンクする。',
     },
     {
       href: PIT_PATTERN_USER_FIGURE_PATH,
