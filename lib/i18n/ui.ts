@@ -25,6 +25,8 @@ export type UiStrings = {
   figureLoadError: string;
   resultPlaceholder: string;
   footnote: string;
+  reportIssue: string;
+  reportPrivacyNote: string;
   missingTitle: string;
   missingBody: string;
   notFoundTitle: string;
@@ -126,6 +128,8 @@ export const UI: Record<Locale, UiStrings> = {
     resultPlaceholder: 'すべての項目を選択すると結果が表示されます',
     footnote:
       '診断支援です。最新ガイドラインと施設プロトコルに従って判断してください。分類の定義・用語は原著の言語で表示します（英語原著は英語、日本語原著は日本語）。注釈（コメント）は日本語です。',
+    reportIssue: '不具合・その他を報告',
+    reportPrivacyNote: '患者を識別できる情報や患者画像は入力しないでください。',
     missingTitle: '未登録',
     missingBody: '指定されたスコアは見つかりません。',
     notFoundTitle: 'ページが見つかりません',
@@ -256,6 +260,8 @@ export const UI: Record<Locale, UiStrings> = {
     resultPlaceholder: 'Select every item to see the result',
     footnote:
       'Decision support only. Follow current guidelines and local protocols. Classification definitions and terminology follow the original publication language.',
+    reportIssue: 'Report an issue or feedback',
+    reportPrivacyNote: 'Do not enter identifiable patient information or patient images.',
     missingTitle: 'Not found',
     missingBody: 'This score is not registered.',
     notFoundTitle: 'Page not found',
