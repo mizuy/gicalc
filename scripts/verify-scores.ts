@@ -2503,7 +2503,7 @@ test('不具合報告フォームはページと利用環境を自動入力す�
   assert.equal(reportUrl.searchParams.get('usp'), 'pp_url');
   assert.equal(
     reportUrl.searchParams.get('entry.503972996'),
-    'Forrest classification\nhttps://mizuy.github.io/gicalc/score/forrest',
+    'Forrest classification — https://mizuy.github.io/gicalc/score/forrest',
   );
   assert.equal(
     reportUrl.searchParams.get('entry.1136097801'),

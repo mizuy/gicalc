@@ -60,7 +60,7 @@ export function buildReportFormUrl({
 }: ReportFormParams): string {
   const url = new URL(REPORT_FORM_URL);
   url.searchParams.set('usp', 'pp_url');
-  url.searchParams.set(TARGET_PAGE_FIELD, pageUrl ? `${pageTitle}\n${pageUrl}` : pageTitle);
+  url.searchParams.set(TARGET_PAGE_FIELD, pageUrl ? `${pageTitle} — ${pageUrl}` : pageTitle);
   url.searchParams.set(ENVIRONMENT_FIELD, reportEnvironment(appVersion, userAgent));
   return url.toString();
 }
