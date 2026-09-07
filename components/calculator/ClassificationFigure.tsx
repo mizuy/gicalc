@@ -149,6 +149,19 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
         compact ? styles.boxCompact : null,
         { backgroundColor: surface, borderColor: border },
       ]}>
+      {figure.isSecondarySource ? (
+        <View
+          accessibilityRole="text"
+          style={[
+            styles.secondarySourceBadge,
+            compact ? styles.secondarySourceBadgeCompact : null,
+            { borderColor: tint },
+          ]}>
+          <Text style={[styles.secondarySourceBadgeText, { color: tint }]}>
+            {t.secondarySourceFigure}
+          </Text>
+        </View>
+      ) : null}
       {uri ? (
         <Pressable
           accessibilityRole="button"
@@ -257,6 +270,24 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 8,
     marginBottom: 0,
+  },
+  secondarySourceBadge: {
+    alignSelf: 'flex-start',
+    borderWidth: 1,
+    borderRadius: 999,
+    paddingHorizontal: 9,
+    paddingVertical: 3,
+    marginBottom: 8,
+  },
+  secondarySourceBadgeCompact: {
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    marginBottom: 6,
+  },
+  secondarySourceBadgeText: {
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 0.2,
   },
   thumbWrap: {
     position: 'relative',

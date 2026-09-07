@@ -86,13 +86,17 @@ import { DEKKER_2020_PUBMED, MCWHINNEY_2023_PUBMED } from '../data/scores/sps';
 import { KUDO_EC_2011_PUBMED, MAEDA_EC_REVIEW_2021_PUBMED } from '../data/scores/colorectal-ec';
 import { KIKUCHI_2014_PUBMED } from '../data/scores/kikuchi-mebi';
 import { UCHIYAMA_2006_PUBMED } from '../data/scores/uchiyama';
-import { KIKUCHI_2014_PUBMED as KIKUCHI_LINK_PUBMED, TOYA_2020_PUBMED } from '../data/scores/toya';
+import {
+  KIKUCHI_2014_PUBMED as KIKUCHI_LINK_PUBMED,
+  TOYA_2020_PUBMED,
+  TOYA_KUMEI_2025_PUBMED,
+} from '../data/scores/toya';
 import { VIENNA_2000_PUBMED } from '../data/scores/vienna';
 import { WHO_DIGESTIVE_2019_PUBMED } from '../data/scores/who-serrated';
-import { ITBCG_BUDDING_PUBMED } from '../data/scores/itbcg-budding';
+import { ITBCC_ZLOBEC_2021_PUBMED, ITBCG_BUDDING_PUBMED } from '../data/scores/itbcg-budding';
 import { WHO_NET_2019_PUBMED } from '../data/scores/net-grade';
 import { LAUREN_1965_PUBMED } from '../data/scores/lauren';
-import { WASP_2016_PUBMED } from '../data/scores/wasp';
+import { WASP_2016_PUBMED, WASP_QUACH_2024_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { buildReportFormUrl, reportEnvironment, REPORT_FORM_URL } from '../lib/reportIssue';
@@ -1540,7 +1544,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
 test('分類は原著の図を出典付きで持つ', () => {
   const jnet = getScoreById('jnet');
   assert.ok(jnet && isClassification(jnet));
-  assert.equal(jnet.figures?.length, 1);
+  assert.equal(jnet.figures?.length, 2);
   assert.match(jnet.figures?.[0]?.source ?? '', /Sano Y/);
   assert.match(jnet.figures?.[0]?.doi ?? '', /10\.1111\/den\.12644/);
   assert.equal(jnet.figures?.[0]?.src, undefined);
@@ -1551,6 +1555,34 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(jnet.figures?.[0]?.pubmed, '26927367');
   assert.equal(jnet.figures?.[0]?.license, undefined);
   assert.match(jnet.figures?.[0]?.note ?? '', /CC ではない/);
+  assert.match(jnet.figures?.[1]?.src ?? '', /jnet-ahmed2024-fig1\.webp/);
+  assert.equal(jnet.figures?.[1]?.isSecondarySource, true);
+  assert.equal(jnet.figures?.[1]?.license, 'CC BY 4.0');
+  assert.equal(jnet.figures?.[1]?.pubmed, '38023663');
+  assert.match(jnet.figures?.[1]?.note ?? '', /原著.*ではなく/);
+
+  const secondaryReferenceFigures = [
+    { id: 'jnet', src: 'jnet-ahmed2024-fig1.webp', license: 'CC BY 4.0' },
+    { id: 'esd-fibrosis', src: 'esd-fibrosis-inada2013-fig1.webp', license: 'CC BY 3.0' },
+    { id: 'prague', src: 'prague-oyanagi2022-fig5.webp', license: 'CC BY 4.0' },
+    { id: 'sarin', src: 'sarin-acevedo2019-fig1.webp', license: 'CC BY-NC 4.0' },
+  ];
+  for (const expected of secondaryReferenceFigures) {
+    const score = getScoreById(expected.id);
+    assert.ok(score && isClassification(score));
+    const figure = score.figures?.find((candidate) => candidate.isSecondarySource);
+    assert.ok(figure, `${expected.id} に別文献の参考図がない`);
+    assert.match(figure.src ?? '', new RegExp(`${expected.src.replace('.', '\\.')}$`));
+    assert.equal(figure.license, expected.license);
+    assert.ok(figure.source);
+    assert.ok(figure.doi);
+    assert.ok(figure.pubmed);
+    assert.match(figure.note, /参考図/);
+    const english = localizeScore(score, 'en');
+    const englishFigure = english.figures?.find((candidate) => candidate.isSecondarySource);
+    assert.match(englishFigure?.note ?? '', /Reference figure/);
+    assert.doesNotMatch(englishFigure?.note ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+  }
 
   const kudo = getScoreById('kudo-tsuruta');
   assert.ok(kudo && isClassification(kudo));
@@ -1704,7 +1736,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const esdFibrosisFig = getScoreById('esd-fibrosis');
   assert.ok(esdFibrosisFig && isClassification(esdFibrosisFig));
-  assert.equal(esdFibrosisFig.figures?.length, 1);
+  assert.equal(esdFibrosisFig.figures?.length, 2);
   assert.equal(esdFibrosisFig.figures?.[0]?.src, undefined);
   assert.match(esdFibrosisFig.figures?.[0]?.href ?? '', /irjournal\.org/);
   assert.equal(esdFibrosisFig.figures?.[0]?.hrefLabel, 'Fig. 1');
@@ -1802,7 +1834,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const sarinFig = getScoreById('sarin');
   assert.ok(sarinFig && isClassification(sarinFig));
-  assert.equal(sarinFig.figures?.length, 1);
+  assert.equal(sarinFig.figures?.length, 2);
   assert.equal(sarinFig.figures?.[0]?.src, undefined);
   assert.match(sarinFig.figures?.[0]?.href ?? '', /10\.1002\/hep\.1840160607/);
   assert.equal(sarinFig.figures?.[0]?.hrefLabel, '1992 paper');
@@ -1812,6 +1844,7 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const pragueFig = getScoreById('prague');
   assert.ok(pragueFig && isClassification(pragueFig));
+  assert.equal(pragueFig.figures?.length, 2);
   assert.equal(pragueFig.figures?.[0]?.src, undefined);
   assert.match(pragueFig.figures?.[0]?.href ?? '', /S0016508506017914-gr3\.jpg/);
   assert.equal(pragueFig.figures?.[0]?.hrefLabel, 'Fig. 3');
@@ -1859,10 +1892,27 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(waspFig.figures?.[0]?.license, undefined);
   assert.match(waspFig.figures?.[0]?.note ?? '', /CC ではない/);
   assert.equal(waspFig.pubmed, WASP_2016_PUBMED);
+  assert.equal(waspFig.figures?.length, 2);
+  assert.equal(waspFig.figures?.[1]?.src, undefined);
+  assert.equal(waspFig.figures?.[1]?.isSecondarySource, true);
+  assert.equal(waspFig.figures?.[1]?.license, 'CC BY 4.0');
+  assert.equal(waspFig.figures?.[1]?.pubmed, WASP_QUACH_2024_PUBMED);
+  const waspFindingFigures = waspFig.entries.find(
+    (entry) => entry.label === 'Step 2 · SSL features',
+  )?.figures;
+  assert.deepEqual(
+    waspFindingFigures?.map((figure) => figure.src),
+    [
+      '/figures/wasp-quach2024-indistinct-border.webp',
+      '/figures/wasp-quach2024-irregular-shape.webp',
+      '/figures/wasp-quach2024-dark-spots.webp',
+    ],
+  );
+  assert.equal(waspFindingFigures?.every((figure) => figure.isSecondarySource), true);
 
   const toyaFig = getScoreById('toya');
   assert.ok(toyaFig && isClassification(toyaFig));
-  assert.equal(toyaFig.figures?.length, 2);
+  assert.equal(toyaFig.figures?.length, 3);
   assert.equal(toyaFig.figures?.[0]?.src, undefined);
   assert.match(toyaFig.figures?.[0]?.href ?? '', /den\.13640/);
   assert.equal(toyaFig.figures?.[0]?.hrefLabel, 'Toya 2020');
@@ -1873,6 +1923,22 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(toyaFig.figures?.[1]?.href ?? '', /den\.12282/);
   assert.equal(toyaFig.figures?.[1]?.hrefLabel, 'Kikuchi 2014');
   assert.equal(toyaFig.figures?.[1]?.pubmed, KIKUCHI_LINK_PUBMED);
+  assert.equal(toyaFig.figures?.[2]?.src, undefined);
+  assert.equal(toyaFig.figures?.[2]?.isSecondarySource, true);
+  assert.equal(toyaFig.figures?.[2]?.license, 'CC BY 4.0');
+  assert.equal(toyaFig.figures?.[2]?.pubmed, TOYA_KUMEI_2025_PUBMED);
+  assert.deepEqual(
+    toyaFig.entries.find((entry) => entry.label === 'Pinecone')?.figures?.map((figure) => figure.src),
+    ['/figures/toya-kumei2025-pinecone.webp'],
+  );
+  assert.deepEqual(
+    toyaFig.entries.find((entry) => entry.label === 'Monotonous')?.figures?.map((figure) => figure.src),
+    [
+      '/figures/toya-kumei2025-convoluted.webp',
+      '/figures/toya-kumei2025-leaf-like.webp',
+      '/figures/toya-kumei2025-reticular.webp',
+    ],
+  );
 
   const viennaFig = getScoreById('vienna');
   assert.ok(viennaFig && isClassification(viennaFig));
@@ -1889,6 +1955,19 @@ test('分類は原著の図を出典付きで持つ', () => {
     assertOriginalPlateIsLinkOnly(score);
     assert.equal(score.figures?.[0]?.src, undefined);
     assert.equal(score.figures?.[0]?.license, undefined);
+  }
+  const itbcgFig = getScoreById('itbcg-budding');
+  assert.ok(itbcgFig && isClassification(itbcgFig));
+  assert.equal(itbcgFig.figures?.length, 2);
+  assert.equal(itbcgFig.figures?.[1]?.src, undefined);
+  assert.equal(itbcgFig.figures?.[1]?.isSecondarySource, true);
+  assert.equal(itbcgFig.figures?.[1]?.license, 'CC BY 4.0');
+  assert.equal(itbcgFig.figures?.[1]?.pubmed, ITBCC_ZLOBEC_2021_PUBMED);
+  for (const grade of ['BD1', 'BD2', 'BD3'] as const) {
+    const figure = itbcgFig.entries.find((entry) => entry.label === grade)?.figures?.[0];
+    assert.equal(figure?.src, `/figures/itbcc-zlobec2021-${grade.toLowerCase()}.webp`);
+    assert.equal(figure?.isSecondarySource, true);
+    assert.equal(figure?.license, 'CC BY 4.0');
   }
 
   const spigelman = getScoreById('spigelman');
@@ -2446,7 +2525,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.22');
+  assert.equal(pkg.version, '1.0.24');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {

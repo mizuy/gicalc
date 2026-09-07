@@ -32,6 +32,22 @@ export const sarinScore: ClassificationDefinition = {
       pubmed: SARIN_1992_PUBMED,
       note: '原著。Wiley / Hepatology の著作権。CC ではないので画像は置かず、論文へリンクする。',
     },
+    {
+      src: '/figures/sarin-acevedo2019-fig1.webp',
+      href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC6447419/figure/F1/',
+      hrefLabel: 'Fig. 1',
+      isSecondarySource: true,
+      alt: 'Sarin classification diagram showing GOV1, GOV2, IGV1, and IGV2 gastric varices',
+      caption: 'Fig. 1. Sarin classification by gastric location (Acevedo and Cramp 2019)',
+      source:
+        'Acevedo JG, Cramp ME. Update on management of gastric varices. World J Hepatol. 2019;11:250-260. Fig. 1.',
+      doi: 'https://doi.org/10.4254/wjh.v11.i3.250',
+      pubmed: '30967903',
+      license: 'CC BY-NC 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
+      note: 'Sarin 1992 の原著図ではなく、Acevedo 2019 の GOV1 / GOV2 / IGV1 / IGV2 模式図を参考図として掲載。CC BY-NC 4.0。',
+      aspectRatio: 735 / 521,
+    },
   ],
   entries: [
     {

@@ -1,9 +1,37 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
 
 /** Toya 2020 Dig Endosc（PMID 31997426）。ME-CV アルゴリズム。Kikuchi 2014 は ME-NBI */
 export const TOYA_2020_PUBMED = '31997426';
 /** Kikuchi 2014 Dig Endosc（PMID 24750143）。SNADET の ME-NBI アルゴリズム */
 export const KIKUCHI_2014_PUBMED = '24750143';
+/** Kumei 2025 DEN Open（PMID 41090111）。Toya ME-CV の検証論文・Fig. 1 */
+export const TOYA_KUMEI_2025_PUBMED = '41090111';
+
+const TOYA_KUMEI_FIGURE_URL =
+  'https://pmc.ncbi.nlm.nih.gov/articles/PMC12515707/figure/deo270223-fig-0001/';
+
+function kumeiCrop(
+  file: string,
+  pattern: string,
+  panel: string,
+): ClassificationFigure {
+  return {
+    src: `/figures/toya-kumei2025-${file}.webp`,
+    href: TOYA_KUMEI_FIGURE_URL,
+    hrefLabel: `Fig. 1${panel}`,
+    isSecondarySource: true,
+    alt: `${pattern} pattern on magnifying endoscopy with crystal violet staining`,
+    caption: `Fig. 1${panel}. ${pattern} pattern (Kumei et al. 2025)`,
+    source:
+      'Kumei T, Toya Y, Yamada S, et al. Diagnostic performance of magnifying endoscopy with crystal violet staining for superficial non-ampullary duodenal epithelial tumors. DEN Open. 2025;6:e70223. Fig. 1.',
+    doi: 'https://doi.org/10.1002/deo2.70223',
+    pubmed: TOYA_KUMEI_2025_PUBMED,
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    note: `Toya 2020 原著ではなく、検証論文 Fig. 1${panel} から ${pattern} を切り抜いた参考図。CC BY 4.0。`,
+    aspectRatio: 301 / 261,
+  };
+}
 
 export const toyaScore: ClassificationDefinition = {
   id: 'toya',
@@ -31,7 +59,7 @@ export const toyaScore: ClassificationDefinition = {
       source: 'Toya Y, Endo M, Oizumi T, et al. Dig Endosc. 2020;32:1066-1073.',
       doi: 'https://doi.org/10.1111/den.13640',
       pubmed: TOYA_2020_PUBMED,
-      note: 'ME-CV アルゴリズム原著。Wiley / Digestive Endoscopy の著作権。CC ではないので論文へリンクする。',
+      note: 'ME-CV アルゴリズム原著。Wiley / Digestive Endoscopy の著作権。CC ではないので埋め込まず、論文へリンクする。',
     },
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.12282',
@@ -41,7 +69,21 @@ export const toyaScore: ClassificationDefinition = {
       source: 'Kikuchi D, Hoteya S, Iizuka T, Kimura R, Kaise M. Dig Endosc. 2014;26:16-22.',
       doi: 'https://doi.org/10.1111/den.12282',
       pubmed: KIKUCHI_2014_PUBMED,
-      note: 'ME-NBI アルゴリズム。mixed type と unclassified 血管は C4/5。CC ではないので論文へリンクする。',
+      note: 'ME-NBI アルゴリズム。mixed type と unclassified 血管は C4/5。CC ではないので埋め込まず、論文へリンクする。',
+    },
+    {
+      href: TOYA_KUMEI_FIGURE_URL,
+      hrefLabel: 'Kumei 2025 Fig. 1',
+      isSecondarySource: true,
+      alt: 'Convoluted, leaf-like, reticular or sulciolar, and pinecone ME-CV patterns',
+      caption: 'Fig. 1. Four ME-CV surface patterns (Kumei et al. 2025)',
+      source:
+        'Kumei T, Toya Y, Yamada S, et al. Diagnostic performance of magnifying endoscopy with crystal violet staining for superficial non-ampullary duodenal epithelial tumors. DEN Open. 2025;6:e70223. Fig. 1.',
+      doi: 'https://doi.org/10.1002/deo2.70223',
+      pubmed: TOYA_KUMEI_2025_PUBMED,
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: 'Toya 2020 原著ではなく、検証論文の複合図。複合図自体は埋め込まず、各パターンの切り抜きを分類カードに掲載。CC BY 4.0。',
     },
   ],
   entries: [
@@ -85,6 +127,7 @@ export const toyaScore: ClassificationDefinition = {
         { heading: 'Vienna', text: 'Category 4/5' },
       ],
       comment: '松ぼっくり様は単一でも C4/5。',
+      figures: [kumeiCrop('pinecone', 'Pinecone', 'd')],
     },
     {
       label: 'Irregular',
@@ -109,6 +152,11 @@ export const toyaScore: ClassificationDefinition = {
         { heading: 'Vienna', text: 'Category 3' },
       ],
       comment: 'pinecone 以外の整った単一パターンは C3。',
+      figures: [
+        kumeiCrop('convoluted', 'Convoluted', 'a'),
+        kumeiCrop('leaf-like', 'Leaf-like', 'b'),
+        kumeiCrop('reticular', 'Reticular/sulciolar', 'c'),
+      ],
     },
   ],
   flow: {
