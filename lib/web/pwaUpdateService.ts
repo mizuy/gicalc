@@ -272,6 +272,7 @@ export function clearPwaUpdateDismissed(): void {
   } catch {
     // ignore
   }
+  if (updateState !== 'none') notifyListeners();
 }
 
 export async function checkPwaUpdate(): Promise<PwaUpdateCheckResult> {
