@@ -47,7 +47,6 @@ export default function OrganScoresScreen() {
       <ScrollView
         style={[styles.scroll, { backgroundColor: background }]}
         contentContainerStyle={styles.content}>
-        <Text style={[styles.lead, { color: textSecondary }]}>{t.navCategoryLead[category]}</Text>
         <ScoreListSection scores={scores} category={category} />
       </ScrollView>
     </>
@@ -64,11 +63,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 20,
     paddingBottom: 40,
-  },
-  lead: {
-    fontSize: 14,
-    lineHeight: 22,
-    marginBottom: 16,
   },
   missing: {
     flex: 1,

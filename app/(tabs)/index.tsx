@@ -10,7 +10,6 @@ import { useLocale } from '@/lib/i18n';
 export default function HomeScreen() {
   const background = useThemeColor({}, 'background');
   const tint = useThemeColor({}, 'tint');
-  const textSecondary = useThemeColor({}, 'textSecondary');
   const { t } = useLocale();
   const groups = useMemo(() => getScoresGroupedForHome(), []);
 
@@ -27,7 +26,6 @@ export default function HomeScreen() {
           <Text style={[styles.slug, { color: tint }]}>gicalc</Text>
         </View>
       </View>
-      <Text style={[styles.lead, { color: textSecondary }]}>{t.homeLead}</Text>
 
       <PwaInstallBanner />
 
@@ -75,11 +73,6 @@ const styles = StyleSheet.create({
   slug: {
     fontSize: 14,
     fontWeight: '600',
-  },
-  lead: {
-    fontSize: 14,
-    lineHeight: 22,
-    marginBottom: 20,
   },
   grid: {
     flexDirection: 'row',

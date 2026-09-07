@@ -2429,7 +2429,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.20');
+  assert.equal(pkg.version, '1.0.21');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2545,18 +2545,12 @@ test('PWA 更新バナーの文言と検知', () => {
   assert.equal(shouldOfferUpdateAfterControllerChange(true), true);
 });
 
-test('About は CC と非 CC を分けて書く', () => {
+test('引用・ライセンス情報は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsCcBody, /CC BY-NC-ND 4\.0/);
   assert.match(UI.ja.about.citationsCcBody, /CC BY 4\.0/);
   assert.match(UI.ja.about.citationsCcBody, /Abe 2022/);
   assert.match(UI.ja.about.citationsCcBody, /Nagashima 2022/);
   assert.match(UI.ja.about.citationsCcBody, /Ge 2023/);
-  assert.match(UI.ja.about.esophagusBody, /門脈圧亢進症学会/);
-  assert.match(UI.ja.about.esophagusBody, /F \/ L \/ C/);
-  assert.match(UI.ja.about.stomachBody, /Sarin/);
-  assert.match(UI.en.about.esophagusBody, /varices/);
-  assert.match(UI.en.about.esophagusBody, /JSPH/);
-  assert.match(UI.en.about.stomachBody, /Sarin/);
   assert.match(UI.ja.about.citationsNotCcBody, /Tajiri 2010/);
   assert.match(UI.ja.about.citationsNotCcBody, /Sarin 1992/);
   assert.match(UI.ja.about.citationsNotCcBody, /JNET/);
@@ -2566,9 +2560,6 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsNotCcBody, /Kajiwara/);
   assert.match(UI.ja.about.citationsNotCcBody, /Koyama 2022/);
   assert.match(UI.ja.about.citationsNotCcBody, /埋め込まず/);
-  assert.match(UI.ja.about.esophagusBody, /Siewert/);
-  assert.match(UI.ja.about.esophagusBody, /西分類/);
-  assert.match(UI.en.about.esophagusBody, /Siewert/);
   assert.match(UI.ja.about.citationsCcBody, /西分類/);
   assert.match(UI.ja.about.citationsNotCcBody, /Siewert 1998/);
   assert.match(UI.ja.about.citationsCcBody, /Quach 2019/);
@@ -2583,12 +2574,6 @@ test('About は CC と非 CC を分けて書く', () => {
   assert.match(UI.ja.about.citationsCcBody, /Kakushima/);
   assert.match(UI.ja.about.citationsNotCcBody, /Spigelman/);
   assert.match(UI.ja.about.citationsNotCcBody, /Vienna/);
-  assert.match(UI.en.about.duodenumBody, /Spigelman/);
-  assert.match(UI.en.about.colorectumBody, /Vienna/);
-  assert.match(UI.en.about.colorectumBody, /SPS/);
-  assert.match(UI.en.about.colorectumBody, /EC/);
-  assert.match(UI.en.about.colorectumBody, /ESD-F/);
-  assert.match(UI.ja.about.colorectumBody, /ESD-F/);
   assert.match(UI.ja.about.citationsNotCcBody, /ESD-F/);
   assert.match(UI.ja.about.citationsNotCcBody, /Dekker 2020/);
   assert.match(UI.ja.about.citationsCcBody, /Misawa 2021/);

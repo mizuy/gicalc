@@ -1,4 +1,5 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Link } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { ReportIssueButton } from '@/components/ReportIssueButton';
 import { Text, useThemeColor } from '@/components/Themed';
@@ -19,46 +20,21 @@ export default function AboutScreen() {
       <Text style={styles.title}>GI Calc / gicalc</Text>
       <Text style={[styles.body, { color: textSecondary }]}>{t.about.intro}</Text>
 
-      <Text style={[styles.section, { color: tint }]}>{t.about.tools}</Text>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>{t.about.esophagus}</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>{t.about.esophagusBody}</Text>
-      </View>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>{t.about.stomach}</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>{t.about.stomachBody}</Text>
-      </View>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>{t.about.duodenum}</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>{t.about.duodenumBody}</Text>
-      </View>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>{t.about.colorectum}</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>{t.about.colorectumBody}</Text>
-      </View>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>{t.about.bleeding}</Text>
-        <Text style={[styles.body, { color: textSecondary }]}>{t.about.bleedingBody}</Text>
-      </View>
-
-      <Text style={[styles.section, { color: tint }]}>{t.about.citationsTitle}</Text>
-      <Text style={[styles.body, { color: textSecondary }]}>{t.about.citationsIntro}</Text>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>{t.about.citationsCc}</Text>
-        {t.about.citationsCcBody.split('\n').map((line) => (
-          <Text key={line} style={[styles.body, { color: textSecondary }]}>
-            {line}
-          </Text>
-        ))}
-      </View>
-      <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>
-        <Text style={styles.cardTitle}>{t.about.citationsNotCc}</Text>
-        {t.about.citationsNotCcBody.split('\n').map((line) => (
-          <Text key={line} style={[styles.body, { color: textSecondary }]}>
-            {line}
-          </Text>
-        ))}
-      </View>
+      <Link href="/citations" asChild>
+        <Pressable
+          accessibilityRole="link"
+          style={({ pressed }) => [
+            styles.linkCard,
+            {
+              backgroundColor: surface,
+              borderColor: border,
+              opacity: pressed ? 0.75 : 1,
+            },
+          ]}>
+          <Text style={[styles.linkText, { color: tint }]}>{t.about.citationsTitle}</Text>
+          <Text style={[styles.linkArrow, { color: tint }]}>›</Text>
+        </Pressable>
+      </Link>
 
       <Text style={[styles.section, { color: tint }]}>{t.about.pwaTitle}</Text>
       <PwaCheckUpdate />
@@ -111,9 +87,23 @@ const styles = StyleSheet.create({
     padding: 14,
     marginBottom: 10,
   },
-  cardTitle: {
+  linkCard: {
+    minHeight: 48,
+    borderWidth: 1,
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    marginTop: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  linkText: {
     fontSize: 16,
     fontWeight: '700',
-    marginBottom: 6,
+  },
+  linkArrow: {
+    fontSize: 24,
+    lineHeight: 24,
   },
 });
