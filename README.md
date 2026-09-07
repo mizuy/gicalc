@@ -130,7 +130,7 @@ npm run preview:pages
 - Prague（Sharma 2006, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 3 へリンクする
 - LA 原著（Lundell 1999, *Gut*）: CC ではない（CC 図は Jung 2025 Fig. 1A–D の切り抜きを掲載）
 - 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。図は埋め込まず、*Clin Endosc* 2025 Fig. 4 へリンクする（記事自体は CC BY-NC、原図は許諾再掲）
-- Paris 原著（2003 *GIE* / 2005 *Endoscopy*）: CC ではない
+- Paris 原著（2003 *GIE* / 2005 *Endoscopy*）: CC ではない（各型カードの模式図はプロジェクト提供者の自作図を許諾のうえ切り抜き掲載）
 - LST 原著（Kudo 2008, *GIE*）: CC ではない
 - 京都（Shichijo 2017）/ 改変京都（Kawamura 2021）: Wiley、CC ではない
 - EGGIM（Pimentel-Nunes 2016, *Endoscopy* / Thieme）: CC ではない

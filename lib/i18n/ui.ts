@@ -313,3 +313,9 @@ UI.en.about.citationsCcBody +=
   '\n• Toya ME-CV reference figure (Kumei 2025, DEN Open Fig. 1): CC BY 4.0 (not the Toya 2020 original; four available patterns are cropped)' +
   '\n• WASP reference figure (Vu 2024, JGH Open Fig. 4): CC BY 4.0 (not the IJspeert 2016 original; three SSL findings are cropped)' +
   '\n• ITBCC reference figure (Zlobec 2021, Virchows Arch Fig. 1): CC BY 4.0 (not the Lugli 2017 original; BD1–BD3 are cropped and investigational BD0 is omitted)';
+
+UI.ja.about.citationsNotCcBody +=
+  '\n• Paris分類カードの模式図: プロジェクト提供者の自作図を切り抜き、許諾のうえ掲載（Paris原著図ではない）';
+
+UI.en.about.citationsNotCcBody +=
+  '\n• Paris card schematics: cropped from an original diagram supplied by a project contributor and used with permission (not figures from the Paris original)';

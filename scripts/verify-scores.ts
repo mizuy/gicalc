@@ -1651,14 +1651,26 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const paris = getScoreById('paris');
   assert.ok(paris && isClassification(paris));
-  assert.equal(paris.figures?.length, 1);
-  assert.match(paris.figures?.[0]?.src ?? '', /paris-ce2025-fig2/);
+  assert.equal(paris.figures?.length, 2);
+  assert.equal(paris.figures?.[0]?.src, undefined);
+  assert.match(paris.figures?.[0]?.href ?? '', /number=8021#F2/);
   assert.match(paris.figures?.[0]?.caption ?? '', /Fig\. 2/);
   assert.match(paris.figures?.[0]?.source ?? '', /Paris workshop/);
   assert.equal(paris.pubmed, PARIS_2003_PUBMED);
   assert.equal(paris.figures?.[0]?.license, 'CC BY-NC 4.0');
   assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
   assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
+  assert.equal(paris.figures?.[1]?.src, undefined);
+  assert.equal(paris.figures?.[1]?.href, '/figures/paris-user2026-original.webp');
+  assert.equal(paris.figures?.[1]?.isSecondarySource, true);
+  assert.equal(paris.figures?.[1]?.license, 'Used with permission');
+  const parisCrops = paris.entries.flatMap((entry) => entry.figures ?? []);
+  assert.equal(parisCrops.length, 11);
+  assert.equal(parisCrops.every((figure) => figure.isSecondarySource), true);
+  assert.equal(parisCrops.every((figure) => figure.license === 'Used with permission'), true);
+  assert.equal(parisCrops.every((figure) => figure.src?.startsWith('/figures/paris-user2026-')), true);
+  assert.equal(paris.entries.find((entry) => entry.label === '0-IIa+IIc')?.figures?.length, 2);
+  assert.equal(paris.entries.every((entry) => entry.figures?.length), true);
 
   const spsFig = getScoreById('sps');
   assert.ok(spsFig && isClassification(spsFig));
@@ -2525,7 +2537,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.24');
+  assert.equal(pkg.version, '1.0.25');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {

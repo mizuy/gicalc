@@ -1,8 +1,30 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
 
 /** 2003 Paris workshop (PMID 14652541) と 2005 update (PMID 15933932) */
 export const PARIS_2003_PUBMED = '14652541';
 export const PARIS_2005_PUBMED = '15933932';
+
+const PARIS_USER_FIGURE_PATH = '/figures/paris-user2026-original.webp';
+
+function userSchematicCrop(
+  file: string,
+  label: string,
+  meaning: string,
+  aspectRatio: number,
+): ClassificationFigure {
+  return {
+    src: `/figures/paris-user2026-${file}.webp`,
+    href: PARIS_USER_FIGURE_PATH,
+    hrefLabel: 'Full schematic',
+    isSecondarySource: true,
+    alt: `Schematic cross-section of Paris ${label}: ${meaning}`,
+    caption: `${label}. ${meaning} (original schematic supplied for GI Calc)`,
+    source: 'Original schematic created and supplied by a GI Calc project contributor, 2026.',
+    license: 'Used with permission',
+    note: `Paris原著の図ではなく、提供者自作の模式図から${label}を切り抜いて許諾掲載。`,
+    aspectRatio,
+  };
+}
 
 export const parisScore: ClassificationDefinition = {
   id: 'paris',
@@ -21,7 +43,8 @@ export const parisScore: ClassificationDefinition = {
   pubmed: PARIS_2003_PUBMED,
   figures: [
     {
-      src: '/figures/paris-ce2025-fig2.webp',
+      href: 'https://www.e-ce.org/journal/view.php?number=8021#F2',
+      hrefLabel: 'Kim 2025 Fig. 2',
       alt: 'Schematic of the Paris Type 0 classification (0-Ip, 0-Isp, 0-Is, 0-IIa, 0-IIb, 0-IIc, 0-III)',
       caption: 'Fig. 2. Schematic representation of the Paris classification of polyp morphology',
       source:
@@ -30,8 +53,17 @@ export const parisScore: ClassificationDefinition = {
       pubmed: '40336268',
       license: 'CC BY-NC 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
-      note: '図の 0-Isp は日本語分類／後年の追加。2003/2005 の Paris 表は 0-Ip と 0-Is。図は Clin Endosc 2025 Fig. 2（CC BY-NC 4.0）。Johnson 2023 Can J Surg は CC BY-NC-ND 4.0。2003/2005 の原著は CC ではない。',
-      aspectRatio: 1566 / 815,
+      note: '図の 0-Isp は日本語分類／後年の追加。2003/2005 の Paris 表は 0-Ip と 0-Is。Clin Endosc 2025 Fig. 2（CC BY-NC 4.0）は埋め込まずリンクする。Johnson 2023 Can J Surg は CC BY-NC-ND 4.0。2003/2005 の原著は CC ではない。',
+    },
+    {
+      href: PARIS_USER_FIGURE_PATH,
+      hrefLabel: 'Full supplied schematic',
+      isSecondarySource: true,
+      alt: 'Original schematic of the Paris Type 0 morphology classification supplied for GI Calc',
+      caption: 'Paris Type 0 morphology — supplied original schematic',
+      source: 'Original schematic created and supplied by a GI Calc project contributor, 2026.',
+      license: 'Used with permission',
+      note: 'Paris原著の図ではない提供者自作の参考図。複合図自体は埋め込まず、各型を切り抜いて分類カードに許諾掲載。',
     },
   ],
   entries: [
@@ -48,6 +80,7 @@ export const parisScore: ClassificationDefinition = {
           text: 'Protruding vs slightly elevated: 2.5 mm (columnar epithelium; closed biopsy forceps) or 1.2 mm (esophageal squamous epithelium)',
         },
       ],
+      figures: [userSchematicCrop('0-ip', '0-Ip', 'Pedunculated', 432 / 256)],
     },
     {
       label: '0-Is',
@@ -63,6 +96,7 @@ export const parisScore: ClassificationDefinition = {
         },
       ],
       comment: '大腸の無茎隆起は SM 浸潤が比較的多い（2005 年 Table 4: 大腸 0-Is 34%）。',
+      figures: [userSchematicCrop('0-is', '0-Is', 'Sessile', 432 / 256)],
     },
     {
       label: '0-IIa',
@@ -77,6 +111,7 @@ export const parisScore: ClassificationDefinition = {
           text: 'Elevation less than 2.5 mm from the adjacent mucosa in columnar epithelium (less than 1.2 mm in the esophagus)',
         },
       ],
+      figures: [userSchematicCrop('0-iia', '0-IIa', 'Slightly elevated', 432 / 256)],
     },
     {
       label: '0-IIb',
@@ -88,6 +123,7 @@ export const parisScore: ClassificationDefinition = {
         { heading: 'Morphology', text: 'Completely flat' },
       ],
       comment: '大腸ではきわめて稀。',
+      figures: [userSchematicCrop('0-iib', '0-IIb', 'Completely flat', 432 / 160)],
     },
     {
       label: '0-IIc',
@@ -103,6 +139,7 @@ export const parisScore: ClassificationDefinition = {
         },
       ],
       comment: '陥凹は SM 浸潤リスクが高い（2005 年 Table 4: 大腸 0-IIc 61%）。',
+      figures: [userSchematicCrop('0-iic', '0-IIc', 'Slightly depressed', 432 / 160)],
     },
     {
       label: '0-IIc+IIa',
@@ -115,6 +152,9 @@ export const parisScore: ClassificationDefinition = {
           heading: 'Morphology',
           text: 'Most of the surface is depressed; elevation is present in a segment of the lesion at the periphery',
         },
+      ],
+      figures: [
+        userSchematicCrop('0-iic-iia', '0-IIc+IIa', 'Depressed with an elevated segment', 432 / 160),
       ],
     },
     {
@@ -133,6 +173,10 @@ export const parisScore: ClassificationDefinition = {
           text: 'When the level of the depression is higher than the mucosa adjacent to the lesion, it is a relatively depressed lesion.',
         },
       ],
+      figures: [
+        userSchematicCrop('0-iia-iic-1', '0-IIa+IIc', 'Elevated with central depression, variant 1', 432 / 160),
+        userSchematicCrop('0-iia-iic-2', '0-IIa+IIc', 'Elevated with central depression, variant 2', 432 / 160),
+      ],
     },
     {
       label: '0-III',
@@ -144,6 +188,7 @@ export const parisScore: ClassificationDefinition = {
         { heading: 'Morphology', text: 'Ulcer' },
       ],
       comment: '大腸ではほとんど見ない。',
+      figures: [userSchematicCrop('0-iii', '0-III', 'Excavated (ulcer)', 432 / 160)],
     },
     {
       label: '0-IIc+III',
@@ -154,6 +199,9 @@ export const parisScore: ClassificationDefinition = {
         { heading: 'Category', text: 'Excavated and depressed types' },
         { heading: 'Morphology', text: 'A depressed lesion with a central ulcer' },
       ],
+      figures: [
+        userSchematicCrop('0-iic-iii', '0-IIc+III', 'Depressed with central ulcer', 432 / 152),
+      ],
     },
     {
       label: '0-III+IIc',
@@ -163,6 +211,9 @@ export const parisScore: ClassificationDefinition = {
       rows: [
         { heading: 'Category', text: 'Excavated and depressed types' },
         { heading: 'Morphology', text: 'An ulcer with short depressed margins' },
+      ],
+      figures: [
+        userSchematicCrop('0-iii-iic', '0-III+IIc', 'Ulcer with depressed margin', 432 / 152),
       ],
     },
   ],
