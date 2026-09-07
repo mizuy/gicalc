@@ -99,6 +99,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Original Fig. 3 (C2M5 schematic). Elsevier / Gastroenterology copyright; not CC, so the figure is not hosted. Link opens the publisher Fig. 3 image.',
+      'Reference figure from Oyanagi 2022, not the Sharma 2006 original: Prague C&M schematic and a C1M4 example. License: CC BY 4.0.',
     ],
   },
   siewert: {
@@ -193,6 +194,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Original 1992 paper. Wiley / Hepatology copyright; not CC, so the figure is not hosted. Link opens the paper.',
+      'Reference figure from Acevedo 2019, not the Sarin 1992 original: GOV1 / GOV2 / IGV1 / IGV2 schematic. License: CC BY-NC 4.0.',
     ],
   },
   erefs: {
@@ -945,7 +947,18 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     figureNotes: [
       'Toya 2020 ME-CV original. Wiley / Digestive Endoscopy copyright; not CC — link to the paper.',
       'Kikuchi 2014 ME-NBI algorithm. Mixed type and unclassified vessels → C4/5. Not CC — link to the paper.',
+      'Reference composite from the 2025 validation study, not the Toya 2020 original. Crops for each available pattern are shown on the classification cards. License: CC BY 4.0.',
     ],
+    entryFigureNotes: {
+      Pinecone: [
+        'Reference figure cropped from panel d of Kumei 2025 Fig. 1, not the Toya 2020 original. Pinecone pattern. License: CC BY 4.0.',
+      ],
+      Monotonous: [
+        'Reference figure cropped from panel a of Kumei 2025 Fig. 1, not the Toya 2020 original. Convoluted pattern. License: CC BY 4.0.',
+        'Reference figure cropped from panel b of Kumei 2025 Fig. 1, not the Toya 2020 original. Leaf-like pattern. License: CC BY 4.0.',
+        'Reference figure cropped from panel c of Kumei 2025 Fig. 1, not the Toya 2020 original. Reticular/sulciolar pattern. License: CC BY 4.0.',
+      ],
+    },
     flow: {
       title: 'Algorithm',
       steps: {
@@ -1230,7 +1243,21 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     comments: {
       BD3: 'Associated with higher LNM risk in T1 colorectal cancer. Separate from the Kajiwara nomogram.',
     },
-    figureNotes: ['Mod Pathol 2017 ITBCC paper. Not CC — link to the publisher.'],
+    figureNotes: [
+      'Mod Pathol 2017 ITBCC paper. Not CC — link to the publisher.',
+      'Reference composite from Zlobec 2021, not the Lugli 2017 ITBCC original. Only official BD1–BD3 crops are shown on the cards; the investigational BD0 panel is omitted. License: CC BY 4.0.',
+    ],
+    entryFigureNotes: {
+      BD1: [
+        'Reference H&E image cropped from panel 2 of Zlobec 2021 Fig. 1, not the Lugli 2017 ITBCC original. License: CC BY 4.0.',
+      ],
+      BD2: [
+        'Reference H&E image cropped from panel 3 of Zlobec 2021 Fig. 1, not the Lugli 2017 ITBCC original. License: CC BY 4.0.',
+      ],
+      BD3: [
+        'Reference H&E image cropped from panel 4 of Zlobec 2021 Fig. 1, not the Lugli 2017 ITBCC original. License: CC BY 4.0.',
+      ],
+    },
   },
   'net-grade': {
     name: 'WHO 2019 GI NET grade (G1–G3)',
@@ -1351,6 +1378,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Original Fig. 1. Intest Res copyright; not CC, so the figure is not hosted. Link opens Fig. 1 in the paper. The colorectal F classification was first described by Matsumoto 2010 (Scand J Gastroenterol).',
+      'Reference figure from Inada 2013, not the Matsumoto 2010 classification original or the linked Kim 2016 figure: endoscopic F0–F2 examples. License: CC BY 3.0.',
     ],
     note: 'Graded during ESD after indigo carmine submucosal injection. Preoperative EUS-F0/F1/F2 is a separate system. The same F definitions are used in gastric ESD, but this page focuses on colorectal ESD. JGES colorectal ESD guidelines list biopsy- or prolapse-related fibrosis as an indication but do not define F0–F2 in the guideline text.',
   },
@@ -1515,7 +1543,15 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Original Fig. 1. BMJ / Gut copyright; not CC, so the figure is not hosted. Link opens Fig. 1 in the paper. Separate from both NICE and JNET.',
+      'Reference composite from the 2024 validation study, not the IJspeert 2016 original. Crops of three visible SSL features are shown on the card. License: CC BY 4.0.',
     ],
+    entryFigureNotes: {
+      'Step 2 · SSL features': [
+        'Reference figure cropped from panel b of Vu 2024 Fig. 4, not the IJspeert 2016 original. Indistinct border. License: CC BY 4.0.',
+        'Reference figure cropped from panel c of Vu 2024 Fig. 4, not the IJspeert 2016 original. Irregular shape. License: CC BY 4.0.',
+        'Reference figure cropped from panel d of Vu 2024 Fig. 4, not the IJspeert 2016 original. Dark spots inside crypts. License: CC BY 4.0.',
+      ],
+    },
     flow: {
       title: 'Algorithm',
       steps: {
@@ -1558,6 +1594,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     description: 'NBI magnifying classification of colorectal tumors (Type 1 / 2A / 2B / 3).',
     figureNotes: [
       'Original Fig. 7. Wiley / JGES standard copyright; not CC, so the figure is not hosted. Link opens Fig. 7 in the paper.',
+      'Reference figure from Ahmed 2024, not the Sano 2016 original: representative JNET Type 1, 2A, 2B, and 3 lesions. License: CC BY 4.0.',
     ],
   },
   'kajiwara-nomogram': {

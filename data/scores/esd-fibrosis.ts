@@ -34,6 +34,22 @@ export const esdFibrosisScore: ClassificationDefinition = {
       pubmed: ESD_FIBROSIS_2016_PUBMED,
       note: '原著 Fig. 1。Intest Res / Korean Association for the Study of Intestinal Diseases の著作権。CC ではないので画像は置かず、論文の Fig. 1 へリンクする。F 分類の大腸原型は Matsumoto 2010（Scand J Gastroenterol）。',
     },
+    {
+      src: '/figures/esd-fibrosis-inada2013-fig1.webp',
+      href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC3723096/figure/fig1/',
+      hrefLabel: 'Fig. 1',
+      isSecondarySource: true,
+      alt: 'Endoscopic submucosal fibrosis grades F0, F1, and F2 during colorectal ESD',
+      caption: 'Fig. 1. Endoscopic submucosal fibrosis grades F0, F1, and F2 (Inada et al. 2013)',
+      source:
+        'Inada Y, Yoshida N, Kugai M, et al. Prediction and treatment of difficult cases in colorectal endoscopic submucosal dissection. Gastroenterol Res Pract. 2013;2013:523084. Fig. 1.',
+      doi: 'https://doi.org/10.1155/2013/523084',
+      pubmed: '23935609',
+      license: 'CC BY 3.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/3.0/',
+      note: '分類原型（Matsumoto 2010）および従来参照（Kim 2016）の原著図ではなく、同じ F0–F2 定義を示す Inada 2013 の参考図。CC BY 3.0。',
+      aspectRatio: 600 / 234,
+    },
   ],
   note:
     '判定は ESD 操作中、粘膜下層へのインジゴカルミン添加局注（ヒアルロン酸ナトリウム等）後の所見で行う。術前 EUS の EUS-F0/F1/F2 とは別体系。同一 F 定義は早期胃癌 ESD でも用いられるが、本ページは大腸 ESD を主対象とする。JGES 大腸 ESD ガイドラインは生検・蠕動に起因する粘膜下層線維化を適応例に挙げるが、F0–F2 の定義自体は論文・手技記事に依存する。',

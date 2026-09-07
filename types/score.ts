@@ -78,6 +78,8 @@ export type ScoreResult = {
 export type ClassificationFigure = {
   /** アプリ内に埋め込む CC 図。非 CC は置かず href だけにする */
   src?: string;
+  /** 分類の原著ではなく、別文献から引用した参考図 */
+  isSecondarySource?: boolean;
   /** 出版社の図そのもの、または図アンカー。クリックで図へ飛ぶ */
   href?: string;
   /** リンクボタンに出す短いラベル（例: Fig. 7） */

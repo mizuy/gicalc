@@ -1,7 +1,31 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
 
 /** Lugli A et al. Mod Pathol 2017 — ITBCC recommendations */
 export const ITBCG_BUDDING_PUBMED = '26907552';
+/** Zlobec 2021 Virchows Arch（PMID 33843013）。BD0–BD3 の H&E 参考図 */
+export const ITBCC_ZLOBEC_2021_PUBMED = '33843013';
+
+const ITBCC_ZLOBEC_FIGURE_URL =
+  'https://pmc.ncbi.nlm.nih.gov/articles/PMC8724067/figure/Fig1/';
+
+function zlobecCrop(grade: 'BD1' | 'BD2' | 'BD3', panel: string): ClassificationFigure {
+  return {
+    src: `/figures/itbcc-zlobec2021-${grade.toLowerCase()}.webp`,
+    href: ITBCC_ZLOBEC_FIGURE_URL,
+    hrefLabel: `Fig. 1, panel ${panel}`,
+    isSecondarySource: true,
+    alt: `Representative H&E image of ${grade} tumor budding in colorectal cancer`,
+    caption: `Fig. 1, panel ${panel}. Representative ${grade} tumor budding (Zlobec et al. 2021)`,
+    source:
+      'Zlobec I, et al. Refining the ITBCC tumor budding scoring system with a “zero-budding” category in colorectal cancer. Virchows Arch. 2021;479:1085-1090. Fig. 1.',
+    doi: 'https://doi.org/10.1007/s00428-021-03090-w',
+    pubmed: ITBCC_ZLOBEC_2021_PUBMED,
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    note: `Lugli 2017 ITBCC 原著ではなく、Zlobec 2021 Fig. 1 のパネル ${panel} から ${grade} を切り抜いた H&E 参考図。CC BY 4.0。`,
+    aspectRatio: 342 / 170,
+  };
+}
 
 export const itbcgBuddingScore: ClassificationDefinition = {
   id: 'itbcg-budding',
@@ -27,7 +51,21 @@ export const itbcgBuddingScore: ClassificationDefinition = {
       source: 'Lugli A, Kirsch R, Ajioka Y, et al. Mod Pathol. 2017;30:1299-1311.',
       doi: 'https://doi.org/10.1038/modpathol.2017.46',
       pubmed: ITBCG_BUDDING_PUBMED,
-      note: 'Elsevier / Nature 著作権。CC ではないので論文へリンクする。',
+      note: 'Elsevier / Nature 著作権。CC ではないので画像は埋め込まず、論文へリンクする。',
+    },
+    {
+      href: ITBCC_ZLOBEC_FIGURE_URL,
+      hrefLabel: 'Zlobec 2021 Fig. 1',
+      isSecondarySource: true,
+      alt: 'Representative H&E images of BD0, BD1, BD2, and BD3 tumor budding',
+      caption: 'Fig. 1. Representative BD0–BD3 tumor budding (Zlobec et al. 2021)',
+      source:
+        'Zlobec I, et al. Refining the ITBCC tumor budding scoring system with a “zero-budding” category in colorectal cancer. Virchows Arch. 2021;479:1085-1090. Fig. 1.',
+      doi: 'https://doi.org/10.1007/s00428-021-03090-w',
+      pubmed: ITBCC_ZLOBEC_2021_PUBMED,
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: 'Lugli 2017 ITBCC 原著ではなく、BD0 を研究的に分離した Zlobec 2021 の複合図。複合図自体は埋め込まず、公式3段階の BD1–BD3 のみ分類カードに切り抜き掲載し、BD0 は掲載しない。CC BY 4.0。',
     },
   ],
   entries: [
@@ -41,6 +79,7 @@ export const itbcgBuddingScore: ClassificationDefinition = {
         { heading: 'Reporting', text: 'Selective reporting acceptable in many protocols' },
         { heading: 'Prognosis', text: 'Favourable compared with BD2/BD3' },
       ],
+      figures: [zlobecCrop('BD1', '2')],
     },
     {
       label: 'BD2',
@@ -52,6 +91,7 @@ export const itbcgBuddingScore: ClassificationDefinition = {
         { heading: 'Reporting', text: 'Mandatory reporting recommended (ITBCC)' },
         { heading: 'Prognosis', text: 'Intermediate adverse prognostic factor' },
       ],
+      figures: [zlobecCrop('BD2', '3')],
     },
     {
       label: 'BD3',
@@ -64,6 +104,7 @@ export const itbcgBuddingScore: ClassificationDefinition = {
         { heading: 'Prognosis', text: 'High risk of LNM and poor outcome; may influence adjuvant therapy' },
       ],
       comment: 'T1 大腸癌では LNM リスク上昇と関連。Kajiwara nomogram とは別の病理因子。',
+      figures: [zlobecCrop('BD3', '4')],
     },
     {
       label: 'Method',
