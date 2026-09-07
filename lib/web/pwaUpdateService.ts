@@ -147,6 +147,22 @@ async function requestUpdate(): Promise<void> {
   applyIncomingWorker(reg);
 }
 
+async function refreshServiceWorker(reg: ServiceWorkerRegistration): Promise<void> {
+  await prepareForUpdateCheck(reg);
+  await reg.update().catch(() => {});
+  applyIncomingWorker(reg);
+}
+
+function monitorServiceWorkerUpdate(
+  reg: ServiceWorkerRegistration,
+  refresh: Promise<void>,
+): void {
+  void refresh
+    .then(() => waitForServiceWorkerUpdate(reg, UPDATE_CHECK_TIMEOUT_MS))
+    .then(() => applyIncomingWorker(reg))
+    .catch(() => {});
+}
+
 export function isPwaUpdateSupported(): boolean {
   return typeof navigator !== 'undefined' && 'serviceWorker' in navigator;
 }
@@ -256,19 +272,20 @@ export async function checkPwaUpdate(): Promise<PwaUpdateCheckResult> {
   const reg = registration ?? (await navigator.serviceWorker.ready);
   registration = reg;
 
-  await prepareForUpdateCheck(reg);
-
   const runningVersion = getAppVersion();
+  const workerRefresh = refreshServiceWorker(reg);
   const remoteVersion = await fetchLiveAppVersion();
 
-  await reg.update().catch(() => {});
-
-  if (shouldReportUpdateAvailable({ runningVersion, remoteVersion, swUpdateDetected: false })) {
-    markAvailable();
-    void waitForServiceWorkerUpdate(reg, UPDATE_CHECK_TIMEOUT_MS).then(() => applyIncomingWorker(reg));
-    return 'available';
+  if (remoteVersion !== null) {
+    monitorServiceWorkerUpdate(reg, workerRefresh);
+    if (shouldReportUpdateAvailable({ runningVersion, remoteVersion, swUpdateDetected: updateAvailable })) {
+      markAvailable();
+      return 'available';
+    }
+    return 'current';
   }
 
+  await workerRefresh;
   const swDetected = await waitForServiceWorkerUpdate(reg, UPDATE_CHECK_TIMEOUT_MS);
   applyIncomingWorker(reg);
 
