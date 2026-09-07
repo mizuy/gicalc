@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""改変可能な複合図を各型カード用に切り出す（大腸EC / LST / Hill / EREFS / NICE）。"""
+"""改変可能な複合図を各型カード用に切り出す。"""
 
 from pathlib import Path
 
@@ -14,6 +14,9 @@ LST = ROOT / 'lst-ce2025-fig3.webp'
 EC2 = ROOT / 'ec-maeda2021-fig2.webp'
 EC3 = ROOT / 'ec-maeda2021-fig3.webp'
 NICE = ROOT / 'nice-hamada2021-fig1.webp'
+TOYA = ROOT / 'toya-kumei2025-fig1.webp'
+WASP = ROOT / 'wasp-quach2024-fig4.webp'
+ITBCC = ROOT / 'itbcc-zlobec2021-fig1.webp'
 
 # box = (left, top, right, bottom)
 CROPS: dict[str, tuple[Path, tuple[int, int, int, int]]] = {
@@ -49,6 +52,19 @@ CROPS: dict[str, tuple[Path, tuple[int, int, int, int]]] = {
     'nice-hamada2021-type1.jpg': (NICE, (250, 396, 511, 629)),
     'nice-hamada2021-type2.jpg': (NICE, (576, 396, 841, 629)),
     'nice-hamada2021-type3.jpg': (NICE, (907, 396, 1175, 629)),
+    # Toya ME-CV: 2×2（a convoluted / b leaf-like / c reticular / d pinecone）。
+    'toya-kumei2025-convoluted.jpg': (TOYA, (0, 0, 301, 261)),
+    'toya-kumei2025-leaf-like.jpg': (TOYA, (301, 0, 602, 261)),
+    'toya-kumei2025-reticular.jpg': (TOYA, (0, 261, 301, 522)),
+    'toya-kumei2025-pinecone.jpg': (TOYA, (301, 261, 602, 522)),
+    # WASP Fig. 4: b 不明瞭な辺縁 / c 不整形 / d 腺窩内暗点。
+    'wasp-quach2024-indistinct-border.jpg': (WASP, (358, 0, 709, 320)),
+    'wasp-quach2024-irregular-shape.jpg': (WASP, (0, 330, 348, 652)),
+    'wasp-quach2024-dark-spots.jpg': (WASP, (358, 330, 709, 652)),
+    # ITBCC: 2×2 のうち研究的 BD0（左上）を除き、公式 BD1–BD3 を切り出す。
+    'itbcc-zlobec2021-bd1.jpg': (ITBCC, (342, 0, 684, 170)),
+    'itbcc-zlobec2021-bd2.jpg': (ITBCC, (0, 174, 342, 344)),
+    'itbcc-zlobec2021-bd3.jpg': (ITBCC, (342, 174, 684, 344)),
 }
 
 

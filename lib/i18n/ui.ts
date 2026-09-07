@@ -356,3 +356,13 @@ export const UI: Record<Locale, UiStrings> = {
     },
   },
 };
+
+UI.ja.about.citationsCcBody +=
+  '\n• Toya ME-CV 参考図（Kumei 2025, DEN Open Fig. 1）: CC BY 4.0（Toya 2020 原著図ではない。4パターンを切り抜き）' +
+  '\n• WASP 参考図（Vu 2024, JGH Open Fig. 4）: CC BY 4.0（IJspeert 2016 原著図ではない。SSL 3所見を切り抜き）' +
+  '\n• ITBCC 参考図（Zlobec 2021, Virchows Arch Fig. 1）: CC BY 4.0（Lugli 2017 原著図ではない。BD1–BD3 を切り抜き、研究的 BD0 は除外）';
+
+UI.en.about.citationsCcBody +=
+  '\n• Toya ME-CV reference figure (Kumei 2025, DEN Open Fig. 1): CC BY 4.0 (not the Toya 2020 original; four available patterns are cropped)' +
+  '\n• WASP reference figure (Vu 2024, JGH Open Fig. 4): CC BY 4.0 (not the IJspeert 2016 original; three SSL findings are cropped)' +
+  '\n• ITBCC reference figure (Zlobec 2021, Virchows Arch Fig. 1): CC BY 4.0 (not the Lugli 2017 original; BD1–BD3 are cropped and investigational BD0 is omitted)';

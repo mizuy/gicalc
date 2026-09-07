@@ -1,7 +1,35 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
 
 /** IJspeert 2016 Gut（PMID 25753029） */
 export const WASP_2016_PUBMED = '25753029';
+/** Quach 2024 JGH Open（PMID 38919272）。WASP 所見の検証論文・Fig. 4 */
+export const WASP_QUACH_2024_PUBMED = '38919272';
+
+const WASP_QUACH_FIGURE_URL =
+  'https://pmc.ncbi.nlm.nih.gov/articles/PMC11196833/figure/jgh313109-fig-0004/';
+
+function quachCrop(
+  file: string,
+  finding: string,
+  panel: string,
+): ClassificationFigure {
+  return {
+    src: `/figures/wasp-quach2024-${file}.webp`,
+    href: WASP_QUACH_FIGURE_URL,
+    hrefLabel: `Fig. 4${panel}`,
+    isSecondarySource: true,
+    alt: `${finding} in a sessile serrated lesion`,
+    caption: `Fig. 4${panel}. ${finding} (Quach et al. 2024)`,
+    source:
+      'Vu NTH, Le HM, Vo DTN, et al. Endoscopic characteristics and performance of WASP classification in the diagnosis of colorectal sessile-serrated lesions in Vietnamese patients. JGH Open. 2024;8:e13109. Fig. 4.',
+    doi: 'https://doi.org/10.1002/jgh3.13109',
+    pubmed: WASP_QUACH_2024_PUBMED,
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    note: `IJspeert 2016 原著ではなく、検証論文 Fig. 4${panel} から「${finding}」を切り抜いた参考図。CC BY 4.0。`,
+    aspectRatio: panel === 'b' ? 351 / 320 : panel === 'c' ? 348 / 322 : 351 / 322,
+  };
+}
 
 export const waspScore: ClassificationDefinition = {
   id: 'wasp',
@@ -27,7 +55,21 @@ export const waspScore: ClassificationDefinition = {
         'IJspeert JEG, Bastiaansen BAJ, van Leerdam ME, et al. Development and validation of the WASP classification system for optical diagnosis of adenomas, hyperplastic polyps and sessile serrated adenomas/polyps. Gut. 2016;65:963-970. Fig. 1.',
       doi: 'https://doi.org/10.1136/gutjnl-2014-308411',
       pubmed: WASP_2016_PUBMED,
-      note: '原著 Fig. 1。BMJ / Gut の著作権。CC ではないので画像は置かず、論文の Fig. 1 へリンクする。NICE とも JNET とも別分類。',
+      note: '原著 Fig. 1。BMJ / Gut の著作権。CC ではないので画像は埋め込まず、論文の Fig. 1 へリンクする。NICE とも JNET とも別分類。',
+    },
+    {
+      href: WASP_QUACH_FIGURE_URL,
+      hrefLabel: 'Quach 2024 Fig. 4',
+      isSecondarySource: true,
+      alt: 'Endoscopic findings of sessile serrated lesions used with the WASP classification',
+      caption: 'Fig. 4. Endoscopic findings of sessile serrated lesions (Quach et al. 2024)',
+      source:
+        'Vu NTH, Le HM, Vo DTN, et al. Endoscopic characteristics and performance of WASP classification in the diagnosis of colorectal sessile-serrated lesions in Vietnamese patients. JGH Open. 2024;8:e13109. Fig. 4.',
+      doi: 'https://doi.org/10.1002/jgh3.13109',
+      pubmed: WASP_QUACH_2024_PUBMED,
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: 'IJspeert 2016 原著ではなく、WASP を検証した Vu 2024 の複合図。複合図自体は埋め込まず、確認できる3所見を分類カードに切り抜き掲載。CC BY 4.0。',
     },
   ],
   entries: [
@@ -60,6 +102,11 @@ export const waspScore: ClassificationDefinition = {
           heading: 'Threshold',
           text: 'The presence of at least two SSA/P-like features is considered sufficient to diagnose an SSA/P',
         },
+      ],
+      figures: [
+        quachCrop('indistinct-border', 'Indistinct border', 'b'),
+        quachCrop('irregular-shape', 'Irregular shape', 'c'),
+        quachCrop('dark-spots', 'Dark spots inside crypts', 'd'),
       ],
     },
     {

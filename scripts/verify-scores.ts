@@ -86,13 +86,17 @@ import { DEKKER_2020_PUBMED, MCWHINNEY_2023_PUBMED } from '../data/scores/sps';
 import { KUDO_EC_2011_PUBMED, MAEDA_EC_REVIEW_2021_PUBMED } from '../data/scores/colorectal-ec';
 import { KIKUCHI_2014_PUBMED } from '../data/scores/kikuchi-mebi';
 import { UCHIYAMA_2006_PUBMED } from '../data/scores/uchiyama';
-import { KIKUCHI_2014_PUBMED as KIKUCHI_LINK_PUBMED, TOYA_2020_PUBMED } from '../data/scores/toya';
+import {
+  KIKUCHI_2014_PUBMED as KIKUCHI_LINK_PUBMED,
+  TOYA_2020_PUBMED,
+  TOYA_KUMEI_2025_PUBMED,
+} from '../data/scores/toya';
 import { VIENNA_2000_PUBMED } from '../data/scores/vienna';
 import { WHO_DIGESTIVE_2019_PUBMED } from '../data/scores/who-serrated';
-import { ITBCG_BUDDING_PUBMED } from '../data/scores/itbcg-budding';
+import { ITBCC_ZLOBEC_2021_PUBMED, ITBCG_BUDDING_PUBMED } from '../data/scores/itbcg-budding';
 import { WHO_NET_2019_PUBMED } from '../data/scores/net-grade';
 import { LAUREN_1965_PUBMED } from '../data/scores/lauren';
-import { WASP_2016_PUBMED } from '../data/scores/wasp';
+import { WASP_2016_PUBMED, WASP_QUACH_2024_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { buildReportFormUrl, reportEnvironment, REPORT_FORM_URL } from '../lib/reportIssue';
@@ -1871,10 +1875,27 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(waspFig.figures?.[0]?.license, undefined);
   assert.match(waspFig.figures?.[0]?.note ?? '', /CC ではない/);
   assert.equal(waspFig.pubmed, WASP_2016_PUBMED);
+  assert.equal(waspFig.figures?.length, 2);
+  assert.equal(waspFig.figures?.[1]?.src, undefined);
+  assert.equal(waspFig.figures?.[1]?.isSecondarySource, true);
+  assert.equal(waspFig.figures?.[1]?.license, 'CC BY 4.0');
+  assert.equal(waspFig.figures?.[1]?.pubmed, WASP_QUACH_2024_PUBMED);
+  const waspFindingFigures = waspFig.entries.find(
+    (entry) => entry.label === 'Step 2 · SSL features',
+  )?.figures;
+  assert.deepEqual(
+    waspFindingFigures?.map((figure) => figure.src),
+    [
+      '/figures/wasp-quach2024-indistinct-border.webp',
+      '/figures/wasp-quach2024-irregular-shape.webp',
+      '/figures/wasp-quach2024-dark-spots.webp',
+    ],
+  );
+  assert.equal(waspFindingFigures?.every((figure) => figure.isSecondarySource), true);
 
   const toyaFig = getScoreById('toya');
   assert.ok(toyaFig && isClassification(toyaFig));
-  assert.equal(toyaFig.figures?.length, 2);
+  assert.equal(toyaFig.figures?.length, 3);
   assert.equal(toyaFig.figures?.[0]?.src, undefined);
   assert.match(toyaFig.figures?.[0]?.href ?? '', /den\.13640/);
   assert.equal(toyaFig.figures?.[0]?.hrefLabel, 'Toya 2020');
@@ -1885,6 +1906,22 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(toyaFig.figures?.[1]?.href ?? '', /den\.12282/);
   assert.equal(toyaFig.figures?.[1]?.hrefLabel, 'Kikuchi 2014');
   assert.equal(toyaFig.figures?.[1]?.pubmed, KIKUCHI_LINK_PUBMED);
+  assert.equal(toyaFig.figures?.[2]?.src, undefined);
+  assert.equal(toyaFig.figures?.[2]?.isSecondarySource, true);
+  assert.equal(toyaFig.figures?.[2]?.license, 'CC BY 4.0');
+  assert.equal(toyaFig.figures?.[2]?.pubmed, TOYA_KUMEI_2025_PUBMED);
+  assert.deepEqual(
+    toyaFig.entries.find((entry) => entry.label === 'Pinecone')?.figures?.map((figure) => figure.src),
+    ['/figures/toya-kumei2025-pinecone.webp'],
+  );
+  assert.deepEqual(
+    toyaFig.entries.find((entry) => entry.label === 'Monotonous')?.figures?.map((figure) => figure.src),
+    [
+      '/figures/toya-kumei2025-convoluted.webp',
+      '/figures/toya-kumei2025-leaf-like.webp',
+      '/figures/toya-kumei2025-reticular.webp',
+    ],
+  );
 
   const viennaFig = getScoreById('vienna');
   assert.ok(viennaFig && isClassification(viennaFig));
@@ -1901,6 +1938,17 @@ test('分類は原著の図を出典付きで持つ', () => {
     assertOriginalPlateIsLinkOnly(score);
     assert.equal(score.figures?.[0]?.src, undefined);
     assert.equal(score.figures?.[0]?.license, undefined);
+  }
+  assert.equal(itbcg.figures?.length, 2);
+  assert.equal(itbcg.figures?.[1]?.src, undefined);
+  assert.equal(itbcg.figures?.[1]?.isSecondarySource, true);
+  assert.equal(itbcg.figures?.[1]?.license, 'CC BY 4.0');
+  assert.equal(itbcg.figures?.[1]?.pubmed, ITBCC_ZLOBEC_2021_PUBMED);
+  for (const grade of ['BD1', 'BD2', 'BD3'] as const) {
+    const figure = itbcg.entries.find((entry) => entry.label === grade)?.figures?.[0];
+    assert.equal(figure?.src, `/figures/itbcc-zlobec2021-${grade.toLowerCase()}.webp`);
+    assert.equal(figure?.isSecondarySource, true);
+    assert.equal(figure?.license, 'CC BY 4.0');
   }
 
   const spigelman = getScoreById('spigelman');
@@ -2458,7 +2506,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.21');
+  assert.equal(pkg.version, '1.0.22');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {

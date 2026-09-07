@@ -117,6 +117,9 @@ npm run preview:pages
 - ESD-F 参考図（Inada 2013, *Gastroenterol Res Pract* Fig. 1）: **CC BY 3.0**（Matsumoto 2010 原著図ではない）
 - Prague 参考図（Oyanagi 2022, *DEN Open* Fig. 5）: **CC BY 4.0**（Sharma 2006 原著図ではない）
 - Sarin 参考図（Acevedo 2019, *World J Hepatol* Fig. 1）: **CC BY-NC 4.0**（Sarin 1992 原著図ではない）
+- Toya ME-CV 参考図（Kumei 2025, *DEN Open* Fig. 1）: **CC BY 4.0**（Toya 2020 原著図ではない。確認できる4パターンを切り抜き）
+- WASP 参考図（Vu 2024, *JGH Open* Fig. 4）: **CC BY 4.0**（IJspeert 2016 原著図ではない。SSL 3所見を切り抜き）
+- ITBCC 参考図（Zlobec 2021, *Virchows Arch* Fig. 1）: **CC BY 4.0**（Lugli 2017 原著図ではない。BD1–BD3 を切り抜き、研究的 BD0 は除外）
 
 **CC ではないソース**
 
