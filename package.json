@@ -1,7 +1,7 @@
 {
   "name": "gicalc",
   "main": "expo-router/entry",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "private": true,
   "homepage": "https://mizuy.github.io/gicalc/",
   "scripts": {
@@ -17,6 +17,7 @@
     "test": "tsx --test scripts/verify-scores.ts",
     "optimize:figures": "python3 scripts/optimize-figures.py",
     "rasterize:paris": "python3 scripts/rasterize-paris-svg.py",
+    "rasterize:pit-pattern": "python3 scripts/rasterize-pit-pattern-svg.py",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

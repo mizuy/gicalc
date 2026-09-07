@@ -34,7 +34,7 @@
 | 大腸 | Vienna（Schlemper 2000） | 消化管上皮性腫瘍の病理分類 | 定義一覧（C1–C5） |
 | 大腸 | Paris（2003 / 2005） | 表在型腫瘍の肉眼型（Type 0） | 定義一覧（原著の図・文言） |
 | 大腸 | LST（Kudo 2008） | 側方発育型腫瘍の4亜型 | 定義一覧（原著の図・文言） |
-| 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（文言。図は原著へリンク） |
+| 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（自作 CC 参考図 + 原著リンク） |
 | 大腸 | ESD-F（Matsumoto 2010 / Kim 2016） | 大腸 ESD 粘膜下層線維化 F0–F2 | 定義一覧（原著リンク + Inada 2013 参考図） |
 | 大腸 | 治癒切除判定（JGES/JSCCR） | 大腸 ESD 後・内視鏡的治癒切除 | 治癒切除 / 追加腸切除 / VM1 |
 | 大腸 | NICE（Hayashi 2013） | 大腸 NBI（非拡大） | 定義一覧（Hamada 2021 CC 図 + Hayashi 原著リンク） |
@@ -121,6 +121,7 @@ npm run preview:pages
 - Toya ME-CV 参考図（Kumei 2025, *DEN Open* Fig. 1）: **CC BY 4.0**（Toya 2020 原著図ではない。確認できる4パターンを切り抜き）
 - WASP 参考図（Vu 2024, *JGH Open* Fig. 4）: **CC BY 4.0**（IJspeert 2016 原著図ではない。SSL 3所見を切り抜き）
 - ITBCC 参考図（Zlobec 2021, *Virchows Arch* Fig. 1）: **CC BY 4.0**（Lugli 2017 原著図ではない。BD1–BD3 を切り抜き、研究的 BD0 は除外）
+- 工藤–鶴田 pit pattern カード模式図: プロジェクト提供者の自作図をSVG要素から抽出して高解像度化。**CC BY 4.0**（原著図ではない）
 
 **CC ではないソース**
 
@@ -129,7 +130,7 @@ npm run preview:pages
 - WASP（IJspeert 2016, *Gut*）: BMJ 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
 - Prague（Sharma 2006, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 3 へリンクする
 - LA 原著（Lundell 1999, *Gut*）: CC ではない（CC 図は Jung 2025 Fig. 1A–D の切り抜きを掲載）
-- 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。図は埋め込まず、*Clin Endosc* 2025 Fig. 4 へリンクする（記事自体は CC BY-NC、原図は許諾再掲）
+- 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。図は埋め込まず、*Clin Endosc* 2025 Fig. 4 へリンクする（各型カードには自作 CC 参考図を掲載）
 - Paris 原著（2003 *GIE* / 2005 *Endoscopy*）: CC ではない（各型カードの模式図はプロジェクト提供者の自作図を許諾のうえ切り抜き掲載）
 - LST 原著（Kudo 2008, *GIE*）: CC ではない
 - 京都（Shichijo 2017）/ 改変京都（Kawamura 2021）: Wiley、CC ではない

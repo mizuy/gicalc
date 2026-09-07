@@ -1468,7 +1468,17 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Types I–VN. Tanaka 2004 Dig Endosc original is not CC, so the figure is not hosted. Link opens Clin Endosc 2025 Fig. 4 (permission reprint).',
+      'Reference schematic created and supplied by a project contributor, not a figure from the Kudo–Tsuruta original. Each vector element was extracted and rasterized at high resolution for its classification card. License: CC BY 4.0.',
     ],
+    entryFigureNotes: {
+      'Type I': ['Extracted from a contributor-created reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
+      'Type II': ['Extracted from a contributor-created reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
+      'Type IIIs': ['Extracted from a contributor-created reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
+      'Type IIIL': ['Extracted from a contributor-created reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
+      'Type IV': ['Extracted from a contributor-created reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
+      'Type VI': ['Extracted from a contributor-created reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
+      'Type VN': ['Extracted from a contributor-created reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
+    },
   },
   'colorectal-ec': {
     name: 'Colorectal EC classification (endocytoscopy)',

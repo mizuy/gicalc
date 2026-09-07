@@ -1,4 +1,22 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
+
+const PIT_PATTERN_USER_FIGURE_PATH = '/figures/pit-pattern-user2026-original.svg';
+
+function userSchematicCrop(file: string, label: string, meaning: string): ClassificationFigure {
+  return {
+    src: `/figures/pit-pattern-user2026-${file}.webp`,
+    href: PIT_PATTERN_USER_FIGURE_PATH,
+    hrefLabel: 'Full schematic',
+    isSecondarySource: true,
+    alt: `Schematic of Kudo–Tsuruta pit pattern ${label}: ${meaning}`,
+    caption: `${label}. ${meaning} (original schematic supplied for GI Calc)`,
+    source: 'Original schematic created and supplied by a GI Calc project contributor, 2026.',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    note: `工藤–鶴田分類の原著図ではなく、提供者自作のCC参考図から${label}を抽出して高解像度化。`,
+    aspectRatio: 1,
+  };
+}
 
 export const kudoTsurutaScore: ClassificationDefinition = {
   id: 'kudo-tsuruta',
@@ -26,6 +44,17 @@ export const kudoTsurutaScore: ClassificationDefinition = {
       pubmed: '40336268',
       note: 'Type I–VN。原図 Tanaka 2004 Dig Endosc は CC ではないので画像は置かず、Clin Endosc 2025 Fig. 4（許諾再掲）へリンクする。',
     },
+    {
+      href: PIT_PATTERN_USER_FIGURE_PATH,
+      hrefLabel: 'Full supplied schematic',
+      isSecondarySource: true,
+      alt: 'Original schematic of Kudo–Tsuruta pit patterns supplied for GI Calc',
+      caption: 'Kudo–Tsuruta pit pattern Types I–VN — supplied original schematic',
+      source: 'Original schematic created and supplied by a GI Calc project contributor, 2026.',
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: '原著図ではない提供者自作のCC参考図。複合図は各型へ分割し、ベクター要素から高解像度でラスタライズ。',
+    },
   ],
   entries: [
     {
@@ -37,6 +66,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
         { heading: 'Pit', text: 'Round pit (normal pit); round and regular' },
         { heading: 'Histology', text: 'Normal glands or inflammatory mucosa' },
       ],
+      figures: [userSchematicCrop('type-i', 'Type I', 'Normal / inflammatory')],
     },
     {
       label: 'Type II',
@@ -47,6 +77,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
         { heading: 'Pit', text: 'Asteroid pit; star-shaped or onion-like, larger than normal' },
         { heading: 'Histology', text: 'Hyperplastic polyp' },
       ],
+      figures: [userSchematicCrop('type-ii', 'Type II', 'Hyperplastic')],
     },
     {
       label: 'Type IIIs',
@@ -67,6 +98,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
           text: 'Adenoma, high-grade dysplasia, or intramucosal cancer (de novo precursor)',
         },
       ],
+      figures: [userSchematicCrop('type-iiis', 'Type IIIs', 'Adenoma / HGD / intramucosal ca')],
     },
     {
       label: 'Type IIIL',
@@ -81,6 +113,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
         { heading: 'Note', text: 'L stands for long or large. Typical of polypoid tubular adenoma.' },
         { heading: 'Histology', text: 'Tubular adenoma' },
       ],
+      figures: [userSchematicCrop('type-iiil', 'Type IIIL', 'Tubular adenoma')],
     },
     {
       label: 'Type IV',
@@ -91,6 +124,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
         { heading: 'Pit', text: 'Dendritic or gyrus-like pit; branch-like' },
         { heading: 'Histology', text: 'Tubulovillous or villous adenoma; may include intramucosal cancer' },
       ],
+      figures: [userSchematicCrop('type-iv', 'Type IV', 'Tubulovillous adenoma')],
     },
     {
       label: 'Type VI',
@@ -105,6 +139,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
         { heading: 'Note', text: 'I stands for irregular (structural atypism).' },
         { heading: 'Histology', text: 'Intramucosal cancer or superficial submucosal invasive cancer' },
       ],
+      figures: [userSchematicCrop('type-vi', 'Type VI', 'Intramucosal / superficial SM ca')],
     },
     {
       label: 'Type VN',
@@ -119,6 +154,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
         },
         { heading: 'Histology', text: 'Deep submucosal invasive cancer' },
       ],
+      figures: [userSchematicCrop('type-vn', 'Type VN', 'Deep SM cancer')],
     },
   ],
 };
