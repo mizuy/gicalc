@@ -1540,7 +1540,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
 test('分類は原著の図を出典付きで持つ', () => {
   const jnet = getScoreById('jnet');
   assert.ok(jnet && isClassification(jnet));
-  assert.equal(jnet.figures?.length, 1);
+  assert.equal(jnet.figures?.length, 2);
   assert.match(jnet.figures?.[0]?.source ?? '', /Sano Y/);
   assert.match(jnet.figures?.[0]?.doi ?? '', /10\.1111\/den\.12644/);
   assert.equal(jnet.figures?.[0]?.src, undefined);
@@ -1551,6 +1551,34 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(jnet.figures?.[0]?.pubmed, '26927367');
   assert.equal(jnet.figures?.[0]?.license, undefined);
   assert.match(jnet.figures?.[0]?.note ?? '', /CC ではない/);
+  assert.match(jnet.figures?.[1]?.src ?? '', /jnet-ahmed2024-fig1\.webp/);
+  assert.equal(jnet.figures?.[1]?.isSecondarySource, true);
+  assert.equal(jnet.figures?.[1]?.license, 'CC BY 4.0');
+  assert.equal(jnet.figures?.[1]?.pubmed, '38023663');
+  assert.match(jnet.figures?.[1]?.note ?? '', /原著.*ではなく/);
+
+  const secondaryReferenceFigures = [
+    { id: 'jnet', src: 'jnet-ahmed2024-fig1.webp', license: 'CC BY 4.0' },
+    { id: 'esd-fibrosis', src: 'esd-fibrosis-inada2013-fig1.webp', license: 'CC BY 3.0' },
+    { id: 'prague', src: 'prague-oyanagi2022-fig5.webp', license: 'CC BY 4.0' },
+    { id: 'sarin', src: 'sarin-acevedo2019-fig1.webp', license: 'CC BY-NC 4.0' },
+  ];
+  for (const expected of secondaryReferenceFigures) {
+    const score = getScoreById(expected.id);
+    assert.ok(score && isClassification(score));
+    const figure = score.figures?.find((candidate) => candidate.isSecondarySource);
+    assert.ok(figure, `${expected.id} に別文献の参考図がない`);
+    assert.match(figure.src ?? '', new RegExp(`${expected.src.replace('.', '\\.')}$`));
+    assert.equal(figure.license, expected.license);
+    assert.ok(figure.source);
+    assert.ok(figure.doi);
+    assert.ok(figure.pubmed);
+    assert.match(figure.note, /参考図/);
+    const english = localizeScore(score, 'en');
+    const englishFigure = english.figures?.find((candidate) => candidate.isSecondarySource);
+    assert.match(englishFigure?.note ?? '', /Reference figure/);
+    assert.doesNotMatch(englishFigure?.note ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+  }
 
   const kudo = getScoreById('kudo-tsuruta');
   assert.ok(kudo && isClassification(kudo));

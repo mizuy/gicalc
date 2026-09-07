@@ -93,6 +93,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Original Fig. 3 (C2M5 schematic). Elsevier / Gastroenterology copyright; not CC, so the figure is not hosted. Link opens the publisher Fig. 3 image.',
+      'Reference figure from Oyanagi 2022, not the Sharma 2006 original: Prague C&M schematic and a C1M4 example. License: CC BY 4.0.',
     ],
   },
   siewert: {
@@ -187,6 +188,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Original 1992 paper. Wiley / Hepatology copyright; not CC, so the figure is not hosted. Link opens the paper.',
+      'Reference figure from Acevedo 2019, not the Sarin 1992 original: GOV1 / GOV2 / IGV1 / IGV2 schematic. License: CC BY-NC 4.0.',
     ],
   },
   erefs: {
@@ -1337,6 +1339,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Original Fig. 1. Intest Res copyright; not CC, so the figure is not hosted. Link opens Fig. 1 in the paper. The colorectal F classification was first described by Matsumoto 2010 (Scand J Gastroenterol).',
+      'Reference figure from Inada 2013, not the Matsumoto 2010 classification original or the linked Kim 2016 figure: endoscopic F0–F2 examples. License: CC BY 3.0.',
     ],
     note: 'Graded during ESD after indigo carmine submucosal injection. Preoperative EUS-F0/F1/F2 is a separate system. The same F definitions are used in gastric ESD, but this page focuses on colorectal ESD. JGES colorectal ESD guidelines list biopsy- or prolapse-related fibrosis as an indication but do not define F0–F2 in the guideline text.',
   },
@@ -1544,6 +1547,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     description: 'NBI magnifying classification of colorectal tumors (Type 1 / 2A / 2B / 3).',
     figureNotes: [
       'Original Fig. 7. Wiley / JGES standard copyright; not CC, so the figure is not hosted. Link opens Fig. 7 in the paper.',
+      'Reference figure from Ahmed 2024, not the Sano 2016 original: representative JNET Type 1, 2A, 2B, and 3 lesions. License: CC BY 4.0.',
     ],
   },
   'kajiwara-nomogram': {

@@ -8,7 +8,7 @@
 |------|--------|------|------|
 | 食道 | JES（Oyama 2017） | 扁平上皮の拡大（IPCL） | 定義一覧（原著の図・文言） |
 | 食道 | LA（Lundell 1999） | 逆流性食道炎 A–D | 定義一覧（文言。図は VideoGIE へリンク） |
-| 食道 | Prague C & M（Sharma 2006） | Barrett の C / M | 定義一覧（文言。図は原著へリンク） |
+| 食道 | Prague C & M（Sharma 2006） | Barrett の C / M | 定義一覧（原著リンク + Oyanagi 2022 参考図） |
 | 食道 | EREFS（Hirano 2013） | 好酸球性食道炎の所見 | 定義一覧（Abe 2022 の図・文言） |
 | 食道 | 門脈圧亢進症学会分類（F / L / C / RC） | 食道胃静脈瘤 | 定義一覧 |
 | 食道 | 治癒切除判定（JGES/JES） | 食道 ESD 後・根治度 | 治癒切除 / 追加治療 / 非治癒切除 |
@@ -35,11 +35,11 @@
 | 大腸 | Paris（2003 / 2005） | 表在型腫瘍の肉眼型（Type 0） | 定義一覧（原著の図・文言） |
 | 大腸 | LST（Kudo 2008） | 側方発育型腫瘍の4亜型 | 定義一覧（原著の図・文言） |
 | 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（文言。図は原著へリンク） |
-| 大腸 | ESD-F（Matsumoto 2010 / Kim 2016） | 大腸 ESD 粘膜下層線維化 F0–F2 | 定義一覧（文言。図は原著へリンク） |
+| 大腸 | ESD-F（Matsumoto 2010 / Kim 2016） | 大腸 ESD 粘膜下層線維化 F0–F2 | 定義一覧（原著リンク + Inada 2013 参考図） |
 | 大腸 | 治癒切除判定（JGES/JSCCR） | 大腸 ESD 後・内視鏡的治癒切除 | 治癒切除 / 追加腸切除 / VM1 |
 | 大腸 | NICE（Hayashi 2013） | 大腸 NBI（非拡大） | 定義一覧（Hamada 2021 CC 図 + Hayashi 原著リンク） |
 | 大腸 | WASP（IJspeert 2016） | HP / SSL / 腺腫（<10 mm） | 定義一覧（文言。図は原著へリンク） |
-| 大腸 | JNET（Sano 2016） | NBI 拡大 | 定義一覧（文言。図は原著へリンク） |
+| 大腸 | JNET（Sano 2016） | NBI 拡大 | 定義一覧（原著リンク + Ahmed 2024 参考図） |
 | 大腸 | T1 Nomogram（Kajiwara 2023） | 大腸T1癌の LNM 確率 | 確率（%）と nomogram 点 |
 | 大腸 | e-T2 Score（Koyama 2022） | 大腸 T1b vs T2 の内視鏡鑑別 | 点数 0–11 |
 | 大腸 | BBPS（Lai 2009） | 腸管前処置（洗浄後・3区域） | 点数 0–9（Kim 2024 CC 図例） |
@@ -113,13 +113,17 @@ npm run preview:pages
 - BBPS 区域スコア例（Kim 2024, *Sci Rep* Fig. 1）: **CC BY 4.0**（Lai 2009 原著 Fig. 1 は Elsevier 著作権）
 - Aronchick（2000, *GIE*）: Crossref 上の Version of Record は **CC BY-NC-ND 4.0**（遅延公開）
 - Kakushima WLI スコア（Kakushima 2017, *Endosc Int Open* Table 2）: **CC BY-NC-ND 4.0**（表は HTML のため埋め込まず Table 2 へリンク）
+- JNET 参考図（Ahmed 2024, *DEN Open* Fig. 1）: **CC BY 4.0**（Sano 2016 原著図ではない）
+- ESD-F 参考図（Inada 2013, *Gastroenterol Res Pract* Fig. 1）: **CC BY 3.0**（Matsumoto 2010 原著図ではない）
+- Prague 参考図（Oyanagi 2022, *DEN Open* Fig. 5）: **CC BY 4.0**（Sharma 2006 原著図ではない）
+- Sarin 参考図（Acevedo 2019, *World J Hepatol* Fig. 1）: **CC BY-NC 4.0**（Sarin 1992 原著図ではない）
 
 **CC ではないソース**
 
-- JNET（Sano 2016, *Dig Endosc*）: Wiley 標準著作権。図は埋め込まず、原著 Fig. 7 へリンクする
+- JNET（Sano 2016, *Dig Endosc*）: Wiley 標準著作権。原著 Fig. 7 は埋め込まずリンクする
 - NICE（Hayashi 2013, *GIE*）: Elsevier 著作権。原著 Fig. 1 は埋め込まずリンクする（CC 図は Hamada 2021 *BMC Gastroenterol* Fig. 1 を埋め込み）
 - WASP（IJspeert 2016, *Gut*）: BMJ 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
-- Prague（Sharma 2006, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 3 へリンクする
+- Prague（Sharma 2006, *Gastroenterology*）: Elsevier 著作権。原著 Fig. 3 は埋め込まずリンクする
 - LA 原著（Lundell 1999, *Gut*）: CC ではない。A–D 揃いの静止画は置かず、VideoGIE 2013（CC BY-NC-ND 4.0 の動画）へリンクする
 - 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。図は埋め込まず、*Clin Endosc* 2025 Fig. 4 へリンクする（記事自体は CC BY-NC、原図は許諾再掲）
 - Paris 原著（2003 *GIE* / 2005 *Endoscopy*）: CC ではない

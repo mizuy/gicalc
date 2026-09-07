@@ -29,6 +29,22 @@ export const pragueScore: ClassificationDefinition = {
       pubmed: PRAGUE_2006_PUBMED,
       note: '原著 Fig. 3（C2M5 の模式図）。Elsevier / Gastroenterology の著作権。CC ではないので画像は置かず、出版社の Fig. 3 画像へリンクする。',
     },
+    {
+      src: '/figures/prague-oyanagi2022-fig5.webp',
+      href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8828243/figure/deo273-fig-0005/',
+      hrefLabel: 'Fig. 5',
+      isSecondarySource: true,
+      alt: 'Prague C and M measurement diagram and a C1M4 endoscopic example',
+      caption: 'Fig. 5. Prague C&M measurement and a C1M4 example (Oyanagi et al. 2022)',
+      source:
+        'Oyanagi T, Watanabe M, Aoyama T, et al. Endoscopic diagnosis and screening of Barrett’s esophagus: inconsistency of diagnostic criteria between Japan and Western countries. DEN Open. 2022;2:e73. Fig. 5.',
+      doi: 'https://doi.org/10.1002/deo2.73',
+      pubmed: '35310704',
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: 'Sharma 2006 の原著図ではなく、Oyanagi 2022 の模式図と C1M4 症例を参考図として掲載。CC BY 4.0。',
+      aspectRatio: 600 / 216,
+    },
   ],
   entries: [
     {
