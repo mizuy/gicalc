@@ -53,7 +53,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
       source: 'Original schematic created and supplied by a GI Calc project contributor, 2026.',
       license: 'CC BY 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-      note: '原著図ではない提供者自作のCC参考図。複合図は各型へ分割し、ベクター要素から高解像度でラスタライズ。',
+      note: '原著図ではない提供者自作のCC参考図。複合図自体は埋め込まず、各型へ分割してベクター要素から高解像度でラスタライズ。',
     },
   ],
   entries: [
