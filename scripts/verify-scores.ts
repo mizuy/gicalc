@@ -1939,13 +1939,15 @@ test('分類は原著の図を出典付きで持つ', () => {
     assert.equal(score.figures?.[0]?.src, undefined);
     assert.equal(score.figures?.[0]?.license, undefined);
   }
-  assert.equal(itbcg.figures?.length, 2);
-  assert.equal(itbcg.figures?.[1]?.src, undefined);
-  assert.equal(itbcg.figures?.[1]?.isSecondarySource, true);
-  assert.equal(itbcg.figures?.[1]?.license, 'CC BY 4.0');
-  assert.equal(itbcg.figures?.[1]?.pubmed, ITBCC_ZLOBEC_2021_PUBMED);
+  const itbcgFig = getScoreById('itbcg-budding');
+  assert.ok(itbcgFig && isClassification(itbcgFig));
+  assert.equal(itbcgFig.figures?.length, 2);
+  assert.equal(itbcgFig.figures?.[1]?.src, undefined);
+  assert.equal(itbcgFig.figures?.[1]?.isSecondarySource, true);
+  assert.equal(itbcgFig.figures?.[1]?.license, 'CC BY 4.0');
+  assert.equal(itbcgFig.figures?.[1]?.pubmed, ITBCC_ZLOBEC_2021_PUBMED);
   for (const grade of ['BD1', 'BD2', 'BD3'] as const) {
-    const figure = itbcg.entries.find((entry) => entry.label === grade)?.figures?.[0];
+    const figure = itbcgFig.entries.find((entry) => entry.label === grade)?.figures?.[0];
     assert.equal(figure?.src, `/figures/itbcc-zlobec2021-${grade.toLowerCase()}.webp`);
     assert.equal(figure?.isSecondarySource, true);
     assert.equal(figure?.license, 'CC BY 4.0');
