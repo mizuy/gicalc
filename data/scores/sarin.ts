@@ -20,7 +20,8 @@ export const sarinScore: ClassificationDefinition = {
   officialUrl: 'https://www.jsge.or.jp/committees/guideline/guideline/lc.html',
   officialLinkLabel: '肝硬変診療ガイドライン2020（胃静脈瘤）',
   officialLinkRole: 'japanese-reference',
-  note: 'Sarin は国際分類なので日本マークは付けない。日本の記載は門脈圧亢進症学会の Lg（噴門 Lg-c、噴門〜穹窿 Lg-cf、穹窿 Lg-f）。形態・色調・発赤は食道と同じ F / C / RC で書く。Hashizume 1990 は古い日本の胃静脈瘤分類で、現行規約は Lg + F を使う。',
+  note: '日本の記載は門脈圧亢進症学会の Lg（噴門 Lg-c、噴門〜穹窿 Lg-cf、穹窿 Lg-f）。形態・色調・発赤は食道と同じ F / C / RC で書く。Hashizume 1990 は古い日本の胃静脈瘤分類で、現行規約は Lg + F を使う。',
+  implementationNote: 'Sarin は国際分類なので日本マークは付けない。',
   figures: [
     {
       href: 'https://doi.org/10.1002/hep.1840160607',

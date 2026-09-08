@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { test } from 'node:test';
 
@@ -2607,7 +2607,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.37');
+  assert.equal(pkg.version, '1.0.38');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2830,6 +2830,31 @@ test('ページ末尾の文献は役割を示し、画像だけの副次的ソ�
   assert.equal(UI.en.citationRole.original, 'Original article');
   assert.equal(UI.en.citationRole.review, 'Review');
   assert.equal(UI.en.citationRole['japanese-reference'], 'Japanese reference');
+});
+
+test('画像の権利・加工メモはデータに保持し、ページには表示しない', () => {
+  const figureComponent = readFileSync(
+    join(process.cwd(), 'components/calculator/ClassificationFigure.tsx'),
+    'utf8',
+  );
+  assert.doesNotMatch(figureComponent, /figure\.note/);
+
+  const esdFibrosis = getScoreById('esd-fibrosis');
+  assert.ok(esdFibrosis?.figures?.[0]?.note);
+  assert.match(esdFibrosis.figures[0].note, /CC ではない/);
+  assert.match(getScoreById('siewert')?.implementationNote ?? '', /日本マーク/);
+  assert.match(
+    getScoreById('colorectal-esd-curability')?.implementationNote ?? '',
+    /ハイライト/,
+  );
+
+  for (const score of ALL_SCORE_DEFINITIONS) {
+    assert.doesNotMatch(score.note ?? '', /日本マーク|画面上部|ハイライト|\/score\/|タブ/);
+    assert.doesNotMatch(
+      localizeScore(score, 'en').note ?? '',
+      /Japan mark|at the top|highlight|\/score\/|\btab\b/i,
+    );
+  }
 });
 
 test('切り抜きがある分類は原図を埋め込まずリンクだけにする', () => {

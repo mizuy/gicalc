@@ -15,7 +15,8 @@ export const apcsModifiedScore: ScoreDefinition = {
     'Yeoh 2011 APCS に BMI（≥23 kg/m²）を加えた改変法（Sung 2018）。年齢・家族歴の点数を調整し 0–6 点。平均（0）/ 中等度（1–2）/ 高（3–6）の 3 段階。',
   reference: 'Sung JJY et al. J Gastroenterol Hepatol 2018;33:187-194',
   pubmed: APCS_MODIFIED_2018_PUBMED,
-  note: '原法（Yeoh 2011、0–7 点）は APCS ページの「原法」タブ。BMI カットオフ 23 kg/m² はアジア人向け。',
+  note: 'BMI カットオフ 23 kg/m² はアジア人向け。',
+  implementationNote: '原法（Yeoh 2011、0–7点）は「原法」タブに表示する。',
   fields: [
     {
       id: 'age',

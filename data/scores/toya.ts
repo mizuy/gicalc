@@ -60,7 +60,8 @@ export const toyaScore: ClassificationDefinition = {
     },
   ],
   pubmed: TOYA_2020_PUBMED,
-  note: 'Toya 原著のアルゴリズムは ME-CV（クリスタルバイオレット拡大）であり、ME-NBI ではない。ME-NBI は Kikuchi 2014（/score/kikuchi-mebi）。WOS で血管が見えにくい十二指腸では表面構造を重視する。',
+  note: 'Toya 原著のアルゴリズムは ME-CV（クリスタルバイオレット拡大）であり、ME-NBI ではない。WOS で血管が見えにくい十二指腸では表面構造を重視する。',
+  implementationNote: 'ME-NBIのKikuchi 2014への導線は関連ツールに表示する。',
   figures: [
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.13640',

@@ -107,6 +107,7 @@ export type ClassificationFigure = {
   /** 図の再利用ライセンス（CC のときだけ書く） */
   license?: string;
   licenseUrl?: string;
+  /** 画像採用・切り抜き・権利確認などの実装記録。画面には表示しない */
   note: string;
   aspectRatio?: number;
 };
@@ -145,6 +146,8 @@ type ToolBase = {
   officialLinkRole?: Extract<CitationRole, 'japanese-reference' | 'official'>;
   /** 画面に出す注意。英語は SCORE_EN.note で上書き */
   note?: string;
+  /** 画面には出さない実装・表示仕様の記録 */
+  implementationNote?: string;
   figures?: ClassificationFigure[];
 };
 

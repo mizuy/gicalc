@@ -110,7 +110,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     description:
       'Splits adenocarcinoma whose center lies within 5 cm of the EGJ into Type I / II / III. Japanese rules and guidelines use the Nishi definition (center within 2 cm of the EGJ, any histology). That zone roughly matches Siewert Type II.',
     officialLinkLabel: 'JGCA gastric cancer guideline, 6th ed. (EGJ cancer)',
-    note: 'Siewert is a German surgical classification (no Japan mark). The Japan Esophageal Society and JGCA adopt Nishi. Siewert’s zero point is the top of the gastric folds, as in Prague. Japanese endoscopy prefers the lower end of the palisade vessels, and uses the fold tops only when those vessels are unclear. The Z-line (SCJ) may not coincide with the EGJ.',
+    note: 'The Japan Esophageal Society and JGCA adopt Nishi. Siewert’s zero point is the top of the gastric folds, as in Prague. Japanese endoscopy prefers the lower end of the palisade vessels, and uses the fold tops only when those vessels are unclear. The Z-line (SCJ) may not coincide with the EGJ.',
     groups: {
       ランドマーク: 'Landmark',
       Siewert: 'Siewert',
@@ -178,7 +178,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     description:
       'Splits gastric varices by continuity with esophageal varices and by site into GOV1 / GOV2 / IGV1 / IGV2. Japanese recording letters Lg-c / Lg-cf / Lg-f roughly match GOV1 / GOV2 / IGV1.',
     officialLinkLabel: 'JSGE/JSH cirrhosis guideline 2020 (gastric varices)',
-    note: 'Sarin is an international classification (no Japan mark). Japanese recording uses JSPH Lg letters (cardiac Lg-c, cardiofundal Lg-cf, fundal Lg-f). Form, color, and red color signs use the same F / C / RC as the esophagus. Hashizume 1990 is an older Japanese gastric scheme; current rules use Lg + F.',
+    note: 'Japanese recording uses JSPH Lg letters (cardiac Lg-c, cardiofundal Lg-cf, fundal Lg-f). Form, color, and red color signs use the same F / C / RC as the esophagus. Hashizume 1990 is an older Japanese gastric scheme; current rules use Lg + F.',
     groups: {
       Sarin: 'Sarin',
       記載基準: 'JSPH letters',
@@ -241,7 +241,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     description:
       'Assesses curability and need for additional therapy after esophageal ESD/EMR from pathology. Based on JGES esophageal ESD/EMR guideline (2020) Fig. 5 and JES practice guidelines.',
     officialLinkLabel: 'JES esophageal cancer practice guidelines',
-    note: 'Fig. 5-style table at the top; depth, lymphovascular invasion, and margins highlight the matching cell. pT1a-MM without Ly/V has no clear consensus (CQ6).',
+    note: 'pT1a-MM without Ly/V has no clear consensus (CQ6).',
     figureNotes: ['Curability and additional-treatment recommendations (CQ6–7). Links to Fig. 5.'],
     fields: {
       depth: {
@@ -524,7 +524,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     description:
       'Determines endoscopic curability (eCuraA / C-1 / C-2) from post-ESD/EMR pathology. Fig. 2 table from the JGES gastric ESD/EMR guideline (2nd ed.); logic follows JGCA treatment guideline (7th ed., Mar 2025).',
     officialLinkLabel: 'JGCA gastric cancer treatment guideline 7th ed. (endoscopic resection)',
-    note: 'Unified Fig. 2-style table at the top; pathology inputs highlight the matching cell. Differentiated pT1b1 (SM1) ≤3 cm is eCuraA per the 2025 7th-ed. revision. For LNM scoring after non-curative resection, see the separate eCura score page (Hatta 2017).',
+    note: 'Differentiated pT1b1 (SM1) ≤3 cm is eCuraA per the 2025 7th-ed. revision.',
     figureNotes: [
       'Tumor-factor curability chart. Same logic as the on-screen form. Links to Fig. 2.',
       'Post-ESD/EMR treatment flowchart, including exceptions where additional surgery is generally indicated for eCuraC-1.',
@@ -760,7 +760,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     shortName: 'Spigelman',
     description:
       'Stages duodenal adenomas in familial adenomatous polyposis (FAP) by number, max size, histology, and dysplasia (0–12 points, Stage 0–IV). 1989 original (mild / moderate / severe). Use Modified Spigelman for Vienna LGD/HGD.',
-    note: 'Surveillance intervals follow ESGE 2019 polyposis (van Leerdam). Assess the papilla separately. Current pathology often uses Vienna (LGD/HGD) — see Modified Spigelman.',
+    note: 'Surveillance intervals follow ESGE 2019 polyposis (van Leerdam). Assess the papilla separately.',
     figureNotes: [
       'The 1989 Lancet original is not CC. Link opens GeneReviews Table 5 (public summary of the points table).',
     ],
@@ -809,7 +809,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     shortName: 'Mod. Spigelman',
     description:
       'Saurin 2004 adaptation of Spigelman 1989 to the Vienna classification. Number, size, and histology are unchanged. Dysplasia is LGD = 1 point, HGD = 3 points (no 2-point moderate).',
-    note: 'Many centers after ESGE 2019 use this two-tier dysplasia score. The 1989 three-tier original is on the Spigelman page. Assess the papilla separately.',
+    note: 'Many centers after ESGE 2019 use this two-tier dysplasia score. Assess the papilla separately.',
     figureNotes: ['Saurin 2004 JCO original. ASCO copyright; not CC — link to the paper.'],
     fields: {
       number: {
@@ -935,7 +935,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     name: 'Toya classification (SNADET, ME-CV)',
     shortName: 'Toya ME-CV',
     description:
-      'ME-CV algorithm (Toya 2020) for SNADET. Monotype vs mixed surface, then pinecone / irregular / monotonous, to separate Vienna C3 from C4/5. ME-NBI algorithm is Kikuchi 2014 (/score/kikuchi-mebi).',
+      'ME-CV algorithm (Toya 2020) for SNADET. Monotype vs mixed surface, then pinecone / irregular / monotonous, to separate Vienna C3 from C4/5. ME-NBI algorithm is Kikuchi 2014.',
     note: 'Toya’s published algorithm is crystal-violet magnifying endoscopy (ME-CV), not NBI. See Kikuchi ME-NBI for the NBI algorithm. Duodenal WOS often hides vessels, so surface pattern is prioritized.',
     groups: {
       表面: 'Surface',
@@ -1119,7 +1119,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     shortName: 'Mod. APCS',
     description:
       'Sung 2018 modification of Yeoh 2011 APCS adding BMI (≥23 kg/m²). Age and family-history points are rescaled to 0–6 total. Average (0) / moderate (1–2) / high (3–6).',
-    note: 'The Yeoh 2011 original (0–7) is on the Original tab. BMI cutoff 23 kg/m² is for Asian populations.',
+    note: 'BMI cutoff 23 kg/m² is for Asian populations.',
     fields: {
       age: {
         label: 'Age',
@@ -1166,7 +1166,6 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     name: 'Asia-Pacific Colorectal Screening Score (APCS)',
     description:
       'Stratifies asymptomatic Asian adults for advanced colorectal neoplasia (advanced adenoma or cancer) by age, sex, family history, and smoking (0–7).',
-    note: 'The Sung 2018 modification with BMI (0–6) is on the Modified tab.',
     fields: {
       age: {
         label: 'Age',
@@ -1407,7 +1406,6 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     description:
       'Determines endoscopic curative resection vs need for additional colectomy after colorectal ESD/EMR using the five JGES criteria for pT1 (SM) cancer.',
     officialLinkLabel: 'JSCCR colorectal cancer treatment guideline',
-    note: 'Five-criteria checklist table at the top with input-linked highlighting. For LNM probability after non-curative factors, see the T1 Nomogram page.',
     fields: {
       depth: {
         label: 'Pathological depth',

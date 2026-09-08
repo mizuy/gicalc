@@ -21,8 +21,9 @@ export const esophagusEsdCurabilityScore: ScoreDefinition = {
   officialUrl: 'https://www.esophagus.jp/guideline/',
   officialLinkLabel: '食道癌取扱い規約（JES）',
   officialLinkRole: 'japanese-reference',
-  note:
-    'JGES 食道 ESD/EMR ガイドライン（2020）の根治度評価テーブルを画面上部に表示。深達度・脈管侵襲・断端から該当セルをハイライト。pT1a-MM・脈管陰性は CQ6 で個別判断。',
+  note: 'pT1a-MM・脈管陰性は CQ6 で個別判断。',
+  implementationNote:
+    'JGES 食道 ESD/EMR ガイドライン（2020）の根治度評価テーブルを画面上部に表示し、深達度・脈管侵襲・断端に応じて該当セルをハイライトする。',
   figures: [
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.13654#den13654-fig-0005',

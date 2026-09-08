@@ -21,8 +21,9 @@ export const gastricEsdCurabilityScore: ScoreDefinition = {
   officialUrl: 'https://www.jgca.jp/guideline/seventh/002_02.html',
   officialLinkLabel: '胃癌治療ガイドライン 第7版（内視鏡的切除）',
   officialLinkRole: 'japanese-reference',
-  note:
-    'JGES 胃癌 ESD/EMR ガイドライン第2版（2020）の Fig. 2 相当テーブルを画面上部に表示し、病理所見を入力すると該当セルがハイライトされます。第7版改訂により分化型・pT1b1（SM1）・長径 ≤3 cm は eCuraA です。非治癒切除後の LNM 点数化は別ページの eCura スコア（Hatta 2017）を参照。',
+  note: '第7版改訂により分化型・pT1b1（SM1）・長径 ≤3 cm は eCuraA です。',
+  implementationNote:
+    'JGES 胃癌 ESD/EMR ガイドライン第2版（2020）の Fig. 2 相当テーブルを画面上部に表示し、病理所見に応じて該当セルをハイライトする。eCura スコアへの導線は関連ツールに表示する。',
   figures: [
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.13883#den13883-fig-0002',

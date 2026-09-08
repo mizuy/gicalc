@@ -15,7 +15,8 @@ export const modifiedSpigelmanScore: ScoreDefinition = {
     'Spigelman 1989 を Vienna 分類に合わせて改変（Saurin 2004）。個数・最大径・組織型は同じ。異型度は LGD 1 点、HGD 3 点（中等度 2 点はない）。',
   reference: 'Saurin JC et al. J Clin Oncol 2004;22:493-498',
   pubmed: SAURIN_2004_PUBMED,
-  note: 'ESGE 2019 以降の多くの施設がこの 2 段階異型度を使う。1989 原法（3 段階）は Spigelman ページ。乳頭部は別評価。',
+  note: 'ESGE 2019 以降の多くの施設がこの 2 段階異型度を使う。乳頭部は別評価。',
+  implementationNote: '1989原法（3段階）への導線は関連ツールに表示する。',
   figures: [
     {
       href: 'https://ascopubs.org/doi/10.1200/JCO.2004.06.028',

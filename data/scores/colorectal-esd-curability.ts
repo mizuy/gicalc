@@ -21,8 +21,8 @@ export const colorectalEsdCurabilityScore: ScoreDefinition = {
   officialUrl: 'https://www.jsccr.jp/guideline/',
   officialLinkLabel: '大腸癌治療ガイドライン（JSCCR）',
   officialLinkRole: 'japanese-reference',
-  note:
-    'JGES 大腸 ESD/EMR ガイドライン第2版の pT1（SM）5 項目をテーブル表示。VM・HM・深達度・組織型・Ly・V・budding を入力し、該当行をハイライト。LNM 確率は T1 Nomogram ページを参照。',
+  implementationNote:
+    'JGES 大腸 ESD/EMR ガイドライン第2版の pT1（SM）5項目をテーブル表示し、入力に応じて該当行をハイライトする。T1 Nomogramへの導線は関連ツールに表示する。',
   fields: [
     {
       id: 'depth',
