@@ -224,6 +224,8 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
 
 CC 済み・非 CC の一覧は [README の引用とライセンス](../README.md#引用とライセンス) を参照。About 画面（`lib/i18n/ui.ts` の `about.citationsCc`）とも整合させてください。
 
+分類ごとの CC 図調査（既掲載 / 候補 / ギャップ）は [`cc-atlas.md`](./cc-atlas.md)。Atlas 実装前にここを更新する。
+
 `developedInJapan: true` は **日本で考案・策定されたツールのみ**（Paris / NICE 等の国際分類には付けない）。
 
 ---
