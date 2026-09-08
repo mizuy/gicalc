@@ -111,8 +111,8 @@ export const UI: Record<Locale, UiStrings> = {
     },
     figureKind: {
       original: 'Original',
-      secondary: 'Secondary',
-      gicalc: 'GI Calc',
+      secondary: 'Not original',
+      gicalc: 'Not original',
     },
     note: '注',
     reset: 'リセット',
@@ -237,8 +237,8 @@ export const UI: Record<Locale, UiStrings> = {
     },
     figureKind: {
       original: 'Original',
-      secondary: 'Secondary',
-      gicalc: 'GI Calc',
+      secondary: 'Not original',
+      gicalc: 'Not original',
     },
     note: 'Note',
     reset: 'Reset',

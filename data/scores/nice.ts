@@ -20,6 +20,7 @@ function hamadaCrop(figure: {
     ...figure,
     figureKind: 'secondary',
     sourceShort: 'Hamada 2021',
+    figureRef: 'Fig. 1',
     source: HAMADA_SOURCE,
     doi: HAMADA_DOI,
     pubmed: NICE_HAMADA_2021_PUBMED,
@@ -45,6 +46,7 @@ export const niceScore: ClassificationDefinition = {
     {
       href: 'https://bmcgastroenterol.biomedcentral.com/articles/10.1186/s12876-021-01898-z/figures/1',
       hrefLabel: 'Fig. 1',
+      figureRef: 'Fig. 1',
       figureKind: 'secondary',
       sourceShort: 'Hamada 2021',
       alt: 'NICE classification Type 1, Type 2, and Type 3 (Hamada 2021 Fig. 1)',
@@ -59,6 +61,7 @@ export const niceScore: ClassificationDefinition = {
     {
       href: 'https://ars.els-cdn.com/content/image/1-s2.0-S0016510713018531-gr1_lrg.jpg',
       hrefLabel: 'Hayashi 2013 Fig. 1',
+      figureRef: 'Fig. 1',
       figureKind: 'original',
       sourceShort: 'Hayashi 2013',
       alt: 'NICE classification Type 1, Type 2, and Type 3 (Hayashi 2013 Fig. 1)',

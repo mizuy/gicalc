@@ -11,6 +11,7 @@ function oyamaCrop(figure: {
   caption: string;
   note: string;
   aspectRatio: number;
+  figureRef: string;
 }): ClassificationFigure {
   return {
     ...figure,
@@ -43,6 +44,7 @@ export const jesScore: ClassificationDefinition = {
     {
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5362661/figure/Fig1/',
       hrefLabel: 'Fig. 1',
+      figureRef: 'Fig. 1',
       figureKind: 'original',
       sourceShort: 'Oyama 2017',
       alt: 'JES Type A (Oyama 2017 Fig. 1)',
@@ -57,6 +59,7 @@ export const jesScore: ClassificationDefinition = {
     {
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5362661/figure/Fig5/',
       hrefLabel: 'Fig. 5',
+      figureRef: 'Fig. 5',
       figureKind: 'original',
       sourceShort: 'Oyama 2017',
       alt: 'JES AVA (Oyama 2017 Fig. 5)',
@@ -79,6 +82,7 @@ export const jesScore: ClassificationDefinition = {
           src: '/figures/jes-oyama2017-fig1-type-a.webp',
           alt: 'JES Type A microvessels (Oyama 2017 Fig. 1 a–b)',
           caption: 'Fig. 1 Type A',
+          figureRef: 'Fig. 1',
           note: '原図 Fig. 1 から切り抜き（a / b）。Springer Open。ライセンスは CC BY 4.0。',
           aspectRatio: 598 / 258,
         }),
@@ -98,6 +102,7 @@ export const jesScore: ClassificationDefinition = {
           src: '/figures/jes-oyama2017-fig2-type-b1.webp',
           alt: 'JES Type B1 microvessels (Oyama 2017 Fig. 2 a–b)',
           caption: 'Fig. 2 Type B1',
+          figureRef: 'Fig. 2',
           note: '原図 Fig. 2 から切り抜き（a / b）。Springer Open。ライセンスは CC BY 4.0。',
           aspectRatio: 598 / 258,
         }),
@@ -121,6 +126,7 @@ export const jesScore: ClassificationDefinition = {
           src: '/figures/jes-oyama2017-fig3-type-b2.webp',
           alt: 'JES Type B2 microvessels (Oyama 2017 Fig. 3 a–b)',
           caption: 'Fig. 3 Type B2',
+          figureRef: 'Fig. 3',
           note: '原図 Fig. 3 から切り抜き（a / b）。Springer Open。ライセンスは CC BY 4.0。',
           aspectRatio: 598 / 258,
         }),
@@ -147,6 +153,7 @@ export const jesScore: ClassificationDefinition = {
           src: '/figures/jes-oyama2017-fig4-type-b3.webp',
           alt: 'JES Type B3 microvessels (Oyama 2017 Fig. 4 a–b)',
           caption: 'Fig. 4 Type B3',
+          figureRef: 'Fig. 4',
           note: '原図 Fig. 4 から切り抜き（a / b）。Springer Open。ライセンスは CC BY 4.0。',
           aspectRatio: 598 / 258,
         }),
@@ -172,6 +179,7 @@ export const jesScore: ClassificationDefinition = {
           src: '/figures/jes-oyama2017-fig5-ava-small.webp',
           alt: 'JES AVA-small (Oyama 2017 Fig. 5a)',
           caption: 'Fig. 5a AVA-small',
+          figureRef: 'Fig. 5a',
           note: '原図 Fig. 5a から切り抜き。Springer Open。ライセンスは CC BY 4.0。',
           aspectRatio: 232 / 203,
         }),
@@ -179,6 +187,7 @@ export const jesScore: ClassificationDefinition = {
           src: '/figures/jes-oyama2017-fig5-ava-middle.webp',
           alt: 'JES AVA-middle (Oyama 2017 Fig. 5b)',
           caption: 'Fig. 5b AVA-middle',
+          figureRef: 'Fig. 5b',
           note: '原図 Fig. 5b から切り抜き。Springer Open。ライセンスは CC BY 4.0。',
           aspectRatio: 233 / 203,
         }),
@@ -186,6 +195,7 @@ export const jesScore: ClassificationDefinition = {
           src: '/figures/jes-oyama2017-fig5-ava-large.webp',
           alt: 'JES AVA-large (Oyama 2017 Fig. 5c)',
           caption: 'Fig. 5c AVA-large',
+          figureRef: 'Fig. 5c',
           note: '原図 Fig. 5c から切り抜き。Springer Open。ライセンスは CC BY 4.0。',
           aspectRatio: 233 / 203,
         }),

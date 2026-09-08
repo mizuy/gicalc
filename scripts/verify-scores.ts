@@ -118,6 +118,12 @@ import {
   TOOL_KIND_LABELS,
 } from '../types/score';
 import { classificationOriginalLocale } from '../lib/i18n/localize';
+import {
+  compactLicense,
+  figureCreditHref,
+  figureCreditLabel,
+  figureOriginLabel,
+} from '../lib/figures/credit';
 
 test('登録スコアは48種で臓器順に並ぶ', () => {
   assert.deepEqual(
@@ -2811,11 +2817,11 @@ test('引用・ライセンス情報は CC と非 CC を分けて書く', () => 
   assert.match(UI.ja.about.citationsCcBody, /Paris分類カードの模式図/);
   assert.match(UI.en.about.citationsCcBody, /Paris card schematics/);
   assert.equal(UI.en.figureKind.original, 'Original');
-  assert.equal(UI.en.figureKind.secondary, 'Secondary');
-  assert.equal(UI.en.figureKind.gicalc, 'GI Calc');
+  assert.equal(UI.en.figureKind.secondary, 'Not original');
+  assert.equal(UI.en.figureKind.gicalc, 'Not original');
   assert.equal(UI.ja.figureKind.original, 'Original');
-  assert.equal(UI.ja.figureKind.secondary, 'Secondary');
-  assert.equal(UI.ja.figureKind.gicalc, 'GI Calc');
+  assert.equal(UI.ja.figureKind.secondary, 'Not original');
+  assert.equal(UI.ja.figureKind.gicalc, 'Not original');
 });
 
 test('ページ末尾の文献は役割を示し、画像だけの副次的ソースは重複させない', () => {
@@ -2886,14 +2892,46 @@ test('ページ末尾の文献は役割を示し、画像だけの副次的ソ�
   assert.equal(UI.en.citationRole['japanese-reference'], 'Japanese reference');
 });
 
+test('画像の下は出典・図番号・Original/Not original・短縮ライセンスの1行', () => {
+  assert.equal(compactLicense('CC BY 4.0'), 'CC BY');
+  assert.equal(compactLicense('CC BY-NC 4.0'), 'CC BY-NC');
+  assert.equal(compactLicense('CC BY-NC-ND 4.0'), 'CC BY-NC-ND');
+  assert.equal(compactLicense('CC BY 3.0'), 'CC BY');
+  assert.equal(figureOriginLabel('original'), 'Original');
+  assert.equal(figureOriginLabel('secondary'), 'Not original');
+  assert.equal(figureOriginLabel('gicalc'), 'Not original');
+
+  const jesCrop = getScoreById('jes')?.entries[0]?.figures?.[0];
+  const niceCrop = getScoreById('nice')?.entries[0]?.figures?.[0];
+  const hayashi = getScoreById('nice')?.figures?.[1];
+  const kudoCrop = getScoreById('kudo-tsuruta')?.entries[0]?.figures?.[0];
+  const kimura = getScoreById('kimura-takemoto')?.figures?.[0];
+  assert.equal(figureCreditLabel(jesCrop!), 'Oyama 2017, Fig. 1, Original, CC BY');
+  assert.equal(figureCreditLabel(niceCrop!), 'Hamada 2021, Fig. 1, Not original, CC BY');
+  assert.equal(figureCreditLabel(hayashi!), 'Hayashi 2013, Fig. 1, Original');
+  assert.equal(figureCreditLabel(kudoCrop!), 'GI Calc, Not original, CC BY');
+  assert.equal(figureCreditLabel(kimura!), 'Quach 2019, Fig. 2, Not original, CC BY-NC');
+  assert.equal(figureCreditHref(jesCrop!), jesCrop!.doi);
+  assert.equal(figureCreditHref(hayashi!), hayashi!.href);
+  assert.equal(figureCreditHref(kudoCrop!), undefined);
+
+  const figureComponent = readFileSync(
+    join(process.cwd(), 'components/calculator/ClassificationFigure.tsx'),
+    'utf8',
+  );
+  assert.match(figureComponent, /figureCreditLabel/);
+  assert.match(figureComponent, /figureCreditHref/);
+  assert.doesNotMatch(figureComponent, /kindBadge/);
+  assert.doesNotMatch(figureComponent, /figure\.caption/);
+  assert.doesNotMatch(figureComponent, /licenseUrl/);
+});
+
 test('各ページに原著または定義ガイドラインがあり、画像は3種類と短い出典を持つ', () => {
   const figureComponent = readFileSync(
     join(process.cwd(), 'components/calculator/ClassificationFigure.tsx'),
     'utf8',
   );
-  assert.match(figureComponent, /figure\.figureKind/);
-  assert.match(figureComponent, /sourceShort/);
-  assert.doesNotMatch(figureComponent, /compact \? null/);
+  assert.match(figureComponent, /figureCreditLabel/);
   assert.doesNotMatch(figureComponent, /licenseUrl/);
 
   for (const score of ALL_SCORE_DEFINITIONS) {
@@ -2918,7 +2956,11 @@ test('各ページに原著または定義ガイドラインがあり、画像�
       if (figure.figureKind === 'gicalc') {
         assert.equal(figure.sourceShort, 'GI Calc', `${score.id}: GI Calc 出典が不正`);
         assert.equal(figure.license, 'CC BY 4.0', `${score.id}: GI Calc 図は CC BY 4.0`);
+        assert.equal(figureCreditHref(figure), undefined, `${score.id}: GI Calc 図に論文リンクがある`);
       }
+      const credit = figureCreditLabel(figure);
+      assert.match(credit, /^(?:[^,]+(?:, (?:Fig\.|Table) [^,]+)?, (?:Original|Not original)(?:, .+)?)$/, `${score.id}: 出典1行が不正: ${credit}`);
+      assert.ok(credit.startsWith(figure.sourceShort), `${score.id}: 出典1行の先頭が sourceShort ではない`);
     }
   }
 

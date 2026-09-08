@@ -15,9 +15,8 @@ import {
   getToolKind,
   isClassification,
   isJapanDeveloped,
-  type ClassificationFigure as ClassificationFigureData,
-  type ScoreDefinition,
 } from '@/types/score';
+import type { ClassificationFigure as ClassificationFigureData, ScoreDefinition } from '@/types/score';
 
 function pageLevelFigures(score: ScoreDefinition): ClassificationFigureData[] {
   const figures = score.figures ?? [];
