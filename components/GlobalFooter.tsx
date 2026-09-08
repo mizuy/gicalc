@@ -1,4 +1,4 @@
-import { Link, usePathname } from 'expo-router';
+import { usePathname, useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -36,20 +36,20 @@ function FooterIcon({ icon, color }: Pick<FooterItemProps, 'icon'> & { color: st
 }
 
 function FooterItem({ href, icon, label, selected }: FooterItemProps) {
+  const router = useRouter();
   const tint = useThemeColor({}, 'tint');
   const inactive = useThemeColor({}, 'tabIconDefault');
   const color = selected ? tint : inactive;
 
   return (
-    <Link href={href} asChild>
-      <Pressable
-        accessibilityRole="tab"
-        accessibilityState={{ selected }}
-        style={({ pressed }) => [styles.item, { opacity: pressed ? 0.65 : 1 }]}>
-        <FooterIcon icon={icon} color={color} />
-        <Text style={[styles.label, { color }]}>{label}</Text>
-      </Pressable>
-    </Link>
+    <Pressable
+      accessibilityRole="tab"
+      accessibilityState={{ selected }}
+      onPress={() => router.navigate(href)}
+      style={({ pressed }) => [styles.item, { opacity: pressed ? 0.65 : 1 }]}>
+      <FooterIcon icon={icon} color={color} />
+      <Text style={[styles.label, { color }]}>{label}</Text>
+    </Pressable>
   );
 }
 
