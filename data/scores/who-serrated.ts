@@ -26,6 +26,7 @@ export const whoSerratedScore: ClassificationDefinition = {
       pubmed: WHO_DIGESTIVE_2019_PUBMED,
     },
   ],
+  pubmed: WHO_DIGESTIVE_2019_PUBMED,
   note: 'SSL with dysplasia は従来型異型増殖（tubular/villous）を伴う。TSA は大腸に限らず小腸にも起こりうる。未分類は上記に当てはまらない鋸歯状病変。',
   figures: [
     {

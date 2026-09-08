@@ -27,6 +27,7 @@ export const kyotoScore: ScoreDefinition = {
       pubmed: '34415621',
     },
   ],
+  pubmed: '28217843',
   fields: [
     {
       id: 'atrophy',

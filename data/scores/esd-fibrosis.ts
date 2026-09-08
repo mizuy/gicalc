@@ -31,6 +31,7 @@ export const esdFibrosisScore: ClassificationDefinition = {
       pubmed: ESD_FIBROSIS_2016_PUBMED,
     },
   ],
+  pubmed: ESD_FIBROSIS_2010_PUBMED,
   figures: [
     {
       href: 'https://www.irjournal.org/journal/view.php?number=178',

@@ -25,6 +25,7 @@ export const aronchickScore: ScoreDefinition = {
       href: 'https://www.jstage.jst.go.jp/article/gee/62/8/62_1519/_article/-char/ja/',
     },
   ],
+  pubmed: ARONCHICK_2000_PUBMED,
   license: 'CC BY-NC-ND 4.0',
   licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
   note:

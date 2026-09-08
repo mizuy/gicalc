@@ -28,6 +28,7 @@ export const spsScore: ClassificationDefinition = {
       pubmed: DEKKER_2020_PUBMED,
     },
   ],
+  pubmed: DEKKER_2020_PUBMED,
   note: '2019 基準はいずれか 1 つで診断。2010 の家族歴基準（Type II）は 2019 で削除。直腸より口側＝rectosigmoid 以遠（2010 は sigmoid より口側）。ESGE 2019 polyposis、US MSTF 2020（Gupta GIE 2020）のサーベイランスを参照。',
   figures: [
     {

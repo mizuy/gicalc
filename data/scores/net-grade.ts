@@ -26,6 +26,7 @@ export const netGradeScore: ClassificationDefinition = {
       pubmed: WHO_NET_2019_PUBMED,
     },
   ],
+  pubmed: WHO_NET_2019_PUBMED,
   note: 'NET G3 と NEC（ poorly differentiated ）は別カテゴリ。NEC は small/large cell 型。機能性・非機能性は grade とは独立。',
   figures: [
     {

@@ -32,6 +32,7 @@ export const eggimScore: ScoreDefinition = {
       pubmed: '34415621',
     },
   ],
+  pubmed: '27280384',
   fields: [
     areaField('antrumLesser', '前庭部小弯'),
     areaField('antrumGreater', '前庭部大弯'),

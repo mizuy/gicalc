@@ -29,6 +29,7 @@ export const ampullaryMacroscopicScore: ClassificationDefinition = {
       pubmed: JSCO_BILIARY_2015_PUBMED,
     },
   ],
+  pubmed: JSCO_BILIARY_2015_PUBMED,
   note: 'JCO 胆道癌診療ガイドライン 2015 でも内視鏡的肉眼型の記載が推奨される。切除標本の固定後所見で最終決定する場合もある。',
   figures: [
     {
