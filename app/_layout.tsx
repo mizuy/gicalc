@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { View } from 'react-native';
 import 'react-native-reanimated';
 
+import { GlobalFooter } from '@/components/GlobalFooter';
 import { LanguageToggle } from '@/components/LanguageToggle';
 import { useColorScheme } from '@/components/useColorScheme';
 import { PwaUpdateBanner } from '@/components/web/PwaUpdateBanner';
@@ -94,6 +95,7 @@ function RootLayoutNav() {
             }}
           />
         </Stack>
+        <GlobalFooter />
       </View>
     </ThemeProvider>
   );
