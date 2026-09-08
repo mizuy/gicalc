@@ -216,8 +216,10 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
 |------|----------|
 | **CC ライセンス確認済み** | `public/figures/` に WebP を置き（`scripts/optimize-figures.py` でリサイズ）、`src: '/figures/xxx.webp'` で埋め込む |
 | **CC ではない / 未確認** | 画像は置かず `href` + `hrefLabel` で原著・GeneReviews 等へリンク |
-| **分類の原著とは別の文献から引用** | `isSecondarySource: true` を付け、「原著図ではない（参考図）」と明示する |
-| 出典 | `source`, `doi`, `pubmed`, `note`（ライセンス説明）を必ず書く |
+| **画像の種類** | `figureKind` を `original` / `secondary` / `gicalc` のいずれかにする |
+| **短い出典** | `sourceShort` に切り抜き用の短い論文リンク（例: `Hamada 2021`）を書く。GI Calc 図は `GI Calc` |
+| **GI Calc 提供図** | `figureKind: 'gicalc'`。ライセンスは `CC BY 4.0`（URL は画面に出さない） |
+| 出典 | `source`, `doi`, `pubmed`, `note`（ライセンス説明）を必ず書く。画面の論文リンクは `sourceShort` |
 
 CC 済み・非 CC の一覧は [README の引用とライセンス](../README.md#引用とライセンス) を参照。About 画面（`lib/i18n/ui.ts` の `about.citationsCc`）とも整合させてください。
 

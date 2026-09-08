@@ -13,7 +13,8 @@ function zlobecCrop(grade: 'BD1' | 'BD2' | 'BD3', panel: string): Classification
     src: `/figures/itbcc-zlobec2021-${grade.toLowerCase()}.webp`,
     href: ITBCC_ZLOBEC_FIGURE_URL,
     hrefLabel: `Fig. 1, panel ${panel}`,
-    isSecondarySource: true,
+    figureKind: 'secondary',
+    sourceShort: 'Zlobec 2021',
     alt: `Representative H&E image of ${grade} tumor budding in colorectal cancer`,
     caption: `Fig. 1, panel ${panel}. Representative ${grade} tumor budding (Zlobec et al. 2021)`,
     source:
@@ -47,6 +48,8 @@ export const itbcgBuddingScore: ClassificationDefinition = {
     {
       href: 'https://www.nature.com/articles/modpathol201746',
       hrefLabel: 'Mod Pathol 2017',
+      figureKind: 'original',
+      sourceShort: 'Lugli 2017',
       alt: 'Recommendations for reporting tumor budding in colorectal cancer (ITBCC)',
       caption: 'Lugli A et al. Recommendations for reporting tumor budding in colorectal cancer. Mod Pathol 2017',
       source: 'Lugli A, Kirsch R, Ajioka Y, et al. Mod Pathol. 2017;30:1299-1311.',
@@ -57,7 +60,8 @@ export const itbcgBuddingScore: ClassificationDefinition = {
     {
       href: ITBCC_ZLOBEC_FIGURE_URL,
       hrefLabel: 'Zlobec 2021 Fig. 1',
-      isSecondarySource: true,
+      figureKind: 'secondary',
+      sourceShort: 'Zlobec 2021',
       alt: 'Representative H&E images of BD0, BD1, BD2, and BD3 tumor budding',
       caption: 'Fig. 1. Representative BD0–BD3 tumor budding (Zlobec et al. 2021)',
       source:

@@ -27,6 +27,8 @@ export const siewertScore: ClassificationDefinition = {
   figures: [
     {
       src: '/figures/siewert-jce2017-fig2-6.webp',
+      figureKind: 'secondary',
+      sourceShort: 'JCE 2017',
       alt: 'Siewert Type I, II, and III relative to the anatomical cardia (JCE 11th Fig. 2-6)',
       caption: 'Fig. 2-6. Definition of adenocarcinoma at the EGJ according to Siewert’s classification',
       source:
@@ -40,6 +42,8 @@ export const siewertScore: ClassificationDefinition = {
     },
     {
       src: '/figures/siewert-jce2017-fig2-5.webp',
+      figureKind: 'secondary',
+      sourceShort: 'JCE 2017',
       alt: 'Nishi EGJ zone: 2 cm above and 2 cm below the EGJ (JCE 11th Fig. 2-5)',
       caption: 'Fig. 2-5. Zone of the esophagogastric junction (Nishi: ±2 cm)',
       source:
@@ -53,6 +57,8 @@ export const siewertScore: ClassificationDefinition = {
     },
     {
       src: '/figures/siewert-jce2017-fig2-7.webp',
+      figureKind: 'secondary',
+      sourceShort: 'JCE 2017',
       alt: 'Nishi occupation E, EG, E=G, GE, and G (JCE 11th Fig. 2-7)',
       caption: 'Fig. 2-7. Subclassification of cancer at the EGJ (E / EG / E=G / GE / G)',
       source:
@@ -67,6 +73,8 @@ export const siewertScore: ClassificationDefinition = {
     {
       href: 'https://doi.org/10.1046/j.1365-2168.1998.00940.x',
       hrefLabel: '1998 paper',
+      figureKind: 'original',
+      sourceShort: 'Siewert 1998',
       alt: 'Siewert and Stein 1998 classification paper in the British Journal of Surgery',
       caption: 'Siewert JR, Stein HJ. Classification of adenocarcinoma of the oesophagogastric junction. Br J Surg 1998',
       source: 'Siewert JR, Stein HJ. Br J Surg. 1998;85:1457-1459.',

@@ -28,6 +28,8 @@ export const gastricEsdCurabilityScore: ScoreDefinition = {
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.13883#den13883-fig-0002',
       hrefLabel: 'Fig. 2',
+      figureKind: 'original',
+      sourceShort: 'Gotoda 2020',
       alt: 'Evaluation of curability according to tumor-related factors (JGES 2020 Fig. 2)',
       caption: 'Fig. 2. Evaluation of curability according to tumor-related factors',
       source:
@@ -41,6 +43,8 @@ export const gastricEsdCurabilityScore: ScoreDefinition = {
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.13883#den13883-fig-0003',
       hrefLabel: 'Fig. 3',
+      figureKind: 'original',
+      sourceShort: 'Gotoda 2020',
       alt: 'Therapeutic flowchart after gastric ESD or EMR (JGES 2020 Fig. 3)',
       caption: 'Fig. 3. Therapeutic flowchart following ESD or EMR',
       source:
@@ -54,6 +58,8 @@ export const gastricEsdCurabilityScore: ScoreDefinition = {
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.13883#den13883-fig-0006',
       hrefLabel: 'Fig. 6',
+      figureKind: 'original',
+      sourceShort: 'Gotoda 2020',
       alt: 'Measurement of undifferentiated-type carcinoma areas (JGES 2020 Fig. 6)',
       caption: 'Fig. 6. Measurement of undifferentiated-type carcinoma (mapping)',
       source: 'Gotoda T, et al. Dig Endosc. 2020;32:303-322. Fig. 6.',

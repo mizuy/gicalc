@@ -32,6 +32,8 @@ export const netGradeScore: ClassificationDefinition = {
     {
       href: 'https://tumourclassification.iarc.who.int/chapters/05',
       hrefLabel: 'WHO Blue Book',
+      figureKind: 'original',
+      sourceShort: 'WHO 2019',
       alt: 'WHO Classification of Tumours: Endocrine and Neuroendocrine Tumours, 5th edition',
       caption: 'WHO Classification of Tumours: Endocrine and Neuroendocrine Tumours (5th ed, 2019)',
       source: 'WHO Classification of Tumours Editorial Board. Endocrine and Neuroendocrine Tumours. Lyon: IARC; 2019.',

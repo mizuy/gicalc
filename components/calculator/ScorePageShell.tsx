@@ -85,7 +85,7 @@ function ScorePageFooter({ score }: { score: ScoreDefinition }) {
   const border = useThemeColor({}, 'border');
   const { t } = useLocale();
   const citations = getToolCitations(score);
-  const hasSources = Boolean(citations.length || score.license || score.officialUrl);
+  const hasSources = Boolean(citations.length || score.officialUrl);
 
   return (
     <View style={[styles.footer, { borderColor: border }]}>
@@ -115,9 +115,6 @@ function ScorePageFooter({ score }: { score: ScoreDefinition }) {
                 </View>
               ))}
             </View>
-          ) : null}
-          {score.license ? (
-            <CitationLink label={`${t.license}: ${score.license}`} href={score.licenseUrl} />
           ) : null}
           {score.officialUrl ? (
             <View style={styles.citationRow}>

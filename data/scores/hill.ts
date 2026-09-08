@@ -17,11 +17,12 @@ function geCrop(figure: {
 }): ClassificationFigure {
   return {
     ...figure,
+    figureKind: 'secondary',
+    sourceShort: 'Ge 2023',
     source: GE_SOURCE,
     doi: GE_DOI,
     pubmed: HILL_GE_2023_PUBMED,
     license: 'CC BY-NC 4.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
   };
 }
 
@@ -43,6 +44,8 @@ export const hillScore: ClassificationDefinition = {
     {
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10653650/figure/F0001/',
       hrefLabel: 'Fig. 1',
+      figureKind: 'secondary',
+      sourceShort: 'Ge 2023',
       alt: 'Hill classification grades I–IV of the gastroesophageal flap valve (Ge 2023 Fig. 1)',
       caption: 'Fig. 1. Sample images of the Hill classification standard (Ge et al. Ann Med 2023)',
       source: GE_SOURCE,

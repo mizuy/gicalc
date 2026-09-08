@@ -34,6 +34,8 @@ export const spsScore: ClassificationDefinition = {
     {
       href: 'https://www.thieme-connect.com/products/ejournals/html/10.1055/a-2157-4125#table-1',
       hrefLabel: 'Table 1',
+      figureKind: 'secondary',
+      sourceShort: 'McWhinney 2023',
       alt: 'WHO diagnostic criteria for serrated polyposis syndrome in 2010 and 2019 (McWhinney 2023 Table 1)',
       caption: 'Table 1. WHO diagnostic criteria for serrated polyposis syndrome in 2010 and 2019',
       source:
@@ -47,6 +49,8 @@ export const spsScore: ClassificationDefinition = {
     {
       href: 'https://doi.org/10.1053/j.gastro.2019.11.310',
       hrefLabel: 'Dekker 2020',
+      figureKind: 'original',
+      sourceShort: 'Dekker 2020',
       alt: 'Update on the WHO criteria for diagnosis of serrated polyposis syndrome',
       caption: 'Dekker E et al. Update on the WHO criteria for diagnosis of serrated polyposis syndrome. Gastroenterology 2020',
       source: 'Dekker E, Bleijenberg AG, Balaguer F, et al. Gastroenterology. 2020;158:1520-1523.',

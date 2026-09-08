@@ -23,7 +23,7 @@ import type { ClassificationFigure as Figure } from '@/types/score';
 
 type Props = {
   figure: Figure;
-  /** 分類カード内の参考画像。出典の長い行は出さない */
+  /** 分類カード内の参考画像。出典は短い論文リンクにする */
   compact?: boolean;
 };
 
@@ -148,19 +148,15 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
         compact ? styles.boxCompact : null,
         { backgroundColor: surface, borderColor: border },
       ]}>
-      {figure.isSecondarySource ? (
-        <View
-          accessibilityRole="text"
-          style={[
-            styles.secondarySourceBadge,
-            compact ? styles.secondarySourceBadgeCompact : null,
-            { borderColor: tint },
-          ]}>
-          <Text style={[styles.secondarySourceBadgeText, { color: tint }]}>
-            {t.secondarySourceFigure}
-          </Text>
-        </View>
-      ) : null}
+      <View
+        accessibilityRole="text"
+        style={[
+          styles.kindBadge,
+          compact ? styles.kindBadgeCompact : null,
+          { borderColor: tint },
+        ]}>
+        <Text style={[styles.kindBadgeText, { color: tint }]}>{t.figureKind[figure.figureKind]}</Text>
+      </View>
       {uri ? (
         <Pressable
           accessibilityRole="button"
@@ -176,10 +172,7 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
         <FigureHrefButton href={figure.href} label={`${t.openFigure}: ${figure.hrefLabel ?? figure.caption}`} />
       ) : null}
       <Text style={[styles.caption, compact ? styles.captionCompact : null]}>{figure.caption}</Text>
-      {compact ? null : <CitationLink label={`${t.source}: ${figure.source}`} pubmed={figure.pubmed} />}
-      {figure.license ? (
-        <CitationLink label={`${t.license}: ${figure.license}`} href={figure.licenseUrl} />
-      ) : null}
+      <FigureSource figure={figure} compact={compact} />
 
       {uri && open ? (
         <Modal
@@ -230,6 +223,28 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
   );
 }
 
+function figureSourceLabel(figure: Figure): string {
+  if (figure.figureKind === 'gicalc') return figure.sourceShort;
+  return `(${figure.sourceShort})`;
+}
+
+function FigureSource({ figure, compact }: { figure: Figure; compact: boolean }) {
+  const textSecondary = useThemeColor({}, 'textSecondary');
+  const sourceHref = figure.figureKind === 'gicalc' ? undefined : figure.doi;
+  const sourcePubmed = figure.figureKind === 'gicalc' ? undefined : figure.pubmed;
+
+  return (
+    <View style={styles.sourceBlock}>
+      <CitationLink label={figureSourceLabel(figure)} pubmed={sourcePubmed} href={sourceHref} />
+      {figure.license ? (
+        <Text style={[styles.licenseText, compact ? styles.licenseTextCompact : null, { color: textSecondary }]}>
+          {figure.license}
+        </Text>
+      ) : null}
+    </View>
+  );
+}
+
 function FigureHrefButton({ href, label }: { href: string; label: string }) {
   const tint = useThemeColor({}, 'tint');
   const webProps: WebLinkProps | Record<string, never> =
@@ -269,7 +284,7 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 0,
   },
-  secondarySourceBadge: {
+  kindBadge: {
     alignSelf: 'flex-start',
     borderWidth: 1,
     borderRadius: 999,
@@ -277,15 +292,27 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     marginBottom: 8,
   },
-  secondarySourceBadgeCompact: {
+  kindBadgeCompact: {
     paddingHorizontal: 7,
     paddingVertical: 2,
     marginBottom: 6,
   },
-  secondarySourceBadgeText: {
+  kindBadgeText: {
     fontSize: 10,
     fontWeight: '800',
     letterSpacing: 0.2,
+  },
+  sourceBlock: {
+    gap: 2,
+  },
+  licenseText: {
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 2,
+  },
+  licenseTextCompact: {
+    fontSize: 11,
+    lineHeight: 16,
   },
   thumbWrap: {
     position: 'relative',

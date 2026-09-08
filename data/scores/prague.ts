@@ -21,6 +21,8 @@ export const pragueScore: ClassificationDefinition = {
     {
       href: 'https://ars.els-cdn.com/content/image/1-s2.0-S0016508506017914-gr3.jpg',
       hrefLabel: 'Fig. 3',
+      figureKind: 'original',
+      sourceShort: 'Sharma 2006',
       alt: 'Diagram of Prague C2M5 Barrett segment (Sharma 2006 Fig. 3)',
       caption: 'Fig. 3. Diagrammatic representation of endoscopic Barrett’s esophagus classified as C2M5',
       source:
@@ -33,7 +35,8 @@ export const pragueScore: ClassificationDefinition = {
       src: '/figures/prague-oyanagi2022-fig5.webp',
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8828243/figure/deo273-fig-0005/',
       hrefLabel: 'Fig. 5',
-      isSecondarySource: true,
+      figureKind: 'secondary',
+      sourceShort: 'Oyanagi 2022',
       alt: 'Prague C and M measurement diagram and a C1M4 endoscopic example',
       caption: 'Fig. 5. Prague C&M measurement and a C1M4 example (Oyanagi et al. 2022)',
       source:

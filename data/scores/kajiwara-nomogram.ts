@@ -33,6 +33,8 @@ export const kajiwaraNomogram: ScoreDefinition = {
     {
       href: 'https://ars.els-cdn.com/content/image/1-s2.0-S0016510723000263-gr2_lrg.jpg',
       hrefLabel: 'Fig. 2',
+      figureKind: 'original',
+      sourceShort: 'Kajiwara 2023',
       alt: 'Nomogram for prediction of lymph node metastasis in T1 colorectal cancer (Kajiwara 2023 Fig. 2)',
       caption: 'Fig. 2. Nomogram for prediction of lymph node metastasis in T1 colorectal cancer (Kajiwara et al. Gastrointest Endosc 2023)',
       source:

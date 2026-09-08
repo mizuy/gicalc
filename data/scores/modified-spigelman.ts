@@ -21,6 +21,8 @@ export const modifiedSpigelmanScore: ScoreDefinition = {
     {
       href: 'https://ascopubs.org/doi/10.1200/JCO.2004.06.028',
       hrefLabel: 'Saurin 2004',
+      figureKind: 'original',
+      sourceShort: 'Saurin 2004',
       alt: 'Modified Spigelman score and classification (Saurin 2004)',
       caption: 'Saurin JC et al. Surveillance of duodenal adenomas in FAP. J Clin Oncol 2004',
       source: 'Saurin JC, Gutknecht C, Napoleon B, et al. J Clin Oncol. 2004;22:493-498.',

@@ -18,11 +18,12 @@ function jungCrop(figure: {
 }): ClassificationFigure {
   return {
     ...figure,
+    figureKind: 'secondary',
+    sourceShort: 'Jung 2025',
     source: JUNG_SOURCE,
     doi: JUNG_DOI,
     pubmed: LA_JUNG_2025_PUBMED,
     license: 'CC BY-NC 4.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
   };
 }
 
@@ -44,6 +45,8 @@ export const laScore: ClassificationDefinition = {
     {
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12173581/figure/f1-kjhugr-2025-0001/',
       hrefLabel: 'Fig. 1',
+      figureKind: 'secondary',
+      sourceShort: 'Jung 2025',
       alt: 'Los Angeles classification Grade A–D endoscopic examples (Jung 2025 Fig. 1)',
       caption: 'Fig. 1 A–D. Endoscopic findings of reflux esophagitis',
       source: JUNG_SOURCE,

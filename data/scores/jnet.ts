@@ -18,6 +18,8 @@ export const jnetScore: ClassificationDefinition = {
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.12644#den12644-fig-0007',
       hrefLabel: 'Fig. 7',
+      figureKind: 'original',
+      sourceShort: 'Sano 2016',
       alt: 'JNET classification Type 1, 2A, 2B, and 3 (Sano 2016 Fig. 7)',
       caption: 'Fig. 7. JNET classification (Sano et al. Dig Endosc 2016)',
       source:
@@ -30,7 +32,8 @@ export const jnetScore: ClassificationDefinition = {
       src: '/figures/jnet-ahmed2024-fig1.webp',
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10681000/figure/deo2322-fig-0001/',
       hrefLabel: 'Fig. 1',
-      isSecondarySource: true,
+      figureKind: 'secondary',
+      sourceShort: 'Ahmed 2024',
       alt: 'Representative JNET Type 1, 2A, 2B, and 3 lesions',
       caption: 'Fig. 1. Representative JNET Type 1, 2A, 2B, and 3 lesions (Ahmed et al. 2024)',
       source:

@@ -28,6 +28,8 @@ export const esophagusEsdCurabilityScore: ScoreDefinition = {
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.13654#den13654-fig-0005',
       hrefLabel: 'Fig. 5',
+      figureKind: 'original',
+      sourceShort: 'Ishihara 2020',
       alt: 'Curability assessment after esophageal ER (JGES 2020 Fig. 5)',
       caption: 'Fig. 5. Recommendation summary for curability assessment (CQ6–7)',
       source: 'Ishihara R, et al. Dig Endosc. 2020;32:452-493. Fig. 5.',

@@ -17,7 +17,8 @@ function quachCrop(
     src: `/figures/wasp-quach2024-${file}.webp`,
     href: WASP_QUACH_FIGURE_URL,
     hrefLabel: `Fig. 4${panel}`,
-    isSecondarySource: true,
+    figureKind: 'secondary',
+    sourceShort: 'Quach 2024',
     alt: `${finding} in a sessile serrated lesion`,
     caption: `Fig. 4${panel}. ${finding} (Quach et al. 2024)`,
     source:
@@ -49,6 +50,8 @@ export const waspScore: ClassificationDefinition = {
     {
       href: 'https://gut.bmj.com/content/65/6/963#F1',
       hrefLabel: 'Fig. 1',
+      figureKind: 'original',
+      sourceShort: 'IJspeert 2016',
       alt: 'WASP classification stepwise diagram (IJspeert 2016 Fig. 1)',
       caption: 'Fig. 1. The WASP classification: NICE criteria then Hazewinkel criteria',
       source:
@@ -60,7 +63,8 @@ export const waspScore: ClassificationDefinition = {
     {
       href: WASP_QUACH_FIGURE_URL,
       hrefLabel: 'Quach 2024 Fig. 4',
-      isSecondarySource: true,
+      figureKind: 'secondary',
+      sourceShort: 'Quach 2024',
       alt: 'Endoscopic findings of sessile serrated lesions used with the WASP classification',
       caption: 'Fig. 4. Endoscopic findings of sessile serrated lesions (Quach et al. 2024)',
       source:
