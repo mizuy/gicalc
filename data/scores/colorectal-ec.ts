@@ -25,11 +25,12 @@ function misawaCrop(
 ): ClassificationFigure {
   return {
     ...figure,
+    figureKind: 'secondary',
+    sourceShort: 'Misawa 2021',
     source,
     doi: MISAWA_DOI,
     pubmed: MAEDA_EC_REVIEW_2021_PUBMED,
     license: 'CC BY-NC 3.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',
   };
 }
 
@@ -54,6 +55,8 @@ export const colorectalEcScore: ClassificationDefinition = {
     {
       href: 'https://www.e-ce.org/journal/view.php?doi=10.5946/ce.2021.165#f2-ce-2021-165',
       hrefLabel: 'Fig. 2',
+      figureKind: 'secondary',
+      sourceShort: 'Misawa 2021',
       alt: 'Endocytoscopic classification for colorectal lesions EC1a EC1b EC2 EC3a EC3b',
       caption: 'Fig. 2. Endocytoscopic classification for colorectal lesions (Kudo et al.)',
       source: MISAWA_SOURCE_FIG2,
@@ -66,6 +69,8 @@ export const colorectalEcScore: ClassificationDefinition = {
     {
       href: 'https://www.e-ce.org/journal/view.php?doi=10.5946/ce.2021.165#f3-ce-2021-165',
       hrefLabel: 'Fig. 3',
+      figureKind: 'secondary',
+      sourceShort: 'Misawa 2021',
       alt: 'Endocytoscopic vascular EC-V classification EC-V1 EC-V2 EC-V3 with NBI',
       caption: 'Fig. 3. Endocytoscopic classification based on narrow-band imaging (EC-V)',
       source: MISAWA_SOURCE_FIG3,

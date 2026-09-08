@@ -19,7 +19,8 @@ function kumeiCrop(
     src: `/figures/toya-kumei2025-${file}.webp`,
     href: TOYA_KUMEI_FIGURE_URL,
     hrefLabel: `Fig. 1${panel}`,
-    isSecondarySource: true,
+    figureKind: 'secondary',
+    sourceShort: 'Kumei 2025',
     alt: `${pattern} pattern on magnifying endoscopy with crystal violet staining`,
     caption: `Fig. 1${panel}. ${pattern} pattern (Kumei et al. 2025)`,
     source:
@@ -66,6 +67,8 @@ export const toyaScore: ClassificationDefinition = {
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.13640',
       hrefLabel: 'Toya 2020',
+      figureKind: 'original',
+      sourceShort: 'Toya 2020',
       alt: 'Toya ME-CV diagnostic algorithm for SNADET',
       caption: 'Toya Y et al. Diagnostic algorithm of ME-CV for NADETs. Dig Endosc 2020',
       source: 'Toya Y, Endo M, Oizumi T, et al. Dig Endosc. 2020;32:1066-1073.',
@@ -76,6 +79,8 @@ export const toyaScore: ClassificationDefinition = {
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.12282',
       hrefLabel: 'Kikuchi 2014',
+      figureKind: 'secondary',
+      sourceShort: 'Kikuchi 2014',
       alt: 'Kikuchi ME-NBI diagnostic algorithm for SNADET',
       caption: 'Kikuchi D et al. Diagnostic algorithm of ME-NBI for SNADET. Dig Endosc 2014',
       source: 'Kikuchi D, Hoteya S, Iizuka T, Kimura R, Kaise M. Dig Endosc. 2014;26:16-22.',
@@ -86,7 +91,8 @@ export const toyaScore: ClassificationDefinition = {
     {
       href: TOYA_KUMEI_FIGURE_URL,
       hrefLabel: 'Kumei 2025 Fig. 1',
-      isSecondarySource: true,
+      figureKind: 'secondary',
+      sourceShort: 'Kumei 2025',
       alt: 'Convoluted, leaf-like, reticular or sulciolar, and pinecone ME-CV patterns',
       caption: 'Fig. 1. Four ME-CV surface patterns (Kumei et al. 2025)',
       source:

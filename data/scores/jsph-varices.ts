@@ -33,6 +33,8 @@ export const jsphVaricesScore: ClassificationDefinition = {
   figures: [
     {
       src: '/figures/varices-popescu2023-fig1.webp',
+      figureKind: 'secondary',
+      sourceShort: 'Pall 2023',
       alt: 'Esophageal varices by JSPH form: F1 straight small-caliber, F2 beady, F3 nodular (Pall 2023 Fig. 1)',
       caption: 'Fig. 1. Esophageal varices according to size: F1 (a), F2 (b), F3 (c)',
       source:
@@ -46,6 +48,8 @@ export const jsphVaricesScore: ClassificationDefinition = {
     },
     {
       src: '/figures/varices-kjhugr2024-fig1.webp',
+      figureKind: 'secondary',
+      sourceShort: 'Kim 2024',
       alt: 'JSPH esophageal varices: F1–F3, Cw, Cb, and RC0–RC3 (Kim 2024 Fig. 1)',
       caption: 'Fig. 1. Endoscopic classifications of esophageal varices (F1–F3, Cw, Cb, RC0–RC3)',
       source:
@@ -59,6 +63,8 @@ export const jsphVaricesScore: ClassificationDefinition = {
     },
     {
       src: '/figures/varices-nagashima2022-fig2.webp',
+      figureKind: 'secondary',
+      sourceShort: 'Nagashima 2022',
       alt: 'Red color signs on esophageal varices: cherry-red spot, red wale marking, and hematocystic spot (Nagashima 2022 Fig. 2)',
       caption: 'Fig. 2. RC findings in esophageal varices (A CRS and RWM; B HCS)',
       source:
@@ -73,6 +79,8 @@ export const jsphVaricesScore: ClassificationDefinition = {
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/j.1443-1661.2009.00929.x',
       hrefLabel: 'Dig Endosc 2010',
+      figureKind: 'original',
+      sourceShort: 'Tajiri 2010',
       alt: 'Tajiri 2010 general rules for recording endoscopic findings of esophagogastric varices',
       caption:
         'Tajiri T et al. General rules for recording endoscopic findings of esophagogastric varices (2nd edition). Dig Endosc 2010',

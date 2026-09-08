@@ -1604,7 +1604,8 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(jnet.figures?.[0]?.license, undefined);
   assert.match(jnet.figures?.[0]?.note ?? '', /CC ではない/);
   assert.match(jnet.figures?.[1]?.src ?? '', /jnet-ahmed2024-fig1\.webp/);
-  assert.equal(jnet.figures?.[1]?.isSecondarySource, true);
+  assert.equal(jnet.figures?.[1]?.figureKind, 'secondary');
+  assert.equal(jnet.figures?.[1]?.sourceShort, 'Ahmed 2024');
   assert.equal(jnet.figures?.[1]?.license, 'CC BY 4.0');
   assert.equal(jnet.figures?.[1]?.pubmed, '38023663');
   assert.match(jnet.figures?.[1]?.note ?? '', /原著.*ではなく/);
@@ -1618,8 +1619,9 @@ test('分類は原著の図を出典付きで持つ', () => {
   for (const expected of secondaryReferenceFigures) {
     const score = getScoreById(expected.id);
     assert.ok(score && isClassification(score));
-    const figure = score.figures?.find((candidate) => candidate.isSecondarySource);
+    const figure = score.figures?.find((candidate) => candidate.src?.endsWith(expected.src));
     assert.ok(figure, `${expected.id} に別文献の参考図がない`);
+    assert.equal(figure.figureKind, 'secondary');
     assert.match(figure.src ?? '', new RegExp(`${expected.src.replace('.', '\\.')}$`));
     assert.equal(figure.license, expected.license);
     assert.ok(figure.source);
@@ -1627,7 +1629,7 @@ test('分類は原著の図を出典付きで持つ', () => {
     assert.ok(figure.pubmed);
     assert.match(figure.note, /参考図/);
     const english = localizeScore(score, 'en');
-    const englishFigure = english.figures?.find((candidate) => candidate.isSecondarySource);
+    const englishFigure = english.figures?.find((candidate) => candidate.src?.endsWith(expected.src));
     assert.match(englishFigure?.note ?? '', /Reference figure/);
     assert.doesNotMatch(englishFigure?.note ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
   }
@@ -1647,12 +1649,14 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(kudo.figures?.[0]?.note ?? '', /Tanaka 2004/);
   assert.match(kudo.figures?.[0]?.note ?? '', /CC ではない/);
   assert.equal(kudo.figures?.[1]?.href, '/figures/pit-pattern-user2026-original.svg');
-  assert.equal(kudo.figures?.[1]?.isSecondarySource, true);
+  assert.equal(kudo.figures?.[1]?.figureKind, 'gicalc');
+  assert.equal(kudo.figures?.[1]?.sourceShort, 'GI Calc');
   assert.equal(kudo.figures?.[1]?.license, 'CC BY 4.0');
   const kudoCrops = kudo.entries.flatMap((entry) => entry.figures ?? []);
   assert.equal(kudoCrops.length, 7);
   assert.equal(kudo.entries.every((entry) => entry.figures?.length === 1), true);
-  assert.equal(kudoCrops.every((figure) => figure.isSecondarySource), true);
+  assert.equal(kudoCrops.every((figure) => figure.figureKind === 'gicalc'), true);
+  assert.equal(kudoCrops.every((figure) => figure.sourceShort === 'GI Calc'), true);
   assert.equal(kudoCrops.every((figure) => figure.license === 'CC BY 4.0'), true);
   assert.equal(
     kudoCrops.every((figure) => figure.src?.startsWith('/figures/pit-pattern-user2026-')),
@@ -1726,11 +1730,13 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
   assert.equal(paris.figures?.[1]?.src, undefined);
   assert.equal(paris.figures?.[1]?.href, '/figures/paris-user2026-original.svg');
-  assert.equal(paris.figures?.[1]?.isSecondarySource, true);
+  assert.equal(paris.figures?.[1]?.figureKind, 'gicalc');
+  assert.equal(paris.figures?.[1]?.sourceShort, 'GI Calc');
   assert.equal(paris.figures?.[1]?.license, 'CC BY 4.0');
   const parisCrops = paris.entries.flatMap((entry) => entry.figures ?? []);
   assert.equal(parisCrops.length, 11);
-  assert.equal(parisCrops.every((figure) => figure.isSecondarySource), true);
+  assert.equal(parisCrops.every((figure) => figure.figureKind === 'gicalc'), true);
+  assert.equal(parisCrops.every((figure) => figure.sourceShort === 'GI Calc'), true);
   assert.equal(parisCrops.every((figure) => figure.license === 'CC BY 4.0'), true);
   assert.equal(parisCrops.every((figure) => figure.src?.startsWith('/figures/paris-user2026-')), true);
   assert.equal(paris.entries.find((entry) => entry.label === '0-IIa+IIc')?.figures?.length, 2);
@@ -1752,7 +1758,8 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(lst.figures?.length, 2);
   assertOriginalPlateIsLinkOnly(lst);
   assert.equal(lst.figures?.[1]?.href, '/figures/lst-user2026-original.svg');
-  assert.equal(lst.figures?.[1]?.isSecondarySource, true);
+  assert.equal(lst.figures?.[1]?.figureKind, 'gicalc');
+  assert.equal(lst.figures?.[1]?.sourceShort, 'GI Calc');
   assert.equal(lst.figures?.[1]?.license, 'CC BY 4.0');
   assert.equal(lst.entries[0]?.figures?.length, 1);
   assert.match(lst.entries[0]?.figures?.[0]?.src ?? '', /lst-user2026-g-homogeneous/);
@@ -1761,7 +1768,7 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(lst.entries[3]?.figures?.[0]?.src ?? '', /lst-user2026-ng-pseudodepressed/);
   assert.equal(lst.pubmed, LST_2008_PUBMED);
   assert.equal(lst.entries.every((entry) => entry.figures?.[0]?.license === 'CC BY 4.0'), true);
-  assert.equal(lst.entries.every((entry) => entry.figures?.[0]?.isSecondarySource), true);
+  assert.equal(lst.entries.every((entry) => entry.figures?.[0]?.figureKind === 'gicalc'), true);
   assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /切り抜/);
   assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /CC BY 4\.0/);
 
@@ -1973,7 +1980,8 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(waspFig.pubmed, WASP_2016_PUBMED);
   assert.equal(waspFig.figures?.length, 2);
   assert.equal(waspFig.figures?.[1]?.src, undefined);
-  assert.equal(waspFig.figures?.[1]?.isSecondarySource, true);
+  assert.equal(waspFig.figures?.[1]?.figureKind, 'secondary');
+  assert.equal(waspFig.figures?.[1]?.sourceShort, 'Quach 2024');
   assert.equal(waspFig.figures?.[1]?.license, 'CC BY 4.0');
   assert.equal(waspFig.figures?.[1]?.pubmed, WASP_QUACH_2024_PUBMED);
   const waspFindingFigures = waspFig.entries.find(
@@ -1987,7 +1995,7 @@ test('分類は原著の図を出典付きで持つ', () => {
       '/figures/wasp-quach2024-dark-spots.webp',
     ],
   );
-  assert.equal(waspFindingFigures?.every((figure) => figure.isSecondarySource), true);
+  assert.equal(waspFindingFigures?.every((figure) => figure.figureKind === 'secondary'), true);
 
   const toyaFig = getScoreById('toya');
   assert.ok(toyaFig && isClassification(toyaFig));
@@ -2003,7 +2011,8 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(toyaFig.figures?.[1]?.hrefLabel, 'Kikuchi 2014');
   assert.equal(toyaFig.figures?.[1]?.pubmed, KIKUCHI_LINK_PUBMED);
   assert.equal(toyaFig.figures?.[2]?.src, undefined);
-  assert.equal(toyaFig.figures?.[2]?.isSecondarySource, true);
+  assert.equal(toyaFig.figures?.[2]?.figureKind, 'secondary');
+  assert.equal(toyaFig.figures?.[2]?.sourceShort, 'Kumei 2025');
   assert.equal(toyaFig.figures?.[2]?.license, 'CC BY 4.0');
   assert.equal(toyaFig.figures?.[2]?.pubmed, TOYA_KUMEI_2025_PUBMED);
   assert.deepEqual(
@@ -2039,13 +2048,15 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.ok(itbcgFig && isClassification(itbcgFig));
   assert.equal(itbcgFig.figures?.length, 2);
   assert.equal(itbcgFig.figures?.[1]?.src, undefined);
-  assert.equal(itbcgFig.figures?.[1]?.isSecondarySource, true);
+  assert.equal(itbcgFig.figures?.[1]?.figureKind, 'secondary');
+  assert.equal(itbcgFig.figures?.[1]?.sourceShort, 'Zlobec 2021');
   assert.equal(itbcgFig.figures?.[1]?.license, 'CC BY 4.0');
   assert.equal(itbcgFig.figures?.[1]?.pubmed, ITBCC_ZLOBEC_2021_PUBMED);
   for (const grade of ['BD1', 'BD2', 'BD3'] as const) {
     const figure = itbcgFig.entries.find((entry) => entry.label === grade)?.figures?.[0];
     assert.equal(figure?.src, `/figures/itbcc-zlobec2021-${grade.toLowerCase()}.webp`);
-    assert.equal(figure?.isSecondarySource, true);
+    assert.equal(figure?.figureKind, 'secondary');
+    assert.equal(figure?.sourceShort, 'Zlobec 2021');
     assert.equal(figure?.license, 'CC BY 4.0');
   }
 
@@ -2608,7 +2619,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.39');
+  assert.equal(pkg.version, '1.0.40');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2765,8 +2776,12 @@ test('引用・ライセンス情報は CC と非 CC を分けて書く', () => 
   assert.match(UI.ja.about.citationsNotCcBody, /Kudo 2011/);
   assert.match(UI.ja.about.citationsCcBody, /Paris分類カードの模式図/);
   assert.match(UI.en.about.citationsCcBody, /Paris card schematics/);
-  assert.equal(UI.en.secondarySourceFigure, 'NOT ORIGINAL FIGURE (SECONDARY SOURCE)');
-  assert.equal(UI.ja.secondarySourceFigure, '原著図ではない（参考図）');
+  assert.equal(UI.en.figureKind.original, 'Original');
+  assert.equal(UI.en.figureKind.secondary, 'Secondary');
+  assert.equal(UI.en.figureKind.gicalc, 'GI Calc');
+  assert.equal(UI.ja.figureKind.original, 'Original');
+  assert.equal(UI.ja.figureKind.secondary, 'Secondary');
+  assert.equal(UI.ja.figureKind.gicalc, 'GI Calc');
 });
 
 test('ページ末尾の文献は役割を示し、画像だけの副次的ソースは重複させない', () => {
@@ -2792,16 +2807,20 @@ test('ページ末尾の文献は役割を示し、画像だけの副次的ソ�
       ...(score.figures ?? []),
       ...score.entries.flatMap((entry) => entry.figures ?? []),
     ];
-    for (const figure of figures.filter((item) => item.isSecondarySource && item.pubmed)) {
-      assert.equal(
-        citations.some((citation) => citation.pubmed === figure.pubmed),
-        false,
+    for (const figure of figures.filter((item) => item.figureKind === 'secondary' && item.pubmed)) {
+      const listed = citations.find((citation) => citation.pubmed === figure.pubmed);
+      if (!listed) continue;
+      assert.ok(
+        listed.role === 'review' || listed.role === 'guideline' || listed.role === 'related-study',
         `${score.id}: 画像だけの副次的ソース ${figure.pubmed} が末尾文献と重複`,
       );
     }
   }
 
-  assert.equal(getToolCitations(getScoreById('kimura-takemoto')!)[0]?.role, 'review');
+  assert.ok(
+    getToolCitations(getScoreById('kimura-takemoto')!).some((citation) => citation.role === 'original'),
+  );
+  assert.equal(getToolCitations(getScoreById('kimura-takemoto')!)[1]?.role, 'review');
   assert.deepEqual(
     getToolCitations(getScoreById('aronchick')!).map((citation) => citation.role),
     ['original', 'japanese-reference'],
@@ -2831,6 +2850,47 @@ test('ページ末尾の文献は役割を示し、画像だけの副次的ソ�
   assert.equal(UI.en.citationRole.original, 'Original article');
   assert.equal(UI.en.citationRole.review, 'Review');
   assert.equal(UI.en.citationRole['japanese-reference'], 'Japanese reference');
+});
+
+test('各ページに原著または定義ガイドラインがあり、画像は3種類と短い出典を持つ', () => {
+  const figureComponent = readFileSync(
+    join(process.cwd(), 'components/calculator/ClassificationFigure.tsx'),
+    'utf8',
+  );
+  assert.match(figureComponent, /figure\.figureKind/);
+  assert.match(figureComponent, /sourceShort/);
+  assert.doesNotMatch(figureComponent, /compact \? null/);
+  assert.doesNotMatch(figureComponent, /licenseUrl/);
+
+  for (const score of ALL_SCORE_DEFINITIONS) {
+    const citations = getToolCitations(score);
+    assert.ok(
+      citations.some((citation) => citation.role === 'original' || citation.role === 'guideline'),
+      `${score.id}: 原著または定義ガイドラインがない`,
+    );
+
+    const figures = [
+      ...(score.figures ?? []),
+      ...(isClassification(score) ? score.entries.flatMap((entry) => entry.figures ?? []) : []),
+    ];
+    for (const figure of figures) {
+      assert.ok(
+        figure.figureKind === 'original' ||
+          figure.figureKind === 'secondary' ||
+          figure.figureKind === 'gicalc',
+        `${score.id}: 画像種類が不正`,
+      );
+      assert.ok(figure.sourceShort.trim(), `${score.id}: 短い出典がない`);
+      if (figure.figureKind === 'gicalc') {
+        assert.equal(figure.sourceShort, 'GI Calc', `${score.id}: GI Calc 出典が不正`);
+        assert.equal(figure.license, 'CC BY 4.0', `${score.id}: GI Calc 図は CC BY 4.0`);
+      }
+    }
+  }
+
+  assert.equal(getScoreById('nice')?.entries[0]?.figures?.[0]?.sourceShort, 'Hamada 2021');
+  assert.equal(getScoreById('jes')?.entries[0]?.figures?.[0]?.figureKind, 'original');
+  assert.equal(getScoreById('paris')?.entries[0]?.figures?.[0]?.figureKind, 'gicalc');
 });
 
 test('画像の権利・加工メモはデータに保持し、ページには表示しない', () => {

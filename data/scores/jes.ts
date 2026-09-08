@@ -14,11 +14,12 @@ function oyamaCrop(figure: {
 }): ClassificationFigure {
   return {
     ...figure,
+    figureKind: 'original',
+    sourceShort: 'Oyama 2017',
     source: OYAMA_SOURCE,
     doi: OYAMA_DOI,
     pubmed: OYAMA_PUBMED,
     license: 'CC BY 4.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
   };
 }
 
@@ -42,6 +43,8 @@ export const jesScore: ClassificationDefinition = {
     {
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5362661/figure/Fig1/',
       hrefLabel: 'Fig. 1',
+      figureKind: 'original',
+      sourceShort: 'Oyama 2017',
       alt: 'JES Type A (Oyama 2017 Fig. 1)',
       caption: 'Fig. 1–4. Type A / B1 / B2 / B3 (Oyama et al. Esophagus 2017)',
       source: OYAMA_SOURCE,
@@ -54,6 +57,8 @@ export const jesScore: ClassificationDefinition = {
     {
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5362661/figure/Fig5/',
       hrefLabel: 'Fig. 5',
+      figureKind: 'original',
+      sourceShort: 'Oyama 2017',
       alt: 'JES AVA (Oyama 2017 Fig. 5)',
       caption: 'Fig. 5. AVA (Oyama et al. Esophagus 2017)',
       source: OYAMA_SOURCE,

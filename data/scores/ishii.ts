@@ -22,6 +22,8 @@ export const ishiiScore: ScoreDefinition = {
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.13762',
       hrefLabel: '2021 paper',
+      figureKind: 'original',
+      sourceShort: 'Ishii 2021',
       alt: 'Ishii simple scoring system for SNADET C3 vs C4/5',
       caption: 'Ishii R et al. Simple scoring system for the diagnosis of SNADETs. Dig Endosc 2021',
       source: 'Ishii R, Ohata K, Takayanagi S, et al. Dig Endosc. 2021;33:399-407.',

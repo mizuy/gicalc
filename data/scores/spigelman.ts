@@ -21,6 +21,8 @@ export const spigelmanScore: ScoreDefinition = {
     {
       href: 'https://www.ncbi.nlm.nih.gov/books/NBK1345/table/fap.T.spigelman_scoring_system_for_duode/',
       hrefLabel: 'Table 5',
+      figureKind: 'original',
+      sourceShort: 'Spigelman 1989',
       alt: 'Spigelman scoring system for duodenal adenomas in FAP (GeneReviews Table 5)',
       caption: 'Table 5. Spigelman scoring system for duodenal adenomas in FAP',
       source:

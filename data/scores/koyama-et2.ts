@@ -23,6 +23,8 @@ export const koyamaEt2Score: ScoreDefinition = {
     {
       href: 'https://doi.org/10.1016/j.gie.2022.03.002',
       hrefLabel: 'GIE 2022 paper',
+      figureKind: 'original',
+      sourceShort: 'Koyama 2022',
       alt: 'Eight representative endoscopic findings for e-T2 Score (Koyama 2022 Fig. 2)',
       caption:
         'Fig. 2. Eight representative potential endoscopic findings of clinical submucosal invasion depth ≥1000 μm or muscularis propria invasive colorectal cancer (Koyama et al. Gastrointest Endosc 2022)',

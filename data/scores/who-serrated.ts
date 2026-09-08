@@ -32,6 +32,8 @@ export const whoSerratedScore: ClassificationDefinition = {
     {
       href: 'https://tumourclassification.iarc.who.int/chapters/08',
       hrefLabel: 'WHO Blue Book',
+      figureKind: 'original',
+      sourceShort: 'WHO 2019',
       alt: 'WHO Classification of Tumours: Digestive System Tumours, 5th edition',
       caption: 'WHO Classification of Tumours: Digestive System Tumours (5th ed, 2019)',
       source: 'WHO Classification of Tumours Editorial Board. Digestive System Tumours. Lyon: IARC; 2019.',
