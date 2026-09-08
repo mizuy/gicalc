@@ -53,7 +53,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
       source: 'Gemini-generated schematic supplied by a GI Calc project contributor, 2026.',
       license: 'CC BY 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-      note: '原著図ではない提供されたGemini生成SVG。各型のcrop-targetを高解像度WebPへラスタライズ。',
+      note: '原著図ではない提供されたGemini生成SVG。複合図自体は埋め込まず、各型のcrop-targetを高解像度WebPへラスタライズ。',
     },
   ],
   entries: [
