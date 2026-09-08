@@ -16,9 +16,11 @@ export const esophagusEsdCurabilityScore: ScoreDefinition = {
   description:
     '食道扁平上皮癌 ESD/EMR 後の病理所見から治癒切除か追加治療要否を判定します。JGES 食道 ESD/EMR ガイドライン（2020）Fig. 5 と食道癌取扱い規約の記載を併記します。',
   reference: 'Ishihara R et al. Dig Endosc 2020;32:452-493',
+  referenceRole: 'guideline',
   pubmed: JGES_ESOPHAGUS_ESD_2020_PUBMED,
   officialUrl: 'https://www.esophagus.jp/guideline/',
   officialLinkLabel: '食道癌取扱い規約（JES）',
+  officialLinkRole: 'japanese-reference',
   note:
     'JGES 食道 ESD/EMR ガイドライン（2020）の根治度評価テーブルを画面上部に表示。深達度・脈管侵襲・断端から該当セルをハイライト。pT1a-MM・脈管陰性は CQ6 で個別判断。',
   figures: [

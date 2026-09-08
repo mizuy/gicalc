@@ -13,13 +13,20 @@ export const aronchickScore: ScoreDefinition = {
   categoryLabel: '腸管前処置',
   description:
     '大腸全体の前処置を洗浄前に5段階で評価します。区域点はありません。JGES 2020 ガイドライン CQ6 で推奨（Table 11）。',
-  reference:
-    'Aronchick CA et al. Gastrointest Endosc 2000;52:346-352. 日本語定義: JGES 大腸内視鏡スクリーニングとサーベイランスガイドライン 2020 CQ6 Table 11',
-  pubmed: ARONCHICK_2000_PUBMED,
+  citations: [
+    {
+      role: 'original',
+      text: 'Aronchick CA et al. Gastrointest Endosc 2000;52:346-352',
+      pubmed: ARONCHICK_2000_PUBMED,
+    },
+    {
+      role: 'japanese-reference',
+      text: 'JGES 大腸内視鏡スクリーニングとサーベイランスガイドライン 2020 CQ6 Table 11',
+      href: 'https://www.jstage.jst.go.jp/article/gee/62/8/62_1519/_article/-char/ja/',
+    },
+  ],
   license: 'CC BY-NC-ND 4.0',
   licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
-  officialUrl: 'https://www.jstage.jst.go.jp/article/gee/62/8/62_1519/_article/-char/ja/',
-  officialLinkLabel: 'JGES 2020 ガイドライン（Table 11）',
   note:
     '5段階の定義は JGES 2020「大腸内視鏡スクリーニングとサーベイランスガイドライン」CQ6・Table 11（Aronchick bowel preparation scale・日本語改変）に準拠。洗浄・吸引の前に大腸全体を評価する。BBPS とは評価時点が異なる。',
   fields: [

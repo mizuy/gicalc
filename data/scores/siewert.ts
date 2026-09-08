@@ -21,6 +21,7 @@ export const siewertScore: ClassificationDefinition = {
   pubmed: SIEWERT_1998_PUBMED,
   officialUrl: 'https://www.jgca.jp/guideline/sixth/002_01.html',
   officialLinkLabel: '胃癌治療ガイドライン 第6版（接合部癌）',
+  officialLinkRole: 'japanese-reference',
   note: 'Siewert はドイツの外科分類で、日本マークは付けない。日本では日本食道学会・日本胃癌学会が西分類を採用する。計測のゼロ点は Prague と同じく胃粘膜縦走ひだの上端（Siewert）。日本の内視鏡では柵状血管下端を優先し、不明なときだけひだの上端を EGJ とする。Z-line（SCJ）は EGJ と一致しないことがある。',
   figures: [
     {

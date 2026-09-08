@@ -108,7 +108,14 @@ import {
 } from '../lib/scores/algorithmFlow';
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { isRemoteVersionNewer, shouldReportUpdateAvailable } from '../lib/web/pwaVersionCheck';
-import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
+import {
+  getToolCitations,
+  getToolKind,
+  hasAlgorithmFlow,
+  isClassification,
+  isJapanDeveloped,
+  TOOL_KIND_LABELS,
+} from '../types/score';
 import { classificationOriginalLocale } from '../lib/i18n/localize';
 
 test('登録スコアは48種で臓器順に並ぶ', () => {
@@ -2596,7 +2603,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.36');
+  assert.equal(pkg.version, '1.0.37');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2755,6 +2762,51 @@ test('引用・ライセンス情報は CC と非 CC を分けて書く', () => 
   assert.match(UI.en.about.citationsCcBody, /Paris card schematics/);
   assert.equal(UI.en.secondarySourceFigure, 'NOT ORIGINAL FIGURE (SECONDARY SOURCE)');
   assert.equal(UI.ja.secondarySourceFigure, '原著図ではない（参考図）');
+});
+
+test('ページ末尾の文献は役割を示し、画像だけの副次的ソースは重複させない', () => {
+  const roles = new Set([
+    'original',
+    'review',
+    'guideline',
+    'japanese-reference',
+    'related-study',
+    'official',
+  ]);
+
+  for (const score of ALL_SCORE_DEFINITIONS) {
+    const citations = getToolCitations(score);
+    assert.ok(citations.length > 0, `${score.id}: ページ末尾の文献がない`);
+    for (const citation of citations) {
+      assert.ok(roles.has(citation.role), `${score.id}: 文献役割が不正`);
+      assert.ok(citation.text.trim(), `${score.id}: 文献名が空`);
+    }
+
+    if (!isClassification(score)) continue;
+    const figures = [
+      ...(score.figures ?? []),
+      ...score.entries.flatMap((entry) => entry.figures ?? []),
+    ];
+    for (const figure of figures.filter((item) => item.isSecondarySource && item.pubmed)) {
+      assert.equal(
+        citations.some((citation) => citation.pubmed === figure.pubmed),
+        false,
+        `${score.id}: 画像だけの副次的ソース ${figure.pubmed} が末尾文献と重複`,
+      );
+    }
+  }
+
+  assert.equal(getToolCitations(getScoreById('kimura-takemoto')!)[0]?.role, 'review');
+  assert.deepEqual(
+    getToolCitations(getScoreById('aronchick')!).map((citation) => citation.role),
+    ['original', 'japanese-reference'],
+  );
+  assert.equal(UI.ja.citationRole.original, '原著');
+  assert.equal(UI.ja.citationRole.review, 'レビュー');
+  assert.equal(UI.ja.citationRole['japanese-reference'], '日本語版の参照先');
+  assert.equal(UI.en.citationRole.original, 'Original article');
+  assert.equal(UI.en.citationRole.review, 'Review');
+  assert.equal(UI.en.citationRole['japanese-reference'], 'Japanese reference');
 });
 
 test('切り抜きがある分類は原図を埋め込まずリンクだけにする', () => {

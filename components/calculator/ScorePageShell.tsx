@@ -11,6 +11,7 @@ import { Text, useThemeColor } from '@/components/Themed';
 import { useLocale } from '@/lib/i18n';
 import {
   figureKey,
+  getToolCitations,
   getToolKind,
   isClassification,
   isJapanDeveloped,
@@ -84,7 +85,8 @@ function ScorePageFooter({ score }: { score: ScoreDefinition }) {
   const border = useThemeColor({}, 'border');
   const { t } = useLocale();
   const originalLead = isClassification(score) ? score.originalLead : undefined;
-  const hasSources = Boolean(score.reference || score.license || score.officialUrl || score.note);
+  const citations = getToolCitations(score);
+  const hasSources = Boolean(citations.length || score.license || score.officialUrl || score.note);
 
   return (
     <View style={[styles.footer, { borderColor: border }]}>
@@ -101,14 +103,42 @@ function ScorePageFooter({ score }: { score: ScoreDefinition }) {
 
       {hasSources ? (
         <View style={styles.reference}>
-          {score.reference ? (
-            <CitationLink label={`${t.reference}: ${score.reference}`} pubmed={score.pubmed} />
+          {citations.length ? (
+            <View style={styles.citationList}>
+              <Text style={[styles.referenceTitle, { color: textSecondary }]}>{t.reference}</Text>
+              {citations.map((citation) => (
+                <View
+                  key={`${citation.role}:${citation.pubmed ?? citation.href ?? citation.text}`}
+                  style={styles.citationRow}>
+                  <Text style={[styles.citationRole, { borderColor: tint, color: tint }]}>
+                    {t.citationRole[citation.role]}
+                  </Text>
+                  <View style={styles.citationLink}>
+                    <CitationLink
+                      label={citation.text}
+                      pubmed={citation.pubmed}
+                      href={citation.href}
+                    />
+                  </View>
+                </View>
+              ))}
+            </View>
           ) : null}
           {score.license ? (
             <CitationLink label={`${t.license}: ${score.license}`} href={score.licenseUrl} />
           ) : null}
           {score.officialUrl ? (
-            <CitationLink label={score.officialLinkLabel ?? score.officialUrl} href={score.officialUrl} />
+            <View style={styles.citationRow}>
+              <Text style={[styles.citationRole, { borderColor: tint, color: tint }]}>
+                {t.citationRole[score.officialLinkRole ?? 'official']}
+              </Text>
+              <View style={styles.citationLink}>
+                <CitationLink
+                  label={score.officialLinkLabel ?? score.officialUrl}
+                  href={score.officialUrl}
+                />
+              </View>
+            </View>
           ) : null}
           {score.note ? <Text style={[styles.note, { color: textSecondary }]}>{score.note}</Text> : null}
         </View>
@@ -178,6 +208,34 @@ const styles = StyleSheet.create({
   },
   reference: {
     gap: 4,
+  },
+  referenceTitle: {
+    fontSize: 12,
+    fontWeight: '800',
+    marginBottom: 2,
+  },
+  citationList: {
+    gap: 6,
+  },
+  citationRow: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    gap: 8,
+  },
+  citationRole: {
+    borderRadius: 999,
+    borderWidth: 1,
+    flexShrink: 0,
+    fontSize: 10,
+    fontWeight: '800',
+    lineHeight: 16,
+    marginTop: 4,
+    overflow: 'hidden',
+    paddingHorizontal: 7,
+  },
+  citationLink: {
+    flex: 1,
+    minWidth: 0,
   },
   note: {
     fontSize: 13,

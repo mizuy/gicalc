@@ -40,6 +40,7 @@ export const itbcgBuddingScore: ClassificationDefinition = {
   originalLead:
     'The International Tumor Budding Consensus Conference (ITBCC) recommends reporting tumor budding in colorectal cancer on H&E-stained sections. A bud is defined as a single cell or a cluster of up to four cells. Count buds in one hotspot (0.785 mm²; 20× objective, field diameter 0.5 mm) at the invasive front. BD1 (low): 0–4 buds; BD2 (intermediate): 5–9 buds; BD3 (high): ≥10 buds. Selective reporting is recommended when the count is 0–4; mandatory reporting when ≥5 in many guidelines.',
   reference: 'Lugli A et al. Mod Pathol 2017;30:1299-1311 (ITBCC 2016)',
+  referenceRole: 'guideline',
   pubmed: ITBCG_BUDDING_PUBMED,
   note: '計数部位は浸潤前沿（intratumoral budding は別概念）。T1 癌・早期癌でも予後・LNM 因子として報告。免疫染色は budding 計数には不要（H&E）。',
   figures: [

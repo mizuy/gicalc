@@ -17,6 +17,7 @@ export const kimuraTakemotoScore: ClassificationDefinition = {
   originalLead:
     'The endoscopic atrophic border can be recognized by discriminating mucosal differences between the 2 sides: the gastric mucosa has a lower level and is pale in color on 1 side, while it has a higher level and is homogeneously reddish on the other side. Based on location of the endoscopic atrophic border, Kimura and Takemoto proposed closed type (C-1, C-2, C-3) and open type (O-1, O-2, O-3).',
   reference: 'Quach DT, Hiyama T. Clin Endosc 2019;52:321-327',
+  referenceRole: 'review',
   pubmed: QUACH_2019_PUBMED,
   license: 'CC BY-NC 3.0',
   licenseUrl: 'https://creativecommons.org/licenses/by-nc/3.0/',

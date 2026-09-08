@@ -18,8 +18,17 @@ export const ampullaryMacroscopicScore: ClassificationDefinition = {
   categoryLabel: '乳頭部',
   description:
     '日本胆道外科学会「胆道癌取扱い規約」に基づく十二指腸乳頭部癌の肉眼型。腫瘤型・潰瘍型・混在型・その他（正常型・ポリープ型・特殊型）。内視鏡で形態を記載し、生検・深達度評価へつなぐ。',
-  reference: '日本胆道外科学会. 胆道癌取扱い規約 第6版. 2013 / JSCO 2015',
-  pubmed: JSCO_BILIARY_2015_PUBMED,
+  citations: [
+    {
+      role: 'japanese-reference',
+      text: '日本胆道外科学会. 胆道癌取扱い規約 第6版. 2013',
+    },
+    {
+      role: 'guideline',
+      text: 'Nakamura M, et al. J Hepatobiliary Pancreat Sci. 2019;26:9-32',
+      pubmed: JSCO_BILIARY_2015_PUBMED,
+    },
+  ],
   note: 'JCO 胆道癌診療ガイドライン 2015 でも内視鏡的肉眼型の記載が推奨される。切除標本の固定後所見で最終決定する場合もある。',
   figures: [
     {

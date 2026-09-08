@@ -1,4 +1,11 @@
-import type { DuodenumSite, ListClinicalPhase, ListNavCategory, ScoreCategory, ScoreOrgan } from '../../types/score';
+import type {
+  CitationRole,
+  DuodenumSite,
+  ListClinicalPhase,
+  ListNavCategory,
+  ScoreCategory,
+  ScoreOrgan,
+} from '../../types/score';
 import type { Locale } from './types';
 
 export type UiStrings = {
@@ -10,6 +17,7 @@ export type UiStrings = {
   source: string;
   license: string;
   original: string;
+  citationRole: Record<CitationRole, string>;
   note: string;
   reset: string;
   classificationOverview: string;
@@ -94,6 +102,14 @@ export const UI: Record<Locale, UiStrings> = {
     source: '出典',
     license: 'ライセンス',
     original: '原著',
+    citationRole: {
+      original: '原著',
+      review: 'レビュー',
+      guideline: 'ガイドライン・基準',
+      'japanese-reference': '日本語版の参照先',
+      'related-study': '関連研究',
+      official: '公式リンク',
+    },
     note: '注',
     reset: 'リセット',
     classificationOverview: '分類の全体像',
@@ -209,6 +225,14 @@ export const UI: Record<Locale, UiStrings> = {
     source: 'Source',
     license: 'License',
     original: 'Original',
+    citationRole: {
+      original: 'Original article',
+      review: 'Review',
+      guideline: 'Guideline / criteria',
+      'japanese-reference': 'Japanese reference',
+      'related-study': 'Related study',
+      official: 'Official link',
+    },
     note: 'Note',
     reset: 'Reset',
     classificationOverview: 'Classification overview',

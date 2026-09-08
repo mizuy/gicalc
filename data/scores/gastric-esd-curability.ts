@@ -16,9 +16,11 @@ export const gastricEsdCurabilityScore: ScoreDefinition = {
   description:
     'ESD/EMR 後の病理所見から内視鏡的根治度（eCuraA / C-1 / C-2）を判定します。Fig. 2 表は JGES 胃癌 ESD/EMR ガイドライン第2版、判定ロジックは胃癌治療ガイドライン第7版（2025年3月改訂）に準拠します。',
   reference: 'JGES ESD/EMR for EGC 2nd ed. Dig Endosc 2020;32:303-322',
+  referenceRole: 'guideline',
   pubmed: JGES_GASTRIC_ESD_2020_PUBMED,
   officialUrl: 'https://www.jgca.jp/guideline/seventh/002_02.html',
   officialLinkLabel: '胃癌治療ガイドライン 第7版（内視鏡的切除）',
+  officialLinkRole: 'japanese-reference',
   note:
     'JGES 胃癌 ESD/EMR ガイドライン第2版（2020）の Fig. 2 相当テーブルを画面上部に表示し、病理所見を入力すると該当セルがハイライトされます。第7版改訂により分化型・pT1b1（SM1）・長径 ≤3 cm は eCuraA です。非治癒切除後の LNM 点数化は別ページの eCura スコア（Hatta 2017）を参照。',
   figures: [

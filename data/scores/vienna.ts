@@ -16,6 +16,7 @@ export const viennaScore: ClassificationDefinition = {
   originalLead:
     'The Vienna classification of gastrointestinal epithelial neoplasia: (1) negative for neoplasia/dysplasia, (2) indefinite for neoplasia/dysplasia, (3) non-invasive low grade neoplasia (low grade adenoma/dysplasia), (4) non-invasive high grade neoplasia (high grade adenoma/dysplasia, non-invasive carcinoma and suspicion of invasive carcinoma), and (5) invasive neoplasia (intramucosal carcinoma, submucosal carcinoma or beyond). Category 4 is subdivided into 4.1 high grade adenoma/dysplasia, 4.2 non-invasive carcinoma (carcinoma in situ), and 4.3 suspicion of invasive carcinoma. Category 5 is subdivided into 5.1 intramucosal carcinoma and 5.2 submucosal carcinoma or beyond.',
   reference: 'Schlemper RJ et al. Gut 2000;47:251-255. Revised grouping: Dixon 2002 Gut',
+  referenceRole: 'guideline',
   pubmed: VIENNA_2000_PUBMED,
   note: '2002 改訂では粘膜内癌を 4.4 に移し、Category 5 を粘膜下以深のみとする。SNADET の C4 は HGA + 粘膜内癌、C5 は SM 以深、という使い方が多い。',
   hierarchy: [
