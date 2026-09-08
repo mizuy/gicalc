@@ -2,7 +2,9 @@
 
 GI Calc の **CC atlas**（全分類の教育用 CC 図を揃える）に向けた文献調査です。画像の取得・切り抜き・埋め込みはしていません。実装時は本表と [`adding-scores.md`](./adding-scores.md) §5 を照合してください。
 
-調査日: 2026-09-08。対象は `kind: 'classification'` の 30 ツール（Sarin を含む）。点数スコア（BBPS 等）は対象外。
+調査日: 2026-09-08（要確認の出版社照合は同日追記）。対象は `kind: 'classification'` の 30 ツール（Sarin を含む）。点数スコア（BBPS 等）は対象外。
+
+**CC atlas は切り抜きしない。** 原図全体を載せられればよい。ND も全体掲載なら使える。
 
 ---
 
@@ -26,17 +28,19 @@ GI Calc の **CC atlas**（全分類の教育用 CC 図を揃える）に向け�
 
 ---
 
-## 3. Atlas 実装ルール（現行）
+## 3. Atlas 実装ルール
 
-| ライセンス | 埋め込み | 切り抜き（型ごと） |
-|---|---|---|
-| CC BY / BY-SA | 可 | 可 |
-| CC BY-NC | 可（非営利の GitHub Pages） | 可 |
-| CC BY-NC-ND | 可 | **不可**（原図全体のみ） |
-| 非 CC / 未確認 | 不可（`href` のみ） | 不可 |
-| 許諾再掲（記事は CC、原図は他誌） | 不可 | 不可 |
+Atlas ページは **原図全体だけ**載せる。型ごとの切り抜きは作らない（スコアカード側の既存切り抜きとは別）。
 
-Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡または病理、定義と対応が本文で明示。模式図だけの論文は補助。
+| ライセンス | Atlas（全体掲載） |
+|---|---|
+| CC BY / BY-SA | 可 |
+| CC BY-NC | 可（非営利の GitHub Pages） |
+| CC BY-NC-ND | 可（改変なしの全体） |
+| 非 CC / 未確認 / All rights reserved | 不可（`href` のみ） |
+| 許諾再掲（記事は CC、原図は他誌） | 不可 |
+
+向く図: **全型が1枚または連続パネル**、実内視鏡または病理、定義と本文が対応。模式は補助。
 
 ---
 
@@ -47,8 +51,33 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | **掲載済** | `public/figures/` に WebP あり |
 | **リンクのみ** | `href` のみ。埋め込みなし |
 | **候補** | 未使用。Atlas に使える CC 図 |
-| **ND 表示のみ** | 切り抜き不可 |
-| **ギャップ** | 使える CC 教育図が見つからない |
+| **ギャップ** | 全体掲載できる CC 教育図が見つからない |
+
+---
+
+## 4.1 要確認だった項目の確定
+
+出版社ページまたは PMC のライセンス文で確認した。Atlas は全体掲載前提。
+
+| 旧表記 | 確定 | 図の中身 | Atlas |
+|---|---|---|---|
+| TGH Wu（Siewert） | **CC BY-NC-ND 4.0**（TGH 2026;11:57） | Fig. 1 は分子特徴。Servier Medical Art 転載。**解剖プレートではない** | 使わない（中身が型図でない） |
+| AoE Saliba 2020 | **CC BY-NC-ND 4.0** | Fig. 1 は Siewert I–III 模式 | 全体なら可。JCE 2017 既掲載の方が良い |
+| MRA 2023 Hill | 実体は Bharatam **J Surg (Gavin) 2022**;7:1674。**CC BY-SA 4.0** | Fig. 1 Grade I–IV | 全体なら可。Ge 2023 既掲載と重複 |
+| Ge 2023「Sci Rep」 | **誤記**。PMC10653650 は Ge 2023 **Ann Med**（既掲載、CC BY-NC 4.0）と同じ論文 | I–IV サンプル | 追加しない |
+| Sci Rep Hill（別論文） | Kafetzis 2024 Sci Rep。**CC BY 4.0** | AI 学習。型プレートではない | 使わない |
+| Miyaoka TGH 2020 | **CC BY-NC-ND 4.0**（PDF Open Access Statement） | Fig. 5–8 が MESDA-G 手順の実例 | 全体なら可。Kurumi の補完 |
+| Qiu 2013 J Transl Med | **CC BY 2.0** | Fig. 1 は生存曲線だけ | 使わない |
+| Hu 2012 J Gastrointest Oncol | PMC に **All rights reserved**（Pioneer Bioscience 2012）。**CC ではない** | WHO 組織亜型。Lauren 対比ではない | 使わない |
+| JE 2021 iScan WASP | **CC BY-NC-ND 4.0** | 研究フロー・正答率図。WASP 型プレートなし | 使わない |
+| Utsumi / Sano 2018 WJGO | **CC BY-NC 4.0** | EC 不一致の症例図。全型プレートではない | 参考。Misawa で足りる |
+| EBHI-Seg 2023 | 論文・データセットとも **CC BY 4.0** | LGIEN/HGIEN 等。**Vienna ラベルではない** | Vienna atlas には使わない |
+| Iwashita 2015 Am J Case Rep（旧「Yamao」） | **CC BY-NC-ND 3.0** | Type I/II → 後年 Type III の経過。全型揃いではない | 全体なら部分候補 |
+| Testoni 2024 Gastrointest Disord（旧「Nardone」） | **CC BY 4.0**（MDPI） | Fig. 1A–F 著者症例 I–Vn | **全体掲載の優先候補** |
+| Mezzapesa 2022 IJMS（旧「De Palma」） | **CC BY 4.0**（MDPI） | SSL / TSA 病理 | **全体掲載の優先候補** |
+| Tsuji 2015 WJG（旧「Goda」） | **CC BY-NC 4.0** | Kikuchi アルゴリズム転載 + 症例 | 全体なら可。Nakagawa の方が血管型が揃う |
+| Sawada 2025 DEN Open | **CC BY 4.0**（PMID 39822952 / PMC11736424） | Fig. 1 の EoE 所見 | Abe の補完。全体なら可 |
+| Berlth 2014 WJG / Ma 2016 Oncol Lett（Lauren 再検索） | WJG は **CC BY-NC 4.0**、Oncol Lett は **CC BY-NC-ND 4.0** | 表または本文のみ。病理対比図なし | 使わない。Lauren ギャップは残る |
 
 ---
 
@@ -90,7 +119,8 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 |---|---|---|---|---|---|---|
 | Siewert 1998 BJS | 9823902 | — | 非 CC | リンクのみ | — | 原著 |
 | JCE 11th ed. 2017 Esophagus | 28111536 / PMC5222925 | Fig. 2-5/2-6/2-7 | **CC BY 4.0** | **掲載済** | I–III + 西分類 | 一次ソース |
-| TGH / AoE 総説 | — | 模式 | 要確認 | 参考 | I–III | 規約図を優先 |
+| Saliba 2020 Ann Esophagus | — / aoe-2020-geja-02 | Fig. 1 | **CC BY-NC-ND 4.0** | 候補（全体） | I–III 模式 | JCE 既掲載を優先 |
+| Wu 2026 TGH | — | Fig. 1 | **CC BY-NC-ND 4.0** | 使わない | 分子図 | Siewert 解剖図ではない |
 
 #### JSPH 食道静脈瘤（F / C / RC）
 
@@ -107,9 +137,9 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | 出典 | PMID / PMC | 図 | ライセンス | 状態 | カバー | メモ |
 |---|---|---|---|---|---|---|
 | Hill 1996 | — | — | 非 CC | リンクのみ | — | 原著 |
-| Ge 2023 Ann Med | — | Fig. 1 | **CC BY-NC 4.0** | **掲載済**（各 grade 切り抜き） | I–IV | 一次ソース |
-| Ge 2023 Sci Rep（DL） | 37949083 / PMC10653650 | Fig. 1 | CC BY-NC | 候補（重複） | I–IV | 既掲載と同系。追加価値は低い |
-| MRA 2023 | — | Fig. 1 | 要確認 | 参考 | I–IV | 出版社ライセンスを実装前に確認 |
+| Ge 2023 Ann Med | 37949083 / PMC10653650 | Fig. 1 | **CC BY-NC 4.0** | **掲載済** | I–IV | スコアカードは切り抜き。Atlas は全体 |
+| Bharatam 2022 J Surg (Gavin) | — | Fig. 1 | **CC BY-SA 4.0** | 候補（全体・重複） | I–IV | Ge で足りる |
+| Kafetzis 2024 Sci Rep | — | — | CC BY 4.0 | 使わない | AI | 型プレートではない |
 
 #### EREFS（EoE）
 
@@ -117,7 +147,7 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 |---|---|---|---|---|---|---|
 | Abe 2022 Diagnostics | — | Fig. 2 | **CC BY 4.0** | **掲載済**（所見切り抜き） | E/R/Ex/F/S | 一次ソース |
 | Hirano 2013 / CGH 総説 | — | — | 非 CC | リンクのみ | — | 原著スコア |
-| Sawada 2025 DEN Open | — / deo2.70063 | Fig. 1b–e | **CC BY**（DEN Open） | 候補 | 主要所見 | Abe の補完。stricture の別例 |
+| Sawada 2025 DEN Open | 39822952 / PMC11736424 | Fig. 1 | **CC BY 4.0** | 候補（全体） | 主要所見 | Abe の補完 |
 
 ---
 
@@ -136,19 +166,21 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 
 | 出典 | PMID / PMC | 図 | ライセンス | 状態 | カバー | メモ |
 |---|---|---|---|---|---|---|
-| Muto 2016 Dig Endosc | — | Fig. 13 等 | **CC BY-NC-ND 4.0** | リンクのみ（Fig. 1 はフローと重複） | アルゴリズム + 例 | ND。切り抜き不可 |
-| Kurumi 2021 J Clin Med | — | Fig. 5 | **CC BY 4.0** | **掲載済**（MS/MV 切り抜き） | regular / irregular / absent | VS 教育の一次ソース |
-| Castañeda 2022 Cancers | 35008263 / PMC8750452 | Fig. 2 | **CC BY 4.0** | 候補 | アルゴリズム図 | 画面フローと重複しうる。写真プレートではない |
-| Miyaoka TGH | — | Fig. 5–8 | 要確認 | 参考 | 手順例 | AME ライセンスを確認 |
+| Muto 2016 Dig Endosc | — | Fig. 13 等 | **CC BY-NC-ND 4.0** | 候補（全体） | アルゴリズム + 例 | 現行はリンク。Atlas は全体可。Fig. 1 は画面フローと重複 |
+| Kurumi 2021 J Clin Med | — | Fig. 5 | **CC BY 4.0** | **掲載済** | regular / irregular / absent | スコアカードは切り抜き。Atlas は全体 |
+| Castañeda 2022 Cancers | 35008263 / PMC8750452 | Fig. 2 | **CC BY 4.0** | 候補（全体） | アルゴリズム図 | 写真プレートではない |
+| Miyaoka 2020 TGH | 33073045 / PMC7530321 | Fig. 5–8 | **CC BY-NC-ND 4.0** | 候補（全体） | 手順の実例 | Kurumi の補完 |
 
 #### Lauren（腸型 / びまん型 / 混合）
 
 | 出典 | PMID / PMC | 図 | ライセンス | 状態 | カバー | メモ |
 |---|---|---|---|---|---|---|
 | Lauren 1965 | 14300643 | — | 非 CC | リンクのみ | — | 原著 |
-| Qiu 2013 J Transl Med | — / PMC3600019 | — | 要確認（BMC 系は CC BY が多い） | **ギャップ寄り** | 組織写真が型プレートになっていない | |
-| Hu 2012 J Gastrointest Oncol | — / PMC3418539 | Fig. 7 等 | 要確認 | 参考 | HDGC / signet | intestinal vs diffuse の対比プレートではない |
-| 各種総説 | — | 表のみ | — | **ギャップ** | — | **腸型・びまん型・混合の揃い CC 教育図は未確認** |
+| Qiu 2013 J Transl Med | 23497313 / PMC3600019 | Fig. 1 | **CC BY 2.0** | 使わない | 生存曲線 | 組織図なし |
+| Hu 2012 J Gastrointest Oncol | 22943016 / PMC3418539 | Fig. 1–7 | **All rights reserved** | 使わない | WHO 亜型 | CC ではない。Lauren 対比でもない |
+| Berlth 2014 WJG | 24914328 / PMC4024777 | 表のみ | **CC BY-NC 4.0** | 使わない | 分類対照表 | 病理写真なし |
+| Ma 2016 Oncol Lett | 27073512 / PMC4840723 | なし | **CC BY-NC-ND 4.0** | 使わない | 総説本文 | 図なし |
+| — | — | — | — | **ギャップ** | — | 腸型・びまん型・混合の揃い CC 図は再検索後もなし |
 
 #### WHO NET G1–G3
 
@@ -170,7 +202,7 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | Sano 2016 Dig Endosc | 26927367 | Fig. 7 | 非 CC | リンクのみ | 1 / 2A / 2B / 3 | 原著 |
 | Ahmed 2024 DEN Open | 38023663 / PMC10681000 | Fig. 1 | **CC BY 4.0** | **掲載済** | 1–3 横並び | 二次。十分 |
 | Nguyen 2024 Medicine | 38968516 / PMC11224830 | 本文中 | CC BY | 参考 | 分布表中心 | 型プレートとしては Ahmed が上 |
-| Yoshida 2021 EIO | 33553592 / PMC7857969 | Fig. BLI 代表例 | **CC BY-NC-ND** | 候補（ND） | 1–3 | 切り抜き不可。全体表示のみ |
+| Yoshida 2021 EIO | 33553592 / PMC7857969 | BLI 代表例 | **CC BY-NC-ND** | 候補（全体） | 1–3 | Ahmed の補完 |
 
 #### NICE
 
@@ -188,7 +220,7 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | IJspeert 2016 Gut | 25753029 | Fig. 1 | 非 CC | リンクのみ | アルゴリズム | 原著 |
 | Vu / Quach 2024 JGH Open | 38919272 / PMC11196833 | Fig. 4 | **CC BY 4.0** | **掲載済**（SSL 3所見切り抜き） | cloud / border / dark spots | コード上は Quach 2024。第一著者 Vu |
 | 同論文 Fig. 1 | 同上 | Fig. 1 | **CC BY 4.0** | **候補** | ステップ図 | 画面フローと重複しうる |
-| JE 2021 iScan | — / PMC8435252 | — | 要確認 | 参考 | 動画研究 | 型プレートではない |
+| van de Wetering 2021 United European Gastroenterol J | — / PMC8435252 | — | **CC BY-NC-ND 4.0** | 使わない | 正答率図 | WASP 型プレートなし |
 
 #### Paris Type 0
 
@@ -197,7 +229,7 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | Paris 2003 GIE / 2005 Endoscopy | 15933932 | — | 非 CC | リンクのみ | — | 原著 |
 | GI Calc 模式図 | — | カード図 | **CC BY 4.0** | **掲載済**（`gicalc`） | 0-I–III + 混在 | 現行カード |
 | Kim 2025 Clin Endosc | 40336268 / PMC12138368 | Fig. 2 | **CC BY-NC 4.0** | リンクのみ | 模式 + Isp | 埋め込まず（現行）。**写真プレートではない** |
-| Johnson 2023 Can J Surg | — / PMC10521811 | Fig. 1 | **CC BY-NC-ND 4.0** | リンクのみ | 模式 | ND |
+| Johnson 2023 Can J Surg | — / PMC10521811 | Fig. 1 | **CC BY-NC-ND 4.0** | 候補（全体） | 模式 | 現行はリンク。Atlas は全体可 |
 | Castañeda 2022 Cancers | 35008263 / PMC8750452 | Fig. 1 | **CC BY 4.0** | **候補** | 早期胃癌の Paris 実例 | 大腸ではなく胃。臓器注記が必要 |
 
 **ギャップ**: 大腸の 0-Ip / Is / IIa / IIb / IIc / III が揃った **CC 実写プレート** は未確認。模式は GI Calc で足りる。実写 atlas は Cancers 2022（胃）か、今後の OA 症例を待つ。
@@ -220,7 +252,7 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | Kudo 1996 GIE / Tanaka 2004 | 8836710 | — | 非 CC | リンクのみ | I–Vn | 原著 |
 | GI Calc Gemini SVG | — | カード図 | **CC BY 4.0** | **掲載済**（`gicalc`） | I–Vn | 現行カード |
 | Kim 2025 Clin Endosc Fig. 4 | 40336268 | Fig. 4 | 記事 CC BY-NC、**原図は許諾再掲** | リンクのみ | I–Vn | **CC 原図として使わない** |
-| Nardone 2024 Gastrointest Disord | — / MDPI 6(3):44 | Fig. 1A–F | **CC BY 4.0**（MDPI） | **候補（優先）** | I, II, IIIL/s, IV, Vi, Vn（i-Scan） | 実写。II-O はなし |
+| Testoni 2024 Gastrointest Disord | — / 10.3390/gidisord6030044 | Fig. 1A–F | **CC BY 4.0** | **候補（優先）** | I, II, IIIL/s, IV, Vi, Vn（i-Scan） | 著者症例。II-O なし |
 | Li 2014 WJG meta | — / PMC4168103 | 表 | CC BY-NC | 参考 | 定義表 | 画像なし |
 
 #### 大腸 EC / EC-V
@@ -229,7 +261,7 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 |---|---|---|---|---|---|---|
 | Kudo 2011 Endoscopy / 2015 GIE | 21837586 / 26071058 | — | 非 CC | リンクのみ | EC1a–3b, EC-V | 原著 |
 | Misawa 2021 Clin Endosc | 34233111 | Fig. 2–3 | **CC BY-NC 3.0** | **掲載済** | EC + EC-V | 一次ソース |
-| Sano 2018 WJGO | 29666668 | 不一致例 | 要確認 | 参考 | 部分 | 型プレートではない |
+| Utsumi / Sano 2018 WJGO | 29666668 | 不一致例 | **CC BY-NC 4.0** | 参考 | 部分 | 全型プレートではない。Misawa で足りる |
 
 追加の全型 CC BY プレートは見つからず。Misawa で足りる。
 
@@ -262,8 +294,8 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | 出典 | PMID / PMC | 図 | ライセンス | 状態 | カバー | メモ |
 |---|---|---|---|---|---|---|
 | WHO Blue Book | — | — | 非 CC | リンクのみ | — | |
-| De Palma 2022 IJMS | — / PMC9032676 | Fig. 2, 4 等 | **CC BY 4.0**（MDPI） | **候補（優先）** | SSL, TSA（HP は本文） | 病理 atlas 向き |
-| Dang 2021 Can J Surg | 34728521 / PMC8565879 | Fig. 1A–C | **CC BY-NC-ND 4.0** | 候補（ND） | HP / SSL / TSA | 切り抜き不可。全体なら可 |
+| Mezzapesa 2022 IJMS | — / PMC9032676 | Fig. 2, 4 等 | **CC BY 4.0** | **候補（優先）** | SSL, TSA（HP は本文） | 病理。第一著者 Mezzapesa |
+| Dang 2021 Can J Surg | 34728521 / PMC8565879 | Fig. 1A–C | **CC BY-NC-ND 4.0** | 候補（全体） | HP / SSL / TSA | Atlas 向き。IJMS と並ぶ |
 | Le 2024 WJG | — / PMC11438847 | 病理図 | CC BY-NC（WJG） | 候補 | SSL / SSLD 等 | NC。IJMS を優先 |
 
 #### SPS（WHO 基準）
@@ -281,7 +313,7 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | Schlemper 2000 Gut | 10896917 | Fig. 1–3 | 非 CC | リンクのみ | 1 症例 + 一致率図 | **型ごとの病理プレートではない** |
 | Dixon 2002 Gut | — | 表 | 非 CC | — | 改訂表 | |
 | Castañeda 系 / 管理論文 | 複数 | 表 | まちまち | 参考 | 表 | |
-| EBHI-Seg 2023 | — / PMC9902656 | データセット図 | 要確認 | 使わない | LGIEN/HGIEN 等 | Vienna ラベルではない。データセット |
+| EBHI-Seg 2023 | — / PMC9902656 | データセット | **CC BY 4.0** | 使わない | LGIEN/HGIEN 等 | Vienna ラベルではない |
 
 **ギャップ**: C1–C5（または改訂 4.1–4.4 / 5）を並べた **CC 病理教育図は未確認**。表＋自作模式が現実的。
 
@@ -301,19 +333,19 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | 出典 | PMID / PMC | 図 | ライセンス | 状態 | カバー | メモ |
 |---|---|---|---|---|---|---|
 | Kikuchi 2014 Dig Endosc | 24750143 | Fig. 10 | 非 CC | リンクのみ | アルゴリズム | 原著 |
-| Goda 2015 WJG | — / 21(41):11832 | Fig. 2–4 | **CC BY-NC**（WJG） | **候補** | アルゴリズム転載 + mixed / obscure | NC。写真は部分 |
-| Nakagawa 2024 Clin Endosc | 38749404 / PMC11457973 | Fig. 1a–e | **CC BY-NC** | **候補（優先・NC）** | absent / network / ISV / unclassified / mixed | **血管型が揃う唯一の近い OA 図** |
-| QIMS 2023 総説 | 36819279 / PMC9929402 | 本文 | CC BY-NC-ND | 参考 | 記述のみ | ND |
+| Tsuji 2015 WJG | — / 21(41):11832 | Fig. 2–4 | **CC BY-NC 4.0** | 候補（全体） | アルゴリズム転載 + 症例 | Nakagawa の方が血管型が揃う |
+| Nakagawa 2024 Clin Endosc | 38749404 / PMC11457973 | Fig. 1a–e | **CC BY-NC** | **候補（優先・全体）** | absent / network / ISV / unclassified / mixed | 血管型が揃う。切り抜かない |
+| QIMS 2023 総説 | 36819279 / PMC9929402 | 本文 | CC BY-NC-ND | 参考 | 記述のみ | 図なし |
 
-**ギャップ（CC BY）**: BY（NC なし）の揃い図は未確認。Atlas は Nakagawa 2024 を NC で切るか、GI Calc 模式を新作する。
+**ギャップ（CC BY）**: NC なしの揃い図は未確認。Atlas は Nakagawa 2024 の全体で足りる。
 
 #### Uchiyama ME-NBI（乳頭部 I–III）
 
 | 出典 | PMID / PMC | 図 | ライセンス | 状態 | カバー | メモ |
 |---|---|---|---|---|---|---|
 | Uchiyama 2006 J Gastroenterol | 16612620 | — | 非 CC | リンクのみ | I–III | 原著 |
-| Yamao 2015 Am J Case Rep | 26324328 / PMC4560156 | Fig. 1–2 | OA、**CC 表記なし** | 使わない | I/II と III の経過 | ライセンス不明 |
-| その他症例 | — | 部分 | まちまち | **ギャップ** | — | **I / II / III + 異常血管の揃い CC 図は未確認** |
+| Iwashita 2015 Am J Case Rep | 26324328 / PMC4560156 | Fig. 1–2 | **CC BY-NC-ND 3.0** | 候補（全体・部分） | I/II → 後年 III | 全型揃いではない。異常血管プレートなし |
+| — | — | — | — | **ギャップ（揃い図）** | — | I / II / III + 異常血管が1枚に揃った CC 図は未確認 |
 
 #### 乳頭部肉眼型（JSBS）
 
@@ -334,10 +366,8 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | 出典 | PMID / PMC | 図 | ライセンス | 状態 | カバー | メモ |
 |---|---|---|---|---|---|---|
 | Forrest 1974 Lancet | — | — | 非 CC | — | — | 原著 |
-| Zhou 2025 J South Med Univ | — | Fig. 1 | **CC BY-NC-ND 4.0** | **掲載済（全体のみ）** | Ia–III | ND。切り抜き不可 |
+| Zhou 2025 J South Med Univ | — | Fig. 1 | **CC BY-NC-ND 4.0** | **掲載済（全体）** | Ia–III | Atlas 向き。追加不要 |
 | Endoscopy Campus 等 | — | 多数 | 非 CC | 使わない | Ia–III | |
-
-**ギャップ（crop）**: Ia–III を切れる CC BY / BY-NC プレートは未確認。全体表示は Zhou で足りる。
 
 #### Sarin（GOV / IGV）
 
@@ -382,38 +412,39 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 
 実装するならこの順。調査時点の推奨。
 
-### P1 — 揃いが良く、ライセンスが BY、ギャップを埋める
+Atlas は全体掲載。ND も同じ優先度で見てよい。
+
+### P1 — ギャップを埋める全体図
 
 | 優先 | 分類 | 論文 | 図 | 理由 |
 |---|---|---|---|---|
-| 1 | **LST** | Moon 2017 PLOS ONE | Fig. 1A–H | 4 亜型の WLI+色素。模式しかない現状を実写で補う |
-| 2 | **pit pattern** | Nardone 2024 Gastrointest Disord | Fig. 1A–F | I–Vn 実写。Clin Endosc 2025 Fig. 4 は使えない |
-| 3 | **WHO serrated** | De Palma 2022 IJMS | Fig. 2, 4 | 病理ギャップ。SSL/TSA |
+| 1 | **LST** | Moon 2017 PLOS ONE | Fig. 1A–H | 4 亜型の WLI+色素 |
+| 2 | **pit pattern** | Testoni 2024 Gastrointest Disord | Fig. 1A–F | I–Vn 実写。Clin Endosc 2025 Fig. 4 は使わない |
+| 3 | **WHO serrated** | Mezzapesa 2022 IJMS または Dang 2021 CJS | Fig. 2/4 または Fig. 1 | IJMS は BY。CJS は ND だが HP/SSL/TSA が1枚 |
 | 4 | **NET G1–G3** | Uccella 2021 Endocrine | Fig. 3 | H&E+Ki-67。G3 vs NEC |
+| 5 | **Kikuchi ME-NBI** | Nakagawa 2024 Clin Endosc | Fig. 1 | 血管型が揃う。NC。全体のまま |
 
-### P2 — 使えるが NC、または既掲載の補完
+### P2 — 既掲載の補完、または部分
 
 | 分類 | 論文 | 図 | 理由 |
 |---|---|---|---|
-| Kikuchi ME-NBI | Nakagawa 2024 Clin Endosc | Fig. 1a–e | 血管型が揃う。**BY-NC** |
-| LST（予備） | Nardone 2025 IJMS | Fig. 2 | Moon と重複しうる |
-| WHO serrated（ND） | Dang 2021 CJS | Fig. 1 | HP/SSL/TSA 3 枚。**切り抜き不可** |
-| Paris（胃） | Castañeda 2022 Cancers | Fig. 1 | 実写だが胃。大腸カードとは別枠 |
+| MESDA-G | Miyaoka 2020 TGH / Muto 2016 | Fig. 5–8 / Fig. 13 | ND。全体。Kurumi の補完 |
+| Paris（胃） | Castañeda 2022 Cancers | Fig. 1 | 実写だが胃 |
+| Paris（模式） | Johnson 2023 Can J Surg | Fig. 1 | ND。全体 |
 | EREFS | Sawada 2025 DEN Open | Fig. 1 | Abe の別症例 |
+| JNET | Yoshida 2021 EIO | BLI 例 | ND。全体 |
 | WASP | Vu 2024 Fig. 1 | アルゴリズム | 画面フローと重複しうる |
-| JNET | Yoshida 2021 EIO | BLI 例 | **ND**。全体表示のみ |
-| Lauren | （未確定） | — | 対比プレートが見つかってから |
+| Uchiyama | Iwashita 2015 AJCR | Fig. 1–2 | ND。経過例のみ |
 
-### P3 — 自作模式または表で足りる（文献 CC 図なし）
+### P3 — 文献の揃い図なし
 
 | 分類 | 方針 |
 |---|---|
-| Vienna | カテゴリ表。病理写真は見つからず |
-| Uchiyama | GI Calc 模式、または今後の OA 症例 |
-| 乳頭部肉眼型 | GI Calc 模式（腫瘤 / 潰瘍 / 混在 / 正常） |
+| Vienna | カテゴリ表。CC の型プレートなし |
+| Lauren | 対比図なし |
+| 乳頭部肉眼型 | 揃い図なし。模式を新作するか表 |
 | SPS | 既存の基準表で足りる |
-| Forrest crop | ND のため切らない。Zhou 全体のまま |
-| 虫垂開口 crop | 同上（Oung 全体） |
+| Forrest / 虫垂開口 | 既に全体掲載。追加不要 |
 
 ---
 
@@ -425,7 +456,7 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | Kim 2025 Fig. 2/3 の「Paris/LST 原著図」扱い | 模式の転載。実写 atlas ではない。現行どおりリンク |
 | Endoscopy Campus / 教科書サイトの写真 | CC ではない |
 | HyperKvasir 等の大規模データセット画像 | 分類教育プレートではない。個別ライセンスも別 |
-| Am J Case Rep の乳頭部症例（PMC4560156） | OA だが CC 表記なし |
+| Hu 2012 J Gastrointest Oncol の図 | All rights reserved。CC ではない |
 | WHO Blue Book の図 | IARC。CC ではない |
 | 原著 Wiley / Elsevier / BMJ / Thieme 図 | 現行どおり `href` のみ |
 
@@ -436,11 +467,11 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 | 臓器 | 実写 CC が揃っている | 模式のみ / 部分 | ギャップ |
 |---|---|---|---|
 | 食道 | JES, LA, Hill, EREFS, JSPH, Prague, Siewert | — | — |
-| 胃 | MESDA-G VS, 木村–竹本 | Lauren | Lauren 対比図 |
-| 大腸光学 | JNET, NICE, WASP, EC, ESD-F | Paris, LST, pit（模式） | 大腸 Paris 実写 |
-| 大腸病理 | ITBCC | SPS 表 | Vienna, WHO serrated（候補あり） |
-| 十二指腸 | Toya | — | Kikuchi（NC 候補）, Uchiyama, 肉眼型 |
-| 出血 | Forrest（ND 全体）, Sarin 模式 | — | Forrest の crop 用 BY 図 |
+| 胃 | MESDA-G VS, 木村–竹本 | Lauren | Lauren 対比図（再検索後もなし） |
+| 大腸光学 | JNET, NICE, WASP, EC, ESD-F | Paris, LST, pit（模式。実写候補あり） | 大腸 Paris 実写の揃い図 |
+| 大腸病理 | ITBCC | SPS 表 | Vienna。WHO serrated は候補確定 |
+| 十二指腸 | Toya | Kikuchi（NC 全体） | Uchiyama 揃い図、肉眼型 |
+| 出血 | Forrest（全体済）, Sarin 模式 | — | — |
 
 ---
 
@@ -448,9 +479,9 @@ Atlas に向く図: **全型が1枚または連続パネル**、実内視鏡ま�
 
 1. 出版社ページでライセンス文を再読する（Europe PMC タグと食い違うことがある）。
 2. 図キャプションが「Adapted from / Reproduced with permission」なら **許諾再掲** として捨てる。
-3. ND は `src` に全体だけ。`entry.figures` の切り抜きを作らない。
+3. **Atlas は切り抜かない。** 原図全体を `src` に置く。ND も改変なしなら可。
 4. 二次資料は `figureKind: 'secondary'`、`isSecondarySource: true`、About の `citationsCc` を更新。
-5. 複合図から切る場合、日本語 `note` に `CC BY 4.0`（または実際のライセンス）と `埋め込まず` を入れる（`verify-scores.ts`）。
+5. スコアカード側で切る場合だけ、日本語 `note` にライセンスと `埋め込まず` を入れる（`verify-scores.ts`）。Atlas では不要。
 6. このファイルの「掲載済」行を実装後に更新する。
 
 関連: [`adding-scores.md`](./adding-scores.md) §5。

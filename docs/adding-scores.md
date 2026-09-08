@@ -226,6 +226,8 @@ CC 済み・非 CC の一覧は [README の引用とライセンス](../README.m
 
 分類ごとの CC 図調査（既掲載 / 候補 / ギャップ）は [`cc-atlas.md`](./cc-atlas.md)。Atlas 実装前にここを更新する。
 
+**Atlas は切り抜かない。** 原図全体を載せる。ND も改変なしの全体なら可。型ごとの切り抜きはスコアカード（`entry.figures`）だけ。
+
 `developedInJapan: true` は **日本で考案・策定されたツールのみ**（Paris / NICE 等の国際分類には付けない）。
 
 ---
