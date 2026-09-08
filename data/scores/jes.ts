@@ -72,7 +72,7 @@ export const jesScore: ClassificationDefinition = {
   entries: [
     {
       label: 'Type A',
-      meaning: 'No invasion',
+      meaning: 'Without severe irregularity',
       severity: 'none',
       figures: [
         oyamaCrop({
@@ -91,7 +91,7 @@ export const jesScore: ClassificationDefinition = {
     },
     {
       label: 'Type B1',
-      meaning: 'T1a-EP or T1a-LPM',
+      meaning: 'Loop-like formation',
       severity: 'mild',
       figures: [
         oyamaCrop({
@@ -114,7 +114,7 @@ export const jesScore: ClassificationDefinition = {
     },
     {
       label: 'Type B2',
-      meaning: 'T1a-MM or T1b-SM1',
+      meaning: 'Non-loop, elongated',
       severity: 'moderate',
       figures: [
         oyamaCrop({
@@ -140,7 +140,7 @@ export const jesScore: ClassificationDefinition = {
     },
     {
       label: 'Type B3',
-      meaning: 'T1b-SM2 or deeper',
+      meaning: 'Highly dilated vessels',
       severity: 'severe',
       figures: [
         oyamaCrop({

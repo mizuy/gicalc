@@ -117,7 +117,6 @@ export const mesdaGScore: ClassificationDefinition = {
     },
     {
       label: 'Non-cancer',
-      meaning: 'Non-cancer',
       group: '判定',
       severity: 'none',
       rows: [
@@ -133,7 +132,6 @@ export const mesdaGScore: ClassificationDefinition = {
     },
     {
       label: 'Irregular MV and/or MS within DL',
-      meaning: 'EGC',
       group: '判定',
       severity: 'severe',
       rows: [

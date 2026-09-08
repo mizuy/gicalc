@@ -61,29 +61,29 @@ export const kudoTsurutaScore: ClassificationDefinition = {
   entries: [
     {
       label: 'Type I',
-      meaning: 'Normal / inflammatory',
+      meaning: 'Round pit',
       group: '非腫瘍',
       severity: 'none',
       rows: [
         { heading: 'Pit', text: 'Round pit (normal pit); round and regular' },
         { heading: 'Histology', text: 'Normal glands or inflammatory mucosa' },
       ],
-      figures: [userSchematicCrop('type-i', 'Type I', 'Normal / inflammatory')],
+      figures: [userSchematicCrop('type-i', 'Type I', 'Round pit')],
     },
     {
       label: 'Type II',
-      meaning: 'Hyperplastic',
+      meaning: 'Asteroid pit',
       group: '非腫瘍',
       severity: 'none',
       rows: [
         { heading: 'Pit', text: 'Asteroid pit; star-shaped or onion-like, larger than normal' },
         { heading: 'Histology', text: 'Hyperplastic polyp' },
       ],
-      figures: [userSchematicCrop('type-ii', 'Type II', 'Hyperplastic')],
+      figures: [userSchematicCrop('type-ii', 'Type II', 'Asteroid pit')],
     },
     {
       label: 'Type IIIs',
-      meaning: 'Adenoma / HGD / intramucosal ca',
+      meaning: 'Small tubular pits',
       group: '腺腫',
       severity: 'moderate',
       rows: [
@@ -100,11 +100,11 @@ export const kudoTsurutaScore: ClassificationDefinition = {
           text: 'Adenoma, high-grade dysplasia, or intramucosal cancer (de novo precursor)',
         },
       ],
-      figures: [userSchematicCrop('type-iiis', 'Type IIIs', 'Adenoma / HGD / intramucosal ca')],
+      figures: [userSchematicCrop('type-iiis', 'Type IIIs', 'Small tubular pits')],
     },
     {
       label: 'Type IIIL',
-      meaning: 'Tubular adenoma',
+      meaning: 'Large tubular pits',
       group: '腺腫',
       severity: 'mild',
       rows: [
@@ -115,22 +115,22 @@ export const kudoTsurutaScore: ClassificationDefinition = {
         { heading: 'Note', text: 'L stands for long or large. Typical of polypoid tubular adenoma.' },
         { heading: 'Histology', text: 'Tubular adenoma' },
       ],
-      figures: [userSchematicCrop('type-iiil', 'Type IIIL', 'Tubular adenoma')],
+      figures: [userSchematicCrop('type-iiil', 'Type IIIL', 'Large tubular pits')],
     },
     {
       label: 'Type IV',
-      meaning: 'Tubulovillous adenoma',
+      meaning: 'Gyrus-like / dendritic pit',
       group: '腺腫',
       severity: 'mild',
       rows: [
         { heading: 'Pit', text: 'Dendritic or gyrus-like pit; branch-like' },
         { heading: 'Histology', text: 'Tubulovillous or villous adenoma; may include intramucosal cancer' },
       ],
-      figures: [userSchematicCrop('type-iv', 'Type IV', 'Tubulovillous adenoma')],
+      figures: [userSchematicCrop('type-iv', 'Type IV', 'Gyrus-like / dendritic pit')],
     },
     {
       label: 'Type VI',
-      meaning: 'Intramucosal / superficial SM ca',
+      meaning: 'Irregular pits',
       group: '癌',
       severity: 'moderate',
       rows: [
@@ -141,11 +141,11 @@ export const kudoTsurutaScore: ClassificationDefinition = {
         { heading: 'Note', text: 'I stands for irregular (structural atypism).' },
         { heading: 'Histology', text: 'Intramucosal cancer or superficial submucosal invasive cancer' },
       ],
-      figures: [userSchematicCrop('type-vi', 'Type VI', 'Intramucosal / superficial SM ca')],
+      figures: [userSchematicCrop('type-vi', 'Type VI', 'Irregular pits')],
     },
     {
       label: 'Type VN',
-      meaning: 'Deep SM cancer',
+      meaning: 'Non-structure',
       group: '癌',
       severity: 'severe',
       rows: [
@@ -156,7 +156,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
         },
         { heading: 'Histology', text: 'Deep submucosal invasive cancer' },
       ],
-      figures: [userSchematicCrop('type-vn', 'Type VN', 'Deep SM cancer')],
+      figures: [userSchematicCrop('type-vn', 'Type VN', 'Non-structure')],
     },
   ],
 };

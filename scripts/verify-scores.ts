@@ -1199,7 +1199,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     jnet.entries.map((entry) => entry.label),
     ['Type 1', 'Type 2A', 'Type 2B', 'Type 3'],
   );
-  assert.equal(jnet.entries[1]?.meaning, 'Low-grade intramucosal neoplasia');
+  assert.equal(jnet.entries[1]?.meaning, 'Regular vessels and surface');
   assert.match(jnet.originalLead ?? '', /vessel and surface pattern/);
   assert.match(jnet.entries[0]?.rows.find((row) => row.heading === '*1')?.text ?? '', /caliber/);
 
@@ -1209,7 +1209,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     kudo.entries.map((entry) => entry.label),
     ['Type I', 'Type II', 'Type IIIs', 'Type IIIL', 'Type IV', 'Type VI', 'Type VN'],
   );
-  assert.equal(kudo.entries[5]?.meaning, 'Intramucosal / superficial SM ca');
+  assert.equal(kudo.entries[5]?.meaning, 'Irregular pits');
   assert.match(kudo.originalLead ?? '', /Type V was later subdivided/);
   assert.match(kudo.entries[2]?.rows.find((row) => row.heading === 'Note')?.text ?? '', /small or short/);
 
@@ -1233,6 +1233,10 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     ['EC1a', 'EC1b', 'EC2', 'EC3a', 'EC3b', 'EC-V1', 'EC-V2', 'EC-V3', 'Observation'],
   );
   assert.equal(colorectalEc.developedInJapan, true);
+  assert.deepEqual(
+    colorectalEc.entries.slice(0, 5).map((entry) => entry.meaning),
+    ['Roundish lumens', 'Serrated lumens', 'Slit-like lumens', 'Irregular lumens', 'Unclear lumens'],
+  );
   assert.match(colorectalEc.originalLead ?? '', /EC-V1/);
   assert.match(colorectalEc.originalLead ?? '', /methylene blue/);
   assert.equal(colorectalEc.pubmed, KUDO_EC_2011_PUBMED);
@@ -1243,7 +1247,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     jes.entries.map((entry) => entry.label),
     ['Type A', 'Type B1', 'Type B2', 'Type B3', 'AVA'],
   );
-  assert.equal(jes.entries[2]?.meaning, 'T1a-MM or T1b-SM1');
+  assert.equal(jes.entries[2]?.meaning, 'Non-loop, elongated');
   assert.match(jes.originalLead ?? '', /three or fewer factors/);
   assert.equal(jes.entries[2]?.comment, '食道 SM1 は ≤200 μm。');
 
@@ -1335,8 +1339,8 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
     nice.entries.map((entry) => entry.label),
     ['Type 1', 'Type 2', 'Type 3'],
   );
-  assert.equal(nice.entries[0]?.meaning, 'Hyperplastic');
-  assert.equal(nice.entries[2]?.meaning, 'Deep SM invasive cancer');
+  assert.equal(nice.entries[0]?.meaning, 'Lacy or no vessels; dark or white spots');
+  assert.equal(nice.entries[2]?.meaning, 'Disrupted vessels; amorphous surface');
   assert.match(nice.originalLead ?? '', /without optical \(zoom\) magnification/);
   assert.match(nice.entries[1]?.rows.find((row) => row.heading === '***')?.text ?? '', /Vienna classification/);
   assert.doesNotMatch(nice.entries.map((entry) => entry.label).join(' '), /2A|2B/);
@@ -1359,8 +1363,8 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
       'Absent MS',
     ],
   );
-  assert.equal(mesda.entries[2]?.meaning, 'Non-cancer');
-  assert.equal(mesda.entries[3]?.meaning, 'EGC');
+  assert.equal(mesda.entries[2]?.meaning, undefined);
+  assert.equal(mesda.entries[3]?.meaning, undefined);
   assert.match(mesda.originalLead ?? '', /demarcation line \(DL\)/);
   assert.match(
     mesda.entries[3]?.rows.find((row) => row.heading === 'Criteria')?.text ?? '',
@@ -1587,6 +1591,24 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
 
   const apcs = getScoreById('apcs');
   assert.ok(apcs && !isClassification(apcs));
+});
+
+test('画像系分類のカード要約は予測診断ではなく所見を書く', () => {
+  const predicted =
+    /hyperplastic polyp|intramucosal neoplasia|invasive cancer|T1a-|T1b-|shallow SM|deep SM|adenoma to|normal mucosa|massively invasive|^No invasion$|^Hyperplastic$|^Adenoma$|^SSA\/P$|^EGC$|^Non-cancer$/i;
+  for (const id of ['jnet', 'nice', 'jes', 'kudo-tsuruta', 'colorectal-ec', 'wasp', 'mesda-g']) {
+    const score = getScoreById(id);
+    assert.ok(score && isClassification(score), id);
+    for (const entry of score.entries) {
+      if (entry.meaning) {
+        assert.doesNotMatch(entry.meaning, predicted, `${id} ${entry.label}: ${entry.meaning}`);
+      }
+    }
+  }
+  assert.equal(getScoreById('kudo-tsuruta')?.entries[0]?.meaning, 'Round pit');
+  assert.equal(getScoreById('colorectal-ec')?.entries[0]?.meaning, 'Roundish lumens');
+  assert.equal(getScoreById('jnet')?.entries[0]?.meaning, 'Invisible vessels');
+  assert.equal(getScoreById('wasp')?.entries.find((entry) => entry.label.startsWith('Type 1 +'))?.meaning, undefined);
 });
 
 test('分類は原著の図を出典付きで持つ', () => {
@@ -2429,18 +2451,30 @@ test('WASP / MESDA-G / Toya / Kikuchi ME-NBI のフローは選択すると診�
 
   const waspHp = walkAlgorithmFlow(wasp.flow, { nice: 'type1', ssl1: 'lt2' });
   assert.equal(waspHp.result?.entryLabel, 'Type 1 + <2 SSL features');
-  assert.equal(findEntryForResult(wasp.entries, waspHp.result)?.meaning, 'Hyperplastic polyp');
+  assert.match(
+    findEntryForResult(wasp.entries, waspHp.result)?.rows.find((row) => row.heading === 'Diagnosis')?.text ?? '',
+    /Hyperplastic polyp/,
+  );
 
   const waspSsap = walkAlgorithmFlow(wasp.flow, { nice: 'type1', ssl1: 'gte2' });
   assert.equal(waspSsap.result?.entryLabel, 'Type 1 + ≥2 SSL features');
-  assert.equal(findEntryForResult(wasp.entries, waspSsap.result)?.meaning, 'SSA/P');
+  assert.match(
+    findEntryForResult(wasp.entries, waspSsap.result)?.rows.find((row) => row.heading === 'Diagnosis')?.text ?? '',
+    /SSA\/P/,
+  );
 
   const waspAdenoma = walkAlgorithmFlow(wasp.flow, { nice: 'type2', ssl2: 'lt2' });
   assert.equal(waspAdenoma.result?.entryLabel, 'Type 2 + <2 SSL features');
-  assert.equal(findEntryForResult(wasp.entries, waspAdenoma.result)?.meaning, 'Adenoma');
+  assert.match(
+    findEntryForResult(wasp.entries, waspAdenoma.result)?.rows.find((row) => row.heading === 'Diagnosis')?.text ?? '',
+    /Adenoma/,
+  );
 
   const waspSsap2 = walkAlgorithmFlow(wasp.flow, { nice: 'type2', ssl2: 'gte2' });
-  assert.equal(findEntryForResult(wasp.entries, waspSsap2.result)?.meaning, 'SSA/P');
+  assert.match(
+    findEntryForResult(wasp.entries, waspSsap2.result)?.rows.find((row) => row.heading === 'Diagnosis')?.text ?? '',
+    /SSA\/P/,
+  );
 
   const afterNice = walkAlgorithmFlow(wasp.flow, { nice: 'type1' });
   assert.equal(afterNice.currentStep?.id, 'ssl1');
@@ -2452,7 +2486,7 @@ test('WASP / MESDA-G / Toya / Kikuchi ME-NBI のフローは選択すると診�
 
   const mesdaNoncancer = walkAlgorithmFlow(mesda.flow, { dl: 'absent' });
   assert.equal(mesdaNoncancer.result?.entryLabel, 'Non-cancer');
-  assert.equal(findEntryForResult(mesda.entries, mesdaNoncancer.result)?.meaning, 'Non-cancer');
+  assert.equal(findEntryForResult(mesda.entries, mesdaNoncancer.result)?.meaning, undefined);
   assert.equal(mesdaNoncancer.currentStep, null);
 
   const afterDl = walkAlgorithmFlow(mesda.flow, { dl: 'present' });
@@ -2460,11 +2494,11 @@ test('WASP / MESDA-G / Toya / Kikuchi ME-NBI のフローは選択すると診�
   assert.equal(afterDl.result, null);
 
   const mesdaEgc = walkAlgorithmFlow(mesda.flow, { dl: 'present', mvms: 'irregular' });
-  assert.equal(findEntryForResult(mesda.entries, mesdaEgc.result)?.meaning, 'EGC');
+  assert.equal(findEntryForResult(mesda.entries, mesdaEgc.result)?.label, 'Irregular MV and/or MS within DL');
 
   const mesdaRegular = walkAlgorithmFlow(mesda.flow, { dl: 'present', mvms: 'regular' });
   assert.equal(mesdaRegular.result?.entryLabel, 'Non-cancer');
-  assert.equal(findEntryForResult(mesda.entries, mesdaRegular.result)?.meaning, 'Non-cancer');
+  assert.equal(findEntryForResult(mesda.entries, mesdaRegular.result)?.meaning, undefined);
 
   const dropped = applyAlgorithmAnswer(mesda.flow, { dl: 'present', mvms: 'irregular' }, 'dl', 'absent');
   assert.deepEqual(dropped, { dl: 'absent' });
@@ -2619,7 +2653,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.42');
+  assert.equal(pkg.version, '1.0.43');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {

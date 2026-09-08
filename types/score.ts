@@ -163,7 +163,8 @@ export type ClassificationRow = {
 
 export type ClassificationEntry = {
   label: string;
-  meaning: string;
+  /** 型の意図・形態。予測診断は書かない。短い原著定義がなければ省略してバッジを出さない */
+  meaning?: string;
   /** 原著の定義（英語または原著どおりの文言） */
   rows: ClassificationRow[];
   /** 必要なときだけ付ける日本語コメント */

@@ -73,7 +73,7 @@ export const niceScore: ClassificationDefinition = {
   entries: [
     {
       label: 'Type 1',
-      meaning: 'Hyperplastic',
+      meaning: 'Lacy or no vessels; dark or white spots',
       severity: 'none',
       figures: [
         hamadaCrop({
@@ -101,7 +101,7 @@ export const niceScore: ClassificationDefinition = {
     },
     {
       label: 'Type 2',
-      meaning: 'Adenoma to superficial SM ca',
+      meaning: 'Brown vessels around white structures',
       severity: 'mild',
       figures: [
         hamadaCrop({
@@ -132,7 +132,7 @@ export const niceScore: ClassificationDefinition = {
     },
     {
       label: 'Type 3',
-      meaning: 'Deep SM invasive cancer',
+      meaning: 'Disrupted vessels; amorphous surface',
       severity: 'severe',
       figures: [
         hamadaCrop({

@@ -54,9 +54,11 @@ function EntryCard({
       ]}>
       <View style={styles.cardHeader}>
         <Text style={styles.entryLabel}>{entry.label}</Text>
-        <View style={[styles.badge, { backgroundColor: accent }]}>
-          <Text style={styles.badgeText}>{entry.meaning}</Text>
-        </View>
+        {entry.meaning ? (
+          <View style={[styles.badge, { backgroundColor: accent }]}>
+            <Text style={styles.badgeText}>{entry.meaning}</Text>
+          </View>
+        ) : null}
       </View>
       {entry.figures?.length ? (
         <View style={styles.entryFigures}>
@@ -151,9 +153,15 @@ export function AlgorithmFlowScreen({ score }: Props) {
         <Text style={[styles.stepKicker, { color: tint }]}>{t.algorithmDiagnosis}</Text>
         {diagnosis ? (
           <>
-            <View style={[styles.diagnosisBadge, { backgroundColor: SeverityColors[diagnosis.severity ?? 'none'] }]}>
-              <Text style={styles.badgeText}>{diagnosis.meaning}</Text>
-            </View>
+            {diagnosis.meaning ||
+            diagnosis.rows.find((row) => row.heading === 'Diagnosis')?.text ? (
+              <View style={[styles.diagnosisBadge, { backgroundColor: SeverityColors[diagnosis.severity ?? 'none'] }]}>
+                <Text style={styles.badgeText}>
+                  {diagnosis.meaning ??
+                    diagnosis.rows.find((row) => row.heading === 'Diagnosis')?.text}
+                </Text>
+              </View>
+            ) : null}
             <Text style={[styles.diagnosisPath, { color: textSecondary }]}>{diagnosis.label}</Text>
             {diagnosis.rows.map((row) => (
               <View key={`${diagnosis.label}-${row.heading}`} style={styles.row}>

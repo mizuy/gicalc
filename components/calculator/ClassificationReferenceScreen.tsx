@@ -60,9 +60,11 @@ export function ClassificationReferenceScreen({ score }: Props) {
                 style={[styles.card, { backgroundColor: surface, borderColor: border, borderLeftColor: accent }]}>
                 <View style={styles.cardHeader}>
                   <Text style={styles.entryLabel}>{entry.label}</Text>
-                  <View style={[styles.badge, { backgroundColor: accent }]}>
-                    <Text style={styles.badgeText}>{entry.meaning}</Text>
-                  </View>
+                  {entry.meaning ? (
+                    <View style={[styles.badge, { backgroundColor: accent }]}>
+                      <Text style={styles.badgeText}>{entry.meaning}</Text>
+                    </View>
+                  ) : null}
                 </View>
                 {entry.figures?.length ? (
                   <View style={styles.entryFigures}>

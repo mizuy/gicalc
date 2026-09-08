@@ -84,7 +84,7 @@ export const colorectalEcScore: ClassificationDefinition = {
   entries: [
     {
       label: 'EC1a',
-      meaning: 'Normal mucosa',
+      meaning: 'Roundish lumens',
       group: 'EC（染色）',
       severity: 'none',
       figures: [
@@ -110,7 +110,7 @@ export const colorectalEcScore: ClassificationDefinition = {
     },
     {
       label: 'EC1b',
-      meaning: 'Hyperplastic polyp',
+      meaning: 'Serrated lumens',
       group: 'EC（染色）',
       severity: 'none',
       figures: [
@@ -137,7 +137,7 @@ export const colorectalEcScore: ClassificationDefinition = {
     },
     {
       label: 'EC2',
-      meaning: 'Adenoma to intramucosal cancer',
+      meaning: 'Slit-like lumens',
       group: 'EC（染色）',
       severity: 'mild',
       figures: [
@@ -167,7 +167,7 @@ export const colorectalEcScore: ClassificationDefinition = {
     },
     {
       label: 'EC3a',
-      meaning: 'Intramucosal to slightly invasive SM',
+      meaning: 'Irregular lumens',
       group: 'EC（染色）',
       severity: 'moderate',
       figures: [
@@ -193,7 +193,7 @@ export const colorectalEcScore: ClassificationDefinition = {
     },
     {
       label: 'EC3b',
-      meaning: 'Massively invasive SM or deeper',
+      meaning: 'Unclear lumens',
       group: 'EC（染色）',
       severity: 'severe',
       figures: [

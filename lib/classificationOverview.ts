@@ -3,7 +3,7 @@ import type {
   ClassificationHierarchyNode,
 } from '../types/score';
 
-function entryLabel(label: string, meaning: string): string {
+function entryLabel(label: string, meaning?: string): string {
   if (!meaning || meaning === label) return label;
   return `${label} · ${meaning}`;
 }

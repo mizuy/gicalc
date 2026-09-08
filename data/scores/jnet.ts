@@ -49,7 +49,7 @@ export const jnetScore: ClassificationDefinition = {
   entries: [
     {
       label: 'Type 1',
-      meaning: 'Hyperplastic polyp / SSP',
+      meaning: 'Invisible vessels',
       severity: 'none',
       rows: [
         { heading: 'Vessel', text: 'Invisible' },
@@ -63,7 +63,7 @@ export const jnetScore: ClassificationDefinition = {
     },
     {
       label: 'Type 2A',
-      meaning: 'Low-grade intramucosal neoplasia',
+      meaning: 'Regular vessels and surface',
       severity: 'mild',
       rows: [
         { heading: 'Vessel', text: 'Regular caliber; regular distribution (meshed/spiral pattern)' },
@@ -77,7 +77,7 @@ export const jnetScore: ClassificationDefinition = {
     },
     {
       label: 'Type 2B',
-      meaning: 'HGIEN / shallow SM invasive cancer',
+      meaning: 'Irregular vessels or surface',
       severity: 'moderate',
       rows: [
         { heading: 'Vessel', text: 'Variable caliber; irregular distribution' },
@@ -88,7 +88,7 @@ export const jnetScore: ClassificationDefinition = {
     },
     {
       label: 'Type 3',
-      meaning: 'Deep SM invasive cancer',
+      meaning: 'Loose vessels; amorphous surface',
       severity: 'severe',
       rows: [
         { heading: 'Vessel', text: 'Loose vessel areas; interruption of thick vessels' },

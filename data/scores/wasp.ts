@@ -115,7 +115,6 @@ export const waspScore: ClassificationDefinition = {
     },
     {
       label: 'Type 1 + <2 SSL features',
-      meaning: 'Hyperplastic polyp',
       group: '判定',
       severity: 'none',
       rows: [
@@ -125,7 +124,6 @@ export const waspScore: ClassificationDefinition = {
     },
     {
       label: 'Type 1 + ≥2 SSL features',
-      meaning: 'SSA/P',
       group: '判定',
       severity: 'moderate',
       rows: [
@@ -135,7 +133,6 @@ export const waspScore: ClassificationDefinition = {
     },
     {
       label: 'Type 2 + <2 SSL features',
-      meaning: 'Adenoma',
       group: '判定',
       severity: 'mild',
       rows: [
@@ -145,7 +142,6 @@ export const waspScore: ClassificationDefinition = {
     },
     {
       label: 'Type 2 + ≥2 SSL features',
-      meaning: 'SSA/P',
       group: '判定',
       severity: 'moderate',
       rows: [
