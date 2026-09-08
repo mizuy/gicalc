@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Platform, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
 import { useLocale } from '@/lib/i18n';
@@ -9,10 +9,11 @@ import {
   isPwaUpdateDismissed,
   reloadPwaApp,
   subscribePwaUpdate,
+  type PwaUpdateState,
 } from '@/lib/web/pwaUpdateService';
 
 export function PwaUpdateBanner() {
-  const [available, setAvailable] = useState(false);
+  const [updateState, setUpdateState] = useState<PwaUpdateState>('none');
   const [dismissed, setDismissed] = useState(false);
 
   const surface = useThemeColor({}, 'surface');
@@ -26,9 +27,9 @@ export function PwaUpdateBanner() {
 
     setDismissed(isPwaUpdateDismissed());
     const cleanupService = initPwaUpdateService();
-    const unsubscribe = subscribePwaUpdate((isAvailable) => {
-      setAvailable(isAvailable);
-      if (isAvailable) {
+    const unsubscribe = subscribePwaUpdate((state) => {
+      setUpdateState(state);
+      if (state !== 'none') {
         setDismissed(isPwaUpdateDismissed());
       }
     });
@@ -39,7 +40,7 @@ export function PwaUpdateBanner() {
     };
   }, []);
 
-  if (Platform.OS !== 'web' || !available || dismissed) {
+  if (Platform.OS !== 'web' || updateState === 'none' || dismissed) {
     return null;
   }
 
@@ -54,14 +55,23 @@ export function PwaUpdateBanner() {
       pointerEvents="box-none"
       style={styles.overlay}>
       <View style={[styles.bar, { backgroundColor: surface, borderBottomColor: border }]}>
-        <Text style={styles.title}>{t.pwa.updateAvailable}</Text>
+        <Text style={styles.title}>
+          {updateState === 'ready' ? t.pwa.updateAvailable : t.pwa.updatePreparing}
+        </Text>
         <View style={styles.actions}>
-          <Pressable
-            accessibilityRole="button"
-            onPress={reloadPwaApp}
-            style={({ pressed }) => [styles.button, { backgroundColor: tint, opacity: pressed ? 0.85 : 1 }]}>
-            <Text style={styles.buttonText}>{t.pwa.reload}</Text>
-          </Pressable>
+          {updateState === 'ready' ? (
+            <Pressable
+              accessibilityRole="button"
+              onPress={reloadPwaApp}
+              style={({ pressed }) => [
+                styles.button,
+                { backgroundColor: tint, opacity: pressed ? 0.85 : 1 },
+              ]}>
+              <Text style={styles.buttonText}>{t.pwa.reload}</Text>
+            </Pressable>
+          ) : (
+            <ActivityIndicator accessibilityLabel={t.pwa.updatePreparing} color={tint} size="small" />
+          )}
           <Pressable
             accessibilityRole="button"
             onPress={later}
