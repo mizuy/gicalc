@@ -22,7 +22,7 @@ export function CitationLink({ label, pubmed, href, style }: Props) {
   const url = href ?? (pubmed ? pubmedUrl(pubmed) : undefined);
 
   if (!url) {
-    return <Text style={[styles.text, { color: textSecondary }, style]}>{label}</Text>;
+    return <Text style={[styles.text, styles.plain, { color: textSecondary }, style]}>{label}</Text>;
   }
 
   if (Platform.OS === 'web') {
@@ -57,5 +57,8 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     marginTop: 4,
     textDecorationLine: 'underline',
+  },
+  plain: {
+    textDecorationLine: 'none',
   },
 });
