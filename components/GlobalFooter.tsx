@@ -62,7 +62,11 @@ export function GlobalFooter() {
 
   const aboutSelected = pathname === '/about' || pathname === '/citations';
   const homeSelected =
-    pathname === '/' || pathname.startsWith('/organ/') || pathname.startsWith('/score/');
+    pathname === '/' ||
+    pathname.startsWith('/organ/') ||
+    pathname.startsWith('/score/') ||
+    pathname === '/atlas' ||
+    pathname.startsWith('/atlas/');
 
   return (
     <View

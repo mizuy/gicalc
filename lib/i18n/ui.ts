@@ -81,6 +81,15 @@ export type UiStrings = {
     disclaimerBody: string;
     disclaimerGuide: string;
   };
+  atlas: {
+    indexTitle: string;
+    indexIntro: string;
+    pageTitle: string;
+    pageIntro: string;
+    open: string;
+    backToScore: string;
+    figureCount: string;
+  };
 };
 
 export const UI: Record<Locale, UiStrings> = {
@@ -208,6 +217,16 @@ export const UI: Record<Locale, UiStrings> = {
       disclaimer: '免責事項',
       disclaimerBody: '本ツールは診断支援用であり、医師の臨床判断を代替するものではありません。',
       disclaimerGuide: 'スコア・ノモグラムの解釈は最新のJSCCR/JGESガイドラインと施設プロトコルに従ってください。',
+    },
+    atlas: {
+      indexTitle: '分類の図鑑',
+      indexIntro:
+        'ホストできる Creative Commons の図が2つ以上ある分類について、メインページで使った1ソース以外の参考図を、切り抜きせず掲載します。',
+      pageTitle: '{name} の図鑑',
+      pageIntro: 'メインの切り抜きに使っていない参考図です。出版年の新しい順に、原図全体を載せています。',
+      open: 'ほかの参考図を見る',
+      backToScore: '分類ページへ戻る',
+      figureCount: '{n} 点の図',
     },
   },
   en: {
@@ -337,6 +356,17 @@ export const UI: Record<Locale, UiStrings> = {
       disclaimerGuide:
         'Interpret scores and nomograms according to current JSCCR/JGES guidelines and local protocols.',
     },
+    atlas: {
+      indexTitle: 'Classification atlas',
+      indexIntro:
+        'For classifications with two or more hostable Creative Commons figures, the remaining figures — everything except the one source used on the main page — are shown here without cropping.',
+      pageTitle: '{name} atlas',
+      pageIntro:
+        'Reference figures that are not the source cropped on the main page, shown in full and ordered by publication year (newest first).',
+      open: 'More reference figures',
+      backToScore: 'Back to the classification',
+      figureCount: '{n} figures',
+    },
   },
 };
 
@@ -346,7 +376,9 @@ UI.ja.about.citationsCcBody +=
   '\n• ITBCC 参考図（Zlobec 2021, Virchows Arch Fig. 1）: CC BY 4.0（Lugli 2017 原著図ではない。BD1–BD3 を切り抜き、研究的 BD0 は除外）' +
   '\n• 工藤–鶴田 pit pattern カード模式図: プロジェクト提供者によるGemini生成SVGを各crop-targetから高解像度化。CC BY 4.0（原著図ではない）' +
   '\n• Paris分類カードの模式図: プロジェクト提供者の自作図を切り抜き。CC BY 4.0（Paris原著図ではない）' +
-  '\n• LST分類カードの模式図: プロジェクト提供者の自作図を切り抜き。CC BY 4.0（LST原著図ではない）';
+  '\n• LST分類カードの模式図: プロジェクト提供者の自作図を切り抜き。CC BY 4.0（LST原著図ではない）' +
+  '\n• JNET teaching 図（Lee 2021, Clin Endosc Fig. 1）: CC BY-NC 4.0（各 Type に下段 NBI を切り抜き。原図は埋め込まずリンク）' +
+  '\n• JNET 図鑑（Le 2024 Medicine Fig. 2 / Ahmed 2024 DEN Open Fig. 1 / Wang 2021 WJGO Fig. 2）: CC BY 4.0 / CC BY 4.0 / CC BY-NC 4.0（切り抜きせず原図全体）';
 
 UI.en.about.citationsCcBody +=
   '\n• Toya ME-CV reference figure (Kumei 2025, DEN Open Fig. 1): CC BY 4.0 (not the Toya 2020 original; four available patterns are cropped)' +
@@ -354,4 +386,6 @@ UI.en.about.citationsCcBody +=
   '\n• ITBCC reference figure (Zlobec 2021, Virchows Arch Fig. 1): CC BY 4.0 (not the Lugli 2017 original; BD1–BD3 are cropped and investigational BD0 is omitted)' +
   '\n• Kudo–Tsuruta pit pattern card schematics: crop targets from a contributor-supplied Gemini-generated SVG, rasterized at high resolution. CC BY 4.0 (not figures from the original)' +
   '\n• Paris card schematics: cropped from a contributor-created diagram. CC BY 4.0 (not figures from the Paris original)' +
-  '\n• LST card schematics: cropped from a contributor-created diagram. CC BY 4.0 (not figures from the LST original)';
+  '\n• LST card schematics: cropped from a contributor-created diagram. CC BY 4.0 (not figures from the LST original)' +
+  '\n• JNET teaching figure (Lee 2021, Clin Endosc Fig. 1): CC BY-NC 4.0 (crops from the lower NBI row on each Type; the plate is not embedded — link only)' +
+  '\n• JNET atlas (Le 2024 Medicine Fig. 2 / Ahmed 2024 DEN Open Fig. 1 / Wang 2021 WJGO Fig. 2): CC BY 4.0 / CC BY 4.0 / CC BY-NC 4.0 (full originals, no cropping)';

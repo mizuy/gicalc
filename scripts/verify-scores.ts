@@ -76,6 +76,15 @@ import { HILL_1996_PUBMED } from '../data/scores/hill';
 import { LA_1999_PUBMED, LA_JUNG_2025_PUBMED } from '../data/scores/la';
 import { SAURIN_2004_PUBMED } from '../data/scores/modified-spigelman';
 import { NICE_2013_PUBMED, NICE_HAMADA_2021_PUBMED } from '../data/scores/nice';
+import { JNET_2016_PUBMED, JNET_LEE_2021_PUBMED } from '../data/scores/jnet';
+import {
+  ATLAS_MIN_FIGURES,
+  getAtlasById,
+  getAtlasRouteIds,
+  hasAtlas,
+  listAtlases,
+} from '../data/atlas';
+import { compareAtlasFigures } from '../data/atlas/types';
 import { BBPS_SCIREP_2024_PUBMED } from '../data/scores/bbps';
 import { PARIS_2003_PUBMED, PARIS_2005_PUBMED } from '../data/scores/paris';
 import { PRAGUE_2006_PUBMED } from '../data/scores/prague';
@@ -1627,19 +1636,26 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(jnet.figures?.[0]?.href ?? '', /den12644-fig-0007/);
   assert.equal(jnet.figures?.[0]?.hrefLabel, 'Fig. 7');
   assert.match(jnet.figures?.[0]?.caption ?? '', /Fig\. 7/);
-  assert.equal(jnet.pubmed, '26927367');
-  assert.equal(jnet.figures?.[0]?.pubmed, '26927367');
+  assert.equal(jnet.pubmed, JNET_2016_PUBMED);
+  assert.equal(jnet.figures?.[0]?.pubmed, JNET_2016_PUBMED);
   assert.equal(jnet.figures?.[0]?.license, undefined);
   assert.match(jnet.figures?.[0]?.note ?? '', /CC ではない/);
-  assert.match(jnet.figures?.[1]?.src ?? '', /jnet-ahmed2024-fig1\.webp/);
+  assert.equal(jnet.figures?.[1]?.src, undefined);
   assert.equal(jnet.figures?.[1]?.figureKind, 'secondary');
-  assert.equal(jnet.figures?.[1]?.sourceShort, 'Ahmed 2024');
-  assert.equal(jnet.figures?.[1]?.license, 'CC BY 4.0');
-  assert.equal(jnet.figures?.[1]?.pubmed, '38023663');
-  assert.match(jnet.figures?.[1]?.note ?? '', /原著.*ではなく/);
+  assert.equal(jnet.figures?.[1]?.sourceShort, 'Lee 2021');
+  assert.equal(jnet.figures?.[1]?.license, 'CC BY-NC 4.0');
+  assert.equal(jnet.figures?.[1]?.pubmed, JNET_LEE_2021_PUBMED);
+  assert.match(jnet.figures?.[1]?.href ?? '', /f1-ce-2020-257/);
+  assert.match(jnet.figures?.[1]?.note ?? '', /埋め込まず/);
+  assert.match(jnet.figures?.[1]?.note ?? '', /Sano 2016/);
+  assert.equal(jnet.entries[0]?.figures?.[0]?.sourceShort, 'Lee 2021');
+  assert.match(jnet.entries[0]?.figures?.[0]?.src ?? '', /jnet-lee2021-type1/);
+  assert.match(jnet.entries[1]?.figures?.[0]?.src ?? '', /jnet-lee2021-type2a/);
+  assert.match(jnet.entries[2]?.figures?.[0]?.src ?? '', /jnet-lee2021-type2b/);
+  assert.match(jnet.entries[3]?.figures?.[0]?.src ?? '', /jnet-lee2021-type3/);
+  assert.match(jnet.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
 
   const secondaryReferenceFigures = [
-    { id: 'jnet', src: 'jnet-ahmed2024-fig1.webp', license: 'CC BY 4.0' },
     { id: 'esd-fibrosis', src: 'esd-fibrosis-inada2013-fig1.webp', license: 'CC BY 3.0' },
     { id: 'prague', src: 'prague-oyanagi2022-fig5.webp', license: 'CC BY 4.0' },
     { id: 'sarin', src: 'sarin-acevedo2019-fig1.webp', license: 'CC BY-NC 4.0' },
@@ -2659,7 +2675,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.44');
+  assert.equal(pkg.version, '1.0.45');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -3040,6 +3056,58 @@ test('全分類ページは先頭に全分類アイテムの全体像を表示�
   assert.match(classificationOverviewNodes(englishJnet)[0]?.label ?? '', /Type 1/);
   assert.equal(UI.ja.classificationOverview, '分類の全体像');
   assert.equal(UI.en.classificationOverview, 'Classification overview');
+});
+
+test('アトラスはホストできる CC 図が2つ以上ある分類だけ公開する', () => {
+  assert.equal(ATLAS_MIN_FIGURES, 2);
+  assert.deepEqual(getAtlasRouteIds(), ['jnet']);
+  assert.equal(hasAtlas('jnet'), true);
+  assert.equal(hasAtlas('nice'), false);
+  assert.equal(getAtlasById('nice'), undefined);
+
+  const jnetAtlas = getAtlasById('jnet');
+  assert.ok(jnetAtlas);
+  assert.equal(jnetAtlas.figures.length, 3);
+  assert.deepEqual(
+    jnetAtlas.figures.map((figure) => figure.sourceShort),
+    ['Le 2024', 'Ahmed 2024', 'Wang 2021'],
+  );
+  for (const figure of jnetAtlas.figures) {
+    assert.ok(figure.src, figure.sourceShort);
+    assert.ok(hostedFigureExists(figure.src!), figure.src);
+    assert.doesNotMatch(figure.src ?? '', /lee2021/);
+    assert.match(figure.note, /切り抜きせず/);
+    assert.ok(figure.license);
+    assert.ok(figure.year);
+  }
+  assert.equal(jnetAtlas.figures[0]?.year, 2024);
+  assert.equal(jnetAtlas.figures[0]?.month, 7);
+  assert.equal(jnetAtlas.figures[1]?.month, 4);
+  assert.equal(jnetAtlas.figures[2]?.year, 2021);
+
+  const sorted = [...jnetAtlas.figures].sort(compareAtlasFigures);
+  assert.deepEqual(
+    sorted.map((figure) => figure.sourceShort),
+    jnetAtlas.figures.map((figure) => figure.sourceShort),
+  );
+
+  const published = listAtlases();
+  assert.equal(published.length, 1);
+  assert.equal(published[0]?.id, 'jnet');
+
+  const footer = readFileSync(join(process.cwd(), 'components/GlobalFooter.tsx'), 'utf8');
+  assert.match(footer, /pathname === '\/atlas'/);
+  assert.match(footer, /pathname.startsWith\('\/atlas\/'\)/);
+
+  const shell = readFileSync(join(process.cwd(), 'components/calculator/ScorePageShell.tsx'), 'utf8');
+  assert.match(shell, /hasAtlas\(score\.id\)/);
+  assert.match(shell, /t\.atlas\.open/);
+
+  assert.equal(UI.ja.atlas.open, 'ほかの参考図を見る');
+  assert.equal(UI.en.atlas.open, 'More reference figures');
+  assert.match(UI.ja.about.citationsCcBody, /Lee 2021/);
+  assert.match(UI.ja.about.citationsCcBody, /図鑑/);
+  assert.match(UI.en.about.citationsCcBody, /JNET atlas/);
 });
 
 test('切り抜きがある分類は原図を埋め込まずリンクだけにする', () => {

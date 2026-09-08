@@ -39,7 +39,7 @@
 | 大腸 | 治癒切除判定（JGES/JSCCR） | 大腸 ESD 後・内視鏡的治癒切除 | 治癒切除 / 追加腸切除 / VM1 |
 | 大腸 | NICE（Hayashi 2013） | 大腸 NBI（非拡大） | 定義一覧（Hamada 2021 CC 図 + Hayashi 原著リンク） |
 | 大腸 | WASP（IJspeert 2016） | HP / SSL / 腺腫（<10 mm） | 定義一覧（文言。図は原著へリンク） |
-| 大腸 | JNET（Sano 2016） | NBI 拡大 | 定義一覧（原著リンク + Ahmed 2024 参考図） |
+| 大腸 | JNET（Sano 2016） | NBI 拡大 | 定義一覧（Lee 2021 切り抜き + 原著リンク。ほかの CC 図は `/atlas/jnet`） |
 | 大腸 | T1 Nomogram（Kajiwara 2023） | 大腸T1癌の LNM 確率 | 確率（%）と nomogram 点 |
 | 大腸 | e-T2 Score（Koyama 2022） | 大腸 T1b vs T2 の内視鏡鑑別 | 点数 0–11 |
 | 大腸 | BBPS（Lai 2009） | 腸管前処置（洗浄後・3区域） | 点数 0–9（Kim 2024 CC 図例） |
@@ -114,7 +114,8 @@ npm run preview:pages
 - BBPS 区域スコア例（Kim 2024, *Sci Rep* Fig. 1）: **CC BY 4.0**（Lai 2009 原著 Fig. 1 は Elsevier 著作権）
 - Aronchick（2000, *GIE*）: Crossref 上の Version of Record は **CC BY-NC-ND 4.0**（遅延公開）
 - Kakushima WLI スコア（Kakushima 2017, *Endosc Int Open* Table 2）: **CC BY-NC-ND 4.0**（表は HTML のため埋め込まず Table 2 へリンク）
-- JNET 参考図（Ahmed 2024, *DEN Open* Fig. 1）: **CC BY 4.0**（Sano 2016 原著図ではない）
+- JNET teaching 図（Lee 2021, *Clin Endosc* Fig. 1）: **CC BY-NC 4.0**（各 Type に下段 NBI を切り抜き。原図は埋め込まずリンク）
+- JNET 図鑑（Le 2024 *Medicine* Fig. 2 / Ahmed 2024 *DEN Open* Fig. 1 / Wang 2021 *WJGO* Fig. 2）: **CC BY 4.0** / **CC BY 4.0** / **CC BY-NC 4.0**（切り抜きせず原図全体）
 - ESD-F 参考図（Inada 2013, *Gastroenterol Res Pract* Fig. 1）: **CC BY 3.0**（Matsumoto 2010 原著図ではない）
 - Prague 参考図（Oyanagi 2022, *DEN Open* Fig. 5）: **CC BY 4.0**（Sharma 2006 原著図ではない）
 - Sarin 参考図（Acevedo 2019, *World J Hepatol* Fig. 1）: **CC BY-NC 4.0**（Sarin 1992 原著図ではない）

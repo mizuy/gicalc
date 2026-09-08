@@ -1,5 +1,6 @@
+import { Link, type Href } from 'expo-router';
 import { type ReactNode } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { CitationLink } from '@/components/calculator/CitationLink';
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
@@ -8,6 +9,7 @@ import { RelatedScoresPanel } from '@/components/calculator/RelatedScoresPanel';
 import { ToolKindBadge } from '@/components/calculator/ToolKindBadge';
 import { ReportIssueButton } from '@/components/ReportIssueButton';
 import { Text, useThemeColor } from '@/components/Themed';
+import { hasAtlas } from '@/data/atlas';
 import { useLocale } from '@/lib/i18n';
 import {
   figureKey,
@@ -91,6 +93,20 @@ function ScorePageFooter({ score }: { score: ScoreDefinition }) {
       {pageLevelFigures(score).map((figure) => (
         <ClassificationFigure key={figureKey(figure)} figure={figure} />
       ))}
+
+      {hasAtlas(score.id) ? (
+        <Link href={`/atlas/${score.id}` as Href} asChild>
+          <Pressable
+            accessibilityRole="link"
+            style={({ pressed }) => [
+              styles.atlasLink,
+              { borderColor: tint, opacity: pressed ? 0.72 : 1 },
+            ]}>
+            <Text style={[styles.atlasLinkText, { color: tint }]}>{t.atlas.open}</Text>
+            <Text style={[styles.atlasLinkChevron, { color: tint }]}>→</Text>
+          </Pressable>
+        </Link>
+      ) : null}
 
       {hasSources ? (
         <View style={styles.reference}>
@@ -214,6 +230,25 @@ const styles = StyleSheet.create({
   },
   related: {
     marginBottom: 0,
+  },
+  atlasLink: {
+    alignItems: 'center',
+    borderRadius: 12,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+  },
+  atlasLinkText: {
+    flex: 1,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  atlasLinkChevron: {
+    fontSize: 16,
+    fontWeight: '700',
+    marginLeft: 8,
   },
   footnote: {
     fontSize: 12,
