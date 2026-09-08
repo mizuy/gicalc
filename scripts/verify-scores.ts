@@ -1648,7 +1648,7 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(kudo.figures?.[0]?.license, undefined);
   assert.match(kudo.figures?.[0]?.note ?? '', /Tanaka 2004/);
   assert.match(kudo.figures?.[0]?.note ?? '', /CC ではない/);
-  assert.equal(kudo.figures?.[1]?.href, '/figures/pit-pattern-user2026-original.svg');
+  assert.equal(kudo.figures?.[1]?.href, '/figures/pit-pattern-gemini2.svg');
   assert.equal(kudo.figures?.[1]?.figureKind, 'gicalc');
   assert.equal(kudo.figures?.[1]?.sourceShort, 'GI Calc');
   assert.equal(kudo.figures?.[1]?.license, 'CC BY 4.0');
@@ -1659,11 +1659,11 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(kudoCrops.every((figure) => figure.sourceShort === 'GI Calc'), true);
   assert.equal(kudoCrops.every((figure) => figure.license === 'CC BY 4.0'), true);
   assert.equal(
-    kudoCrops.every((figure) => figure.src?.startsWith('/figures/pit-pattern-user2026-')),
+    kudoCrops.every((figure) => figure.src?.startsWith('/figures/pit-pattern-gemini2-')),
     true,
   );
   const englishKudo = localizeScore(kudo, 'en');
-  assert.match(englishKudo.figures?.[1]?.note ?? '', /Reference schematic/);
+  assert.match(englishKudo.figures?.[1]?.note ?? '', /Gemini-generated reference schematic/);
   assert.match(englishKudo.entries[0]?.figures?.[0]?.note ?? '', /rasterized at high resolution/);
   assert.doesNotMatch(englishKudo.entries[0]?.figures?.[0]?.note ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
 
@@ -2619,7 +2619,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.40');
+  assert.equal(pkg.version, '1.0.41');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {

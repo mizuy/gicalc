@@ -1,10 +1,10 @@
 import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
 
-const PIT_PATTERN_USER_FIGURE_PATH = '/figures/pit-pattern-user2026-original.svg';
+const PIT_PATTERN_USER_FIGURE_PATH = '/figures/pit-pattern-gemini2.svg';
 
 function userSchematicCrop(file: string, label: string, meaning: string): ClassificationFigure {
   return {
-    src: `/figures/pit-pattern-user2026-${file}.webp`,
+    src: `/figures/pit-pattern-gemini2-${file}.webp`,
     href: PIT_PATTERN_USER_FIGURE_PATH,
     hrefLabel: 'Full schematic',
     figureKind: 'gicalc',
@@ -13,7 +13,7 @@ function userSchematicCrop(file: string, label: string, meaning: string): Classi
     caption: `${label}. ${meaning} (original schematic supplied for GI Calc)`,
     source: 'GI Calc original schematic, 2026.',
     license: 'CC BY 4.0',
-    note: `工藤–鶴田分類の原著図ではなく、提供者自作のCC参考図から${label}を抽出して高解像度化。`,
+    note: `工藤–鶴田分類の原著図ではなく、提供されたGemini生成SVGから${label}を抽出して高解像度化。`,
     aspectRatio: 1,
   };
 }
@@ -55,7 +55,7 @@ export const kudoTsurutaScore: ClassificationDefinition = {
       caption: 'Kudo–Tsuruta pit pattern Types I–VN — supplied original schematic',
       source: 'GI Calc original schematic, 2026.',
       license: 'CC BY 4.0',
-      note: '原著図ではない提供者自作のCC参考図。複合図自体は埋め込まず、各型へ分割してベクター要素から高解像度でラスタライズ。',
+      note: '原著図ではない提供されたGemini生成SVG。複合図自体は埋め込まず、各型のcrop-targetを高解像度WebPへラスタライズ。',
     },
   ],
   entries: [

@@ -347,7 +347,7 @@ UI.ja.about.citationsCcBody +=
   '\n• Toya ME-CV 参考図（Kumei 2025, DEN Open Fig. 1）: CC BY 4.0（Toya 2020 原著図ではない。4パターンを切り抜き）' +
   '\n• WASP 参考図（Vu 2024, JGH Open Fig. 4）: CC BY 4.0（IJspeert 2016 原著図ではない。SSL 3所見を切り抜き）' +
   '\n• ITBCC 参考図（Zlobec 2021, Virchows Arch Fig. 1）: CC BY 4.0（Lugli 2017 原著図ではない。BD1–BD3 を切り抜き、研究的 BD0 は除外）' +
-  '\n• 工藤–鶴田 pit pattern カード模式図: プロジェクト提供者の自作図をベクター要素から高解像度化。CC BY 4.0（原著図ではない）' +
+  '\n• 工藤–鶴田 pit pattern カード模式図: プロジェクト提供者によるGemini生成SVGを各crop-targetから高解像度化。CC BY 4.0（原著図ではない）' +
   '\n• Paris分類カードの模式図: プロジェクト提供者の自作図を切り抜き。CC BY 4.0（Paris原著図ではない）' +
   '\n• LST分類カードの模式図: プロジェクト提供者の自作図を切り抜き。CC BY 4.0（LST原著図ではない）';
 
@@ -355,6 +355,6 @@ UI.en.about.citationsCcBody +=
   '\n• Toya ME-CV reference figure (Kumei 2025, DEN Open Fig. 1): CC BY 4.0 (not the Toya 2020 original; four available patterns are cropped)' +
   '\n• WASP reference figure (Vu 2024, JGH Open Fig. 4): CC BY 4.0 (not the IJspeert 2016 original; three SSL findings are cropped)' +
   '\n• ITBCC reference figure (Zlobec 2021, Virchows Arch Fig. 1): CC BY 4.0 (not the Lugli 2017 original; BD1–BD3 are cropped and investigational BD0 is omitted)' +
-  '\n• Kudo–Tsuruta pit pattern card schematics: contributor-created vector elements rasterized at high resolution. CC BY 4.0 (not figures from the original)' +
+  '\n• Kudo–Tsuruta pit pattern card schematics: crop targets from a contributor-supplied Gemini-generated SVG, rasterized at high resolution. CC BY 4.0 (not figures from the original)' +
   '\n• Paris card schematics: cropped from a contributor-created diagram. CC BY 4.0 (not figures from the Paris original)' +
   '\n• LST card schematics: cropped from a contributor-created diagram. CC BY 4.0 (not figures from the LST original)';
