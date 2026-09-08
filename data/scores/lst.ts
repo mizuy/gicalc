@@ -18,7 +18,7 @@ function userSchematicCrop(file: string, label: string, meaning: string): Classi
     source: 'Original schematic created and supplied by a GI Calc project contributor, 2026.',
     license: 'CC BY 4.0',
     licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-    note: `LST原著の図ではなく、提供者自作のCC BY模式図から${label}を切り抜いて掲載。`,
+    note: `LST原著の図ではなく、提供者自作のCC BY 4.0模式図から${label}を切り抜いて掲載。`,
     aspectRatio: 1400 / 360,
   };
 }
@@ -78,7 +78,7 @@ export const lstScore: ClassificationDefinition = {
       source: 'Original schematic created and supplied by a GI Calc project contributor, 2026.',
       license: 'CC BY 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-      note: 'LST原著の図ではない提供者自作のCC BY参考図。複合図自体は埋め込まず、各亜型を切り抜いて分類カードに掲載。',
+      note: 'LST原著の図ではない提供者自作のCC BY 4.0参考図。複合図自体は埋め込まず、各亜型を切り抜いて分類カードに掲載。',
     },
   ],
   entries: [
