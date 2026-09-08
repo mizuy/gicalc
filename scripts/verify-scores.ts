@@ -2090,7 +2090,11 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(aronchick.license, 'CC BY-NC-ND 4.0');
   assert.match(aronchick.note ?? '', /JGES 2020/);
   assert.match(aronchick.note ?? '', /Table 11/);
-  assert.match(aronchick.officialUrl ?? '', /jstage\.jst\.go\.jp/);
+  assert.match(
+    getToolCitations(aronchick).find((citation) => citation.role === 'japanese-reference')?.href ??
+      '',
+    /jstage\.jst\.go\.jp/,
+  );
 
   for (const score of SCORES) {
     for (const figure of score.figures ?? []) {
