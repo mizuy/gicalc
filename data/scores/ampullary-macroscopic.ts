@@ -35,6 +35,8 @@ export const ampullaryMacroscopicScore: ClassificationDefinition = {
     {
       href: 'http://www.jsco-cpg.jp/biliary-tract-cancer/guideline/',
       hrefLabel: 'JSCO 2015',
+      figureKind: 'original',
+      sourceShort: 'JSCO 2015',
       alt: 'Clinical practice guidelines for biliary tract cancers (macroscopic types)',
       caption: 'Ampullary carcinoma macroscopic types (JSCO 2015 guideline)',
       source:

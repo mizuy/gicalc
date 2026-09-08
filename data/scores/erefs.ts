@@ -17,11 +17,12 @@ function abeCrop(figure: {
 }): ClassificationFigure {
   return {
     ...figure,
+    figureKind: 'secondary',
+    sourceShort: 'Abe 2022',
     source: ABE_SOURCE,
     doi: ABE_DOI,
     pubmed: EREFS_ABE_2022_PUBMED,
     license: 'CC BY 4.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
   };
 }
 
@@ -43,6 +44,8 @@ export const erefsScore: ClassificationDefinition = {
     {
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9777529/figure/diagnostics-12-03202-f002/',
       hrefLabel: 'Fig. 2',
+      figureKind: 'secondary',
+      sourceShort: 'Abe 2022',
       alt: 'EREFS findings: edema, rings, exudates, furrows, stricture, and narrow-caliber esophagus (Abe 2022 Fig. 2)',
       caption: 'Fig. 2. Characteristic endoscopic findings of EoE (Abe et al. Diagnostics 2022)',
       source: ABE_SOURCE,

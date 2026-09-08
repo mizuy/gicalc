@@ -26,6 +26,8 @@ export const sarinScore: ClassificationDefinition = {
     {
       href: 'https://doi.org/10.1002/hep.1840160607',
       hrefLabel: '1992 paper',
+      figureKind: 'original',
+      sourceShort: 'Sarin 1992',
       alt: 'Sarin 1992 classification of gastric varices in Hepatology',
       caption:
         'Sarin SK, Lahoti D, Saxena SP, Murthy NS, Makwana UK. Prevalence, classification and natural history of gastric varices. Hepatology 1992',
@@ -38,7 +40,8 @@ export const sarinScore: ClassificationDefinition = {
       src: '/figures/sarin-acevedo2019-fig1.webp',
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC6447419/figure/F1/',
       hrefLabel: 'Fig. 1',
-      isSecondarySource: true,
+      figureKind: 'secondary',
+      sourceShort: 'Acevedo 2019',
       alt: 'Sarin classification diagram showing GOV1, GOV2, IGV1, and IGV2 gastric varices',
       caption: 'Fig. 1. Sarin classification by gastric location (Acevedo and Cramp 2019)',
       source:

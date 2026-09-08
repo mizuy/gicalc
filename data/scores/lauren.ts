@@ -22,6 +22,8 @@ export const laurenScore: ClassificationDefinition = {
     {
       href: 'https://pubmed.ncbi.nlm.nih.gov/14300643/',
       hrefLabel: '1965 paper',
+      figureKind: 'original',
+      sourceShort: 'Lauren 1965',
       alt: 'The two histological main types of gastric carcinoma',
       caption: 'Lauren P. The two histological main types of gastric carcinoma. Acta Pathol Microbiol Scand 1965',
       source: 'Lauren P. Acta Pathol Microbiol Scand. 1965;64:31-49.',

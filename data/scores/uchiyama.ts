@@ -24,6 +24,8 @@ export const uchiyamaScore: ClassificationDefinition = {
     {
       href: 'https://link.springer.com/article/10.1007/s00535-006-1800-7',
       hrefLabel: 'Uchiyama 2006',
+      figureKind: 'original',
+      sourceShort: 'Uchiyama 2006',
       alt: 'Uchiyama ME-NBI classification for ampullary tumors',
       caption: 'ME-NBI classification of ampullary tumors (Uchiyama 2006)',
       source:

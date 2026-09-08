@@ -18,11 +18,12 @@ function kurumiCrop(figure: {
 }): ClassificationFigure {
   return {
     ...figure,
+    figureKind: 'secondary',
+    sourceShort: 'Kurumi 2021',
     source: KURUMI_SOURCE,
     doi: KURUMI_DOI,
     pubmed: MESDA_KURUMI_2021_PUBMED,
     license: 'CC BY 4.0',
-    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
   };
 }
 
@@ -48,6 +49,8 @@ export const mesdaGScore: ClassificationDefinition = {
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.12638#den12638-fig-0001',
       hrefLabel: 'Fig. 1',
+      figureKind: 'original',
+      sourceShort: 'Muto 2016',
       alt: 'MESDA-G algorithm: suspicious lesion, demarcation line, then irregular MV and/or MS (Muto 2016 Fig. 1)',
       caption: 'Fig. 1. Magnifying Endoscopy Simple Diagnostic Algorithm for Gastric cancer (MESDA-G)',
       source:
@@ -61,6 +64,8 @@ export const mesdaGScore: ClassificationDefinition = {
     {
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8269063/figure/jcm-10-02918-f005/',
       hrefLabel: 'Fig. 5',
+      figureKind: 'secondary',
+      sourceShort: 'Kurumi 2021',
       alt: 'VS classification examples: microvascular and microsurface patterns regular, irregular, or absent (Kurumi 2021 Fig. 5)',
       caption: 'Fig. 5. Regular, irregular, and absent microsurface and microvascular patterns',
       source: KURUMI_SOURCE,

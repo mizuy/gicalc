@@ -55,6 +55,8 @@ export const viennaScore: ClassificationDefinition = {
     {
       href: 'https://gut.bmj.com/content/47/2/251',
       hrefLabel: '2000 paper',
+      figureKind: 'original',
+      sourceShort: 'Schlemper 2000',
       alt: 'The Vienna classification of gastrointestinal epithelial neoplasia',
       caption: 'Schlemper RJ et al. The Vienna classification of gastrointestinal epithelial neoplasia. Gut 2000',
       source: 'Schlemper RJ, Riddell RH, Kato Y, et al. Gut. 2000;47:251-255.',

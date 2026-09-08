@@ -56,6 +56,9 @@ export type CitationRole =
   | 'related-study'
   | 'official';
 
+/** 画面に出す画像の種類。Original / Secondary / GI Calc */
+export type FigureKind = 'original' | 'secondary' | 'gicalc';
+
 export type ToolCitation = {
   role: CitationRole;
   text: string;
@@ -93,8 +96,10 @@ export type ScoreResult = {
 export type ClassificationFigure = {
   /** アプリ内に埋め込む CC 図。非 CC は置かず href だけにする */
   src?: string;
-  /** 分類の原著ではなく、別文献から引用した参考図 */
-  isSecondarySource?: boolean;
+  /** Original = 原著図、Secondary = 二次文献、gicalc = GI Calc 提供図 */
+  figureKind: FigureKind;
+  /** 画面用の短い出典。論文は "Hamada 2021"、GI Calc 図は "GI Calc" */
+  sourceShort: string;
   /** 出版社の図そのもの、または図アンカー。クリックで図へ飛ぶ */
   href?: string;
   /** リンクボタンに出す短いラベル（例: Fig. 7） */
@@ -104,7 +109,7 @@ export type ClassificationFigure = {
   source: string;
   doi?: string;
   pubmed?: string;
-  /** 図の再利用ライセンス（CC のときだけ書く） */
+  /** 図の再利用ライセンス（CC のときだけ書く）。URL は画面に出さない */
   license?: string;
   licenseUrl?: string;
   /** 画像採用・切り抜き・権利確認などの実装記録。画面には表示しない */

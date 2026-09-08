@@ -36,6 +36,8 @@ export const esdFibrosisScore: ClassificationDefinition = {
     {
       href: 'https://www.irjournal.org/journal/view.php?number=178',
       hrefLabel: 'Fig. 1',
+      figureKind: 'secondary',
+      sourceShort: 'Kim 2016',
       alt: 'ESD submucosal fibrosis F0, F1, and F2 (Kim 2016 Fig. 1)',
       caption: 'Fig. 1. Degrees of endoscopic submucosal fibrosis in early colorectal tumors',
       source:
@@ -48,7 +50,8 @@ export const esdFibrosisScore: ClassificationDefinition = {
       src: '/figures/esd-fibrosis-inada2013-fig1.webp',
       href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC3723096/figure/fig1/',
       hrefLabel: 'Fig. 1',
-      isSecondarySource: true,
+      figureKind: 'secondary',
+      sourceShort: 'Inada 2013',
       alt: 'Endoscopic submucosal fibrosis grades F0, F1, and F2 during colorectal ESD',
       caption: 'Fig. 1. Endoscopic submucosal fibrosis grades F0, F1, and F2 (Inada et al. 2013)',
       source:

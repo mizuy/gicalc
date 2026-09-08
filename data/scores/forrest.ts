@@ -27,6 +27,8 @@ export const forrestScore: ClassificationDefinition = {
       src: '/figures/forrest-jsmu2025-fig1.webp',
       href: ZHOU_DOI,
       hrefLabel: 'Fig. 1',
+      figureKind: 'secondary',
+      sourceShort: 'Zhou 2025',
       alt: 'Forrest classification Ia–III (Zhou 2025 Fig. 1)',
       caption: 'Fig. 1. Representative endoscopic images of peptic ulcers in the 6 Forrest grades (Zhou et al. 2025)',
       source: ZHOU_SOURCE,

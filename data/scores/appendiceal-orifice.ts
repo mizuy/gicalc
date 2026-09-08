@@ -31,6 +31,8 @@ export const appendicealOrificeScore: ClassificationDefinition = {
       src: '/figures/oung2020-fig2.webp',
       href: 'https://www.thieme-connect.com/products/ejournals/html/10.1055/a-1072-4830',
       hrefLabel: 'Fig. 2',
+      figureKind: 'secondary',
+      sourceShort: 'Oung 2020',
       alt: 'Toyonaga appendiceal orifice lesion classification Types 0–3a (Oung 2020 Fig. 2)',
       caption:
         'Fig. 2. Lesion classification according to Toyonaga’s classification with additional type 3a in case of previous appendectomy',

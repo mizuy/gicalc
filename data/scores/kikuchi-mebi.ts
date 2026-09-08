@@ -24,6 +24,8 @@ export const kikuchiMebiScore: ClassificationDefinition = {
     {
       href: 'https://onlinelibrary.wiley.com/doi/10.1111/den.12282',
       hrefLabel: 'Kikuchi 2014',
+      figureKind: 'original',
+      sourceShort: 'Kikuchi 2014',
       alt: 'Kikuchi ME-NBI diagnostic algorithm for SNADET (Fig. 10)',
       caption: 'Fig. 10. Diagnostic algorithm of ME-NBI for SNADET',
       source:

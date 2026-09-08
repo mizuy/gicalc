@@ -24,6 +24,8 @@ export const kakushimaScore: ScoreDefinition = {
     {
       href: 'https://www.thieme-connect.com/products/ejournals/html/10.1055/s-0043-113567#table-2',
       hrefLabel: 'Table 2',
+      figureKind: 'original',
+      sourceShort: 'Kakushima 2017',
       alt: 'Kakushima WLI scoring system for VCL3 vs VCL4 or higher (Table 2)',
       caption: 'Table 2. Scoring system for VCL3 and VCL4 or higher',
       source:
