@@ -3,8 +3,10 @@
 
 from __future__ import annotations
 
+import argparse
 import copy
 import re
+import shutil
 import subprocess
 import tempfile
 import xml.etree.ElementTree as ET
@@ -59,7 +61,7 @@ def render(group: ET.Element, defs: ET.Element, destination: Path) -> None:
     crop = ET.Element(
         f'{{{SVG_NS}}}svg',
         {
-            'viewBox': f'{x} {y + 10} 300 170',
+            'viewBox': f'{x} {y} 300 185',
             'width': str(WIDTH),
             'height': str(HEIGHT),
         },
@@ -92,6 +94,17 @@ def render(group: ET.Element, defs: ET.Element, destination: Path) -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--source',
+        type=Path,
+        help='初回のみ指定する提供SVG。検証後にpublic/figuresへ保存する。',
+    )
+    args = parser.parse_args()
+    if args.source:
+        ET.parse(args.source)
+        shutil.copyfile(args.source, SOURCE)
+
     ET.register_namespace('', SVG_NS)
     root = ET.parse(SOURCE).getroot()
     defs = root.find('svg:defs', NS)

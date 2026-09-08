@@ -216,7 +216,7 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
 |------|----------|
 | **CC ライセンス確認済み** | `public/figures/` に WebP を置き（`scripts/optimize-figures.py` でリサイズ）、`src: '/figures/xxx.webp'` で埋め込む |
 | **CC ではない / 未確認** | 画像は置かず `href` + `hrefLabel` で原著・GeneReviews 等へリンク |
-| **分類の原著とは別の文献から引用** | `isSecondarySource: true` を付け、「参考図（別文献）」と明示する |
+| **分類の原著とは別の文献から引用** | `isSecondarySource: true` を付け、「原著図ではない（参考図）」と明示する |
 | 出典 | `source`, `doi`, `pubmed`, `note`（ライセンス説明）を必ず書く |
 
 CC 済み・非 CC の一覧は [README の引用とライセンス](../README.md#引用とライセンス) を参照。About 画面（`lib/i18n/ui.ts` の `about.citationsCc`）とも整合させてください。

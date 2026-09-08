@@ -1307,22 +1307,22 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       '0-Isp in the figure is Japanese / later. The 2003/2005 Paris table lists 0-Ip and 0-Is. Clin Endosc 2025 Fig. 2 (CC BY-NC 4.0) is linked rather than hosted. Johnson 2023 Can J Surg is CC BY-NC-ND 4.0. The 2003/2005 originals are not CC.',
-      'Reference schematic created and supplied by a project contributor, not a figure from the Paris original. The composite is linked rather than embedded; permitted crops are shown on each classification card.',
+      'Reference schematic created and supplied by a project contributor, not a figure from the Paris original. The composite is linked rather than embedded; CC BY 4.0 crops are shown on each classification card.',
     ],
     entryFigureNotes: {
-      '0-Ip': ['Cropped from a contributor-created schematic and used with permission. Not a figure from the Paris original.'],
-      '0-Is': ['Cropped from a contributor-created schematic and used with permission. Not a figure from the Paris original.'],
-      '0-IIa': ['Cropped from a contributor-created schematic and used with permission. Not a figure from the Paris original.'],
-      '0-IIb': ['Cropped from a contributor-created schematic and used with permission. Not a figure from the Paris original.'],
-      '0-IIc': ['Cropped from a contributor-created schematic and used with permission. Not a figure from the Paris original.'],
-      '0-IIc+IIa': ['Cropped from a contributor-created schematic and used with permission. Not a figure from the Paris original.'],
+      '0-Ip': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
+      '0-Is': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
+      '0-IIa': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
+      '0-IIb': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
+      '0-IIc': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
+      '0-IIc+IIa': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
       '0-IIa+IIc': [
-        'Variant 1 cropped from a contributor-created schematic and used with permission. Not a figure from the Paris original.',
-        'Variant 2 cropped from a contributor-created schematic and used with permission. Not a figure from the Paris original.',
+        'Variant 1 cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.',
+        'Variant 2 cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.',
       ],
-      '0-III': ['Cropped from a contributor-created schematic and used with permission. Not a figure from the Paris original.'],
-      '0-IIc+III': ['Cropped from a contributor-created schematic and used with permission. Not a figure from the Paris original.'],
-      '0-III+IIc': ['Cropped from a contributor-created schematic and used with permission. Not a figure from the Paris original.'],
+      '0-III': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
+      '0-IIc+III': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
+      '0-III+IIc': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
     },
   },
   lst: {
@@ -1335,28 +1335,29 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     comments: {
       'LST-G homogeneous':
-        'Deep SM invasion is low. The 0.5% (CI 0.1–1.0%) on the figure is from the Bogie 2018 meta-analysis.',
+        'Deep SM invasion is low. The 0.5% (CI 0.1–1.0%) is from the Bogie 2018 meta-analysis.',
       'LST-G mixed nodular':
-        'Invasion often sits in the large nodule. The 10.5% (CI 5.9–15.1%) on the figure is from Bogie 2018.',
-      'LST-NG flat elevated': 'The 4.9% (CI 2.1–7.8%) on the figure is from Bogie 2018.',
+        'Invasion often sits in the large nodule. The 10.5% (CI 5.9–15.1%) is from Bogie 2018.',
+      'LST-NG flat elevated': 'The 4.9% (CI 2.1–7.8%) is from Bogie 2018.',
       'LST-NG pseudodepressed':
-        'Highest invasion risk of the four subtypes. The 31.6% (CI 19.8–43.4%) on the figure is from Bogie 2018. Consider en-bloc resection.',
+        'Highest invasion risk of the four subtypes. The 31.6% (CI 19.8–43.4%) is from Bogie 2018. Consider en-bloc resection.',
     },
     figureNotes: [
-      'Crops are on each subtype card. The original plate is not hosted — link to Clin Endosc 2025 Fig. 3. License: CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+      'Clin Endosc 2025 Fig. 3 (CC BY-NC 4.0) is linked rather than hosted. The Kudo 2008 GIE original is not CC.',
+      'Reference schematic created and supplied by a project contributor, not a figure from the LST original. The composite is linked rather than embedded; CC BY 4.0 crops are shown on each classification card.',
     ],
     entryFigureNotes: {
       'LST-G homogeneous': [
-        'Cropped from original Fig. 3 (LST-G homogeneous). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+        'Cropped from a contributor-created schematic. Not a figure from the LST original. License: CC BY 4.0.',
       ],
       'LST-G mixed nodular': [
-        'Cropped from original Fig. 3 (LST-G mixed nodular). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+        'Cropped from a contributor-created schematic. Not a figure from the LST original. License: CC BY 4.0.',
       ],
       'LST-NG flat elevated': [
-        'Cropped from original Fig. 3 (LST-NG flat). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+        'Cropped from a contributor-created schematic. Not a figure from the LST original. License: CC BY 4.0.',
       ],
       'LST-NG pseudodepressed': [
-        'Cropped from original Fig. 3 (LST-NG pseudodepressed). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+        'Cropped from a contributor-created schematic. Not a figure from the LST original. License: CC BY 4.0.',
       ],
     },
   },

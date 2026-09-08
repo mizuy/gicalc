@@ -77,7 +77,7 @@ import { LA_1999_PUBMED, LA_JUNG_2025_PUBMED } from '../data/scores/la';
 import { SAURIN_2004_PUBMED } from '../data/scores/modified-spigelman';
 import { NICE_2013_PUBMED, NICE_HAMADA_2021_PUBMED } from '../data/scores/nice';
 import { BBPS_SCIREP_2024_PUBMED } from '../data/scores/bbps';
-import { PARIS_2003_PUBMED } from '../data/scores/paris';
+import { PARIS_2003_PUBMED, PARIS_2005_PUBMED } from '../data/scores/paris';
 import { PRAGUE_2006_PUBMED } from '../data/scores/prague';
 import { JSPH_VARICES_2010_PUBMED, KJ_HUGR_2024_PUBMED, NAGASHIMA_2022_PUBMED, PALL_2023_PUBMED } from '../data/scores/jsph-varices';
 import { SARIN_1992_PUBMED } from '../data/scores/sarin';
@@ -1258,7 +1258,10 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(paris.entries[0]?.meaning, 'Pedunculated');
   assert.match(paris.originalLead ?? '', /Type 0 is divided into three categories/);
   assert.doesNotMatch(paris.entries.map((entry) => entry.label).join(' '), /Isp/);
-  assert.equal(paris.pubmed, PARIS_2003_PUBMED);
+  assert.equal(paris.pubmed, PARIS_2005_PUBMED);
+  assert.match(paris.reference ?? '', /Update on the Paris classification/);
+  assert.match(paris.reference ?? '', /Gastrointest Endosc 2003/);
+  assert.equal(PARIS_2003_PUBMED, '14652541');
   assert.deepEqual(
     paris.hierarchy?.map((node) => node.label),
     ['0-I · Protruding', '0-II · Nonprotruding and nonexcavated', '0-III · Excavated family'],
@@ -1709,18 +1712,18 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(paris.figures?.[0]?.href ?? '', /number=8021#F2/);
   assert.match(paris.figures?.[0]?.caption ?? '', /Fig\. 2/);
   assert.match(paris.figures?.[0]?.source ?? '', /Paris workshop/);
-  assert.equal(paris.pubmed, PARIS_2003_PUBMED);
+  assert.equal(paris.pubmed, PARIS_2005_PUBMED);
   assert.equal(paris.figures?.[0]?.license, 'CC BY-NC 4.0');
   assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
   assert.match(paris.figures?.[0]?.note ?? '', /CC BY-NC-ND 4\.0/);
   assert.equal(paris.figures?.[1]?.src, undefined);
   assert.equal(paris.figures?.[1]?.href, '/figures/paris-user2026-original.svg');
   assert.equal(paris.figures?.[1]?.isSecondarySource, true);
-  assert.equal(paris.figures?.[1]?.license, 'Used with permission');
+  assert.equal(paris.figures?.[1]?.license, 'CC BY 4.0');
   const parisCrops = paris.entries.flatMap((entry) => entry.figures ?? []);
   assert.equal(parisCrops.length, 11);
   assert.equal(parisCrops.every((figure) => figure.isSecondarySource), true);
-  assert.equal(parisCrops.every((figure) => figure.license === 'Used with permission'), true);
+  assert.equal(parisCrops.every((figure) => figure.license === 'CC BY 4.0'), true);
   assert.equal(parisCrops.every((figure) => figure.src?.startsWith('/figures/paris-user2026-')), true);
   assert.equal(paris.entries.find((entry) => entry.label === '0-IIa+IIc')?.figures?.length, 2);
   assert.equal(paris.entries.every((entry) => entry.figures?.length), true);
@@ -1738,18 +1741,21 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const lst = getScoreById('lst');
   assert.ok(lst && isClassification(lst));
+  assert.equal(lst.figures?.length, 2);
   assertOriginalPlateIsLinkOnly(lst);
+  assert.equal(lst.figures?.[1]?.href, '/figures/lst-user2026-original.svg');
+  assert.equal(lst.figures?.[1]?.isSecondarySource, true);
+  assert.equal(lst.figures?.[1]?.license, 'CC BY 4.0');
   assert.equal(lst.entries[0]?.figures?.length, 1);
-  assert.match(lst.entries[0]?.figures?.[0]?.src ?? '', /g-homogeneous/);
-  assert.match(lst.entries[1]?.figures?.[0]?.src ?? '', /g-mixed/);
-  assert.match(lst.entries[2]?.figures?.[0]?.src ?? '', /ng-flat/);
-  assert.match(lst.entries[3]?.figures?.[0]?.src ?? '', /ng-pseudodepressed/);
-  assert.match(lst.entries[0]?.figures?.[0]?.caption ?? '', /Fig\. 3/);
-  assert.match(lst.entries[0]?.figures?.[0]?.source ?? '', /Kudo S/);
+  assert.match(lst.entries[0]?.figures?.[0]?.src ?? '', /lst-user2026-g-homogeneous/);
+  assert.match(lst.entries[1]?.figures?.[0]?.src ?? '', /lst-user2026-g-mixed/);
+  assert.match(lst.entries[2]?.figures?.[0]?.src ?? '', /lst-user2026-ng-flat/);
+  assert.match(lst.entries[3]?.figures?.[0]?.src ?? '', /lst-user2026-ng-pseudodepressed/);
   assert.equal(lst.pubmed, LST_2008_PUBMED);
-  assert.equal(lst.entries[0]?.figures?.[0]?.license, 'CC BY-NC 4.0');
-  assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
-  assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
+  assert.equal(lst.entries.every((entry) => entry.figures?.[0]?.license === 'CC BY 4.0'), true);
+  assert.equal(lst.entries.every((entry) => entry.figures?.[0]?.isSecondarySource), true);
+  assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /切り抜/);
+  assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /CC BY 4\.0/);
 
   const appendicealOrificeFig = getScoreById('appendiceal-orifice');
   assert.ok(appendicealOrificeFig && isClassification(appendicealOrificeFig));
@@ -2590,7 +2596,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.32');
+  assert.equal(pkg.version, '1.0.35');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2745,6 +2751,10 @@ test('引用・ライセンス情報は CC と非 CC を分けて書く', () => 
   assert.match(UI.ja.about.citationsNotCcBody, /Dekker 2020/);
   assert.match(UI.ja.about.citationsCcBody, /Misawa 2021/);
   assert.match(UI.ja.about.citationsNotCcBody, /Kudo 2011/);
+  assert.match(UI.ja.about.citationsCcBody, /Paris分類カードの模式図/);
+  assert.match(UI.en.about.citationsCcBody, /Paris card schematics/);
+  assert.equal(UI.en.secondarySourceFigure, 'NOT ORIGINAL FIGURE (SECONDARY SOURCE)');
+  assert.equal(UI.ja.secondarySourceFigure, '原著図ではない（参考図）');
 });
 
 test('切り抜きがある分類は原図を埋め込まずリンクだけにする', () => {

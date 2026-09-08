@@ -20,8 +20,9 @@ function userSchematicCrop(
     alt: `Schematic cross-section of Paris ${label}: ${meaning}`,
     caption: `${label}. ${meaning} (original schematic supplied for GI Calc)`,
     source: 'Original schematic created and supplied by a GI Calc project contributor, 2026.',
-    license: 'Used with permission',
-    note: `Paris原著の図ではなく、提供者自作の模式図から${label}を切り抜いて許諾掲載。`,
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    note: `Paris原著の図ではなく、提供者自作のCC BY模式図から${label}を切り抜いて掲載。`,
     aspectRatio,
   };
 }
@@ -39,8 +40,8 @@ export const parisScore: ClassificationDefinition = {
   originalLead:
     'Neoplastic lesions in the esophagus, stomach, and large bowel are called superficial when their endoscopic appearance suggests that invasion is limited to the mucosa and submucosa. Type 0 is divided into three categories: protruding (0-I), nonprotruding and nonexcavated (0-II), and excavated (0-III). Type 0-I is subdivided into pedunculated (0-Ip) and sessile (0-Is). Type 0-II is divided into slightly elevated (IIa), flat (IIb), or depressed (IIc). The distinction between a sessile (protruding) lesion and a slightly elevated (nonprotruding) lesion is based on the extent of the elevation from the adjacent mucosa. The cut-off limit is 2.5 mm in the columnar epithelium and 1.2 mm in the stratified epithelium of the esophagus.',
   reference:
-    'The Paris endoscopic classification. Gastrointest Endosc 2003;58:S3-S43. Endoscopic Classification Review Group. Endoscopy 2005;37:570-578',
-  pubmed: PARIS_2003_PUBMED,
+    'Endoscopic Classification Review Group. Update on the Paris classification of superficial neoplastic lesions in the digestive tract. Endoscopy 2005;37:570-578. The Paris endoscopic classification of superficial neoplastic lesions. Gastrointest Endosc 2003;58:S3-S43',
+  pubmed: PARIS_2005_PUBMED,
   hierarchy: [
     {
       id: 'paris-0-i',
@@ -92,8 +93,9 @@ export const parisScore: ClassificationDefinition = {
       alt: 'Original schematic of the Paris Type 0 morphology classification supplied for GI Calc',
       caption: 'Paris Type 0 morphology — supplied original schematic',
       source: 'Original schematic created and supplied by a GI Calc project contributor, 2026.',
-      license: 'Used with permission',
-      note: 'Paris原著の図ではない提供者自作の参考図。複合図自体は埋め込まず、各型を切り抜いて分類カードに許諾掲載。',
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: 'Paris原著の図ではない提供者自作のCC BY参考図。複合図自体は埋め込まず、各型を切り抜いて分類カードに掲載。',
     },
   ],
   entries: [

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900" width="100%" height="100%">
   <defs>
     <style>
       .tissue { fill: #e0e0e0; stroke: #999999; stroke-width: 2; stroke-linejoin: round; }
@@ -8,74 +8,112 @@
       .sublabel { font-family: sans-serif; font-size: 13px; fill: #666; text-anchor: middle; }
     </style>
   </defs>
+
   <text x="500" y="40" class="title">The Paris Endoscopic Classification of Superficial Neoplastic Lesions</text>
+
+  <!-- ================= ROW 1 ================= -->
+  
+  <!-- 0-Ip (Pedunculated) -->
   <g transform="translate(30, 70)">
-    <path d="M0,100 L135,100 L140,70 L160,70 L165,100 L300,100 L300,180 L0,180 Z" class="tissue"/>
-    <path d="M140,70 C90,10 210,10 160,70 Z" class="tumor"/>
+    <path d="M0,100 L135,100 L140,70 L160,70 L165,100 L300,100 L300,180 L0,180 Z" class="tissue" />
+    <path d="M140,70 C90,10 210,10 160,70 Z" class="tumor" />
     <text x="150" y="210" class="label">0-Ip</text>
-    <text x="150" y="230" class="sublabel">Pedunculated (&#26377;&#33550;)</text>
+    <text x="150" y="230" class="sublabel">Pedunculated (有茎)</text>
   </g>
+
+  <!-- 0-Is (Sessile) -->
   <g transform="translate(350, 70)">
-    <path d="M0,100 L90,100 L90,112 L210,112 L210,100 L300,100 L300,180 L0,180 Z" class="tissue"/>
-    <path d="M90,100 C90,40 210,40 210,100 L210,112 L90,112 Z" class="tumor"/>
+    <path d="M0,100 L90,100 L90,112 L210,112 L210,100 L300,100 L300,180 L0,180 Z" class="tissue" />
+    <path d="M90,100 C90,40 210,40 210,100 L210,112 L90,112 Z" class="tumor" />
     <text x="150" y="210" class="label">0-Is</text>
-    <text x="150" y="230" class="sublabel">Sessile (&#28961;&#33550;)</text>
+    <text x="150" y="230" class="sublabel">Sessile (無茎)</text>
   </g>
+
+  <!-- 0-IIa (Slightly elevated) -->
   <g transform="translate(670, 70)">
-    <path d="M0,100 L90,100 L90,112 L210,112 L210,100 L300,100 L300,180 L0,180 Z" class="tissue"/>
-    <path d="M90,100 L95,85 L205,85 L210,100 L210,112 L90,112 Z" class="tumor"/>
+    <path d="M0,100 L90,100 L90,112 L210,112 L210,100 L300,100 L300,180 L0,180 Z" class="tissue" />
+    <path d="M90,100 L95,85 L205,85 L210,100 L210,112 L90,112 Z" class="tumor" />
     <text x="150" y="210" class="label">0-IIa</text>
-    <text x="150" y="230" class="sublabel">Slightly elevated (&#34920;&#38754;&#38534;&#36215;)</text>
+    <text x="150" y="230" class="sublabel">Slightly elevated (表面隆起)</text>
   </g>
+
+  <!-- ================= ROW 2 ================= -->
+
+  <!-- 0-IIb (Completely flat) -->
   <g transform="translate(30, 270)">
-    <path d="M0,100 L100,100 L100,112 L200,112 L200,100 L300,100 L300,180 L0,180 Z" class="tissue"/>
-    <path d="M100,100 L200,100 L200,112 L100,112 Z" class="tumor"/>
+    <path d="M0,100 L100,100 L100,112 L200,112 L200,100 L300,100 L300,180 L0,180 Z" class="tissue" />
+    <path d="M100,100 L200,100 L200,112 L100,112 Z" class="tumor" />
     <text x="150" y="210" class="label">0-IIb</text>
-    <text x="150" y="230" class="sublabel">Completely flat (&#34920;&#38754;&#24179;&#22374;)</text>
+    <text x="150" y="230" class="sublabel">Completely flat (表面平坦)</text>
   </g>
+
+  <!-- 0-IIc (Slightly depressed) -->
   <g transform="translate(350, 270)">
-    <path d="M0,100 L90,100 L90,112 L100,127 L200,127 L210,112 L210,100 L300,100 L300,180 L0,180 Z" class="tissue"/>
-    <path d="M90,100 L100,115 L200,115 L210,100 L210,112 L200,127 L100,127 L90,112 Z" class="tumor"/>
+    <path d="M0,100 L90,100 L90,112 L100,127 L200,127 L210,112 L210,100 L300,100 L300,180 L0,180 Z" class="tissue" />
+    <path d="M90,100 L100,115 L200,115 L210,100 L210,112 L200,127 L100,127 L90,112 Z" class="tumor" />
     <text x="150" y="210" class="label">0-IIc</text>
-    <text x="150" y="230" class="sublabel">Slightly depressed (&#34920;&#38754;&#38501;&#20985;)</text>
+    <text x="150" y="230" class="sublabel">Slightly depressed (表面陥凹)</text>
   </g>
+
+  <!-- 0-IIc+IIa (Depressed + elevated margins) -->
   <g transform="translate(670, 270)">
-    <path d="M0,100 L75,100 L75,112 L85,92 L110,92 L120,127 L180,127 L190,92 L215,92 L225,112 L225,100 L300,100 L300,180 L0,180 Z" class="tissue"/>
-    <path d="M75,100 L85,80 L110,80 L120,115 L180,115 L190,80 L215,80 L225,100 L225,112 L215,92 L190,92 L180,127 L120,127 L110,92 L85,92 L75,112 Z" class="tumor"/>
+    <!-- 修正: 左側の一部のみを隆起(IIa)させ、右側にかけて大部分を陥凹(IIc)とする非対称な形状 -->
+    <path d="M0,100 L75,100 L75,112 L85,92 L110,92 L120,127 L200,127 L210,112 L210,100 L300,100 L300,180 L0,180 Z" class="tissue" />
+    <path d="M75,100 L85,80 L110,80 L120,115 L200,115 L210,100 L210,112 L200,127 L120,127 L110,92 L85,92 L75,112 Z" class="tumor" />
     <text x="150" y="210" class="label">0-IIc + IIa</text>
     <text x="150" y="230" class="sublabel">Depressed + elevated margins</text>
   </g>
+
+  <!-- ================= ROW 3 ================= -->
+
+  <!-- 0-IIa+IIc (Pattern 1: Elevated + relatively depressed) -->
   <g transform="translate(30, 470)">
-    <path d="M0,100 L65,100 L65,112 L75,87 L110,87 L115,102 L185,102 L190,87 L225,87 L235,112 L235,100 L300,100 L300,180 L0,180 Z" class="tissue"/>
-    <path d="M65,100 L75,75 L110,75 L115,90 L185,90 L190,75 L225,75 L235,100 L235,112 L225,87 L190,87 L185,102 L115,102 L110,87 L75,87 L65,112 Z" class="tumor"/>
+    <!-- 修正: 最初のプロポーション(全体が隆起ベース)に復元 -->
+    <path d="M0,100 L65,100 L65,112 L75,87 L110,87 L115,102 L185,102 L190,87 L225,87 L235,112 L235,100 L300,100 L300,180 L0,180 Z" class="tissue" />
+    <path d="M65,100 L75,75 L110,75 L115,90 L185,90 L190,75 L225,75 L235,100 L235,112 L225,87 L190,87 L185,102 L115,102 L110,87 L75,87 L65,112 Z" class="tumor" />
     <text x="150" y="210" class="label">0-IIa + IIc (Pattern 1)</text>
     <text x="150" y="230" class="sublabel">Elevated + relatively depressed</text>
   </g>
+
+  <!-- 0-IIa+IIc (Pattern 2: Elevated + absolutely depressed) -->
   <g transform="translate(350, 470)">
-    <path d="M0,100 L65,100 L65,112 L75,87 L110,87 L120,127 L180,127 L190,87 L225,87 L235,112 L235,100 L300,100 L300,180 L0,180 Z" class="tissue"/>
-    <path d="M65,100 L75,75 L110,75 L120,115 L180,115 L190,75 L225,75 L235,100 L235,112 L225,87 L190,87 L180,127 L120,127 L110,87 L75,87 L65,112 Z" class="tumor"/>
+    <!-- 修正: 最初のプロポーション(全体が隆起ベース)に復元 -->
+    <path d="M0,100 L65,100 L65,112 L75,87 L110,87 L120,127 L180,127 L190,87 L225,87 L235,112 L235,100 L300,100 L300,180 L0,180 Z" class="tissue" />
+    <path d="M65,100 L75,75 L110,75 L120,115 L180,115 L190,75 L225,75 L235,100 L235,112 L225,87 L190,87 L180,127 L120,127 L110,87 L75,87 L65,112 Z" class="tumor" />
     <text x="150" y="210" class="label">0-IIa + IIc (Pattern 2)</text>
     <text x="150" y="230" class="sublabel">Elevated + absolutely depressed</text>
   </g>
+
+  <!-- 0-III (Excavated / Ulcer) -->
   <g transform="translate(670, 470)">
-    <path d="M0,100 L80,100 L80,112 L115,112 L135,152 L165,152 L185,112 L220,112 L220,100 L300,100 L300,180 L0,180 Z" class="tissue"/>
-    <path d="M80,100 L120,100 L130,120 L125,132 L115,112 L80,112 Z" class="tumor"/>
-    <path d="M220,100 L180,100 L170,120 L175,132 L185,112 L220,112 Z" class="tumor"/>
+    <!-- 修正キープ: 潰瘍内に腫瘍が入り込まないように辺縁のみに配置 -->
+    <path d="M0,100 L110,100 L110,112 L130,160 L170,160 L190,112 L190,100 L300,100 L300,180 L0,180 Z" class="tissue" />
+    <path d="M80,100 L110,100 L110,112 L80,112 Z" class="tumor" />
+    <path d="M190,100 L220,100 L220,112 L190,112 Z" class="tumor" />
     <text x="150" y="210" class="label">0-III</text>
-    <text x="150" y="230" class="sublabel">Excavated / Ulcer (&#38501;&#20985; / &#28528;&#30221;)</text>
+    <text x="150" y="230" class="sublabel">Excavated / Ulcer (陥凹・潰瘍)</text>
   </g>
+
+  <!-- ================= ROW 4 ================= -->
+
+  <!-- 0-IIc+III (Depressed + central ulcer) -->
   <g transform="translate(190, 670)">
-    <path d="M0,100 L65,100 L65,112 L75,127 L115,127 L130,157 L170,157 L185,127 L225,127 L235,112 L235,100 L300,100 L300,180 L0,180 Z" class="tissue"/>
-    <path d="M65,100 L75,115 L120,115 L125,135 L122,141 L115,127 L75,127 L65,112 Z" class="tumor"/>
-    <path d="M235,100 L225,115 L180,115 L175,135 L178,141 L185,127 L225,127 L235,112 Z" class="tumor"/>
+    <!-- 修正キープ: 潰瘍内に腫瘍が入り込まないようにIIc部分のみに配置 -->
+    <path d="M0,100 L65,100 L65,112 L75,127 L115,127 L135,165 L165,165 L185,127 L225,127 L235,112 L235,100 L300,100 L300,180 L0,180 Z" class="tissue" />
+    <path d="M65,100 L75,115 L115,115 L115,127 L75,127 L65,112 Z" class="tumor" />
+    <path d="M235,100 L225,115 L185,115 L185,127 L225,127 L235,112 Z" class="tumor" />
     <text x="150" y="210" class="label">0-IIc + III</text>
     <text x="150" y="230" class="sublabel">Depressed + central ulcer</text>
   </g>
+
+  <!-- 0-III+IIc (Ulcer + short depressed margins) -->
   <g transform="translate(510, 670)">
-    <path d="M0,100 L80,100 L80,112 L85,127 L105,127 L120,157 L180,157 L195,127 L215,127 L220,112 L220,100 L300,100 L300,180 L0,180 Z" class="tissue"/>
-    <path d="M80,100 L85,115 L110,115 L115,135 L112,141 L105,127 L85,127 L80,112 Z" class="tumor"/>
-    <path d="M220,100 L215,115 L190,115 L185,135 L188,141 L195,127 L215,127 L220,112 Z" class="tumor"/>
+    <!-- 修正キープ: 潰瘍内に腫瘍が入り込まないように短いIIc部分のみに配置 -->
+    <path d="M0,100 L80,100 L80,112 L85,127 L105,127 L120,165 L180,165 L195,127 L215,127 L220,112 L220,100 L300,100 L300,180 L0,180 Z" class="tissue" />
+    <path d="M80,100 L85,115 L105,115 L105,127 L85,127 L80,112 Z" class="tumor" />
+    <path d="M220,100 L215,115 L195,115 L195,127 L215,127 L220,112 Z" class="tumor" />
     <text x="150" y="210" class="label">0-III + IIc</text>
     <text x="150" y="230" class="sublabel">Ulcer + short depressed margins</text>
   </g>
+
 </svg>

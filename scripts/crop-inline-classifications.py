@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """改変可能な複合図を各型カード用に切り出す。
 
-対象: 大腸EC / LST / Hill / EREFS / NICE / MESDA-G / GERD LA /
+対象: 大腸EC / Hill / EREFS / NICE / MESDA-G / GERD LA /
 Toya ME-CV / WASP / ITBCC。
 """
 
@@ -14,7 +14,6 @@ ROOT = Path(__file__).resolve().parents[1] / 'public' / 'figures'
 # 複合図は optimize-figures.py で WebP 化済み。座標は元のフル解像度基準。
 HILL = ROOT / 'hill-ge2023-fig1.webp'
 EREFS = ROOT / 'erefs-abe2022-fig2.webp'
-LST = ROOT / 'lst-ce2025-fig3.webp'
 EC2 = ROOT / 'ec-maeda2021-fig2.webp'
 EC3 = ROOT / 'ec-maeda2021-fig3.webp'
 NICE = ROOT / 'nice-hamada2021-fig1.webp'
@@ -38,11 +37,6 @@ CROPS: dict[str, tuple[Path, tuple[int, int, int, int]]] = {
     'erefs-abe2022-fig2-furrows.jpg': (EREFS, (5, 196, 248, 379)),
     'erefs-abe2022-fig2-stricture.jpg': (EREFS, (256, 196, 497, 379)),
     'erefs-abe2022-fig2-narrow-caliber.jpg': (EREFS, (504, 196, 747, 379)),
-    # LST: 表の各行（模式図と深部SM浸潤率）。
-    'lst-ce2025-fig3-g-homogeneous.jpg': (LST, (0, 90, 774, 300)),
-    'lst-ce2025-fig3-g-mixed.jpg': (LST, (0, 301, 774, 520)),
-    'lst-ce2025-fig3-ng-flat.jpg': (LST, (0, 521, 774, 710)),
-    'lst-ce2025-fig3-ng-pseudodepressed.jpg': (LST, (0, 711, 774, 874)),
     # EC Fig. 2: 左 EC1a/1b、中央 EC2、右 EC3a/3b。ラベル行を含める。
     'ec-maeda2021-fig2-ec1a.jpg': (EC2, (16, 18, 247, 337)),
     'ec-maeda2021-fig2-ec1b.jpg': (EC2, (16, 338, 247, 651)),
