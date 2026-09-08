@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import { Text, useThemeColor } from '@/components/Themed';
@@ -9,6 +9,7 @@ import {
   clearPwaUpdateDismissed,
   isPwaUpdateSupported,
   reloadPwaApp,
+  subscribePwaUpdate,
   type PwaUpdateCheckResult,
 } from '@/lib/web/pwaUpdateService';
 
@@ -22,6 +23,14 @@ export function PwaCheckUpdate() {
   const textSecondary = useThemeColor({}, 'textSecondary');
   const { t } = useLocale();
 
+  useEffect(() => {
+    if (Platform.OS !== 'web' || !isPwaUpdateSupported()) return;
+    return subscribePwaUpdate((updateState) => {
+      if (updateState === 'preparing') setState('preparing');
+      if (updateState === 'ready') setState('available');
+    });
+  }, []);
+
   if (Platform.OS !== 'web' || !isPwaUpdateSupported()) {
     return null;
   }
@@ -29,7 +38,7 @@ export function PwaCheckUpdate() {
   const handleCheck = async () => {
     setState('checking');
     const result = await checkPwaUpdate();
-    if (result === 'available') {
+    if (result === 'preparing' || result === 'available') {
       clearPwaUpdateDismissed();
     }
     setState(result);
@@ -38,11 +47,13 @@ export function PwaCheckUpdate() {
   const statusMessage =
     state === 'checking'
       ? t.pwa.checking
-      : state === 'current'
-        ? t.pwa.upToDate
-        : state === 'available'
-          ? t.pwa.updateAvailable
-          : null;
+      : state === 'preparing'
+        ? t.pwa.updatePreparing
+        : state === 'current'
+          ? t.pwa.upToDate
+          : state === 'available'
+            ? t.pwa.updateAvailable
+            : null;
 
   const version = getAppVersion();
 

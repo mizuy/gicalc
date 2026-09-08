@@ -48,6 +48,7 @@ export type UiStrings = {
     install: string;
     close: string;
     updateAvailable: string;
+    updatePreparing: string;
     reload: string;
     later: string;
     checkUpdate: string;
@@ -154,6 +155,7 @@ export const UI: Record<Locale, UiStrings> = {
       install: 'インストール',
       close: '閉じる',
       updateAvailable: '新しい版があります',
+      updatePreparing: '更新を準備中…',
       reload: '再読み込み',
       later: '後で',
       checkUpdate: '更新を確認',
@@ -268,6 +270,7 @@ export const UI: Record<Locale, UiStrings> = {
       install: 'Install',
       close: 'Close',
       updateAvailable: 'A new version is available',
+      updatePreparing: 'Preparing update…',
       reload: 'Reload',
       later: 'Later',
       checkUpdate: 'Check for updates',

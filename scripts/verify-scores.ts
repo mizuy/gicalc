@@ -2590,7 +2590,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.29');
+  assert.equal(pkg.version, '1.0.31');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2678,6 +2678,7 @@ test('不具合報告フォームはページと利用環境を自動入力す�
 test('PWA 更新バナーの文言と検知', () => {
   const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
   assert.equal(UI.ja.pwa.updateAvailable, '新しい版があります');
+  assert.equal(UI.ja.pwa.updatePreparing, '更新を準備中…');
   assert.equal(UI.ja.pwa.reload, '再読み込み');
   assert.equal(UI.ja.pwa.later, '後で');
   assert.equal(UI.ja.pwa.checkUpdate, '更新を確認');
@@ -2685,6 +2686,7 @@ test('PWA 更新バナーの文言と検知', () => {
   assert.match(UI.ja.about.pwaUpdate, /バージョン/);
   assert.equal(UI.ja.about.versionLabel, 'バージョン');
   assert.equal(UI.en.pwa.updateAvailable, 'A new version is available');
+  assert.equal(UI.en.pwa.updatePreparing, 'Preparing update…');
   assert.equal(UI.en.pwa.reload, 'Reload');
   assert.equal(UI.en.pwa.later, 'Later');
   assert.equal(UI.en.pwa.checkUpdate, 'Check for updates');
@@ -2692,6 +2694,7 @@ test('PWA 更新バナーの文言と検知', () => {
   assert.match(UI.en.about.pwaUpdate, /version number/i);
   assert.equal(UI.en.about.versionLabel, 'Version');
   assert.doesNotMatch(UI.en.pwa.updateAvailable, japanese);
+  assert.doesNotMatch(UI.en.pwa.updatePreparing, japanese);
   assert.doesNotMatch(UI.en.pwa.reload, japanese);
   assert.doesNotMatch(UI.en.pwa.later, japanese);
   assert.doesNotMatch(UI.en.pwa.checkUpdate, japanese);
