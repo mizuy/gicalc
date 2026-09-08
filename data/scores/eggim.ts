@@ -27,7 +27,7 @@ export const eggimScore: ScoreDefinition = {
       pubmed: '27280384',
     },
     {
-      role: 'related-study',
+      role: 'review',
       text: 'Kawamura M et al. Dig Endosc 2021',
       pubmed: '34415621',
     },

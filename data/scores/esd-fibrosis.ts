@@ -26,7 +26,7 @@ export const esdFibrosisScore: ClassificationDefinition = {
       pubmed: ESD_FIBROSIS_2010_PUBMED,
     },
     {
-      role: 'related-study',
+      role: 'review',
       text: 'Kim EK, Han DS, et al. Intest Res 2016;14:358-364',
       pubmed: ESD_FIBROSIS_2016_PUBMED,
     },

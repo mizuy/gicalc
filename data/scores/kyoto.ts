@@ -17,12 +17,12 @@ export const kyotoScore: ScoreDefinition = {
       text: 'Haruma K et al. Kyoto Classification of Gastritis, 2017',
     },
     {
-      role: 'related-study',
+      role: 'original',
       text: 'Shichijo S et al. J Gastroenterol Hepatol 2017;32:1581-1586',
       pubmed: '28217843',
     },
     {
-      role: 'related-study',
+      role: 'review',
       text: 'Kawamura M et al. Dig Endosc 2021',
       pubmed: '34415621',
     },

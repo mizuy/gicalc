@@ -17,7 +17,7 @@ export const whoSerratedScore: ClassificationDefinition = {
     'The WHO 2019 classification of serrated lesions in the colorectum distinguishes hyperplastic polyp (HP), sessile serrated lesion (SSL; formerly sessile serrated adenoma/polyp, SSA/P), SSL with dysplasia, traditional serrated adenoma (TSA), and unclassified serrated lesion. SSL shows serrated architecture with crypt distortion (dilated, branched, or horizontally oriented crypts) without cytologic dysplasia. TSA shows ectopic crypt foci and often eosinophilic cytoplasm. SSA/P terminology is deprecated in favour of SSL.',
   citations: [
     {
-      role: 'guideline',
+      role: 'original',
       text: 'WHO Classification of Tumours: Digestive System Tumours, 5th ed, 2019',
     },
     {

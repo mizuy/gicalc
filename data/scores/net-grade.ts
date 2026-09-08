@@ -17,11 +17,11 @@ export const netGradeScore: ClassificationDefinition = {
     'The WHO 2019 classification grades well-differentiated gastroenteropancreatic neuroendocrine tumours (NETs) by mitotic count and Ki-67 proliferation index. G1: mitotic count <2 per 2 mm² and Ki-67 index <3%. G2: mitotic count 2–20 per 2 mm² or Ki-67 index 3–20%. G3: mitotic count >20 per 2 mm² or Ki-67 index >20%. Poorly differentiated neuroendocrine carcinoma (NEC) is high-grade by definition (G3) but is a separate entity from well-differentiated NET G3. Grade is based on the higher value when mitotic count and Ki-67 disagree.',
   citations: [
     {
-      role: 'guideline',
+      role: 'original',
       text: 'WHO Classification of Tumours: Endocrine and Neuroendocrine Tumours, 5th ed, 2019',
     },
     {
-      role: 'review',
+      role: 'original',
       text: 'Klimstra DS et al.',
       pubmed: WHO_NET_2019_PUBMED,
     },

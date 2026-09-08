@@ -19,7 +19,7 @@ export const spsScore: ClassificationDefinition = {
     'Serrated polyposis syndrome (SPS) is diagnosed when either of the following WHO 2019 criteria is met. Criterion I: at least five serrated polyps proximal to the rectum, all ≥5 mm in size, with at least two ≥10 mm. Criterion II: more than 20 serrated polyps of any size distributed throughout the large bowel, with at least five proximal to the rectum. Serrated polyps include hyperplastic polyps (HP), sessile serrated lesions (SSL; formerly SSA/P), and traditional serrated adenomas (TSA). Counts are cumulative over a lifetime and across multiple colonoscopies. Adenomas are not counted toward SPS criteria.',
   citations: [
     {
-      role: 'guideline',
+      role: 'original',
       text: 'WHO Classification of Digestive System Tumours, 5th ed. 2019',
     },
     {

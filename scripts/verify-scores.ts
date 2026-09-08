@@ -2805,6 +2805,25 @@ test('ページ末尾の文献は役割を示し、画像だけの副次的ソ�
     getToolCitations(getScoreById('aronchick')!).map((citation) => citation.role),
     ['original', 'japanese-reference'],
   );
+  assert.deepEqual(
+    getToolCitations(getScoreById('kyoto')!).map((citation) => citation.role),
+    ['original', 'original', 'review'],
+  );
+  assert.deepEqual(
+    getToolCitations(getScoreById('toya')!).map((citation) => citation.role),
+    ['original', 'review'],
+  );
+  assert.deepEqual(
+    getToolCitations(getScoreById('sps')!).map((citation) => citation.role),
+    ['original', 'review'],
+  );
+  assert.deepEqual(
+    getToolCitations(getScoreById('vienna')!).map((citation) => citation.role),
+    ['original', 'review'],
+  );
+  for (const scoreId of ['itbcg-budding', 'paris', 'lst']) {
+    assert.equal(getToolCitations(getScoreById(scoreId)!)[0]?.role, 'original');
+  }
   assert.equal(UI.ja.citationRole.original, '原著');
   assert.equal(UI.ja.citationRole.review, 'レビュー');
   assert.equal(UI.ja.citationRole['japanese-reference'], '日本語版の参照先');
