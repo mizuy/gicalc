@@ -144,7 +144,7 @@ type ToolBase = {
   officialUrl?: string;
   officialLinkLabel?: string;
   officialLinkRole?: Extract<CitationRole, 'japanese-reference' | 'official'>;
-  /** 画面に出す注意。英語は SCORE_EN.note で上書き */
+  /** 補足。ページ末尾には出さず、本文に載せるほど重要なことだけ description / comment へ書く */
   note?: string;
   /** 画面には出さない実装・表示仕様の記録 */
   implementationNote?: string;
@@ -239,7 +239,7 @@ export type AlgorithmFlow = {
 
 export type ClassificationDefinition = ToolBase & {
   kind: 'classification';
-  /** 原著の定義文。画面末尾の文献ブロックに出す */
+  /** 原著の定義文。データとして保持し、ページ末尾には出さない */
   originalLead?: string;
   /** 親子関係を持つ分類で、カード前に示す全体像 */
   hierarchy?: ClassificationHierarchyNode[];

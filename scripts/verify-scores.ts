@@ -2608,7 +2608,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.39');
+  assert.equal(pkg.version, '1.0.40');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2839,6 +2839,13 @@ test('画像の権利・加工メモはデータに保持し、ページには�
     'utf8',
   );
   assert.doesNotMatch(figureComponent, /figure\.note/);
+
+  const pageShell = readFileSync(
+    join(process.cwd(), 'components/calculator/ScorePageShell.tsx'),
+    'utf8',
+  );
+  assert.doesNotMatch(pageShell, /originalLead/);
+  assert.doesNotMatch(pageShell, /score\.note/);
 
   const esdFibrosis = getScoreById('esd-fibrosis');
   assert.ok(esdFibrosis?.figures?.[0]?.note);

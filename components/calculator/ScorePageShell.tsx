@@ -84,22 +84,14 @@ function ScorePageFooter({ score }: { score: ScoreDefinition }) {
   const tint = useThemeColor({}, 'tint');
   const border = useThemeColor({}, 'border');
   const { t } = useLocale();
-  const originalLead = isClassification(score) ? score.originalLead : undefined;
   const citations = getToolCitations(score);
-  const hasSources = Boolean(citations.length || score.license || score.officialUrl || score.note);
+  const hasSources = Boolean(citations.length || score.license || score.officialUrl);
 
   return (
     <View style={[styles.footer, { borderColor: border }]}>
       {pageLevelFigures(score).map((figure) => (
         <ClassificationFigure key={figureKey(figure)} figure={figure} />
       ))}
-
-      {originalLead ? (
-        <View style={styles.originalBlock}>
-          <Text style={[styles.originalLabel, { color: tint }]}>{t.original}</Text>
-          <Text style={[styles.originalLead, { color: textSecondary }]}>{originalLead}</Text>
-        </View>
-      ) : null}
 
       {hasSources ? (
         <View style={styles.reference}>
@@ -140,7 +132,6 @@ function ScorePageFooter({ score }: { score: ScoreDefinition }) {
               </View>
             </View>
           ) : null}
-          {score.note ? <Text style={[styles.note, { color: textSecondary }]}>{score.note}</Text> : null}
         </View>
       ) : null}
 
@@ -194,18 +185,6 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     gap: 12,
   },
-  originalBlock: {
-    gap: 4,
-  },
-  originalLabel: {
-    fontSize: 11,
-    fontWeight: '800',
-    letterSpacing: 0.4,
-  },
-  originalLead: {
-    fontSize: 13,
-    lineHeight: 20,
-  },
   reference: {
     gap: 4,
   },
@@ -236,11 +215,6 @@ const styles = StyleSheet.create({
   citationLink: {
     flex: 1,
     minWidth: 0,
-  },
-  note: {
-    fontSize: 13,
-    lineHeight: 20,
-    marginTop: 4,
   },
   related: {
     marginBottom: 0,

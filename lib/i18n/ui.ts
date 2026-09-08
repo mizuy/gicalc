@@ -16,7 +16,6 @@ export type UiStrings = {
   reference: string;
   source: string;
   license: string;
-  original: string;
   citationRole: Record<CitationRole, string>;
   note: string;
   reset: string;
@@ -101,7 +100,6 @@ export const UI: Record<Locale, UiStrings> = {
     reference: '文献',
     source: '出典',
     license: 'ライセンス',
-    original: '原著',
     citationRole: {
       original: '原著',
       review: 'レビュー',
@@ -224,7 +222,6 @@ export const UI: Record<Locale, UiStrings> = {
     reference: 'Reference',
     source: 'Source',
     license: 'License',
-    original: 'Original',
     citationRole: {
       original: 'Original article',
       review: 'Review',

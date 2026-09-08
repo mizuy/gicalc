@@ -1627,7 +1627,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
   'kajiwara-nomogram': {
     name: 'Colorectal T1 LNM nomogram (Kajiwara / JSCCR)',
     description:
-      'Predicts lymph-node metastasis (LNM) probability after endoscopic treatment of colorectal T1 cancer. Six-factor multivariable logistic model from Kajiwara 2023 (GIE; derivation n=3080). Total points treat SM ≥2000 μm as 100 on the nomogram scale.',
+      'Predicts lymph-node metastasis (LNM) probability after endoscopic treatment of colorectal T1 cancer. Six-factor multivariable logistic model from Kajiwara 2023 (GIE; derivation n=3080). Total points treat SM ≥2000 μm as 100 on the nomogram scale. Values may differ slightly from the official site. GI Calc uses the published figures — the actual β coefficients — from the paper.',
     officialLinkLabel: 'Official calculator (JSCCR)',
     note: 'Values may differ slightly from the official site. GI Calc uses the published figures — the actual β coefficients — from the paper.',
     figureNotes: [
