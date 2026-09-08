@@ -101,6 +101,7 @@ import { WASP_2016_PUBMED, WASP_QUACH_2024_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { buildReportFormUrl, reportEnvironment, REPORT_FORM_URL } from '../lib/reportIssue';
+import { classificationOverviewNodes } from '../lib/classificationOverview';
 import {
   applyAlgorithmAnswer,
   findEntryForResult,
@@ -2607,7 +2608,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.38');
+  assert.equal(pkg.version, '1.0.39');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2855,6 +2856,47 @@ test('画像の権利・加工メモはデータに保持し、ページには�
       /Japan mark|at the top|highlight|\/score\/|\btab\b/i,
     );
   }
+});
+
+test('全分類ページは先頭に全分類アイテムの全体像を表示する', () => {
+  for (const score of ALL_SCORE_DEFINITIONS.filter(isClassification)) {
+    const nodes = classificationOverviewNodes(score);
+    const leaves = (function flatten(items: typeof nodes): string[] {
+      return items.flatMap((item) =>
+        item.children?.length ? flatten(item.children) : [item.label],
+      );
+    })(nodes);
+
+    assert.ok(nodes.length > 0, `${score.id}: 分類の全体像が空`);
+    assert.ok(
+      leaves.length >= score.entries.length,
+      `${score.id}: 分類の全体像に全項目がない`,
+    );
+    if (!score.hierarchy) {
+      for (const entry of score.entries) {
+        assert.ok(
+          leaves.some((label) => label.includes(entry.label)),
+          `${score.id}: ${entry.label} が分類の全体像にない`,
+        );
+      }
+    }
+  }
+
+  const referenceScreen = readFileSync(
+    join(process.cwd(), 'components/calculator/ClassificationReferenceScreen.tsx'),
+    'utf8',
+  );
+  const algorithmScreen = readFileSync(
+    join(process.cwd(), 'components/calculator/AlgorithmFlowScreen.tsx'),
+    'utf8',
+  );
+  assert.match(referenceScreen, /<ClassificationOverview score=\{score\} \/>/);
+  assert.match(algorithmScreen, /<ClassificationOverview score=\{score\} \/>/);
+
+  const englishJnet = localizeScore(getScoreById('jnet')!, 'en');
+  assert.match(classificationOverviewNodes(englishJnet)[0]?.label ?? '', /Type 1/);
+  assert.equal(UI.ja.classificationOverview, '分類の全体像');
+  assert.equal(UI.en.classificationOverview, 'Classification overview');
 });
 
 test('切り抜きがある分類は原図を埋め込まずリンクだけにする', () => {
