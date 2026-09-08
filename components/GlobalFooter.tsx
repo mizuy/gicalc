@@ -7,10 +7,33 @@ import { useLocale } from '@/lib/i18n';
 
 type FooterItemProps = {
   href: '/' | '/about';
-  icon: string;
+  icon: 'menu' | 'info';
   label: string;
   selected: boolean;
 };
+
+function FooterIcon({ icon, color }: Pick<FooterItemProps, 'icon'> & { color: string }) {
+  if (icon === 'menu') {
+    return (
+      <View style={styles.iconFrame}>
+        <View style={styles.menuIcon}>
+          <View style={[styles.menuBar, { backgroundColor: color }]} />
+          <View style={[styles.menuBar, { backgroundColor: color }]} />
+          <View style={[styles.menuBar, { backgroundColor: color }]} />
+        </View>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.iconFrame}>
+      <View style={[styles.infoIcon, { borderColor: color }]}>
+        <View style={[styles.infoDot, { backgroundColor: color }]} />
+        <View style={[styles.infoStem, { backgroundColor: color }]} />
+      </View>
+    </View>
+  );
+}
 
 function FooterItem({ href, icon, label, selected }: FooterItemProps) {
   const tint = useThemeColor({}, 'tint');
@@ -23,7 +46,7 @@ function FooterItem({ href, icon, label, selected }: FooterItemProps) {
         accessibilityRole="tab"
         accessibilityState={{ selected }}
         style={({ pressed }) => [styles.item, { opacity: pressed ? 0.65 : 1 }]}>
-        <Text style={[styles.icon, { color }]}>{icon}</Text>
+        <FooterIcon icon={icon} color={color} />
         <Text style={[styles.label, { color }]}>{label}</Text>
       </Pressable>
     </Link>
@@ -52,8 +75,8 @@ export function GlobalFooter() {
           paddingBottom: Math.max(insets.bottom, 4),
         },
       ]}>
-      <FooterItem href="/" icon="☰" label={t.tabs.scores} selected={homeSelected} />
-      <FooterItem href="/about" icon="ℹ" label={t.tabs.about} selected={aboutSelected} />
+      <FooterItem href="/" icon="menu" label={t.tabs.scores} selected={homeSelected} />
+      <FooterItem href="/about" icon="info" label={t.tabs.about} selected={aboutSelected} />
     </View>
   );
 }
@@ -63,23 +86,56 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row',
     minHeight: 52,
+    width: '100%',
   },
   item: {
     alignItems: 'center',
     flex: 1,
+    flexBasis: 0,
     justifyContent: 'center',
     minHeight: 50,
     paddingHorizontal: 12,
     paddingTop: 6,
   },
-  icon: {
-    fontSize: 18,
-    fontWeight: '700',
-    lineHeight: 20,
+  iconFrame: {
+    alignItems: 'center',
+    height: 20,
+    justifyContent: 'center',
+    width: 24,
+  },
+  menuIcon: {
+    gap: 3,
+    width: 18,
+  },
+  menuBar: {
+    borderRadius: 1,
+    height: 2,
+    width: 18,
+  },
+  infoIcon: {
+    alignItems: 'center',
+    borderRadius: 9,
+    borderWidth: 2,
+    height: 18,
+    justifyContent: 'center',
+    width: 18,
+  },
+  infoDot: {
+    borderRadius: 1,
+    height: 2,
+    marginBottom: 2,
+    width: 2,
+  },
+  infoStem: {
+    borderRadius: 1,
+    height: 7,
+    width: 2,
   },
   label: {
     fontSize: 10,
     fontWeight: '600',
     lineHeight: 14,
+    textAlign: 'center',
+    width: '100%',
   },
 });
