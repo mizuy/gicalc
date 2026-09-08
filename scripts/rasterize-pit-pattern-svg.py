@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Pit pattern SVGの各型要素を抽出し、高解像度WebPへラスタライズする。"""
+"""提供されたpit pattern SVGの各crop-targetを高解像度WebPへラスタライズする。"""
 
 from __future__ import annotations
 
 import argparse
 import copy
-import re
 import shutil
 import subprocess
 import tempfile
@@ -14,37 +13,35 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FIGURES = ROOT / 'public' / 'figures'
-SOURCE = FIGURES / 'pit-pattern-user2026-original.svg'
+SOURCE = FIGURES / 'pit-pattern-gemini2.svg'
 SVG_NS = 'http://www.w3.org/2000/svg'
 NS = {'svg': SVG_NS}
 SIZE = 900
 
 OUTPUTS = {
-    'I': 'pit-pattern-user2026-type-i.webp',
-    'II': 'pit-pattern-user2026-type-ii.webp',
-    'IIIs': 'pit-pattern-user2026-type-iiis.webp',
-    'IIIL': 'pit-pattern-user2026-type-iiil.webp',
-    'IV': 'pit-pattern-user2026-type-iv.webp',
-    'VI': 'pit-pattern-user2026-type-vi.webp',
-    'VN': 'pit-pattern-user2026-type-vn.webp',
+    'I': 'pit-pattern-gemini2-type-i.webp',
+    'II': 'pit-pattern-gemini2-type-ii.webp',
+    'IIIs': 'pit-pattern-gemini2-type-iiis.webp',
+    'IIIL': 'pit-pattern-gemini2-type-iiil.webp',
+    'IV': 'pit-pattern-gemini2-type-iv.webp',
+    'VI': 'pit-pattern-gemini2-type-vi.webp',
+    'VN': 'pit-pattern-gemini2-type-vn.webp',
 }
 
 
-def render(group: ET.Element, defs: ET.Element, destination: Path) -> None:
-    match = re.fullmatch(r'translate\((\d+),\s*(\d+)\)', group.get('transform', ''))
-    if not match:
-        raise ValueError(f'unsupported transform: {group.get("transform")}')
-    x, y = int(match.group(1)), int(match.group(2))
+def render(target: ET.Element, defs: ET.Element, destination: Path) -> None:
     crop = ET.Element(
         f'{{{SVG_NS}}}svg',
         {
-            'viewBox': f'{x - 60} {y - 60} 120 120',
+            'viewBox': '-70 -70 140 140',
             'width': str(SIZE),
             'height': str(SIZE),
         },
     )
     crop.append(copy.deepcopy(defs))
-    crop.append(copy.deepcopy(group))
+    isolated_target = copy.deepcopy(target)
+    isolated_target.attrib.pop('transform', None)
+    crop.append(isolated_target)
 
     with tempfile.NamedTemporaryFile(suffix='.svg') as temporary:
         ET.ElementTree(crop).write(temporary.name, encoding='utf-8', xml_declaration=True)
@@ -88,18 +85,14 @@ def main() -> None:
     if defs is None:
         raise ValueError('SVG defs not found')
 
-    pending_label: str | None = None
     found: set[str] = set()
-    for child in root:
-        if child.tag == f'{{{SVG_NS}}}text' and child.get('class') == 'type-text':
-            pending_label = ''.join(child.itertext()).strip()
+    for label, output in OUTPUTS.items():
+        target = root.find(f".//svg:g[@id='crop-target-{label}']", NS)
+        if target is None:
             continue
-        if child.tag != f'{{{SVG_NS}}}g' or pending_label not in OUTPUTS:
-            continue
-        render(child, defs, FIGURES / OUTPUTS[pending_label])
-        print(OUTPUTS[pending_label], f'{SIZE}x{SIZE}')
-        found.add(pending_label)
-        pending_label = None
+        render(target, defs, FIGURES / output)
+        print(output, f'{SIZE}x{SIZE}')
+        found.add(label)
 
     missing = set(OUTPUTS) - found
     if missing:
