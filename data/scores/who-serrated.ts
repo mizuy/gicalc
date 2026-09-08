@@ -15,8 +15,17 @@ export const whoSerratedScore: ClassificationDefinition = {
     'WHO 第5版（2019）消化器腫瘍の鋸歯状ポリープ・病変の組織型。WASP・SPS と連動する病理報告の共通言語です。',
   originalLead:
     'The WHO 2019 classification of serrated lesions in the colorectum distinguishes hyperplastic polyp (HP), sessile serrated lesion (SSL; formerly sessile serrated adenoma/polyp, SSA/P), SSL with dysplasia, traditional serrated adenoma (TSA), and unclassified serrated lesion. SSL shows serrated architecture with crypt distortion (dilated, branched, or horizontally oriented crypts) without cytologic dysplasia. TSA shows ectopic crypt foci and often eosinophilic cytoplasm. SSA/P terminology is deprecated in favour of SSL.',
-  reference:
-    'WHO Classification of Tumours: Digestive System Tumours, 5th ed, 2019 / Nagtegaal JD et al. Histopathology 2020',
+  citations: [
+    {
+      role: 'original',
+      text: 'WHO Classification of Tumours: Digestive System Tumours, 5th ed, 2019',
+    },
+    {
+      role: 'review',
+      text: 'Nagtegaal JD et al. Histopathology 2020',
+      pubmed: WHO_DIGESTIVE_2019_PUBMED,
+    },
+  ],
   pubmed: WHO_DIGESTIVE_2019_PUBMED,
   note: 'SSL with dysplasia は従来型異型増殖（tubular/villous）を伴う。TSA は大腸に限らず小腸にも起こりうる。未分類は上記に当てはまらない鋸歯状病変。',
   figures: [

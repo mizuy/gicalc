@@ -48,6 +48,21 @@ export type ToolKind = 'classification' | 'score' | 'prediction' | 'algorithm';
 /** 分類の原著言語。省略時は en（英語原著） */
 export type OriginalLocale = 'en' | 'ja';
 
+export type CitationRole =
+  | 'original'
+  | 'review'
+  | 'guideline'
+  | 'japanese-reference'
+  | 'related-study'
+  | 'official';
+
+export type ToolCitation = {
+  role: CitationRole;
+  text: string;
+  pubmed?: string;
+  href?: string;
+};
+
 export type ScoreOption = {
   value: number;
   label: string;
@@ -92,6 +107,7 @@ export type ClassificationFigure = {
   /** 図の再利用ライセンス（CC のときだけ書く） */
   license?: string;
   licenseUrl?: string;
+  /** 画像採用・切り抜き・権利確認などの実装記録。画面には表示しない */
   note: string;
   aspectRatio?: number;
 };
@@ -114,7 +130,11 @@ type ToolBase = {
   originalLocale?: OriginalLocale;
   /** 日本で考案・策定されたツール。国際分類（Paris / NICE など）には付けない */
   developedInJapan?: boolean;
+  /** 複数文献を役割別に表示するときに使う */
+  citations?: ToolCitation[];
   reference?: string;
+  /** 単一 reference の役割。省略時は original */
+  referenceRole?: CitationRole;
   /** PubMed PMID、または PubMed 上の URL（未収載論文は検索 URL） */
   pubmed?: string;
   /** Creative Commons など、確認できた再利用ライセンス */
@@ -123,8 +143,11 @@ type ToolBase = {
   /** 公式計算機など、PubMed 以外の外部リンク */
   officialUrl?: string;
   officialLinkLabel?: string;
+  officialLinkRole?: Extract<CitationRole, 'japanese-reference' | 'official'>;
   /** 画面に出す注意。英語は SCORE_EN.note で上書き */
   note?: string;
+  /** 画面には出さない実装・表示仕様の記録 */
+  implementationNote?: string;
   figures?: ClassificationFigure[];
 };
 
@@ -252,6 +275,18 @@ export const TOOL_KIND_LABELS: Record<ToolKind, string> = {
 
 export function isJapanDeveloped(tool: ScoreDefinition): boolean {
   return tool.developedInJapan === true;
+}
+
+export function getToolCitations(tool: ScoreDefinition): ToolCitation[] {
+  if (tool.citations) return tool.citations;
+  if (!tool.reference) return [];
+  return [
+    {
+      role: tool.referenceRole ?? 'original',
+      text: tool.reference,
+      pubmed: tool.pubmed,
+    },
+  ];
 }
 
 export const ORGAN_LABELS: Record<ScoreOrgan, string> = {

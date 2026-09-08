@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { test } from 'node:test';
 
@@ -101,6 +101,7 @@ import { WASP_2016_PUBMED, WASP_QUACH_2024_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { buildReportFormUrl, reportEnvironment, REPORT_FORM_URL } from '../lib/reportIssue';
+import { classificationOverviewNodes } from '../lib/classificationOverview';
 import {
   applyAlgorithmAnswer,
   findEntryForResult,
@@ -108,7 +109,14 @@ import {
 } from '../lib/scores/algorithmFlow';
 import { isPwaUpdateAvailable, shouldOfferUpdateAfterControllerChange } from '../lib/web/pwaUpdate';
 import { isRemoteVersionNewer, shouldReportUpdateAvailable } from '../lib/web/pwaVersionCheck';
-import { getToolKind, hasAlgorithmFlow, isClassification, isJapanDeveloped, TOOL_KIND_LABELS } from '../types/score';
+import {
+  getToolCitations,
+  getToolKind,
+  hasAlgorithmFlow,
+  isClassification,
+  isJapanDeveloped,
+  TOOL_KIND_LABELS,
+} from '../types/score';
 import { classificationOriginalLocale } from '../lib/i18n/localize';
 
 test('登録スコアは48種で臓器順に並ぶ', () => {
@@ -2083,7 +2091,11 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(aronchick.license, 'CC BY-NC-ND 4.0');
   assert.match(aronchick.note ?? '', /JGES 2020/);
   assert.match(aronchick.note ?? '', /Table 11/);
-  assert.match(aronchick.officialUrl ?? '', /jstage\.jst\.go\.jp/);
+  assert.match(
+    getToolCitations(aronchick).find((citation) => citation.role === 'japanese-reference')?.href ??
+      '',
+    /jstage\.jst\.go\.jp/,
+  );
 
   for (const score of SCORES) {
     for (const figure of score.figures ?? []) {
@@ -2596,7 +2608,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.36');
+  assert.equal(pkg.version, '1.0.39');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2755,6 +2767,136 @@ test('引用・ライセンス情報は CC と非 CC を分けて書く', () => 
   assert.match(UI.en.about.citationsCcBody, /Paris card schematics/);
   assert.equal(UI.en.secondarySourceFigure, 'NOT ORIGINAL FIGURE (SECONDARY SOURCE)');
   assert.equal(UI.ja.secondarySourceFigure, '原著図ではない（参考図）');
+});
+
+test('ページ末尾の文献は役割を示し、画像だけの副次的ソースは重複させない', () => {
+  const roles = new Set([
+    'original',
+    'review',
+    'guideline',
+    'japanese-reference',
+    'related-study',
+    'official',
+  ]);
+
+  for (const score of ALL_SCORE_DEFINITIONS) {
+    const citations = getToolCitations(score);
+    assert.ok(citations.length > 0, `${score.id}: ページ末尾の文献がない`);
+    for (const citation of citations) {
+      assert.ok(roles.has(citation.role), `${score.id}: 文献役割が不正`);
+      assert.ok(citation.text.trim(), `${score.id}: 文献名が空`);
+    }
+
+    if (!isClassification(score)) continue;
+    const figures = [
+      ...(score.figures ?? []),
+      ...score.entries.flatMap((entry) => entry.figures ?? []),
+    ];
+    for (const figure of figures.filter((item) => item.isSecondarySource && item.pubmed)) {
+      assert.equal(
+        citations.some((citation) => citation.pubmed === figure.pubmed),
+        false,
+        `${score.id}: 画像だけの副次的ソース ${figure.pubmed} が末尾文献と重複`,
+      );
+    }
+  }
+
+  assert.equal(getToolCitations(getScoreById('kimura-takemoto')!)[0]?.role, 'review');
+  assert.deepEqual(
+    getToolCitations(getScoreById('aronchick')!).map((citation) => citation.role),
+    ['original', 'japanese-reference'],
+  );
+  assert.deepEqual(
+    getToolCitations(getScoreById('kyoto')!).map((citation) => citation.role),
+    ['original', 'original', 'review'],
+  );
+  assert.deepEqual(
+    getToolCitations(getScoreById('toya')!).map((citation) => citation.role),
+    ['original', 'review'],
+  );
+  assert.deepEqual(
+    getToolCitations(getScoreById('sps')!).map((citation) => citation.role),
+    ['original', 'review'],
+  );
+  assert.deepEqual(
+    getToolCitations(getScoreById('vienna')!).map((citation) => citation.role),
+    ['original', 'review'],
+  );
+  for (const scoreId of ['itbcg-budding', 'paris', 'lst']) {
+    assert.equal(getToolCitations(getScoreById(scoreId)!)[0]?.role, 'original');
+  }
+  assert.equal(UI.ja.citationRole.original, '原著');
+  assert.equal(UI.ja.citationRole.review, 'レビュー');
+  assert.equal(UI.ja.citationRole['japanese-reference'], '日本語版の参照先');
+  assert.equal(UI.en.citationRole.original, 'Original article');
+  assert.equal(UI.en.citationRole.review, 'Review');
+  assert.equal(UI.en.citationRole['japanese-reference'], 'Japanese reference');
+});
+
+test('画像の権利・加工メモはデータに保持し、ページには表示しない', () => {
+  const figureComponent = readFileSync(
+    join(process.cwd(), 'components/calculator/ClassificationFigure.tsx'),
+    'utf8',
+  );
+  assert.doesNotMatch(figureComponent, /figure\.note/);
+
+  const esdFibrosis = getScoreById('esd-fibrosis');
+  assert.ok(esdFibrosis?.figures?.[0]?.note);
+  assert.match(esdFibrosis.figures[0].note, /CC ではない/);
+  assert.match(getScoreById('siewert')?.implementationNote ?? '', /日本マーク/);
+  assert.match(
+    getScoreById('colorectal-esd-curability')?.implementationNote ?? '',
+    /ハイライト/,
+  );
+
+  for (const score of ALL_SCORE_DEFINITIONS) {
+    assert.doesNotMatch(score.note ?? '', /日本マーク|画面上部|ハイライト|\/score\/|タブ/);
+    assert.doesNotMatch(
+      localizeScore(score, 'en').note ?? '',
+      /Japan mark|at the top|highlight|\/score\/|\btab\b/i,
+    );
+  }
+});
+
+test('全分類ページは先頭に全分類アイテムの全体像を表示する', () => {
+  for (const score of ALL_SCORE_DEFINITIONS.filter(isClassification)) {
+    const nodes = classificationOverviewNodes(score);
+    const leaves = (function flatten(items: typeof nodes): string[] {
+      return items.flatMap((item) =>
+        item.children?.length ? flatten(item.children) : [item.label],
+      );
+    })(nodes);
+
+    assert.ok(nodes.length > 0, `${score.id}: 分類の全体像が空`);
+    assert.ok(
+      leaves.length >= score.entries.length,
+      `${score.id}: 分類の全体像に全項目がない`,
+    );
+    if (!score.hierarchy) {
+      for (const entry of score.entries) {
+        assert.ok(
+          leaves.some((label) => label.includes(entry.label)),
+          `${score.id}: ${entry.label} が分類の全体像にない`,
+        );
+      }
+    }
+  }
+
+  const referenceScreen = readFileSync(
+    join(process.cwd(), 'components/calculator/ClassificationReferenceScreen.tsx'),
+    'utf8',
+  );
+  const algorithmScreen = readFileSync(
+    join(process.cwd(), 'components/calculator/AlgorithmFlowScreen.tsx'),
+    'utf8',
+  );
+  assert.match(referenceScreen, /<ClassificationOverview score=\{score\} \/>/);
+  assert.match(algorithmScreen, /<ClassificationOverview score=\{score\} \/>/);
+
+  const englishJnet = localizeScore(getScoreById('jnet')!, 'en');
+  assert.match(classificationOverviewNodes(englishJnet)[0]?.label ?? '', /Type 1/);
+  assert.equal(UI.ja.classificationOverview, '分類の全体像');
+  assert.equal(UI.en.classificationOverview, 'Classification overview');
 });
 
 test('切り抜きがある分類は原図を埋め込まずリンクだけにする', () => {

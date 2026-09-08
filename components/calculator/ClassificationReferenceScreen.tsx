@@ -1,5 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
+import { ClassificationOverview } from '@/components/calculator/ClassificationOverview';
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
 import { ScorePageShell } from '@/components/calculator/ScorePageShell';
 import { Text, useThemeColor } from '@/components/Themed';
@@ -9,7 +10,6 @@ import {
   figureKey,
   type ClassificationDefinition,
   type ClassificationEntry,
-  type ClassificationHierarchyNode,
 } from '@/types/score';
 
 type Props = {
@@ -36,39 +36,6 @@ function groupEntries(entries: ClassificationEntry[]): EntryGroup[] {
   return groups;
 }
 
-function HierarchyList({
-  nodes,
-  depth = 0,
-  borderColor,
-}: {
-  nodes: ClassificationHierarchyNode[];
-  depth?: number;
-  borderColor: string;
-}) {
-  return (
-    <View
-      style={[
-        styles.hierarchyList,
-        depth > 0 && styles.hierarchyNested,
-        depth > 0 && { borderLeftColor: borderColor },
-      ]}>
-      {nodes.map((node) => (
-        <View key={node.id} style={styles.hierarchyItem}>
-          <View style={styles.hierarchyLine}>
-            <Text style={styles.hierarchyBullet}>•</Text>
-            <Text style={[styles.hierarchyLabel, depth === 0 && styles.hierarchyRootLabel]}>
-              {node.label}
-            </Text>
-          </View>
-          {node.children?.length ? (
-            <HierarchyList nodes={node.children} depth={depth + 1} borderColor={borderColor} />
-          ) : null}
-        </View>
-      ))}
-    </View>
-  );
-}
-
 export function ClassificationReferenceScreen({ score }: Props) {
   const textSecondary = useThemeColor({}, 'textSecondary');
   const tint = useThemeColor({}, 'tint');
@@ -79,12 +46,7 @@ export function ClassificationReferenceScreen({ score }: Props) {
 
   return (
     <ScorePageShell score={score}>
-      {score.hierarchy?.length ? (
-        <View style={[styles.hierarchyCard, { backgroundColor: surface, borderColor: border }]}>
-          <Text style={[styles.hierarchyTitle, { color: tint }]}>{t.classificationOverview}</Text>
-          <HierarchyList nodes={score.hierarchy} borderColor={border} />
-        </View>
-      ) : null}
+      <ClassificationOverview score={score} />
       {groups.map((group) => (
         <View key={group.key || 'default'} style={styles.group}>
           {group.label ? (
@@ -130,46 +92,6 @@ export function ClassificationReferenceScreen({ score }: Props) {
 }
 
 const styles = StyleSheet.create({
-  hierarchyCard: {
-    borderWidth: 1,
-    borderRadius: 14,
-    padding: 14,
-    marginBottom: 18,
-  },
-  hierarchyTitle: {
-    fontSize: 15,
-    fontWeight: '800',
-    marginBottom: 10,
-  },
-  hierarchyList: {
-    gap: 5,
-  },
-  hierarchyNested: {
-    borderLeftWidth: 2,
-    marginLeft: 7,
-    paddingLeft: 16,
-    marginTop: 5,
-  },
-  hierarchyItem: {
-    minWidth: 0,
-  },
-  hierarchyLine: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 7,
-  },
-  hierarchyBullet: {
-    fontSize: 17,
-    lineHeight: 22,
-  },
-  hierarchyLabel: {
-    flex: 1,
-    fontSize: 14,
-    lineHeight: 22,
-  },
-  hierarchyRootLabel: {
-    fontWeight: '700',
-  },
   group: {
     marginBottom: 8,
   },

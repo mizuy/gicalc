@@ -24,9 +24,11 @@ export const jsphVaricesScore: ClassificationDefinition = {
   originalLead:
     'The revised rules comprise six main categories: location (L), form (F), color (C), red color signs (RC), bleeding signs, and mucosal findings. In principle, the endoscopic diagnosis is based on endoscopic findings assessed with the naked eye. The esophagus is divided into three portions: Ls (locus superior), Lm (locus medialis), and Li (locus inferior). Gastric varices are listed separately as Lg-c (cardiac), Lg-cf (cardiofornical), and Lg-f (fundal). Form: F0 lesions lack a varicose appearance (used after treatment, even if red or blue veins remain); F1 lesions are straight, small-caliber varices (small venous dilatations that disappear on insufflation are not included); F2 lesions are moderately enlarged, beady varices; F3 lesions are markedly enlarged, nodular or tumor-shaped varices. Color: Cw (white) varices look like large folds of the esophageal mucosa; Cb (blue) varices are bluish or cyanotic and the covering mucosa appears thin. Red color signs are reddish changes immediately beneath the submucosa and are classified as red wale markings (RWM), cherry-red spots (CRS), and hematocystic spots (HCS). RC0 is absent; RC1 is small in number and localized; RC2 is intermediate; RC3 is large in number and circumferential.',
   reference: 'Tajiri T et al. Dig Endosc 2010;22:1-9',
+  referenceRole: 'original',
   pubmed: JSPH_VARICES_2010_PUBMED,
   officialUrl: 'https://www.jsge.or.jp/committees/guideline/guideline/lc.html',
   officialLinkLabel: '肝硬変診療ガイドライン2020（食道・胃静脈瘤）',
+  officialLinkRole: 'japanese-reference',
   note: '1980年提案、1991年改訂、2010年第2版（英語）。現行は『門脈圧亢進症取扱い規約』第4版（2022）で同じ軸。記載順は L, F, C, RC, 出血兆候, 粘膜所見。胃静脈瘤の国際分類は Sarin。欧米の small / large はおおよそ F1 と F2/F3。',
   figures: [
     {

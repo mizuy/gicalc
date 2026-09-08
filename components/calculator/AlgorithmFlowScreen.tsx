@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { ClassificationOverview } from '@/components/calculator/ClassificationOverview';
 import { AlgorithmFlowMap } from '@/components/calculator/AlgorithmFlowMap';
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
 import { ScorePageShell } from '@/components/calculator/ScorePageShell';
@@ -103,6 +104,7 @@ export function AlgorithmFlowScreen({ score }: Props) {
 
   return (
     <ScorePageShell score={score} keyboardShouldPersistTaps="handled">
+      <ClassificationOverview score={score} />
       <Text style={[styles.section, { color: tint }]}>{flow.title}</Text>
       <Text style={[styles.hint, { color: textSecondary }]}>{t.algorithmHint}</Text>
 

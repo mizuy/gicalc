@@ -133,7 +133,6 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
   const { height: windowHeight, width: windowWidth } = useWindowDimensions();
   const surface = useThemeColor({}, 'surface');
   const border = useThemeColor({}, 'border');
-  const textSecondary = useThemeColor({}, 'textSecondary');
   const tint = useThemeColor({}, 'tint');
   const { t } = useLocale();
   const uri = figure.src ? publicPath(figure.src) : undefined;
@@ -181,7 +180,6 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
       {figure.license ? (
         <CitationLink label={`${t.license}: ${figure.license}`} href={figure.licenseUrl} />
       ) : null}
-      <Text style={[styles.note, { color: textSecondary }]}>{figure.note}</Text>
 
       {uri && open ? (
         <Modal
@@ -360,11 +358,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 6,
     lineHeight: 16,
-  },
-  note: {
-    fontSize: 11,
-    lineHeight: 16,
-    marginTop: 4,
   },
   lightbox: {
     flex: 1,

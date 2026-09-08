@@ -19,8 +19,18 @@ export const esdFibrosisScore: ClassificationDefinition = {
     '大腸 ESD 術中、インジゴカルミン入り局注後の粘膜下層所見で線維化程度を F0 / F1 / F2 に分類する。pit pattern / NICE / JNET とは別の分類です。',
   originalLead:
     'The degree of submucosal fibrosis was determined based on the findings observed at the time of submucosal local injection and classified into three groups: F0 (no fibrosis), F1 (mild fibrosis), and F2 (severe fibrosis). F0 was defined as a transparent submucosal layer. F1 appeared as a white web-like structure in the transparent submucosal layer and F2 appeared as a white muscular-like structure without a transparent submucosal layer.',
-  reference:
-    'Matsumoto A, Tanaka S, Oka S, et al. Scand J Gastroenterol 2010;45:1329-1337. Kim EK, Han DS, et al. Intest Res 2016;14:358-364',
+  citations: [
+    {
+      role: 'original',
+      text: 'Matsumoto A, Tanaka S, Oka S, et al. Scand J Gastroenterol 2010;45:1329-1337',
+      pubmed: ESD_FIBROSIS_2010_PUBMED,
+    },
+    {
+      role: 'review',
+      text: 'Kim EK, Han DS, et al. Intest Res 2016;14:358-364',
+      pubmed: ESD_FIBROSIS_2016_PUBMED,
+    },
+  ],
   pubmed: ESD_FIBROSIS_2010_PUBMED,
   figures: [
     {

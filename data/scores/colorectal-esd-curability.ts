@@ -16,11 +16,13 @@ export const colorectalEsdCurabilityScore: ScoreDefinition = {
   description:
     '大腸 ESD/EMR 後の病理所見から内視鏡的治癒切除か追加腸切除要否を判定します。JGES 大腸 ESD/EMR ガイドライン第2版の 5 項目と大腸癌治療ガイドラインの記載を併記します。',
   reference: 'Tanaka S et al. Dig Endosc 2020;32:219-239',
+  referenceRole: 'guideline',
   pubmed: JGES_COLORECTAL_ESD_2020_PUBMED,
   officialUrl: 'https://www.jsccr.jp/guideline/',
   officialLinkLabel: '大腸癌治療ガイドライン（JSCCR）',
-  note:
-    'JGES 大腸 ESD/EMR ガイドライン第2版の pT1（SM）5 項目をテーブル表示。VM・HM・深達度・組織型・Ly・V・budding を入力し、該当行をハイライト。LNM 確率は T1 Nomogram ページを参照。',
+  officialLinkRole: 'japanese-reference',
+  implementationNote:
+    'JGES 大腸 ESD/EMR ガイドライン第2版の pT1（SM）5項目をテーブル表示し、入力に応じて該当行をハイライトする。T1 Nomogramへの導線は関連ツールに表示する。',
   fields: [
     {
       id: 'depth',

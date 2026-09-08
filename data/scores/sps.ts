@@ -17,8 +17,17 @@ export const spsScore: ClassificationDefinition = {
     'WHO 2019 の鋸歯状ポリープ症候群（Serrated Polyposis Syndrome; 旧 hyperplastic polyposis）の診断基準。2010 基準との差分と、カウント対象・サーベイランスの要点をまとめた。WASP の SSL 形態分類とは別物。',
   originalLead:
     'Serrated polyposis syndrome (SPS) is diagnosed when either of the following WHO 2019 criteria is met. Criterion I: at least five serrated polyps proximal to the rectum, all ≥5 mm in size, with at least two ≥10 mm. Criterion II: more than 20 serrated polyps of any size distributed throughout the large bowel, with at least five proximal to the rectum. Serrated polyps include hyperplastic polyps (HP), sessile serrated lesions (SSL; formerly SSA/P), and traditional serrated adenomas (TSA). Counts are cumulative over a lifetime and across multiple colonoscopies. Adenomas are not counted toward SPS criteria.',
-  reference:
-    'WHO Classification of Digestive System Tumours, 5th ed. 2019. Dekker E et al. Gastroenterology 2020;158:1520-1523',
+  citations: [
+    {
+      role: 'original',
+      text: 'WHO Classification of Digestive System Tumours, 5th ed. 2019',
+    },
+    {
+      role: 'review',
+      text: 'Dekker E et al. Gastroenterology 2020;158:1520-1523',
+      pubmed: DEKKER_2020_PUBMED,
+    },
+  ],
   pubmed: DEKKER_2020_PUBMED,
   note: '2019 基準はいずれか 1 つで診断。2010 の家族歴基準（Type II）は 2019 で削除。直腸より口側＝rectosigmoid 以遠（2010 は sigmoid より口側）。ESGE 2019 polyposis、US MSTF 2020（Gupta GIE 2020）のサーベイランスを参照。',
   figures: [

@@ -15,7 +15,8 @@ export const spigelmanScore: ScoreDefinition = {
     '家族性腺腫性ポリポーシス（FAP）の十二指腸腺腫を、個数・最大径・組織型・異型度で 0–12 点・Stage 0–IV に層別します。1989 原法（軽度 / 中等度 / 高度）。Vienna 2 段階は Modified Spigelman。',
   reference: 'Spigelman AD et al. Lancet 1989;2:783-785',
   pubmed: SPIGELMAN_1989_PUBMED,
-  note: 'サーベイランス間隔は ESGE 2019 polyposis（van Leerdam）。乳頭部は別評価。現行病理は Vienna（LGD/HGD）が多いので Modified Spigelman も参照。',
+  note: 'サーベイランス間隔は ESGE 2019 polyposis（van Leerdam）。乳頭部は別評価。',
+  implementationNote: 'Vienna（LGD/HGD）に合わせた改変法への導線は関連ツールに表示する。',
   figures: [
     {
       href: 'https://www.ncbi.nlm.nih.gov/books/NBK1345/table/fap.T.spigelman_scoring_system_for_duode/',
