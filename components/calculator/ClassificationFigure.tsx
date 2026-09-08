@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import * as Linking from 'expo-linking';
 import {
   ActivityIndicator,
   Image,
@@ -17,6 +16,7 @@ import {
 
 import { CitationLink } from '@/components/calculator/CitationLink';
 import { Text, useThemeColor } from '@/components/Themed';
+import { figureCreditHref, figureCreditLabel } from '@/lib/figures/credit';
 import { useLocale } from '@/lib/i18n';
 import { publicPath } from '@/lib/web/baseUrl';
 import type { ClassificationFigure as Figure } from '@/types/score';
@@ -25,11 +25,6 @@ type Props = {
   figure: Figure;
   /** 分類カード内の参考画像。出典は短い論文リンクにする */
   compact?: boolean;
-};
-
-type WebLinkProps = {
-  href: string;
-  hrefAttrs: { target: string; rel: string };
 };
 
 type FigureImageProps = {
@@ -141,6 +136,9 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
   const lightboxMaxWidth = windowWidth - LIGHTBOX_PADDING_HORIZONTAL;
   const lightboxSize = fitWithinBounds(aspectRatio, lightboxMaxWidth, lightboxMaxHeight);
 
+  const creditLabel = figureCreditLabel(figure);
+  const creditHref = figureCreditHref(figure);
+
   return (
     <View
       style={[
@@ -148,15 +146,6 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
         compact ? styles.boxCompact : null,
         { backgroundColor: surface, borderColor: border },
       ]}>
-      <View
-        accessibilityRole="text"
-        style={[
-          styles.kindBadge,
-          compact ? styles.kindBadgeCompact : null,
-          { borderColor: tint },
-        ]}>
-        <Text style={[styles.kindBadgeText, { color: tint }]}>{t.figureKind[figure.figureKind]}</Text>
-      </View>
       {uri ? (
         <Pressable
           accessibilityRole="button"
@@ -168,11 +157,8 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
             <Text style={styles.enlargeBadgeText}>{t.enlargeHint}</Text>
           </View>
         </Pressable>
-      ) : figure.href ? (
-        <FigureHrefButton href={figure.href} label={`${t.openFigure}: ${figure.hrefLabel ?? figure.caption}`} />
       ) : null}
-      <Text style={[styles.caption, compact ? styles.captionCompact : null]}>{figure.caption}</Text>
-      <FigureSource figure={figure} compact={compact} />
+      <FigureCredit label={creditLabel} href={creditHref} compact={compact} />
 
       {uri && open ? (
         <Modal
@@ -201,13 +187,16 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
                 bounces={false}
                 showsHorizontalScrollIndicator
                 contentContainerStyle={styles.lightboxHContent}>
-                <FigureImage
-                  uri={uri}
-                  alt={figure.alt}
-                  aspectRatio={aspectRatio}
-                  compact={false}
-                  displaySize={lightboxSize}
-                />
+                <View>
+                  <FigureImage
+                    uri={uri}
+                    alt={figure.alt}
+                    aspectRatio={aspectRatio}
+                    compact={false}
+                    displaySize={lightboxSize}
+                  />
+                  <FigureCredit label={creditLabel} href={creditHref} compact={false} onDark />
+                </View>
               </ScrollView>
             </ScrollView>
             <Pressable
@@ -223,50 +212,27 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
   );
 }
 
-function figureSourceLabel(figure: Figure): string {
-  if (figure.figureKind === 'gicalc') return figure.sourceShort;
-  return `(${figure.sourceShort})`;
-}
-
-function FigureSource({ figure, compact }: { figure: Figure; compact: boolean }) {
-  const textSecondary = useThemeColor({}, 'textSecondary');
-  const sourceHref = figure.figureKind === 'gicalc' ? undefined : figure.doi;
-  const sourcePubmed = figure.figureKind === 'gicalc' ? undefined : figure.pubmed;
-
+function FigureCredit({
+  label,
+  href,
+  compact,
+  onDark = false,
+}: {
+  label: string;
+  href?: string;
+  compact: boolean;
+  onDark?: boolean;
+}) {
   return (
-    <View style={styles.sourceBlock}>
-      <CitationLink label={figureSourceLabel(figure)} pubmed={sourcePubmed} href={sourceHref} />
-      {figure.license ? (
-        <Text style={[styles.licenseText, compact ? styles.licenseTextCompact : null, { color: textSecondary }]}>
-          {figure.license}
-        </Text>
-      ) : null}
-    </View>
-  );
-}
-
-function FigureHrefButton({ href, label }: { href: string; label: string }) {
-  const tint = useThemeColor({}, 'tint');
-  const webProps: WebLinkProps | Record<string, never> =
-    Platform.OS === 'web'
-      ? { href, hrefAttrs: { target: '_blank', rel: 'noopener noreferrer' } }
-      : {};
-
-  return (
-    <Pressable
-      accessibilityRole="link"
-      accessibilityLabel={label}
-      onPress={
-        Platform.OS === 'web'
-          ? undefined
-          : () => {
-              void Linking.openURL(href);
-            }
-      }
-      style={({ pressed }) => [styles.hrefButton, { backgroundColor: tint, opacity: pressed ? 0.88 : 1 }]}
-      {...webProps}>
-      <Text style={styles.hrefButtonText}>{label}</Text>
-    </Pressable>
+    <CitationLink
+      label={label}
+      href={href}
+      style={[
+        styles.credit,
+        compact ? styles.creditCompact : null,
+        onDark ? styles.creditOnDark : null,
+      ]}
+    />
   );
 }
 
@@ -284,35 +250,19 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 0,
   },
-  kindBadge: {
-    alignSelf: 'flex-start',
-    borderWidth: 1,
-    borderRadius: 999,
-    paddingHorizontal: 9,
-    paddingVertical: 3,
-    marginBottom: 8,
-  },
-  kindBadgeCompact: {
-    paddingHorizontal: 7,
-    paddingVertical: 2,
-    marginBottom: 6,
-  },
-  kindBadgeText: {
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 0.2,
-  },
-  sourceBlock: {
-    gap: 2,
-  },
-  licenseText: {
+  credit: {
     fontSize: 12,
     lineHeight: 18,
-    marginTop: 2,
+    marginTop: 8,
   },
-  licenseTextCompact: {
+  creditCompact: {
     fontSize: 11,
     lineHeight: 16,
+    marginTop: 6,
+  },
+  creditOnDark: {
+    color: '#E8EEF6',
+    marginTop: 10,
   },
   thumbWrap: {
     position: 'relative',
@@ -344,18 +294,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
   },
-  hrefButton: {
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  hrefButtonText: {
-    color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: '800',
-    textAlign: 'center',
-  },
   enlargeBadge: {
     position: 'absolute',
     right: 8,
@@ -374,17 +312,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 11,
     fontWeight: '700',
-  },
-  caption: {
-    fontSize: 13,
-    fontWeight: '700',
-    marginTop: 10,
-    lineHeight: 20,
-  },
-  captionCompact: {
-    fontSize: 12,
-    marginTop: 6,
-    lineHeight: 16,
   },
   lightbox: {
     flex: 1,

@@ -56,7 +56,7 @@ export type CitationRole =
   | 'related-study'
   | 'official';
 
-/** 画面に出す画像の種類。Original / Secondary / GI Calc */
+/** データの画像種類。画面の1行は Original / Not original に畳む */
 export type FigureKind = 'original' | 'secondary' | 'gicalc';
 
 export type ToolCitation = {
@@ -96,13 +96,15 @@ export type ScoreResult = {
 export type ClassificationFigure = {
   /** アプリ内に埋め込む CC 図。非 CC は置かず href だけにする */
   src?: string;
-  /** Original = 原著図、Secondary = 二次文献、gicalc = GI Calc 提供図 */
+  /** original = 原著図、secondary = 二次文献、gicalc = GI Calc 提供図 */
   figureKind: FigureKind;
   /** 画面用の短い出典。論文は "Hamada 2021"、GI Calc 図は "GI Calc" */
   sourceShort: string;
+  /** 画面1行用の図番号。例: Fig. 1 / Fig. 5a / Table 5。無ければ hrefLabel か caption から拾う */
+  figureRef?: string;
   /** 出版社の図そのもの、または図アンカー。クリックで図へ飛ぶ */
   href?: string;
-  /** リンクボタンに出す短いラベル（例: Fig. 7） */
+  /** リンク先の短いラベル（例: Fig. 7）。figureRef が無いときの図番号にも使う */
   hrefLabel?: string;
   alt: string;
   caption: string;
