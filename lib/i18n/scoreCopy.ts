@@ -1335,28 +1335,29 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     comments: {
       'LST-G homogeneous':
-        'Deep SM invasion is low. The 0.5% (CI 0.1–1.0%) on the figure is from the Bogie 2018 meta-analysis.',
+        'Deep SM invasion is low. The 0.5% (CI 0.1–1.0%) is from the Bogie 2018 meta-analysis.',
       'LST-G mixed nodular':
-        'Invasion often sits in the large nodule. The 10.5% (CI 5.9–15.1%) on the figure is from Bogie 2018.',
-      'LST-NG flat elevated': 'The 4.9% (CI 2.1–7.8%) on the figure is from Bogie 2018.',
+        'Invasion often sits in the large nodule. The 10.5% (CI 5.9–15.1%) is from Bogie 2018.',
+      'LST-NG flat elevated': 'The 4.9% (CI 2.1–7.8%) is from Bogie 2018.',
       'LST-NG pseudodepressed':
-        'Highest invasion risk of the four subtypes. The 31.6% (CI 19.8–43.4%) on the figure is from Bogie 2018. Consider en-bloc resection.',
+        'Highest invasion risk of the four subtypes. The 31.6% (CI 19.8–43.4%) is from Bogie 2018. Consider en-bloc resection.',
     },
     figureNotes: [
-      'Crops are on each subtype card. The original plate is not hosted — link to Clin Endosc 2025 Fig. 3. License: CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+      'Clin Endosc 2025 Fig. 3 (CC BY-NC 4.0) is linked rather than hosted. The Kudo 2008 GIE original is not CC.',
+      'Reference schematic created and supplied by a project contributor, not a figure from the LST original. The composite is linked rather than embedded; CC BY 4.0 crops are shown on each classification card.',
     ],
     entryFigureNotes: {
       'LST-G homogeneous': [
-        'Cropped from original Fig. 3 (LST-G homogeneous). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+        'Cropped from a contributor-created schematic. Not a figure from the LST original. License: CC BY 4.0.',
       ],
       'LST-G mixed nodular': [
-        'Cropped from original Fig. 3 (LST-G mixed nodular). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+        'Cropped from a contributor-created schematic. Not a figure from the LST original. License: CC BY 4.0.',
       ],
       'LST-NG flat elevated': [
-        'Cropped from original Fig. 3 (LST-NG flat). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+        'Cropped from a contributor-created schematic. Not a figure from the LST original. License: CC BY 4.0.',
       ],
       'LST-NG pseudodepressed': [
-        'Cropped from original Fig. 3 (LST-NG pseudodepressed). Clin Endosc 2025. License: CC BY-NC 4.0. Castillo-Regalado 2022 WJGE is CC BY-NC 4.0. The Kudo 2008 GIE original is not CC.',
+        'Cropped from a contributor-created schematic. Not a figure from the LST original. License: CC BY 4.0.',
       ],
     },
   },

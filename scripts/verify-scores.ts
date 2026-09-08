@@ -1741,18 +1741,21 @@ test('分類は原著の図を出典付きで持つ', () => {
 
   const lst = getScoreById('lst');
   assert.ok(lst && isClassification(lst));
+  assert.equal(lst.figures?.length, 2);
   assertOriginalPlateIsLinkOnly(lst);
+  assert.equal(lst.figures?.[1]?.href, '/figures/lst-user2026-original.svg');
+  assert.equal(lst.figures?.[1]?.isSecondarySource, true);
+  assert.equal(lst.figures?.[1]?.license, 'CC BY 4.0');
   assert.equal(lst.entries[0]?.figures?.length, 1);
-  assert.match(lst.entries[0]?.figures?.[0]?.src ?? '', /g-homogeneous/);
-  assert.match(lst.entries[1]?.figures?.[0]?.src ?? '', /g-mixed/);
-  assert.match(lst.entries[2]?.figures?.[0]?.src ?? '', /ng-flat/);
-  assert.match(lst.entries[3]?.figures?.[0]?.src ?? '', /ng-pseudodepressed/);
-  assert.match(lst.entries[0]?.figures?.[0]?.caption ?? '', /Fig\. 3/);
-  assert.match(lst.entries[0]?.figures?.[0]?.source ?? '', /Kudo S/);
+  assert.match(lst.entries[0]?.figures?.[0]?.src ?? '', /lst-user2026-g-homogeneous/);
+  assert.match(lst.entries[1]?.figures?.[0]?.src ?? '', /lst-user2026-g-mixed/);
+  assert.match(lst.entries[2]?.figures?.[0]?.src ?? '', /lst-user2026-ng-flat/);
+  assert.match(lst.entries[3]?.figures?.[0]?.src ?? '', /lst-user2026-ng-pseudodepressed/);
   assert.equal(lst.pubmed, LST_2008_PUBMED);
-  assert.equal(lst.entries[0]?.figures?.[0]?.license, 'CC BY-NC 4.0');
-  assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /切り抜き/);
-  assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /CC BY-NC 4\.0/);
+  assert.equal(lst.entries.every((entry) => entry.figures?.[0]?.license === 'CC BY 4.0'), true);
+  assert.equal(lst.entries.every((entry) => entry.figures?.[0]?.isSecondarySource), true);
+  assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /切り抜/);
+  assert.match(lst.entries[0]?.figures?.[0]?.note ?? '', /CC BY 4\.0/);
 
   const appendicealOrificeFig = getScoreById('appendiceal-orifice');
   assert.ok(appendicealOrificeFig && isClassification(appendicealOrificeFig));
@@ -2593,7 +2596,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.32');
+  assert.equal(pkg.version, '1.0.33');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {

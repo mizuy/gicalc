@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <!-- Modern Color Palette & Gradients -->
+    <linearGradient id="tumor-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff4d6d" />
+      <stop offset="100%" stop-color="#c9184a" />
+    </linearGradient>
+    <linearGradient id="tissue-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e2e8f0" />
+      <stop offset="100%" stop-color="#cbd5e1" />
+    </linearGradient>
+    
+    <!-- Soft Drop Shadow for Cards -->
+    <filter id="card-shadow" x="-2%" y="-5%" width="104%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+
+    <style>
+      .bg { fill: #f8fafc; }
+      .card { fill: #ffffff; stroke: #f1f5f9; stroke-width: 2; filter: url(#card-shadow); }
+      .tissue { fill: url(#tissue-grad); }
+      .tumor { fill: url(#tumor-grad); }
+      .cat-title { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 26px; font-weight: 800; fill: #1e293b; }
+      .cat-sub { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 600; fill: #64748b; letter-spacing: 1px; text-transform: uppercase; }
+      .type-label { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 700; fill: #0f172a; }
+      .type-desc { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 500; fill: #475569; }
+      .accent-line-ng { fill: #3b82f6; }
+      .accent-line-g { fill: #10b981; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="100%" height="100%" class="bg" />
+
+  <!-- ================= SECTION 1: LST-NG (Non-Granular) ================= -->
+  <g transform="translate(40, 40)">
+    <!-- Card Background -->
+    <rect width="920" height="220" rx="16" class="card" />
+    
+    <!-- Category Accent & Labels -->
+    <rect x="24" y="30" width="6" height="160" rx="3" class="accent-line-ng" />
+    <text class="cat-title" x="45" y="110">LST-NG</text>
+    <text class="cat-sub" x="45" y="135">Non-Granular</text>
+
+    <!-- Row 1: IIa (Flat elevated) -->
+    <g transform="translate(0, 0)">
+      <!-- Tissue Base -->
+      <rect x="250" y="70" width="380" height="16" rx="8" class="tissue" />
+      <!-- Tumor (Smooth flat elevated with rounded edges) -->
+      <path class="tumor" d="M 280,70 L 280,52 C 280,47 284,44 289,44 L 591,44 C 596,44 600,47 600,52 L 600,70 Z" />
+      <!-- Labels -->
+      <text class="type-label" x="660" y="55">IIa</text>
+      <text class="type-desc" x="660" y="78">Flat elevated (扁平隆起型)</text>
+    </g>
+
+    <!-- Row 2: IIc + IIa (Pseudodepressed) -->
+    <g transform="translate(0, 0)">
+      <!-- Tissue Base -->
+      <rect x="250" y="160" width="380" height="16" rx="8" class="tissue" />
+      <!-- Tumor (Smooth elevated margins with elegant central dip) -->
+      <path class="tumor" d="M 280,160 L 280,135 C 280,130 286,127 292,132 C 340,162 540,162 588,132 C 594,127 600,130 600,135 L 600,160 Z" />
+      <!-- Labels -->
+      <text class="type-label" x="660" y="145">IIc + IIa</text>
+      <text class="type-desc" x="660" y="168">Pseudodepressed (偽陥凹型)</text>
+    </g>
+  </g>
+
+
+  <!-- ================= SECTION 2: LST-G (Granular) ================= -->
+  <g transform="translate(40, 290)">
+    <!-- Card Background -->
+    <rect width="920" height="220" rx="16" class="card" />
+    
+    <!-- Category Accent & Labels -->
+    <rect x="24" y="30" width="6" height="160" rx="3" class="accent-line-g" />
+    <text class="cat-title" x="45" y="110">LST-G</text>
+    <text class="cat-sub" x="45" y="135">Granular</text>
+
+    <!-- Row 3: IIa (Homogenous) -->
+    <g transform="translate(0, 0)">
+      <!-- Tissue Base -->
+      <rect x="250" y="70" width="380" height="16" rx="8" class="tissue" />
+      <!-- Tumor (Uniform continuous granular waves) -->
+      <path class="tumor" d="M 280,70 L 280,60 
+               A 10 10 0 0 1 300 60 A 10 10 0 0 1 320 60 A 10 10 0 0 1 340 60 
+               A 10 10 0 0 1 360 60 A 10 10 0 0 1 380 60 A 10 10 0 0 1 400 60 
+               A 10 10 0 0 1 420 60 A 10 10 0 0 1 440 60 A 10 10 0 0 1 460 60 
+               A 10 10 0 0 1 480 60 A 10 10 0 0 1 500 60 A 10 10 0 0 1 520 60 
+               A 10 10 0 0 1 540 60 A 10 10 0 0 1 560 60 A 10 10 0 0 1 580 60 
+               A 10 10 0 0 1 600 60 L 600,70 Z" />
+      <!-- Labels -->
+      <text class="type-label" x="660" y="55">IIa</text>
+      <text class="type-desc" x="660" y="78">Homogenous (均一結節型)</text>
+    </g>
+
+    <!-- Row 4: IIa + Is (Nodular mixed) -->
+    <g transform="translate(0, 0)">
+      <!-- Tissue Base -->
+      <rect x="250" y="160" width="380" height="16" rx="8" class="tissue" />
+      <!-- Tumor (Granular skirt ending with a prominent smooth nodule) -->
+      <path class="tumor" d="M 280,160 L 280,150 
+               A 10 10 0 0 1 300 150 A 10 10 0 0 1 320 150 A 10 10 0 0 1 340 150 
+               A 10 10 0 0 1 360 150 A 10 10 0 0 1 380 150 A 10 10 0 0 1 400 150 
+               A 10 10 0 0 1 420 150 A 10 10 0 0 1 440 150 A 10 10 0 0 1 460 150 
+               A 10 10 0 0 1 480 150 A 10 10 0 0 1 500 150 A 10 10 0 0 1 520 150 
+               A 40 40 0 0 1 600 150 L 600,160 Z" />
+      <!-- Labels -->
+      <text class="type-label" x="660" y="145">IIa + Is</text>
+      <text class="type-desc" x="660" y="168">Nodular mixed (結節混在型)</text>
+    </g>
+  </g>
+
+  <!-- Footer Info / Legend -->
+  <g transform="translate(40, 560)">
+    <text class="type-desc" font-size="13" x="0" y="0">Visualized models of Laterally Spreading Tumors (LST) based on the Paris classification framework.</text>
+  </g>
+
+</svg>
