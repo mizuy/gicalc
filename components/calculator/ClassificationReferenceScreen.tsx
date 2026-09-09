@@ -56,15 +56,15 @@ export function ClassificationReferenceScreen({ score }: Props) {
           ) : null}
           <View style={twoColumn ? styles.cardGrid : undefined}>
             {group.entries.map((entry) => {
-            const accent = SeverityColors[entry.severity ?? 'none'];
-            return (
-              <View
-                key={entry.label}
-                style={[
-                  styles.card,
-                  twoColumn ? styles.cardHalf : null,
-                  { backgroundColor: surface, borderColor: border, borderLeftColor: accent },
-                ]}>
+              const accent = SeverityColors[entry.severity ?? 'none'];
+              return (
+                <View
+                  key={entry.label}
+                  style={[
+                    styles.card,
+                    twoColumn ? styles.cardHalf : null,
+                    { backgroundColor: surface, borderColor: border, borderLeftColor: accent },
+                  ]}>
                   <View style={styles.cardHeader}>
                     <Text style={styles.entryLabel}>{entry.label}</Text>
                     {entry.meaning ? (
