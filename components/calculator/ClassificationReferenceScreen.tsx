@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import { ClassificationOverview } from '@/components/calculator/ClassificationOverview';
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
@@ -37,6 +37,8 @@ function groupEntries(entries: ClassificationEntry[]): EntryGroup[] {
 }
 
 export function ClassificationReferenceScreen({ score }: Props) {
+  const { width: windowWidth } = useWindowDimensions();
+  const twoColumn = windowWidth >= 600;
   const textSecondary = useThemeColor({}, 'textSecondary');
   const tint = useThemeColor({}, 'tint');
   const surface = useThemeColor({}, 'surface');
@@ -52,41 +54,47 @@ export function ClassificationReferenceScreen({ score }: Props) {
           {group.label ? (
             <Text style={[styles.groupLabel, { color: tint }]}>{group.label}</Text>
           ) : null}
-          {group.entries.map((entry) => {
-            const accent = SeverityColors[entry.severity ?? 'none'];
-            return (
-              <View
-                key={entry.label}
-                style={[styles.card, { backgroundColor: surface, borderColor: border, borderLeftColor: accent }]}>
-                <View style={styles.cardHeader}>
-                  <Text style={styles.entryLabel}>{entry.label}</Text>
-                  {entry.meaning ? (
-                    <View style={[styles.badge, { backgroundColor: accent }]}>
-                      <Text style={styles.badgeText}>{entry.meaning}</Text>
+          <View style={twoColumn ? styles.cardGrid : undefined}>
+            {group.entries.map((entry) => {
+              const accent = SeverityColors[entry.severity ?? 'none'];
+              return (
+                <View
+                  key={entry.label}
+                  style={[
+                    styles.card,
+                    twoColumn ? styles.cardHalf : null,
+                    { backgroundColor: surface, borderColor: border, borderLeftColor: accent },
+                  ]}>
+                  <View style={styles.cardHeader}>
+                    <Text style={styles.entryLabel}>{entry.label}</Text>
+                    {entry.meaning ? (
+                      <View style={[styles.badge, { backgroundColor: accent }]}>
+                        <Text style={styles.badgeText}>{entry.meaning}</Text>
+                      </View>
+                    ) : null}
+                  </View>
+                  {entry.figures?.length ? (
+                    <View style={styles.entryFigures}>
+                      {entry.figures.map((figure) => (
+                        <ClassificationFigure key={figureKey(figure)} figure={figure} compact />
+                      ))}
                     </View>
                   ) : null}
+                  {entry.rows.map((row) => (
+                    <View key={`${entry.label}-${row.heading}`} style={styles.row}>
+                      <Text style={[styles.rowHeading, { color: textSecondary }]}>{row.heading}</Text>
+                      <Text style={styles.rowText}>{row.text}</Text>
+                    </View>
+                  ))}
+                  {entry.comment ? (
+                    <Text style={[styles.comment, { color: textSecondary }]}>
+                      {t.note}: {entry.comment}
+                    </Text>
+                  ) : null}
                 </View>
-                {entry.figures?.length ? (
-                  <View style={styles.entryFigures}>
-                    {entry.figures.map((figure) => (
-                      <ClassificationFigure key={figureKey(figure)} figure={figure} compact />
-                    ))}
-                  </View>
-                ) : null}
-                {entry.rows.map((row) => (
-                  <View key={`${entry.label}-${row.heading}`} style={styles.row}>
-                    <Text style={[styles.rowHeading, { color: textSecondary }]}>{row.heading}</Text>
-                    <Text style={styles.rowText}>{row.text}</Text>
-                  </View>
-                ))}
-                {entry.comment ? (
-                  <Text style={[styles.comment, { color: textSecondary }]}>
-                    {t.note}: {entry.comment}
-                  </Text>
-                ) : null}
-              </View>
-            );
-          })}
+              );
+            })}
+          </View>
         </View>
       ))}
     </ScorePageShell>
@@ -103,12 +111,20 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     letterSpacing: 0.3,
   },
+  cardGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
   card: {
     borderWidth: 1,
     borderLeftWidth: 5,
     borderRadius: 14,
     padding: 14,
     marginBottom: 10,
+  },
+  cardHalf: {
+    width: '47%',
   },
   cardHeader: {
     flexDirection: 'row',
