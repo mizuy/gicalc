@@ -1316,15 +1316,17 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(macro.entries.every((entry) => entry.figures === undefined), true);
   assert.deepEqual(
     macro.entries.map((entry) => entry.label),
-    ['0-I の亜分類', '0-I と 0-IIa', '混合型', '0-III'],
+    ['0-Ip', '0-Isp', '0-Is', '0-IIa', '0-IIb', '0-IIc', '0-IIc+IIa', '0-IIa+IIc', '0-III'],
   );
-  assert.doesNotMatch(macro.entries.map((entry) => entry.label).join(' '), /0-Ip|0-Isp|0-IIa\+IIc/);
+  assert.equal(macro.entries.some((entry) => entry.label === '0-Isp'), true);
   assert.match(macro.hierarchy?.map((node) => JSON.stringify(node)).join(' ') ?? '', /0-Isp/);
   assert.match(macro.entries[0]?.rows.map((row) => row.heading).join(' ') ?? '', /Paris/);
-  assert.match(macro.entries[0]?.rows.map((row) => row.heading).join(' ') ?? '', /大腸規約/);
-  assert.match(macro.entries[1]?.rows.find((row) => row.heading === 'Paris')?.text ?? '', /2\.5 mm/);
-  assert.match(macro.entries[2]?.rows.find((row) => row.heading === '食道規約')?.text ?? '', /引用符/);
-  assert.match(macro.entries[3]?.rows.find((row) => row.heading === '大腸規約')?.text ?? '', /削除/);
+  assert.match(macro.entries[0]?.rows.map((row) => row.heading).join(' ') ?? '', /大腸/);
+  assert.match(macro.entries.find((entry) => entry.label === '0-Isp')?.rows.find((row) => row.heading === 'Paris')?.text ?? '', /表にはない/);
+  assert.match(macro.entries.find((entry) => entry.label === '0-Is')?.rows.find((row) => row.heading === 'Paris')?.text ?? '', /2\.5 mm/);
+  assert.match(macro.entries.find((entry) => entry.label === '0-IIa')?.rows.find((row) => row.heading === 'Paris')?.text ?? '', /2\.5 mm/);
+  assert.match(macro.entries.find((entry) => entry.label === '0-IIc+IIa')?.rows.find((row) => row.heading === '食道')?.text ?? '', /引用符/);
+  assert.match(macro.entries.find((entry) => entry.label === '0-III')?.rows.find((row) => row.heading === '大腸')?.text ?? '', /削除/);
   assert.doesNotMatch(macro.originalLead ?? '', /Type 0 is divided into three categories/);
   assert.equal(macro.pubmed, MACRO_PARIS_2005_PUBMED);
   assert.ok(macro.citations?.some((citation) => citation.pubmed === MACRO_JSCCR_2019_PUBMED));
@@ -1333,7 +1335,7 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.ok(isClassification(englishMacro));
   assert.deepEqual(
     englishMacro.entries.map((entry) => entry.label),
-    ['0-I subtypes', '0-I vs 0-IIa', 'Mixed type', '0-III'],
+    ['0-Ip', '0-Isp', '0-Is', '0-IIa', '0-IIb', '0-IIc', '0-IIc+IIa', '0-IIa+IIc', '0-III'],
   );
   const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
   for (const entry of englishMacro.entries) {

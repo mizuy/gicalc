@@ -22,7 +22,7 @@ export const macroScore: ClassificationDefinition = {
   category: 'classification',
   categoryLabel: '内視鏡分類',
   description:
-    '食道・胃・大腸の取扱い規約における Type 0（表在型）と Paris 分類の違い。記号の骨格は同じで、ずれるのは 0-I の亜分類、0-I と 0-IIa の境、混合型の書き方、0-III の有無。進行癌 1–5 型は扱わない。',
+    '食道・胃・大腸の取扱い規約における Type 0（表在型）の肉眼型。記号は Paris と共通だが、0-I の亜分類、0-I と 0-IIa の境、混合型の書き方、0-III の有無は臓器と文書でずれる。進行癌 1–5 型は扱わない。',
   originalLead:
     'GI Calc commentary on Type 0 only. Paris 2003/2005 and the Japanese organ-specific Type 0 rules share the same symbols, but they diverge on 0-I subtypes, the 0-I versus 0-IIa cut-off, mixed-type notation, and whether 0-III is used. This page paraphrases those points; it is not a quotation of the source documents.',
   citations: [
@@ -80,138 +80,195 @@ export const macroScore: ClassificationDefinition = {
           id: 'macro-0-i',
           label: '0-I 隆起',
           children: [
-            { id: 'macro-0-ip', label: '0-Ip — Paris / 大腸 / 食道' },
+            { id: 'macro-0-ip', label: '0-Ip' },
             { id: 'macro-0-isp', label: '0-Isp — 大腸規約のみ' },
-            { id: 'macro-0-is', label: '0-Is — Paris / 大腸 / 食道（胃は 0-I）' },
+            { id: 'macro-0-is', label: '0-Is' },
           ],
         },
         {
           id: 'macro-0-ii',
           label: '0-II 表面',
           children: [
-            { id: 'macro-0-ii-common', label: '0-IIa / IIb / IIc — 四文書ともある' },
-            { id: 'macro-0-mixed', label: '混合型 — 書き方は文書で違う' },
+            { id: 'macro-0-iia', label: '0-IIa' },
+            { id: 'macro-0-iib', label: '0-IIb' },
+            { id: 'macro-0-iic', label: '0-IIc' },
+          ],
+        },
+        {
+          id: 'macro-0-mixed',
+          label: '混合型',
+          children: [
+            { id: 'macro-0-iic-iia', label: '0-IIc+IIa' },
+            { id: 'macro-0-iia-iic', label: '0-IIa+IIc' },
           ],
         },
         {
           id: 'macro-0-iii',
-          label: '0-III — Paris 表 / 胃 / 食道。大腸規約は削除',
+          label: '0-III — 大腸規約は削除',
         },
       ],
     },
   ],
   entries: [
     {
-      label: '0-I の亜分類',
-      meaning: '茎の分け方',
-      group: '相違点',
-      severity: 'moderate',
+      label: '0-Ip',
+      meaning: '有茎',
+      group: '隆起型',
+      severity: 'mild',
       rows: [
-        {
-          heading: 'Paris',
-          text: '2003/2005 の表は 0-Ip と 0-Is だけ。Isp は臨床的意義が乏しいとして置かず、Is として扱う。',
-        },
-        {
-          heading: '大腸規約',
-          text: '0-Ip（有茎）/ 0-Isp（亜有茎）/ 0-Is（無茎）の3つ。Isp は正規の亜型。',
-        },
-        {
-          heading: '胃癌規約',
-          text: '0-I のみ。有茎・亜有茎・無茎には分けない。',
-        },
-        {
-          heading: '食道規約',
-          text: '0-Ip と 0-Is。亜有茎は Ip 側に寄せ、独立した Isp 欄はない。',
-        },
-        {
-          heading: '実務でのずれ',
-          text: '大腸で 0-Isp と書いた病変は Paris では 0-Is。胃の 0-I は Paris の Ip または Is に相当しうる。二次図に Isp が戻っていることがあり、Paris 原表と混同しやすい。',
-        },
+        { heading: '形態', text: '明らかな茎を持つ隆起。' },
+        { heading: 'Paris', text: '表にある（0-Ip）。' },
+        { heading: '大腸', text: '0-Ip として正規の亜型。' },
+        { heading: '胃', text: '茎の細分はなく、0-I に含める。' },
+        { heading: '食道', text: '0-Ip。亜有茎もここへ寄せることがある。' },
       ],
     },
     {
-      label: '0-I と 0-IIa',
-      meaning: '高さの境',
-      group: '相違点',
+      label: '0-Isp',
+      meaning: '亜有茎',
+      group: '隆起型',
+      severity: 'moderate',
+      rows: [
+        { heading: '形態', text: 'くびれはあるが、長い茎はない亜有茎隆起。' },
+        {
+          heading: 'Paris',
+          text: '2003/2005 の表にはない。臨床的意義が乏しいとして 0-Is に含める。',
+        },
+        { heading: '大腸', text: '正規の亜型（0-Ip / 0-Isp / 0-Is の3つ）。' },
+        { heading: '胃', text: '置かない。0-I に含める。' },
+        { heading: '食道', text: '独立した Isp 欄はない。Ip 側に寄せる。' },
+      ],
+      comment:
+        '大腸で 0-Isp と書いた病変は Paris では 0-Is。二次図に Isp が戻っていることがあり、Paris 原表と混同しやすい。',
+    },
+    {
+      label: '0-Is',
+      meaning: '無茎',
+      group: '隆起型',
       severity: 'severe',
       rows: [
+        { heading: '形態', text: '茎のない、明らかな隆起。' },
         {
           heading: 'Paris',
-          text: '定量。円柱上皮（胃・大腸）は閉じた生検鉗子約 2.5 mm。超えたら 0-Is、未満は 0-IIa。食道扁平上皮は 1.2 mm。',
+          text: '表にある。円柱上皮（胃・大腸）では周囲から約 2.5 mm 以上（閉じた生検鉗子）。食道扁平上皮は 1.2 mm。未満は 0-IIa。',
+        },
+        { heading: '大腸', text: '明らかな腫瘤状隆起。ミリ基準はない。' },
+        {
+          heading: '胃',
+          text: '0-I に含める。英語第3版はおおむね 3 mm 超を 0-I。二次資料では第15版を約 2 mm 超とする（第15版本文は未確認）。',
+        },
+        { heading: '食道', text: '基部の広さが目立つ無茎。鉗子のミリ基準は書いていない。' },
+      ],
+      comment:
+        '高さ 3–4 mm の広い無茎隆起や LST-G の顆粒は、大腸記載では 0-IIa、Paris を厳密に当てると 0-Is になりやすい。',
+    },
+    {
+      label: '0-IIa',
+      meaning: '表面隆起',
+      group: '表面型',
+      severity: 'severe',
+      rows: [
+        { heading: '形態', text: '周囲より低い隆起。' },
+        {
+          heading: 'Paris',
+          text: '円柱上皮では 2.5 mm 未満、食道扁平上皮では 1.2 mm 未満。それを超えると 0-Is。',
         },
         {
-          heading: '大腸規約',
-          text: '定性。0-I は明らかな腫瘤状隆起、0-IIa は低い隆起。ミリ基準はない。',
+          heading: '大腸',
+          text: '低い隆起。定性で、ミリ基準はない。径 10 mm 以上の側方発育は LST と呼び、肉眼型には含めない。',
         },
         {
-          heading: '胃癌規約',
-          text: '目安あり。英語第3版はおおむね 3 mm 未満を 0-IIa。日本語第15版では約 2 mm までを 0-IIa とする、と二次資料にある（第15版本文は未確認）。',
+          heading: '胃',
+          text: '英語第3版はおおむね 3 mm 未満を 0-IIa。二次資料では第15版を約 2 mm までとする（第15版本文は未確認）。',
         },
+        { heading: '食道', text: 'わずかに低い隆起。鉗子 2.5 mm は書いていない。' },
+      ],
+      comment: '0-Is と同じ境の裏側。同一病変で型名が入れ替わる最大点。',
+    },
+    {
+      label: '0-IIb',
+      meaning: '平坦',
+      group: '表面型',
+      severity: 'none',
+      rows: [
+        { heading: '形態', text: '正常粘膜の凹凸を超えない平坦。' },
+        { heading: 'Paris', text: '表にある。大腸ではきわめて稀。' },
+        { heading: '大腸', text: 'ある。稀。' },
+        { heading: '胃', text: 'ある。' },
+        { heading: '食道', text: 'ある。' },
+      ],
+      comment: '四文書でほぼ同じ。差は小さい。',
+    },
+    {
+      label: '0-IIc',
+      meaning: '表面陥凹',
+      group: '表面型',
+      severity: 'moderate',
+      rows: [
+        { heading: '形態', text: '浅い陥凹またはびらん。' },
         {
-          heading: '食道規約',
-          text: '高さと基部のくびれの印象。0-I は丈が高く表在と推定できる隆起、0-IIa はわずかに低い隆起。鉗子 2.5 mm は書いていない。',
+          heading: 'Paris',
+          text: '表にある。より深い潰瘍は 0-III（円柱上皮で深さの目安 1.2 mm、食道扁平上皮 0.5 mm）。',
         },
-        {
-          heading: '実務でのずれ',
-          text: '高さ 3–4 mm の広い無茎隆起や LST-G の顆粒は、大腸記載では 0-IIa、Paris を厳密に当てると 0-Is になりやすい。同一病変で型名が入れ替わる最大点。',
-        },
+        { heading: '大腸', text: '表面陥凹。0-III は削除されているので、深い潰瘍型は置かない。' },
+        { heading: '胃', text: '表面陥凹。明らかに深いものは 0-III。' },
+        { heading: '食道', text: '表面陥凹。明らかに深いものは 0-III。' },
       ],
     },
     {
-      label: '混合型',
-      meaning: '＋の書き方',
-      group: '相違点',
+      label: '0-IIc+IIa',
+      meaning: '陥凹＋辺縁隆起',
+      group: '混合型',
       severity: 'moderate',
       rows: [
+        { heading: '形態', text: '陥凹が主で、辺縁や一部に隆起がある。' },
+        { heading: 'Paris', text: '形の定義。主体が陥凹で、隆起は辺縁または一部。' },
+        { heading: '大腸', text: '面積の広い要素を先に書き、＋でつなぐ。' },
+        { heading: '胃', text: '大腸と同じく面積順。' },
         {
-          heading: 'Paris',
-          text: '形の組み合わせとして型を定義する。0-IIa+IIc は全体が隆起で中央陥凹（底が周囲粘膜より高い相対陥凹も含む）。0-IIc+IIa は主体が陥凹で辺縁や一部に隆起。',
-        },
-        {
-          heading: '大腸規約',
-          text: '面積の広い要素を先に書き、＋でつなぐ（例: 0-IIc＋IIa）。',
-        },
-        {
-          heading: '胃癌規約',
-          text: '大腸と同じく、面積の広い要素を先に書く（例: 0-IIc＋III）。',
-        },
-        {
-          heading: '食道規約',
-          text: '面積順に加え、より深い浸潤を示唆する成分を引用符で囲む（例: 0-IIc＋“0-Is”）。進行型が混ざるときは進行型を先に書く。',
-        },
-        {
-          heading: '実務でのずれ',
-          text: '規約は「広い方＋狭い方」、Paris は「隆起主体か陥凹主体か」。相対陥凹は Paris が明示し、規約注は薄い。引用符は食道だけ。',
+          heading: '食道',
+          text: '面積順。より深い浸潤を示唆する成分は引用符で囲む（例: 0-IIc＋“0-Is”）。',
         },
       ],
+      comment: '規約は「広い方＋狭い方」、Paris は「陥凹主体か隆起主体か」。引用符は食道だけ。',
+    },
+    {
+      label: '0-IIa+IIc',
+      meaning: '隆起＋中央陥凹',
+      group: '混合型',
+      severity: 'moderate',
+      rows: [
+        { heading: '形態', text: '全体が隆起で、中央に陥凹がある。' },
+        {
+          heading: 'Paris',
+          text: '形の定義。陥凹底が周囲粘膜より高い相対陥凹も含む。',
+        },
+        { heading: '大腸', text: '面積の広い要素を先に書く。' },
+        { heading: '胃', text: '面積順（例: 面積が広ければ 0-IIa＋IIc）。' },
+        { heading: '食道', text: '面積順。深い成分は引用符。進行型が混ざるときは進行型を先に書く。' },
+      ],
+      comment: '相対陥凹は Paris が明示し、規約注は薄い。',
     },
     {
       label: '0-III',
-      meaning: 'ある／なし',
-      group: '相違点',
+      meaning: '深い陥凹',
+      group: '陥凹型',
       severity: 'mild',
       rows: [
+        { heading: '形態', text: '明らかに深い陥凹または潰瘍。' },
         {
           heading: 'Paris',
-          text: '表に 0-III（潰瘍・深い陥凹）がある。IIc との差は深さ（円柱上皮で目安 1.2 mm、食道扁平上皮 0.5 mm）。大腸には適用しない（Barrett・胃が主）と注記する。',
+          text: '表にある。IIc との差は深さ。大腸には適用しない（Barrett・胃が主）と注記する。0-IIc+III / 0-III+IIc もある。',
         },
         {
-          heading: '大腸規約',
+          heading: '大腸',
           text: 'かつては胃癌に倣って置いたが、実在しないとして削除。現行の 0 型は 0-I と 0-II だけ。',
         },
-        {
-          heading: '胃癌規約',
-          text: '0-III（陥凹型）あり。明らかに深い陥凹。',
-        },
-        {
-          heading: '食道規約',
-          text: '0-III（表在陥凹型）あり。',
-        },
-        {
-          heading: '実務でのずれ',
-          text: '大腸では Paris も規約も「ほぼ使わない」で一致する。胃・食道では規約の正規型。Paris ページに 0-III があるのは臓器横断の表だからで、大腸運用とは別。',
-        },
+        { heading: '胃', text: '0-III（陥凹型）あり。IIc との混合（0-IIc＋III など）もある。' },
+        { heading: '食道', text: '0-III（表在陥凹型）あり。IIc との混合もある。' },
       ],
+      comment:
+        '大腸では Paris も規約も「ほぼ使わない」で一致する。胃・食道では規約の正規型。Paris ページに 0-III があるのは臓器横断の表だからで、大腸運用とは別。',
     },
   ],
 };
