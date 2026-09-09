@@ -8,6 +8,7 @@ import { SeverityColors } from '@/constants/Colors';
 import { useLocale } from '@/lib/i18n';
 import {
   figureKey,
+  isHalfWidthTypeCard,
   type ClassificationDefinition,
   type ClassificationEntry,
 } from '@/types/score';
@@ -57,12 +58,13 @@ export function ClassificationReferenceScreen({ score }: Props) {
           <View style={twoColumn ? styles.cardGrid : undefined}>
             {group.entries.map((entry) => {
               const accent = SeverityColors[entry.severity ?? 'none'];
+              const halfWidth = isHalfWidthTypeCard(entry, { twoColumn, scoreId: score.id });
               return (
                 <View
                   key={entry.label}
                   style={[
                     styles.card,
-                    twoColumn ? styles.cardHalf : null,
+                    halfWidth ? styles.cardHalf : twoColumn ? styles.cardFull : null,
                     { backgroundColor: surface, borderColor: border, borderLeftColor: accent },
                   ]}>
                   <View style={styles.cardHeader}>
@@ -125,6 +127,9 @@ const styles = StyleSheet.create({
   },
   cardHalf: {
     width: '47%',
+  },
+  cardFull: {
+    width: '100%',
   },
   cardHeader: {
     flexDirection: 'row',

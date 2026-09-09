@@ -16,6 +16,7 @@ import {
 } from '@/lib/scores/algorithmFlow';
 import {
   figureKey,
+  isHalfWidthTypeCard,
   type AlgorithmFlow,
   type ClassificationDefinition,
   type ClassificationEntry,
@@ -30,11 +31,13 @@ function EntryCard({
   emphasized,
   dimmed,
   twoColumn,
+  scoreId,
 }: {
   entry: ClassificationEntry;
   emphasized?: boolean;
   dimmed?: boolean;
   twoColumn?: boolean;
+  scoreId: string;
 }) {
   const textSecondary = useThemeColor({}, 'textSecondary');
   const surface = useThemeColor({}, 'surface');
@@ -42,12 +45,13 @@ function EntryCard({
   const tint = useThemeColor({}, 'tint');
   const { t } = useLocale();
   const accent = SeverityColors[entry.severity ?? 'none'];
+  const halfWidth = isHalfWidthTypeCard(entry, { twoColumn: Boolean(twoColumn), scoreId });
 
   return (
     <View
       style={[
         styles.card,
-        twoColumn ? styles.cardHalf : null,
+        halfWidth ? styles.cardHalf : twoColumn ? styles.cardFull : null,
         {
           backgroundColor: surface,
           borderColor: emphasized ? tint : border,
@@ -200,6 +204,7 @@ export function AlgorithmFlowScreen({ score }: Props) {
           <EntryCard
             key={entry.label}
             entry={entry}
+            scoreId={score.id}
             twoColumn={twoColumn}
             emphasized={diagnosis?.label === entry.label}
             dimmed={Boolean(diagnosis && diagnosis.label !== entry.label)}
@@ -324,6 +329,9 @@ const styles = StyleSheet.create({
   },
   cardHalf: {
     width: '47%',
+  },
+  cardFull: {
+    width: '100%',
   },
   cardHeader: {
     flexDirection: 'row',

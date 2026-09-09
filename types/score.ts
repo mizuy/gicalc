@@ -125,6 +125,20 @@ export function figureKey(figure: ClassificationFigure): string {
   return figure.src ?? figure.href ?? figure.caption;
 }
 
+export function hostedFigureCount(entry: ClassificationEntry): number {
+  return entry.figures?.filter((figure) => figure.src).length ?? 0;
+}
+
+/** 広い画面で半分幅にするのは、カード内の図が1枚だけのとき。JES は a/b が1ファイルでも2枚扱いなので全幅 */
+export function isHalfWidthTypeCard(
+  entry: ClassificationEntry,
+  options: { twoColumn: boolean; scoreId: string },
+): boolean {
+  if (!options.twoColumn) return false;
+  if (options.scoreId === 'jes') return false;
+  return hostedFigureCount(entry) === 1;
+}
+
 type ToolBase = {
   id: string;
   name: string;
