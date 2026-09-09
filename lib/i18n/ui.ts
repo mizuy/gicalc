@@ -89,6 +89,7 @@ export type UiStrings = {
     open: string;
     backToScore: string;
     figureCount: string;
+    legend: string;
   };
 };
 
@@ -227,6 +228,7 @@ export const UI: Record<Locale, UiStrings> = {
       open: 'ほかの参考図を見る',
       backToScore: '分類ページへ戻る',
       figureCount: '{n} 点の図',
+      legend: '凡例',
     },
   },
   en: {
@@ -366,6 +368,7 @@ export const UI: Record<Locale, UiStrings> = {
       open: 'More reference figures',
       backToScore: 'Back to the classification',
       figureCount: '{n} figures',
+      legend: 'Legend',
     },
   },
 };

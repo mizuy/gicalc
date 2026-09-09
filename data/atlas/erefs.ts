@@ -10,6 +10,10 @@ const TANAKA: AtlasFigure = {
   sourceShort: 'Tanaka 2025',
   alt: 'Histology and endoscopic EREFS features of eosinophilic esophagitis (Tanaka 2025 Fig. 1)',
   caption: 'Fig. 1. Endoscopic characteristics of eosinophilic esophagitis (Tanaka et al. 2025)',
+  legend:
+    '(a) 好酸球性食道炎の病理。上皮内好酸球浸潤（45/HPF）と脱顆粒。(b) rings grade 1、furrows grade 1。(c) edema / rings / exudates / furrows 各 grade 1。矢頭は滲出物。(d) edema grade 1、rings grade 2、exudates grade 1。(e) strictures grade 1。(f) NBI の beige mucosa。',
+  legendEn:
+    '(a) Histology of eosinophilic esophagitis: intraepithelial eosinophils (45/HPF) and degranulation. (b) Rings grade 1; furrows grade 1. (c) Edema, rings, exudates, and furrows, each grade 1; arrowhead marks exudate. (d) Edema grade 1; rings grade 2; exudates grade 1. (e) Strictures grade 1. (f) Beige mucosa on NBI.',
   source:
     'Tanaka F, Sawada A, Tanaka S, Kohashi K, Fujiwara Y. Endoscopic diagnosis and management of eosinophilic esophagitis. DEN Open. 2025;5:e70063. Fig. 1.',
   doi: 'https://doi.org/10.1002/deo2.70063',

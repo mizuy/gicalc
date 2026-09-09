@@ -8,7 +8,7 @@ import { whoSerratedAtlas } from './who-serrated';
 import type { AtlasDefinition } from './types';
 
 export type { AtlasDefinition, AtlasFigure } from './types';
-export { compareAtlasFigures, sortedAtlasFigures } from './types';
+export { compareAtlasFigures, localizeAtlasFigure, sortedAtlasFigures } from './types';
 
 /**
  * アトラス候補。ホストできる CC ソースが2つ以上ある分類だけ登録する。

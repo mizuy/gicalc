@@ -11,6 +11,10 @@ const MYUNG: AtlasFigure = {
   alt: 'LST-G homogeneous, LST-G mixed, LST-NG flat elevated, and LST-NG pseudodepressed on white light and indigo carmine (Myung 2017 Fig. 1)',
   caption:
     'Fig. 1. Endoscopic and chromoscopic findings of laterally spreading tumors (Myung et al. 2017)',
+  legend:
+    'LST の通常観察（A–D）と 0.4% インジゴカルミン散布（E–H）。A/E: LST-G 均一型（HG）。B/F: LST-G 結節混在型（NM）。C/G: LST-NG 平坦隆起型（FE）。D/H: LST-NG 偽陥凹型（PD）。',
+  legendEn:
+    'Endoscopic (A–D) and chromoscopic (E–H) findings of LSTs with 0.4% indigo carmine. A/E: LST-G homogeneous. B/F: LST-G nodular mixed. C/G: LST-NG flat elevated. D/H: LST-NG pseudodepressed.',
   source:
     'Myung DS, Kweon SS, Lee J, et al. Clinicopathological features of laterally spreading colorectal tumors and their association with advanced histology and invasiveness: an experience from Honam province of South Korea. PLoS One. 2017;12:e0184205. Fig. 1.',
   doi: 'https://doi.org/10.1371/journal.pone.0184205',

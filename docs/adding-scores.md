@@ -26,7 +26,7 @@ scripts/verify-scores.ts … 回帰テスト（必ず更新）
 
 型ごとの切り抜き（`entry.figures`）は分類カードの中に置きます。切り抜きを載せた分類の原図（複合図）は埋め込まず、`score.figures` は `href` だけのリンクにします。
 
-ホストできる CC 図が **2つ以上**ある分類は、メインで使う最良の1ソースだけをカードに切り抜き、残りは切り抜きせず [`/atlas/{id}`](../app/atlas/[id].tsx) に載せます（残りが1枚でも公開。並べは出版年の降順）。カタログは [`data/atlas/`](../data/atlas/) です。1ソースだけの分類にアトラスは作りません。フッターに図鑑タブは足さず、`/atlas` は Home 扱いにします。
+ホストできる CC 図が **2つ以上**ある分類は、メインで使う最良の1ソースだけをカードに切り抜き、残りは切り抜きせず [`/atlas/{id}`](../app/atlas/[id].tsx) に載せます（残りが1枚でも公開。並べは出版年の降順）。カタログは [`data/atlas/`](../data/atlas/) です。1ソースだけの分類にアトラスは作りません。フッターに図鑑タブは足さず、`/atlas` は Home 扱いにします。アトラスの各図には原著の Figure legend（`legend` / `legendEn`）を書き、パネルが何を示すか分かるようにします。
 
 アトラスは **CC BY / BY-NC / BY-ND / BY-NC-ND** を原図のまま掲載してよい（改変しないので ND も可）。ND 図は分類カード用に切り抜かない。メインの「最良」にも ND は選ばない。
 
@@ -225,6 +225,7 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
 | **図番号** | あれば `figureRef`（例: `Fig. 1`）。無ければ `hrefLabel` か `caption` から拾う |
 | **GI Calc 提供図** | `figureKind: 'gicalc'`。ライセンスは `CC BY 4.0`（URL は画面に出さない） |
 | 出典 | `source`, `doi`, `pubmed`, `note`（ライセンス説明）を必ず書く。画面は `出典, Fig., Original/Not original, CC BY` の1行 |
+| **アトラスの凡例** | `/atlas/{id}` の各図は `legend`（日本語）と `legendEn`（英語）を必須にする。原著のパネル説明を短く載せる。分類カードの切り抜き（compact）には出さない |
 
 CC 済み・非 CC の一覧は [README の引用とライセンス](../README.md#引用とライセンス) を参照。About 画面（`lib/i18n/ui.ts` の `about.citationsCc`）とも整合させてください。
 

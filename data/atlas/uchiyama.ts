@@ -12,6 +12,8 @@ function iwashita(figure: {
   figureRef: string;
   alt: string;
   caption: string;
+  legend: string;
+  legendEn: string;
   aspectRatio: number;
 }): AtlasFigure {
   return {
@@ -42,6 +44,10 @@ export const uchiyamaAtlas: AtlasDefinition = {
       figureRef: 'Fig. 1',
       alt: 'Ampullary adenoma at diagnosis: white light, NBI villi, histology, and EUS (Iwashita 2015 Fig. 1)',
       caption: 'Fig. 1. Ampullary adenoma at the initial diagnosis (Iwashita et al. 2015)',
+      legend:
+        '初回診断時の乳頭部腺腫。(A) 十二指腸鏡。褪色〜一部発赤の分葉状隆起。(B) NBI。卵円〜松かさ/葉状の絨毛（矢印）。(C) 生検は管状腺腫。(D) EUS。低エコー腫瘤（矢印）は乳頭部に限局し、十二指腸固有筋層への浸潤なし（矢頭）。',
+      legendEn:
+        'Ampullary adenoma at the initial diagnosis. (A) Duodenoscopy: discolored, partly reddish, lobular protruding tumor. (B) NBI: oval and pinecone/leaf-shaped villi (arrow). (C) Biopsy: tubular adenoma. (D) EUS: hypoechoic mass (arrow) limited to the ampulla without invasion of the duodenal muscularis propria (arrowhead).',
       aspectRatio: 720 / 720,
     }),
     iwashita({
@@ -50,6 +56,10 @@ export const uchiyamaAtlas: AtlasDefinition = {
       figureRef: 'Fig. 2',
       alt: 'Ampullary adenocarcinoma 7 years later: white light, irregular NBI surface, histology, and EUS (Iwashita 2015 Fig. 2)',
       caption: 'Fig. 2. Progression to ampullary adenocarcinoma after 7 years (Iwashita et al. 2015)',
+      legend:
+        '7年後の腺癌化。(A) 十二指腸鏡。胆管開口部周囲の易出血性・発赤・凹凸面。(B) NBI。不整で無構造の表面（矢印）。(C) 生検は高分化腺癌。(D) EUS。低エコー腫瘤（矢印）が十二指腸固有筋層へ浸潤（矢頭）。',
+      legendEn:
+        'Progression to adenocarcinoma after 7 years. (A) Duodenoscopy: easy-bleeding, reddish, uneven surface around the bile-duct orifice. (B) NBI: irregular, non-structured surface (arrow). (C) Biopsy: well-differentiated adenocarcinoma. (D) EUS: hypoechoic mass (arrow) invading the duodenal muscularis propria (arrowhead).',
       aspectRatio: 720 / 703,
     }),
   ]),

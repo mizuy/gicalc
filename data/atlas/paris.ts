@@ -10,6 +10,10 @@ const JOHNSON: AtlasFigure = {
   sourceShort: 'Johnson 2023',
   alt: 'Schematic of the Paris Type 0 classification of polyp morphology (Johnson 2023 Fig. 1)',
   caption: 'Fig. 1. Schematic representation of the Paris classification of polyp morphology (Johnson et al. 2023)',
+  legend:
+    'Paris 分類 Type 0 の模式図。ポリープ型（高さ ≥2.5 mm）: 0-Ip 有茎、0-Isp 亜有茎、0-Is 無茎。非ポリープ型（<2.5 mm）: 0-IIa 表面隆起、0-IIb 平坦、0-IIc 表面陥凹、0-III 潰瘍・掘れ込み。m = 粘膜、sm = 粘膜下層。',
+  legendEn:
+    'Schematic of the Paris Type 0 classification. Polypoid (≥2.5 mm): 0-Ip pedunculated, 0-Isp subpedunculated, 0-Is sessile. Nonpolypoid (<2.5 mm): 0-IIa flat elevation, 0-IIb flat mucosal change, 0-IIc mucosal depression, 0-III ulceration/excavated. m = mucosa; sm = submucosa.',
   source:
     'Johnson GGRJ, Helewa RM, Hyun E, Moffatt DC, Coneys JG, Park J. Colorectal polyp classification and management of complex polyps for surgeon endoscopists. Can J Surg. 2023;66:E491-E498. Fig. 1.',
   doi: 'https://doi.org/10.1503/cjs.011422',
@@ -32,6 +36,10 @@ const FUJIYOSHI: AtlasFigure = {
   sourceShort: 'Fujiyoshi 2022',
   alt: 'Gastric Paris Type 0 examples: 0-I, 0-IIa, 0-IIb, and 0-IIc on white light and chromoendoscopy (Fujiyoshi 2022 Fig. 1)',
   caption: 'Fig. 1. Representative images of the Paris endoscopic classification (Fujiyoshi et al. 2022)',
+  legend:
+    '胃の Paris 分類の代表例。上段は通常観察、下段は同じ病変の色素内視鏡。列は左から 0-I（隆起）、0-IIa（表面隆起）、0-IIb（平坦）、0-IIc（表面陥凹）。大腸の写真ではない。',
+  legendEn:
+    'Representative gastric images of the Paris endoscopic classification. Upper row: white light; lower row: the same lesions under chromoendoscopy. Columns, left to right: 0-I (protruded), 0-IIa (superficial elevated), 0-IIb (flat), 0-IIc (superficial depressed). Not colorectal photographs.',
   source:
     'Fujiyoshi MRA, Inoue H, Fujiyoshi Y, et al. Endoscopic classifications of early gastric cancer: a literature review. Cancers (Basel). 2022;14:100. Fig. 1.',
   doi: 'https://doi.org/10.3390/cancers14010100',

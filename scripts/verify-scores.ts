@@ -83,6 +83,7 @@ import {
   getAtlasRouteIds,
   hasAtlas,
   listAtlases,
+  localizeAtlasFigure,
 } from '../data/atlas';
 import { compareAtlasFigures } from '../data/atlas/types';
 import { BBPS_SCIREP_2024_PUBMED } from '../data/scores/bbps';
@@ -2941,6 +2942,7 @@ test('画像の下は出典・図番号・Original/Not original・短縮ライ�
   );
   assert.match(figureComponent, /figureCreditLabel/);
   assert.match(figureComponent, /figureCreditHref/);
+  assert.match(figureComponent, /figure\.legend/);
   assert.doesNotMatch(figureComponent, /kindBadge/);
   assert.doesNotMatch(figureComponent, /figure\.caption/);
   assert.doesNotMatch(figureComponent, /licenseUrl/);
@@ -3155,6 +3157,34 @@ test('アトラスはホストできる CC 図が2つ以上ある分類の残り
   assert.ok(uchiyamaAtlas);
   assert.equal(uchiyamaAtlas.figures.length, 2);
   assert.equal(uchiyamaAtlas.figures[0]?.license, 'CC BY-NC-ND 3.0');
+
+  for (const atlas of listAtlases()) {
+    for (const figure of atlas.figures) {
+      assert.ok(
+        (figure.legend?.trim().length ?? 0) > 20,
+        `${atlas.id} ${figure.sourceShort} ${figure.figureRef}: legend がない`,
+      );
+      assert.ok(
+        (figure.legendEn?.trim().length ?? 0) > 20,
+        `${atlas.id} ${figure.sourceShort} ${figure.figureRef}: legendEn がない`,
+      );
+    }
+  }
+  assert.match(lstAtlas.figures[0]?.legend ?? '', /LST-G/);
+  assert.match(lstAtlas.figures[0]?.legendEn ?? '', /indigo/i);
+  assert.match(parisAtlas.figures[0]?.legend ?? '', /0-Ip/);
+  assert.match(parisAtlas.figures[1]?.legend ?? '', /0-IIa/);
+  assert.match(erefsAtlas.figures[0]?.legend ?? '', /\(a\)/);
+  assert.match(mesdaAtlas.figures[0]?.legend ?? '', /境界線/);
+  assert.match(uchiyamaAtlas.figures[0]?.legend ?? '', /\(A\)/);
+  assert.match(jnetAtlas.figures[2]?.legend ?? '', /Type 1/);
+  assert.equal(UI.ja.atlas.legend, '凡例');
+  assert.equal(UI.en.atlas.legend, 'Legend');
+  assert.equal(localizeAtlasFigure(lstAtlas.figures[0]!, 'en').legend, lstAtlas.figures[0]!.legendEn);
+  assert.equal(localizeAtlasFigure(lstAtlas.figures[0]!, 'ja').legend, lstAtlas.figures[0]!.legend);
+
+  const atlasPage = readFileSync(join(process.cwd(), 'app/atlas/[id].tsx'), 'utf8');
+  assert.match(atlasPage, /localizeAtlasFigure/);
 
   assert.match(UI.ja.atlas.indexIntro, /CC BY-NC-ND/);
   assert.match(UI.en.atlas.indexIntro, /CC BY-NC-ND/);

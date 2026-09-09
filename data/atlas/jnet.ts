@@ -10,6 +10,9 @@ const AHMED: AtlasFigure = {
   sourceShort: 'Ahmed 2024',
   alt: 'Representative JNET Type 1, 2A, 2B, and 3 lesions (Ahmed 2024 Fig. 1)',
   caption: 'Fig. 1. Representative JNET Type 1, 2A, 2B, and 3 lesions (Ahmed et al. 2024)',
+  legend: 'JNET 分類の代表例。左から Type 1、Type 2A、Type 2B、Type 3。',
+  legendEn:
+    'Images of the JNET classification (left to right): JNET 1, JNET 2A, JNET 2B, and JNET 3 lesions.',
   source:
     'Ahmed N, Bechara R. Endoscopic submucosal dissection and JNET classification for colorectal neoplasia: a North American academic center experience. DEN Open. 2024;4:e322. Fig. 1.',
   doi: 'https://doi.org/10.1002/deo2.322',
@@ -32,6 +35,9 @@ const LE: AtlasFigure = {
   sourceShort: 'Le 2024',
   alt: 'JNET Type 1, 2A, 2B, and 3 with dual-focus NBI (Le 2024 Fig. 2)',
   caption: 'Fig. 2. JNET Type 1 / 2A / 2B / 3 with dual-focus NBI (Le et al. 2024)',
+  legend: 'Dual-focus NBI による大腸ポリープ。(A) JNET Type 1、(B) Type 2A、(C) Type 2B、(D) Type 3。',
+  legendEn:
+    'Characteristics of colorectal polyps on dual-focus NBI. (A) JNET type 1, (B) Type 2A, (C) Type 2B, and (D) Type 3.',
   source:
     'Le NQ, Huynh TM, Vo DTN, et al. Diagnostic performance of the Japanese Narrow-band imaging expert team classification system using dual focus magnification in real-time Vietnamese setting. Medicine (Baltimore). 2024;103:e38752. Fig. 2.',
   doi: 'https://doi.org/10.1097/MD.0000000000038752',
@@ -54,6 +60,10 @@ const GREGA: AtlasFigure = {
   sourceShort: 'Grega 2025',
   alt: 'JNET classification Type 1, 2A, 2B, and 3 (Grega 2025 Fig. 2)',
   caption: 'Fig. 2. The Japan NBI Expert Team (JNET) classification (Grega et al. 2025)',
+  legend:
+    'JNET 分類の定義表。列は Type 1 / 2A / 2B / 3。行は血管模様、表面模様、想定病理、拡大 NBI 例。',
+  legendEn:
+    'The JNET classification. Columns are Type 1 / 2A / 2B / 3. Rows show vessel pattern, surface pattern, most likely pathology, and a magnifying NBI example.',
   source:
     'Grega T, Kmochova K, Hejcmanova K, et al. Impact of narrow band imaging in prediction of histology of advanced colorectal neoplasia. Sci Rep. 2025;15:1414. Fig. 2.',
   doi: 'https://doi.org/10.1038/s41598-025-85669-w',
@@ -76,6 +86,10 @@ const WANG: AtlasFigure = {
   sourceShort: 'Wang 2021',
   alt: 'JNET classification vessel and surface patterns with examples (Wang 2021 Fig. 2)',
   caption: 'Fig. 2. Japanese Narrow-band Imaging Expert Team classification (Wang et al. 2021)',
+  legend:
+    'JNET 分類。列は Type 1 / 2A / 2B / 3。血管模様・表面模様・想定組織と拡大 NBI 例。SSL = 無茎性鋸歯状病変。',
+  legendEn:
+    'Japanese Narrow-band Imaging Expert Team classification. Columns are Type 1 / 2A / 2B / 3 (vessel pattern, surface pattern, most likely histology, and an example). SSL: sessile serrated lesion.',
   source:
     'Wang Y, Li WK, Wang YD, Liu KL, Wu J. Diagnostic performance of narrow-band imaging international colorectal endoscopic and Japanese narrow-band imaging expert team classification systems for colorectal cancer and precancerous lesions. World J Gastrointest Oncol. 2021;13:58-68. Fig. 2.',
   doi: 'https://doi.org/10.4251/wjgo.v13.i1.58',
