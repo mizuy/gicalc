@@ -123,7 +123,9 @@ import {
   getToolCitations,
   getToolKind,
   hasAlgorithmFlow,
+  hostedFigureCount,
   isClassification,
+  isHalfWidthTypeCard,
   isJapanDeveloped,
   TOOL_KIND_LABELS,
 } from '../types/score';
@@ -2680,7 +2682,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.50');
+  assert.equal(pkg.version, '1.0.51');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2998,10 +3000,44 @@ test('各ページに原著または定義ガイドラインがあり、画像�
     join(process.cwd(), 'components/calculator/AlgorithmFlowScreen.tsx'),
     'utf8',
   );
-  assert.match(referenceScreen, /windowWidth >= 600/);
+  assert.match(referenceScreen, /isHalfWidthTypeCard/);
   assert.match(referenceScreen, /width: '47%'/);
-  assert.match(algorithmScreen, /windowWidth >= 600/);
+  assert.match(referenceScreen, /width: '100%'/);
+  assert.match(algorithmScreen, /isHalfWidthTypeCard/);
   assert.match(algorithmScreen, /width: '47%'/);
+  assert.match(algorithmScreen, /width: '100%'/);
+});
+
+test('広い画面の半分幅は図1枚のカードだけ。JES と図なし・図2枚以上は全幅', () => {
+  const jes = getScoreById('jes');
+  const paris = getScoreById('paris');
+  const jnet = getScoreById('jnet');
+  const mesda = getScoreById('mesda-g');
+  assert.ok(jes && paris && jnet && mesda && isClassification(jes) && isClassification(paris));
+  assert.ok(isClassification(jnet) && isClassification(mesda));
+
+  const jesTypeA = jes.entries.find((entry) => entry.label === 'Type A');
+  const jesAva = jes.entries.find((entry) => entry.label === 'AVA');
+  const parisIiaIic = paris.entries.find((entry) => entry.label === '0-IIa+IIc');
+  const parisIp = paris.entries.find((entry) => entry.label === '0-Ip');
+  const jnetType1 = jnet.entries.find((entry) => entry.label === 'Type 1');
+  const mesdaDl = mesda.entries.find((entry) => entry.label === 'Demarcation line (DL)');
+  assert.ok(jesTypeA && jesAva && parisIiaIic && parisIp && jnetType1 && mesdaDl);
+
+  assert.equal(hostedFigureCount(jesTypeA), 1);
+  assert.equal(hostedFigureCount(jesAva), 3);
+  assert.equal(hostedFigureCount(parisIiaIic), 2);
+  assert.equal(hostedFigureCount(parisIp), 1);
+  assert.equal(hostedFigureCount(jnetType1), 1);
+  assert.equal(hostedFigureCount(mesdaDl), 0);
+
+  assert.equal(isHalfWidthTypeCard(jnetType1, { twoColumn: true, scoreId: 'jnet' }), true);
+  assert.equal(isHalfWidthTypeCard(parisIp, { twoColumn: true, scoreId: 'paris' }), true);
+  assert.equal(isHalfWidthTypeCard(parisIiaIic, { twoColumn: true, scoreId: 'paris' }), false);
+  assert.equal(isHalfWidthTypeCard(mesdaDl, { twoColumn: true, scoreId: 'mesda-g' }), false);
+  assert.equal(isHalfWidthTypeCard(jesTypeA, { twoColumn: true, scoreId: 'jes' }), false);
+  assert.equal(isHalfWidthTypeCard(jesAva, { twoColumn: true, scoreId: 'jes' }), false);
+  assert.equal(isHalfWidthTypeCard(jnetType1, { twoColumn: false, scoreId: 'jnet' }), false);
 });
 
 test('画像の権利・加工メモはデータに保持し、ページには表示しない', () => {
