@@ -2675,7 +2675,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.45');
+  assert.equal(pkg.version, '1.0.46');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -3067,10 +3067,10 @@ test('アトラスはホストできる CC 図が2つ以上ある分類だけ公
 
   const jnetAtlas = getAtlasById('jnet');
   assert.ok(jnetAtlas);
-  assert.equal(jnetAtlas.figures.length, 3);
+  assert.equal(jnetAtlas.figures.length, 4);
   assert.deepEqual(
     jnetAtlas.figures.map((figure) => figure.sourceShort),
-    ['Le 2024', 'Ahmed 2024', 'Wang 2021'],
+    ['Grega 2025', 'Le 2024', 'Ahmed 2024', 'Wang 2021'],
   );
   for (const figure of jnetAtlas.figures) {
     assert.ok(figure.src, figure.sourceShort);
@@ -3080,10 +3080,14 @@ test('アトラスはホストできる CC 図が2つ以上ある分類だけ公
     assert.ok(figure.license);
     assert.ok(figure.year);
   }
-  assert.equal(jnetAtlas.figures[0]?.year, 2024);
-  assert.equal(jnetAtlas.figures[0]?.month, 7);
-  assert.equal(jnetAtlas.figures[1]?.month, 4);
-  assert.equal(jnetAtlas.figures[2]?.year, 2021);
+  assert.equal(jnetAtlas.figures[0]?.year, 2025);
+  assert.equal(jnetAtlas.figures[0]?.license, 'CC BY-NC-ND 4.0');
+  assert.equal(jnetAtlas.figures[1]?.year, 2024);
+  assert.equal(jnetAtlas.figures[1]?.month, 7);
+  assert.equal(jnetAtlas.figures[2]?.month, 4);
+  assert.equal(jnetAtlas.figures[3]?.year, 2021);
+  assert.match(UI.ja.atlas.indexIntro, /CC BY-NC-ND/);
+  assert.match(UI.en.atlas.indexIntro, /CC BY-NC-ND/);
 
   const sorted = [...jnetAtlas.figures].sort(compareAtlasFigures);
   assert.deepEqual(

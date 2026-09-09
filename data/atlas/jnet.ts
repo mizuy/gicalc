@@ -45,6 +45,28 @@ const LE: AtlasFigure = {
   authors: 'Le',
 };
 
+const GREGA: AtlasFigure = {
+  src: '/figures/jnet-grega2025-fig2.webp',
+  href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11718093/figure/Fig2/',
+  hrefLabel: 'Fig. 2',
+  figureRef: 'Fig. 2',
+  figureKind: 'secondary',
+  sourceShort: 'Grega 2025',
+  alt: 'JNET classification Type 1, 2A, 2B, and 3 (Grega 2025 Fig. 2)',
+  caption: 'Fig. 2. The Japan NBI Expert Team (JNET) classification (Grega et al. 2025)',
+  source:
+    'Grega T, Kmochova K, Hejcmanova K, et al. Impact of narrow band imaging in prediction of histology of advanced colorectal neoplasia. Sci Rep. 2025;15:1414. Fig. 2.',
+  doi: 'https://doi.org/10.1038/s41598-025-85669-w',
+  pubmed: '39789214',
+  license: 'CC BY-NC-ND 4.0',
+  licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
+  note: 'アトラス用。CC BY-NC-ND 4.0 なので改変・切り抜きせず原図全体を掲載。Type 1 / 2A / 2B / 3 の定義表と拡大 NBI 例。',
+  aspectRatio: 786 / 377,
+  year: 2025,
+  month: 1,
+  authors: 'Grega',
+};
+
 const WANG: AtlasFigure = {
   src: '/figures/jnet-wang2021-fig2.webp',
   href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7805268/figure/F2/',
@@ -71,5 +93,5 @@ const WANG: AtlasFigure = {
 export const jnetAtlas: AtlasDefinition = {
   id: 'jnet',
   scoreId: 'jnet',
-  figures: sortedAtlasFigures([AHMED, LE, WANG]),
+  figures: sortedAtlasFigures([AHMED, LE, WANG, GREGA]),
 };

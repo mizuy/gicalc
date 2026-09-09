@@ -115,7 +115,7 @@ npm run preview:pages
 - Aronchick（2000, *GIE*）: Crossref 上の Version of Record は **CC BY-NC-ND 4.0**（遅延公開）
 - Kakushima WLI スコア（Kakushima 2017, *Endosc Int Open* Table 2）: **CC BY-NC-ND 4.0**（表は HTML のため埋め込まず Table 2 へリンク）
 - JNET teaching 図（Lee 2021, *Clin Endosc* Fig. 1）: **CC BY-NC 4.0**（各 Type に下段 NBI を切り抜き。原図は埋め込まずリンク）
-- JNET 図鑑（Le 2024 *Medicine* Fig. 2 / Ahmed 2024 *DEN Open* Fig. 1 / Wang 2021 *WJGO* Fig. 2）: **CC BY 4.0** / **CC BY 4.0** / **CC BY-NC 4.0**（切り抜きせず原図全体）
+- JNET 図鑑（Grega 2025 *Sci Rep* Fig. 2 / Le 2024 *Medicine* Fig. 2 / Ahmed 2024 *DEN Open* Fig. 1 / Wang 2021 *WJGO* Fig. 2）: **CC BY-NC-ND 4.0** / **CC BY 4.0** / **CC BY 4.0** / **CC BY-NC 4.0**（切り抜きせず原図全体。ND も改変なしで掲載）
 - ESD-F 参考図（Inada 2013, *Gastroenterol Res Pract* Fig. 1）: **CC BY 3.0**（Matsumoto 2010 原著図ではない）
 - Prague 参考図（Oyanagi 2022, *DEN Open* Fig. 5）: **CC BY 4.0**（Sharma 2006 原著図ではない）
 - Sarin 参考図（Acevedo 2019, *World J Hepatol* Fig. 1）: **CC BY-NC 4.0**（Sarin 1992 原著図ではない）

@@ -221,7 +221,7 @@ export const UI: Record<Locale, UiStrings> = {
     atlas: {
       indexTitle: '分類の図鑑',
       indexIntro:
-        'ホストできる Creative Commons の図が2つ以上ある分類について、メインページで使った1ソース以外の参考図を、切り抜きせず掲載します。',
+        'ホストできる Creative Commons の図が2つ以上ある分類について、メインページで使った1ソース以外の参考図を、切り抜きせず掲載します。CC BY-NC-ND も、改変しない原図として載せます。',
       pageTitle: '{name} の図鑑',
       pageIntro: 'メインの切り抜きに使っていない参考図です。出版年の新しい順に、原図全体を載せています。',
       open: 'ほかの参考図を見る',
@@ -359,7 +359,7 @@ export const UI: Record<Locale, UiStrings> = {
     atlas: {
       indexTitle: 'Classification atlas',
       indexIntro:
-        'For classifications with two or more hostable Creative Commons figures, the remaining figures — everything except the one source used on the main page — are shown here without cropping.',
+        'For classifications with two or more hostable Creative Commons figures, the remaining figures — everything except the one source used on the main page — are shown here without cropping. CC BY-NC-ND plates are included as unaltered originals.',
       pageTitle: '{name} atlas',
       pageIntro:
         'Reference figures that are not the source cropped on the main page, shown in full and ordered by publication year (newest first).',
@@ -378,7 +378,7 @@ UI.ja.about.citationsCcBody +=
   '\n• Paris分類カードの模式図: プロジェクト提供者の自作図を切り抜き。CC BY 4.0（Paris原著図ではない）' +
   '\n• LST分類カードの模式図: プロジェクト提供者の自作図を切り抜き。CC BY 4.0（LST原著図ではない）' +
   '\n• JNET teaching 図（Lee 2021, Clin Endosc Fig. 1）: CC BY-NC 4.0（各 Type に下段 NBI を切り抜き。原図は埋め込まずリンク）' +
-  '\n• JNET 図鑑（Le 2024 Medicine Fig. 2 / Ahmed 2024 DEN Open Fig. 1 / Wang 2021 WJGO Fig. 2）: CC BY 4.0 / CC BY 4.0 / CC BY-NC 4.0（切り抜きせず原図全体）';
+  '\n• JNET 図鑑（Grega 2025 Sci Rep Fig. 2 / Le 2024 Medicine Fig. 2 / Ahmed 2024 DEN Open Fig. 1 / Wang 2021 WJGO Fig. 2）: CC BY-NC-ND 4.0 / CC BY 4.0 / CC BY 4.0 / CC BY-NC 4.0（切り抜きせず原図全体。ND も改変なしで掲載）';
 
 UI.en.about.citationsCcBody +=
   '\n• Toya ME-CV reference figure (Kumei 2025, DEN Open Fig. 1): CC BY 4.0 (not the Toya 2020 original; four available patterns are cropped)' +
@@ -388,4 +388,4 @@ UI.en.about.citationsCcBody +=
   '\n• Paris card schematics: cropped from a contributor-created diagram. CC BY 4.0 (not figures from the Paris original)' +
   '\n• LST card schematics: cropped from a contributor-created diagram. CC BY 4.0 (not figures from the LST original)' +
   '\n• JNET teaching figure (Lee 2021, Clin Endosc Fig. 1): CC BY-NC 4.0 (crops from the lower NBI row on each Type; the plate is not embedded — link only)' +
-  '\n• JNET atlas (Le 2024 Medicine Fig. 2 / Ahmed 2024 DEN Open Fig. 1 / Wang 2021 WJGO Fig. 2): CC BY 4.0 / CC BY 4.0 / CC BY-NC 4.0 (full originals, no cropping)';
+  '\n• JNET atlas (Grega 2025 Sci Rep Fig. 2 / Le 2024 Medicine Fig. 2 / Ahmed 2024 DEN Open Fig. 1 / Wang 2021 WJGO Fig. 2): CC BY-NC-ND 4.0 / CC BY 4.0 / CC BY 4.0 / CC BY-NC 4.0 (full originals, no cropping; ND is hosted unaltered)';

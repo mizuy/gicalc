@@ -1,6 +1,6 @@
 import type { ClassificationFigure } from '../../types/score';
 
-/** アトラスに載せる論文 Figure 1枚。切り抜きしない。 */
+/** アトラスに載せる論文 Figure 1枚。切り抜きしない。CC BY / BY-NC / BY-ND / BY-NC-ND を原図のまま掲載してよい。 */
 export type AtlasFigure = ClassificationFigure & {
   /** 出版年。並べは降順 */
   year: number;
