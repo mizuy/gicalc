@@ -9,12 +9,12 @@
 | 食道 | JES（Oyama 2017） | 扁平上皮の拡大（IPCL） | 定義一覧（原著の図・文言） |
 | 食道 | LA（Lundell 1999） | 逆流性食道炎 A–D | 定義一覧（文言。図は VideoGIE へリンク） |
 | 食道 | Prague C & M（Sharma 2006） | Barrett の C / M | 定義一覧（原著リンク + Oyanagi 2022 参考図） |
-| 食道 | EREFS（Hirano 2013） | 好酸球性食道炎の所見 | 定義一覧（Abe 2022 の図・文言） |
+| 食道 | EREFS（Hirano 2013） | 好酸球性食道炎の所見 | 定義一覧（Abe 2022 の図・文言。ほかの CC 図は `/atlas/erefs`） |
 | 食道 | 門脈圧亢進症学会分類（F / L / C / RC） | 食道胃静脈瘤 | 定義一覧 |
 | 食道 | 治癒切除判定（JGES/JES） | 食道 ESD 後・根治度 | 治癒切除 / 追加治療 / 非治癒切除 |
 | 胃 | 木村–竹本（Quach 2019） | 内視鏡的萎縮 | 定義一覧（Quach 2019 の図・文言） |
 | 胃 | Hill（1996） | 胃食道フラップ弁 I–IV | 定義一覧（Ge 2023 の図・文言） |
-| 胃 | MESDA-G（Muto 2016） | 早期胃癌の拡大（M-NBI） | 定義一覧（原著の図・文言） |
+| 胃 | MESDA-G（Muto 2016） | 早期胃癌の拡大（M-NBI） | 定義一覧（Kurumi 2021 切り抜き + 原著リンク。ほかの CC 図は `/atlas/mesda-g`） |
 | 胃 | 京都分類（原法） | 胃炎・胃癌リスク | 点数 0–8 |
 | 胃 | 改変京都（Kawamura 2021） | 胃炎・胃癌リスク | 点数 0–5 |
 | 胃 | EGGIM | 内視鏡的腸上皮化生 | 点数 0–8 |
@@ -27,13 +27,13 @@
 | 十二指腸 | Ishii（2021） | SNADET C3 vs C4/5 | 点数 0–5 |
 | 十二指腸 | Kakushima WLI（2017） | SNADET LGA vs HGA/癌 | 点数 0–5 |
 | 十二指腸 | Toya ME-CV（2020） | SNADET（ME-CV） | アルゴリズム（C3 / C4/5） |
-| 十二指腸 | Kikuchi ME-NBI（2014） | SNADET（ME-NBI） | アルゴリズム（C3 / C4/5） |
-| 十二指腸 | Uchiyama ME-NBI（2006） | 乳頭部 ME-NBI Type I–III | 分類 |
+| 十二指腸 | Kikuchi ME-NBI（2014） | SNADET（ME-NBI） | アルゴリズム（C3 / C4/5。Kurata 2024 参考図） |
+| 十二指腸 | Uchiyama ME-NBI（2006） | 乳頭部 ME-NBI Type I–III | 分類（原著リンク。Iwashita 2015 は `/atlas/uchiyama`） |
 | 十二指腸 | 乳頭部癌肉眼型（JSBS） | 胆道癌取扱い規約 | 分類（腫瘤 / 潰瘍 / 混在 / その他） |
 | 大腸 | APCS（Yeoh 2011） | 無症状アジア人の進行大腸腫瘍リスク | 点数 0–7 |
 | 大腸 | Vienna（Schlemper 2000） | 消化管上皮性腫瘍の病理分類 | 定義一覧（C1–C5） |
-| 大腸 | Paris（2005 Update / 2003） | 表在型腫瘍の肉眼型（Type 0） | 定義一覧（自作 CC 参考図 + 原著リンク） |
-| 大腸 | LST（Kudo 2008） | 側方発育型腫瘍の4亜型 | 定義一覧（自作 CC 参考図 + 原著リンク） |
+| 大腸 | Paris（2005 Update / 2003） | 表在型腫瘍の肉眼型（Type 0） | 定義一覧（自作 CC 参考図 + 原著リンク。ほかの CC 図は `/atlas/paris`） |
+| 大腸 | LST（Kudo 2008） | 側方発育型腫瘍の4亜型 | 定義一覧（自作 CC 参考図 + 原著リンク。ほかの CC 図は `/atlas/lst`） |
 | 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（自作 CC 参考図 + 原著リンク） |
 | 大腸 | ESD-F（Matsumoto 2010 / Kim 2016） | 大腸 ESD 粘膜下層線維化 F0–F2 | 定義一覧（原著リンク + Inada 2013 参考図） |
 | 大腸 | 治癒切除判定（JGES/JSCCR） | 大腸 ESD 後・内視鏡的治癒切除 | 治癒切除 / 追加腸切除 / VM1 |
@@ -100,14 +100,14 @@ npm run preview:pages
 **Creative Commons**
 
 - JES（Oyama 2017, *Esophagus*）の図: **CC BY 4.0**
-- EREFS の図（Abe 2022, *Diagnostics* Fig. 2）: **CC BY 4.0**
+- EREFS の図（Abe 2022, *Diagnostics* Fig. 2）: **CC BY 4.0**（各所見に切り抜き。Tanaka 2025 は `/atlas/erefs`）
 - GERD LA分類の図（Jung 2025, *Korean J Helicobacter Up Gastrointest Res* Fig. 1A–D）: **CC BY-NC 4.0**（各 Grade に切り抜きを掲載）
 - Hill の図（Ge 2023, *Ann Med* Fig. 1）: **CC BY-NC 4.0**
 - Forrest の図（Zhou 2025, *J South Med Univ* Fig. 1）: **CC BY-NC-ND 4.0**（改変・切り抜きなしで原図全体を掲載）
-- MESDA-G の VS 分類例（Kurumi 2021, *J Clin Med* Fig. 5）: **CC BY 4.0**（MS / MV の各型に切り抜きを掲載。Muto 2016 原著は CC BY-NC-ND 4.0）
+- MESDA-G の VS 分類例（Kurumi 2021, *J Clin Med* Fig. 5）: **CC BY 4.0**（MS / MV の各型に切り抜きを掲載。Muto 2016 原著は CC BY-NC-ND 4.0。Miyaoka 2020 は `/atlas/mesda-g`）
 - 木村–竹本の図（Quach 2019, *Clin Endosc* Fig. 2）: **CC BY-NC 3.0**
-- Paris の図（Kim 2025, *Clin Endosc* Fig. 2）: **CC BY-NC 4.0**（Johnson 2023 *Can J Surg* は CC BY-NC-ND 4.0）
-- LST の図（Kim 2025, *Clin Endosc* Fig. 3）: **CC BY-NC 4.0**（埋め込まずリンク。Castillo-Regalado 2022 *WJGE* は CC BY-NC 4.0）
+- Paris の図（Kim 2025, *Clin Endosc* Fig. 2）: **CC BY-NC 4.0**（埋め込まずリンク。Johnson 2023 / Fujiyoshi 2022 は `/atlas/paris`）
+- LST の図（Kim 2025, *Clin Endosc* Fig. 3）: **CC BY-NC 4.0**（埋め込まずリンク。Myung 2017 は `/atlas/lst`）
 - 虫垂開口部 Type 分類の図（Oung 2020, *Endosc Int Open* Fig. 2）: **CC BY-NC-ND 4.0**（改変・切り抜きなしで原図全体を掲載）
 - BEST-J（Hatta 2021, *Gut*）: **CC BY-NC 4.0**
 - NICE teaching 図（Hamada 2021, *BMC Gastroenterol* Fig. 1）: **CC BY 4.0**（各 Type に Endoscopic image 行から切り抜きを掲載。Hayashi 2013 原著 Fig. 1 は Elsevier 著作権のためリンクのみ）
@@ -116,6 +116,14 @@ npm run preview:pages
 - Kakushima WLI スコア（Kakushima 2017, *Endosc Int Open* Table 2）: **CC BY-NC-ND 4.0**（表は HTML のため埋め込まず Table 2 へリンク）
 - JNET teaching 図（Lee 2021, *Clin Endosc* Fig. 1）: **CC BY-NC 4.0**（各 Type に下段 NBI を切り抜き。原図は埋め込まずリンク）
 - JNET 図鑑（Grega 2025 *Sci Rep* Fig. 2 / Le 2024 *Medicine* Fig. 2 / Ahmed 2024 *DEN Open* Fig. 1 / Wang 2021 *WJGO* Fig. 2）: **CC BY-NC-ND 4.0** / **CC BY 4.0** / **CC BY 4.0** / **CC BY-NC 4.0**（切り抜きせず原図全体。ND も改変なしで掲載）
+- Paris 図鑑（Johnson 2023 *Can J Surg* Fig. 1 / Fujiyoshi 2022 *Cancers* Fig. 1）: **CC BY-NC-ND 4.0** / **CC BY 4.0**（切り抜きせず原図全体。Fujiyoshi は胃）
+- LST 図鑑（Myung 2017 *PLoS ONE* Fig. 1）: **CC BY 4.0**（切り抜きせず原図全体）
+- WHO serrated 図鑑（Mezzapesa 2022 *IJMS* Fig. 1–4 / Hyun 2021 *Can J Surg* Fig. 1–2）: **CC BY 4.0** / **CC BY-NC-ND 4.0**（切り抜きせず原図全体）
+- EREFS 図鑑（Tanaka 2025 *DEN Open* Fig. 1）: **CC BY 4.0**（切り抜きせず原図全体）
+- MESDA-G 図鑑（Miyaoka 2020 *TGH* Fig. 5–8）: **CC BY-NC-ND 4.0**（切り抜きせず原図全体）
+- Uchiyama 図鑑（Iwashita 2015 *Am J Case Rep* Fig. 1–2）: **CC BY-NC-ND 3.0**（切り抜きせず原図全体。症例経過）
+- NET G1–G3 参考図（La Rosa 2021 *Rev Endocr Metab Disord* Fig. 3）: **CC BY 4.0**（改変・切り抜きなしで原図全体を掲載）
+- Kikuchi ME-NBI 参考図（Kurata 2024 *Dig Dis* Fig. 1）: **CC BY 4.0**（改変・切り抜きなしで原図全体を掲載）
 - ESD-F 参考図（Inada 2013, *Gastroenterol Res Pract* Fig. 1）: **CC BY 3.0**（Matsumoto 2010 原著図ではない）
 - Prague 参考図（Oyanagi 2022, *DEN Open* Fig. 5）: **CC BY 4.0**（Sharma 2006 原著図ではない）
 - Sarin 参考図（Acevedo 2019, *World J Hepatol* Fig. 1）: **CC BY-NC 4.0**（Sarin 1992 原著図ではない）

@@ -3058,11 +3058,27 @@ test('全分類ページは先頭に全分類アイテムの全体像を表示�
   assert.equal(UI.en.classificationOverview, 'Classification overview');
 });
 
-test('アトラスはホストできる CC 図が2つ以上ある分類だけ公開する', () => {
-  assert.equal(ATLAS_MIN_FIGURES, 2);
-  assert.deepEqual(getAtlasRouteIds(), ['jnet']);
+test('アトラスはホストできる CC 図が2つ以上ある分類の残りを公開する', () => {
+  assert.equal(ATLAS_MIN_FIGURES, 1);
+  assert.deepEqual(getAtlasRouteIds(), [
+    'erefs',
+    'mesda-g',
+    'uchiyama',
+    'jnet',
+    'paris',
+    'lst',
+    'who-serrated',
+  ]);
   assert.equal(hasAtlas('jnet'), true);
+  assert.equal(hasAtlas('paris'), true);
+  assert.equal(hasAtlas('lst'), true);
+  assert.equal(hasAtlas('who-serrated'), true);
+  assert.equal(hasAtlas('erefs'), true);
+  assert.equal(hasAtlas('mesda-g'), true);
+  assert.equal(hasAtlas('uchiyama'), true);
   assert.equal(hasAtlas('nice'), false);
+  assert.equal(hasAtlas('net-grade'), false);
+  assert.equal(hasAtlas('kikuchi-mebi'), false);
   assert.equal(getAtlasById('nice'), undefined);
 
   const jnetAtlas = getAtlasById('jnet');
@@ -3086,8 +3102,59 @@ test('アトラスはホストできる CC 図が2つ以上ある分類だけ公
   assert.equal(jnetAtlas.figures[1]?.month, 7);
   assert.equal(jnetAtlas.figures[2]?.month, 4);
   assert.equal(jnetAtlas.figures[3]?.year, 2021);
+
+  const parisAtlas = getAtlasById('paris');
+  assert.ok(parisAtlas);
+  assert.deepEqual(
+    parisAtlas.figures.map((figure) => figure.sourceShort),
+    ['Johnson 2023', 'Fujiyoshi 2022'],
+  );
+  assert.match(parisAtlas.figures[1]?.note ?? '', /胃/);
+
+  const lstAtlas = getAtlasById('lst');
+  assert.ok(lstAtlas);
+  assert.deepEqual(
+    lstAtlas.figures.map((figure) => figure.sourceShort),
+    ['Myung 2017'],
+  );
+
+  const whoAtlas = getAtlasById('who-serrated');
+  assert.ok(whoAtlas);
+  assert.equal(whoAtlas.figures.length, 6);
+  assert.deepEqual(
+    whoAtlas.figures.map((figure) => figure.sourceShort),
+    [
+      'Mezzapesa 2022',
+      'Mezzapesa 2022',
+      'Mezzapesa 2022',
+      'Mezzapesa 2022',
+      'Hyun 2021',
+      'Hyun 2021',
+    ],
+  );
+
+  const erefsAtlas = getAtlasById('erefs');
+  assert.ok(erefsAtlas);
+  assert.deepEqual(
+    erefsAtlas.figures.map((figure) => figure.sourceShort),
+    ['Tanaka 2025'],
+  );
+
+  const mesdaAtlas = getAtlasById('mesda-g');
+  assert.ok(mesdaAtlas);
+  assert.deepEqual(
+    mesdaAtlas.figures.map((figure) => figure.figureRef),
+    ['Fig. 5', 'Fig. 6', 'Fig. 7', 'Fig. 8'],
+  );
+
+  const uchiyamaAtlas = getAtlasById('uchiyama');
+  assert.ok(uchiyamaAtlas);
+  assert.equal(uchiyamaAtlas.figures.length, 2);
+  assert.equal(uchiyamaAtlas.figures[0]?.license, 'CC BY-NC-ND 3.0');
+
   assert.match(UI.ja.atlas.indexIntro, /CC BY-NC-ND/);
   assert.match(UI.en.atlas.indexIntro, /CC BY-NC-ND/);
+  assert.match(UI.ja.atlas.indexIntro, /1枚でも/);
 
   const sorted = [...jnetAtlas.figures].sort(compareAtlasFigures);
   assert.deepEqual(
@@ -3096,8 +3163,7 @@ test('アトラスはホストできる CC 図が2つ以上ある分類だけ公
   );
 
   const published = listAtlases();
-  assert.equal(published.length, 1);
-  assert.equal(published[0]?.id, 'jnet');
+  assert.equal(published.length, 7);
 
   const footer = readFileSync(join(process.cwd(), 'components/GlobalFooter.tsx'), 'utf8');
   assert.match(footer, /pathname === '\/atlas'/);
@@ -3111,7 +3177,30 @@ test('アトラスはホストできる CC 図が2つ以上ある分類だけ公
   assert.equal(UI.en.atlas.open, 'More reference figures');
   assert.match(UI.ja.about.citationsCcBody, /Lee 2021/);
   assert.match(UI.ja.about.citationsCcBody, /図鑑/);
+  assert.match(UI.ja.about.citationsCcBody, /Myung 2017/);
+  assert.match(UI.ja.about.citationsCcBody, /Fujiyoshi 2022/);
+  assert.match(UI.ja.about.citationsCcBody, /Mezzapesa 2022/);
+  assert.match(UI.ja.about.citationsCcBody, /Tanaka 2025/);
+  assert.match(UI.ja.about.citationsCcBody, /Miyaoka 2020/);
+  assert.match(UI.ja.about.citationsCcBody, /Iwashita 2015/);
+  assert.match(UI.ja.about.citationsCcBody, /La Rosa 2021/);
+  assert.match(UI.ja.about.citationsCcBody, /Kurata 2024/);
   assert.match(UI.en.about.citationsCcBody, /JNET atlas/);
+  assert.match(UI.en.about.citationsCcBody, /Paris atlas/);
+  assert.match(UI.en.about.citationsCcBody, /WHO serrated atlas/);
+
+  const netGrade = getScoreById('net-grade');
+  assert.ok(netGrade && isClassification(netGrade));
+  assert.match(netGrade.figures?.[1]?.src ?? '', /net-uccella2021-fig3/);
+  assert.match(netGrade.figures?.[1]?.note ?? '', /改変・切り抜きせず/);
+  assert.equal(netGrade.figures?.[1]?.sourceShort, 'La Rosa 2021');
+
+  const kikuchi = getScoreById('kikuchi-mebi');
+  assert.ok(kikuchi && isClassification(kikuchi));
+  assert.match(kikuchi.figures?.[1]?.src ?? '', /kikuchi-nakagawa2024-fig1/);
+  assert.match(kikuchi.figures?.[1]?.note ?? '', /改変・切り抜きせず/);
+  assert.equal(kikuchi.figures?.[1]?.sourceShort, 'Kurata 2024');
+  assert.equal(kikuchi.figures?.[1]?.license, 'CC BY 4.0');
 });
 
 test('切り抜きがある分類は原図を埋め込まずリンクだけにする', () => {

@@ -1,13 +1,30 @@
+import { erefsAtlas } from './erefs';
 import { jnetAtlas } from './jnet';
+import { lstAtlas } from './lst';
+import { mesdaGAtlas } from './mesda-g';
+import { parisAtlas } from './paris';
+import { uchiyamaAtlas } from './uchiyama';
+import { whoSerratedAtlas } from './who-serrated';
 import type { AtlasDefinition } from './types';
 
 export type { AtlasDefinition, AtlasFigure } from './types';
 export { compareAtlasFigures, sortedAtlasFigures } from './types';
 
-/** アトラス候補。公開するのはホストできる CC 図が 2 枚以上ある分類だけ。 */
-export const ALL_ATLAS_DEFINITIONS: AtlasDefinition[] = [jnetAtlas];
+/**
+ * アトラス候補。ホストできる CC ソースが2つ以上ある分類だけ登録する。
+ * 公開するのはカード用1ソース以外の残り（1枚でも可）。
+ */
+export const ALL_ATLAS_DEFINITIONS: AtlasDefinition[] = [
+  erefsAtlas,
+  mesdaGAtlas,
+  uchiyamaAtlas,
+  jnetAtlas,
+  parisAtlas,
+  lstAtlas,
+  whoSerratedAtlas,
+];
 
-export const ATLAS_MIN_FIGURES = 2;
+export const ATLAS_MIN_FIGURES = 1;
 
 export function isPublishedAtlas(atlas: AtlasDefinition): boolean {
   return atlas.figures.length >= ATLAS_MIN_FIGURES;

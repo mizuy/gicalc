@@ -53,7 +53,7 @@ export const erefsScore: ClassificationDefinition = {
       pubmed: EREFS_ABE_2022_PUBMED,
       license: 'CC BY 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-      note: '各所見カードに切り抜きを掲載。原図は埋め込まず PMC の Fig. 2 へリンクする。ライセンスは CC BY 4.0。Hirano 2013 Gut 原著の表は CC ではない。',
+      note: '各所見カードに切り抜きを掲載。原図は埋め込まず PMC の Fig. 2 へリンクする。ライセンスは CC BY 4.0。Tanaka 2025 の原図は図鑑に掲載。Hirano 2013 Gut 原著の表は CC ではない。',
     },
   ],
   entries: [

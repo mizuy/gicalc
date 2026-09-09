@@ -221,7 +221,7 @@ export const UI: Record<Locale, UiStrings> = {
     atlas: {
       indexTitle: '分類の図鑑',
       indexIntro:
-        'ホストできる Creative Commons の図が2つ以上ある分類について、メインページで使った1ソース以外の参考図を、切り抜きせず掲載します。CC BY-NC-ND も、改変しない原図として載せます。',
+        'ホストできる Creative Commons の図が2つ以上ある分類について、メインページで使った1ソース以外の参考図を、切り抜きせず掲載します。残りが1枚でも公開します。CC BY-NC-ND も、改変しない原図として載せます。',
       pageTitle: '{name} の図鑑',
       pageIntro: 'メインの切り抜きに使っていない参考図です。出版年の新しい順に、原図全体を載せています。',
       open: 'ほかの参考図を見る',
@@ -359,7 +359,7 @@ export const UI: Record<Locale, UiStrings> = {
     atlas: {
       indexTitle: 'Classification atlas',
       indexIntro:
-        'For classifications with two or more hostable Creative Commons figures, the remaining figures — everything except the one source used on the main page — are shown here without cropping. CC BY-NC-ND plates are included as unaltered originals.',
+        'For classifications with two or more hostable Creative Commons figures, the remaining figures — everything except the one source used on the main page — are shown here without cropping, even when only one plate remains. CC BY-NC-ND plates are included as unaltered originals.',
       pageTitle: '{name} atlas',
       pageIntro:
         'Reference figures that are not the source cropped on the main page, shown in full and ordered by publication year (newest first).',
@@ -378,7 +378,15 @@ UI.ja.about.citationsCcBody +=
   '\n• Paris分類カードの模式図: プロジェクト提供者の自作図を切り抜き。CC BY 4.0（Paris原著図ではない）' +
   '\n• LST分類カードの模式図: プロジェクト提供者の自作図を切り抜き。CC BY 4.0（LST原著図ではない）' +
   '\n• JNET teaching 図（Lee 2021, Clin Endosc Fig. 1）: CC BY-NC 4.0（各 Type に下段 NBI を切り抜き。原図は埋め込まずリンク）' +
-  '\n• JNET 図鑑（Grega 2025 Sci Rep Fig. 2 / Le 2024 Medicine Fig. 2 / Ahmed 2024 DEN Open Fig. 1 / Wang 2021 WJGO Fig. 2）: CC BY-NC-ND 4.0 / CC BY 4.0 / CC BY 4.0 / CC BY-NC 4.0（切り抜きせず原図全体。ND も改変なしで掲載）';
+  '\n• JNET 図鑑（Grega 2025 Sci Rep Fig. 2 / Le 2024 Medicine Fig. 2 / Ahmed 2024 DEN Open Fig. 1 / Wang 2021 WJGO Fig. 2）: CC BY-NC-ND 4.0 / CC BY 4.0 / CC BY 4.0 / CC BY-NC 4.0（切り抜きせず原図全体。ND も改変なしで掲載）' +
+  '\n• Paris 図鑑（Johnson 2023 Can J Surg Fig. 1 / Fujiyoshi 2022 Cancers Fig. 1）: CC BY-NC-ND 4.0 / CC BY 4.0（切り抜きせず原図全体。Fujiyoshi は胃の写真）' +
+  '\n• LST 図鑑（Myung 2017 PLoS ONE Fig. 1）: CC BY 4.0（切り抜きせず原図全体）' +
+  '\n• WHO serrated 図鑑（Mezzapesa 2022 IJMS Fig. 1–4 / Hyun 2021 Can J Surg Fig. 1–2）: CC BY 4.0 / CC BY-NC-ND 4.0（切り抜きせず原図全体）' +
+  '\n• EREFS 図鑑（Tanaka 2025 DEN Open Fig. 1）: CC BY 4.0（切り抜きせず原図全体。カードは Abe 2022）' +
+  '\n• MESDA-G 図鑑（Miyaoka 2020 TGH Fig. 5–8）: CC BY-NC-ND 4.0（切り抜きせず原図全体。カードは Kurumi 2021）' +
+  '\n• Uchiyama 図鑑（Iwashita 2015 Am J Case Rep Fig. 1–2）: CC BY-NC-ND 3.0（切り抜きせず原図全体。症例経過）' +
+  '\n• NET G1–G3 参考図（La Rosa 2021 Rev Endocr Metab Disord Fig. 3）: CC BY 4.0（改変・切り抜きなしで原図全体を掲載）' +
+  '\n• Kikuchi ME-NBI 参考図（Kurata 2024 Dig Dis Fig. 1）: CC BY 4.0（改変・切り抜きなしで原図全体を掲載。Kikuchi 2014 原著図ではない）';
 
 UI.en.about.citationsCcBody +=
   '\n• Toya ME-CV reference figure (Kumei 2025, DEN Open Fig. 1): CC BY 4.0 (not the Toya 2020 original; four available patterns are cropped)' +
@@ -388,4 +396,12 @@ UI.en.about.citationsCcBody +=
   '\n• Paris card schematics: cropped from a contributor-created diagram. CC BY 4.0 (not figures from the Paris original)' +
   '\n• LST card schematics: cropped from a contributor-created diagram. CC BY 4.0 (not figures from the LST original)' +
   '\n• JNET teaching figure (Lee 2021, Clin Endosc Fig. 1): CC BY-NC 4.0 (crops from the lower NBI row on each Type; the plate is not embedded — link only)' +
-  '\n• JNET atlas (Grega 2025 Sci Rep Fig. 2 / Le 2024 Medicine Fig. 2 / Ahmed 2024 DEN Open Fig. 1 / Wang 2021 WJGO Fig. 2): CC BY-NC-ND 4.0 / CC BY 4.0 / CC BY 4.0 / CC BY-NC 4.0 (full originals, no cropping; ND is hosted unaltered)';
+  '\n• JNET atlas (Grega 2025 Sci Rep Fig. 2 / Le 2024 Medicine Fig. 2 / Ahmed 2024 DEN Open Fig. 1 / Wang 2021 WJGO Fig. 2): CC BY-NC-ND 4.0 / CC BY 4.0 / CC BY 4.0 / CC BY-NC 4.0 (full originals, no cropping; ND is hosted unaltered)' +
+  '\n• Paris atlas (Johnson 2023 Can J Surg Fig. 1 / Fujiyoshi 2022 Cancers Fig. 1): CC BY-NC-ND 4.0 / CC BY 4.0 (full originals; Fujiyoshi is gastric)' +
+  '\n• LST atlas (Myung 2017 PLoS ONE Fig. 1): CC BY 4.0 (full original, no cropping)' +
+  '\n• WHO serrated atlas (Mezzapesa 2022 IJMS Fig. 1–4 / Hyun 2021 Can J Surg Fig. 1–2): CC BY 4.0 / CC BY-NC-ND 4.0 (full originals, no cropping)' +
+  '\n• EREFS atlas (Tanaka 2025 DEN Open Fig. 1): CC BY 4.0 (full original; card crops use Abe 2022)' +
+  '\n• MESDA-G atlas (Miyaoka 2020 TGH Fig. 5–8): CC BY-NC-ND 4.0 (full originals; card crops use Kurumi 2021)' +
+  '\n• Uchiyama atlas (Iwashita 2015 Am J Case Rep Fig. 1–2): CC BY-NC-ND 3.0 (full originals; a case follow-up, not a complete type plate)' +
+  '\n• NET G1–G3 reference figure (La Rosa 2021 Rev Endocr Metab Disord Fig. 3): CC BY 4.0 (the full original is shown without alteration or cropping)' +
+  '\n• Kikuchi ME-NBI reference figure (Kurata 2024 Dig Dis Fig. 1): CC BY 4.0 (the full original is shown without alteration or cropping; not the Kikuchi 2014 original)';

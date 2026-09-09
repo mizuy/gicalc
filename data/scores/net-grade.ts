@@ -39,6 +39,24 @@ export const netGradeScore: ClassificationDefinition = {
       source: 'WHO Classification of Tumours Editorial Board. Endocrine and Neuroendocrine Tumours. Lyon: IARC; 2019.',
       note: 'IARC WHO Blue Book。CC ではないのでリンクのみ。',
     },
+    {
+      src: '/figures/net-uccella2021-fig3.webp',
+      href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8346451/figure/Fig3/',
+      hrefLabel: 'Fig. 3',
+      figureRef: 'Fig. 3',
+      figureKind: 'secondary',
+      sourceShort: 'La Rosa 2021',
+      alt: 'H&E and Ki-67 of NET G1–G3, LCNEC, and SmCNEC (La Rosa 2021 Fig. 3)',
+      caption: 'Fig. 3. Morphology and Ki-67 proliferation index of digestive NENs (La Rosa and Uccella 2021)',
+      source:
+        'La Rosa S, Uccella S. Classification of neuroendocrine neoplasms: lights and shadows. Rev Endocr Metab Disord. 2021. Fig. 3.',
+      doi: 'https://doi.org/10.1007/s11154-020-09612-2',
+      pubmed: '33169199',
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: 'La Rosa 2021 Fig. 3 を改変・切り抜きせず全体で掲載。ライセンスは CC BY 4.0。WHO Blue Book は CC ではない。',
+      aspectRatio: 1200 / 1822,
+    },
   ],
   entries: [
     {
