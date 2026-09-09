@@ -1343,7 +1343,10 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
       assert.doesNotMatch(row.text, japanese, row.text);
     }
   }
-  assert.match(englishMacro.hierarchy?.map((node) => node.label).join(' ') ?? '', /colorectal rules only/);
+  assert.match(
+    englishMacro.hierarchy?.[0]?.children?.[0]?.children?.[1]?.label ?? '',
+    /colorectal rules only/,
+  );
 
   const sps = getScoreById('sps');
   assert.ok(sps && isClassification(sps));
