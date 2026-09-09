@@ -158,6 +158,7 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
           </View>
         </Pressable>
       ) : null}
+      <FigureLegend text={figure.legend} compact={compact} />
       <FigureCredit label={creditLabel} href={creditHref} compact={compact} />
 
       {uri && open ? (
@@ -195,6 +196,7 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
                     compact={false}
                     displaySize={lightboxSize}
                   />
+                  <FigureLegend text={figure.legend} compact={false} onDark />
                   <FigureCredit label={creditLabel} href={creditHref} compact={false} onDark />
                 </View>
               </ScrollView>
@@ -208,6 +210,35 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
           </View>
         </Modal>
       ) : null}
+    </View>
+  );
+}
+
+function FigureLegend({
+  text,
+  compact,
+  onDark = false,
+}: {
+  text?: string;
+  compact: boolean;
+  onDark?: boolean;
+}) {
+  const textSecondary = useThemeColor({}, 'textSecondary');
+  const { t } = useLocale();
+  if (!text?.trim() || compact) return null;
+
+  return (
+    <View style={styles.legendWrap}>
+      <Text
+        style={[
+          styles.legendLabel,
+          { color: onDark ? '#E8EEF6' : textSecondary },
+        ]}>
+        {t.atlas.legend}
+      </Text>
+      <Text style={[styles.legend, onDark ? styles.legendOnDark : { color: textSecondary }]}>
+        {text}
+      </Text>
     </View>
   );
 }
@@ -249,6 +280,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 8,
     marginBottom: 0,
+  },
+  legendWrap: {
+    marginTop: 10,
+  },
+  legendLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  legend: {
+    fontSize: 13,
+    lineHeight: 20,
+  },
+  legendOnDark: {
+    color: '#E8EEF6',
   },
   credit: {
     fontSize: 12,

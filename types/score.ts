@@ -108,6 +108,8 @@ export type ClassificationFigure = {
   hrefLabel?: string;
   alt: string;
   caption: string;
+  /** 画面に出す論文の Figure legend（パネル説明）。無ければ出さない */
+  legend?: string;
   source: string;
   doi?: string;
   pubmed?: string;

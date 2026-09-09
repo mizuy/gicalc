@@ -73,7 +73,7 @@ export const mesdaGScore: ClassificationDefinition = {
       pubmed: MESDA_KURUMI_2021_PUBMED,
       license: 'CC BY 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-      note: '各 VS 分類カードに Kurumi 2021 Fig. 5 の切り抜きを掲載。原図は埋め込まず PMC の Fig. 5 へリンクする。ライセンスは CC BY 4.0。',
+      note: '各 VS 分類カードに Kurumi 2021 Fig. 5 の切り抜きを掲載。原図は埋め込まず PMC の Fig. 5 へリンクする。ライセンスは CC BY 4.0。Miyaoka 2020 の原図は図鑑に掲載。',
     },
   ],
   entries: [

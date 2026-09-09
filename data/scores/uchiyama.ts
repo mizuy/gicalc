@@ -32,7 +32,7 @@ export const uchiyamaScore: ClassificationDefinition = {
         'Uchiyama Y, Imazu H, Kakutani H, et al. New approach to diagnosing ampullary tumors by magnifying endoscopy combined with a narrow-band imaging system. J Gastroenterol. 2006;41:483-490.',
       doi: 'https://doi.org/10.1007/s00535-006-1800-7',
       pubmed: UCHIYAMA_2006_PUBMED,
-      note: '原著。Springer の著作権。CC ではないので論文へリンクする。',
+      note: '原著。Springer の著作権。CC ではないので論文へリンクする。Iwashita 2015 の原図は図鑑に掲載。',
     },
   ],
   entries: [

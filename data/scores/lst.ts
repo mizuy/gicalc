@@ -70,7 +70,7 @@ export const lstScore: ClassificationDefinition = {
       pubmed: '40336268',
       license: 'CC BY-NC 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
-      note: 'Clin Endosc 2025 Fig. 3（CC BY-NC 4.0）は埋め込まずリンクする。Kudo 2008 の原著（GIE）は CC ではない。',
+      note: 'Clin Endosc 2025 Fig. 3（CC BY-NC 4.0）は埋め込まずリンクする。Myung 2017 の原図は図鑑に掲載。Kudo 2008 の原著（GIE）は CC ではない。',
     },
     {
       href: LST_USER_FIGURE_PATH,

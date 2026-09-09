@@ -34,6 +34,24 @@ export const kikuchiMebiScore: ClassificationDefinition = {
       pubmed: KIKUCHI_2014_PUBMED,
       note: '原著 Fig. 10。Wiley / Digestive Endoscopy の著作権。CC ではないので論文へリンクする。',
     },
+    {
+      src: '/figures/kikuchi-nakagawa2024-fig1.webp',
+      href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11457973/figure/F1/',
+      hrefLabel: 'Fig. 1',
+      figureRef: 'Fig. 1',
+      figureKind: 'secondary',
+      sourceShort: 'Kurata 2024',
+      alt: 'Kikuchi ME-NBI vascular patterns: absent, network, ISV, unclassified, and mixed (Kurata 2024 Fig. 1)',
+      caption: 'Fig. 1. M-NBI vascular patterns of SNADET (Kurata et al. 2024)',
+      source:
+        'Kurata Y, Hirose T, Kakushima N, et al. Endoscopic diagnosis of epithelial subtypes of superficial non-ampullary duodenal epithelial tumors using magnifying narrow-band imaging. Dig Dis. 2024;42:399-406. Fig. 1.',
+      doi: 'https://doi.org/10.1159/000539308',
+      pubmed: '38749404',
+      license: 'CC BY 4.0',
+      licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+      note: 'Kurata 2024 Fig. 1 を改変・切り抜きせず全体で掲載。ライセンスは CC BY 4.0。Kikuchi 2014 原著は CC ではない。血管パターン（absent / network / ISV / unclassified / mixed）。',
+      aspectRatio: 729 / 448,
+    },
   ],
   entries: [
     {

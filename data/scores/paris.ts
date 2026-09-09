@@ -87,7 +87,7 @@ export const parisScore: ClassificationDefinition = {
       pubmed: '40336268',
       license: 'CC BY-NC 4.0',
       licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
-      note: '図の 0-Isp は日本語分類／後年の追加。2003/2005 の Paris 表は 0-Ip と 0-Is。Clin Endosc 2025 Fig. 2（CC BY-NC 4.0）は埋め込まずリンクする。Johnson 2023 Can J Surg は CC BY-NC-ND 4.0。2003/2005 の原著は CC ではない。',
+      note: '図の 0-Isp は日本語分類／後年の追加。2003/2005 の Paris 表は 0-Ip と 0-Is。Clin Endosc 2025 Fig. 2（CC BY-NC 4.0）は埋め込まずリンクする。Johnson 2023 Can J Surg は CC BY-NC-ND 4.0。Johnson 2023 と Fujiyoshi 2022 の原図は図鑑に掲載。2003/2005 の原著は CC ではない。',
     },
     {
       href: PARIS_USER_FIGURE_PATH,

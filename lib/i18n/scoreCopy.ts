@@ -214,7 +214,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       Total: 'Biopsies from the distal and mid esophagus are still required. EREFS alone does not confirm the diagnosis.',
     },
     figureNotes: [
-      'Crops are on each finding card. The original plate is not hosted — link to PMC Fig. 2. License: CC BY 4.0. The Hirano 2013 Gut table is not CC.',
+      'Crops are on each finding card. The original plate is not hosted — link to PMC Fig. 2. License: CC BY 4.0. Tanaka 2025 is on the atlas. The Hirano 2013 Gut table is not CC.',
     ],
     entryFigureNotes: {
       Edema: [
@@ -349,7 +349,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Same algorithm as the on-screen flowchart, so the image is not hosted — link to original Fig. 1. Wiley / JGES Open Access, CC BY-NC-ND 4.0. Magnifying algorithm for the stomach. Separate from JNET / NICE.',
-      'Crops from Kurumi 2021 Fig. 5 are on each VS classification card. The original plate is not hosted — link to PMC Fig. 5. License: CC BY 4.0.',
+      'Crops from Kurumi 2021 Fig. 5 are on each VS classification card. The original plate is not hosted — link to PMC Fig. 5. License: CC BY 4.0. Miyaoka 2020 plates are on the atlas.',
     ],
     entryFigureNotes: {
       'Regular MV': ['Cropped from the regular MVP panel in the lower row of Kurumi 2021 Fig. 5. License: CC BY 4.0.'],
@@ -1010,6 +1010,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Kikuchi 2014 Fig. 10. Wiley / Digestive Endoscopy copyright; not CC — link to the paper.',
+      'Kurata 2024 Fig. 1 is shown in full without alteration or cropping. License: CC BY 4.0. Vascular patterns: absent / network / ISV / unclassified / mixed. Not the Kikuchi 2014 original.',
     ],
     flow: {
       title: 'Algorithm',
@@ -1064,7 +1065,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Abnormal vessels': 'Useful to differentiate adenoma from adenocarcinoma; evaluate with surface type.',
     },
     figureNotes: [
-      'Uchiyama 2006 original. Springer copyright; not CC — link to the paper.',
+      'Uchiyama 2006 original. Springer copyright; not CC — link to the paper. Iwashita 2015 plates are on the atlas.',
     ],
   },
   'ampullary-macroscopic': {
@@ -1230,7 +1231,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     comments: {
       SSL: 'Precursor of the serrated pathway. Management depends on size, margins, and dysplasia.',
     },
-    figureNotes: ['IARC WHO Blue Book (5th ed). Not CC — link only.'],
+    figureNotes: ['IARC WHO Blue Book (5th ed). Not CC — link only. Mezzapesa 2022 and Hyun 2021 plates are on the atlas.'],
   },
   'itbcg-budding': {
     name: 'ITBCG tumor budding (BD1–BD3)',
@@ -1273,7 +1274,10 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     comments: {
       G3: 'Poorly differentiated NEC is also high grade but a distinct entity from well-differentiated NET G3.',
     },
-    figureNotes: ['IARC WHO Blue Book (Endocrine, 5th ed). Not CC — link only.'],
+    figureNotes: [
+      'IARC WHO Blue Book (Endocrine, 5th ed). Not CC — link only.',
+      'La Rosa 2021 Fig. 3 is shown in full without alteration or cropping. License: CC BY 4.0. The WHO Blue Book is not CC.',
+    ],
   },
   lauren: {
     name: 'Lauren classification (gastric adenocarcinoma)',
@@ -1305,7 +1309,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       '0-III': 'Almost never seen in the colorectum.',
     },
     figureNotes: [
-      '0-Isp in the figure is Japanese / later. The 2003/2005 Paris table lists 0-Ip and 0-Is. Clin Endosc 2025 Fig. 2 (CC BY-NC 4.0) is linked rather than hosted. Johnson 2023 Can J Surg is CC BY-NC-ND 4.0. The 2003/2005 originals are not CC.',
+      '0-Isp in the figure is Japanese / later. The 2003/2005 Paris table lists 0-Ip and 0-Is. Clin Endosc 2025 Fig. 2 (CC BY-NC 4.0) is linked rather than hosted. Johnson 2023 Can J Surg is CC BY-NC-ND 4.0. Johnson 2023 and Fujiyoshi 2022 plates are on the atlas. The 2003/2005 originals are not CC.',
       'Reference schematic created and supplied by a project contributor, not a figure from the Paris original. The composite is linked rather than embedded; CC BY 4.0 crops are shown on each classification card.',
     ],
     entryFigureNotes: {
@@ -1342,7 +1346,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         'Highest invasion risk of the four subtypes. The 31.6% (CI 19.8–43.4%) is from Bogie 2018. Consider en-bloc resection.',
     },
     figureNotes: [
-      'Clin Endosc 2025 Fig. 3 (CC BY-NC 4.0) is linked rather than hosted. The Kudo 2008 GIE original is not CC.',
+      'Clin Endosc 2025 Fig. 3 (CC BY-NC 4.0) is linked rather than hosted. Myung 2017 is on the atlas. The Kudo 2008 GIE original is not CC.',
       'Reference schematic created and supplied by a project contributor, not a figure from the LST original. The composite is linked rather than embedded; CC BY 4.0 crops are shown on each classification card.',
     ],
     entryFigureNotes: {

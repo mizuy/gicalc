@@ -37,7 +37,7 @@ export const whoSerratedScore: ClassificationDefinition = {
       alt: 'WHO Classification of Tumours: Digestive System Tumours, 5th edition',
       caption: 'WHO Classification of Tumours: Digestive System Tumours (5th ed, 2019)',
       source: 'WHO Classification of Tumours Editorial Board. Digestive System Tumours. Lyon: IARC; 2019.',
-      note: 'IARC WHO Blue Book。CC ではないのでリンクのみ。',
+      note: 'IARC WHO Blue Book。CC ではないのでリンクのみ。Mezzapesa 2022 と Hyun 2021 の原図は図鑑に掲載。',
     },
   ],
   entries: [

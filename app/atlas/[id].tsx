@@ -4,7 +4,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { ClassificationFigure } from '@/components/calculator/ClassificationFigure';
 import { ReportIssueButton } from '@/components/ReportIssueButton';
 import { Text, useThemeColor } from '@/components/Themed';
-import { getAtlasById, getAtlasRouteIds } from '@/data/atlas';
+import { getAtlasById, getAtlasRouteIds, localizeAtlasFigure } from '@/data/atlas';
 import { getScoreById } from '@/data/scores';
 import { localizeScore, useLocale } from '@/lib/i18n';
 import { figureKey } from '@/types/score';
@@ -51,7 +51,10 @@ export default function AtlasScreen() {
         </Link>
 
         {atlas.figures.map((figure) => (
-          <ClassificationFigure key={figureKey(figure)} figure={figure} />
+          <ClassificationFigure
+            key={figureKey(figure)}
+            figure={localizeAtlasFigure(figure, locale)}
+          />
         ))}
 
         <ReportIssueButton pageTitle={`${localized.shortName} / Atlas`} />

@@ -83,6 +83,7 @@ import {
   getAtlasRouteIds,
   hasAtlas,
   listAtlases,
+  localizeAtlasFigure,
 } from '../data/atlas';
 import { compareAtlasFigures } from '../data/atlas/types';
 import { BBPS_SCIREP_2024_PUBMED } from '../data/scores/bbps';
@@ -2084,9 +2085,13 @@ test('分類は原著の図を出典付きで持つ', () => {
   for (const id of ['who-serrated', 'itbcg-budding', 'net-grade', 'lauren'] as const) {
     const score = getScoreById(id);
     assert.ok(score && isClassification(score));
-    assertOriginalPlateIsLinkOnly(score);
     assert.equal(score.figures?.[0]?.src, undefined);
     assert.equal(score.figures?.[0]?.license, undefined);
+  }
+  for (const id of ['who-serrated', 'itbcg-budding', 'lauren'] as const) {
+    const score = getScoreById(id);
+    assert.ok(score && isClassification(score));
+    assertOriginalPlateIsLinkOnly(score);
   }
   const itbcgFig = getScoreById('itbcg-budding');
   assert.ok(itbcgFig && isClassification(itbcgFig));
@@ -2675,7 +2680,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.48');
+  assert.equal(pkg.version, '1.0.50');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2937,6 +2942,7 @@ test('画像の下は出典・図番号・Original/Not original・短縮ライ�
   );
   assert.match(figureComponent, /figureCreditLabel/);
   assert.match(figureComponent, /figureCreditHref/);
+  assert.match(figureComponent, /figure\.legend/);
   assert.doesNotMatch(figureComponent, /kindBadge/);
   assert.doesNotMatch(figureComponent, /figure\.caption/);
   assert.doesNotMatch(figureComponent, /licenseUrl/);
@@ -3071,11 +3077,27 @@ test('全分類ページは先頭に全分類アイテムの全体像を表示�
   assert.equal(UI.en.classificationOverview, 'Classification overview');
 });
 
-test('アトラスはホストできる CC 図が2つ以上ある分類だけ公開する', () => {
-  assert.equal(ATLAS_MIN_FIGURES, 2);
-  assert.deepEqual(getAtlasRouteIds(), ['jnet']);
+test('アトラスはホストできる CC 図が2つ以上ある分類の残りを公開する', () => {
+  assert.equal(ATLAS_MIN_FIGURES, 1);
+  assert.deepEqual(getAtlasRouteIds(), [
+    'erefs',
+    'mesda-g',
+    'uchiyama',
+    'jnet',
+    'paris',
+    'lst',
+    'who-serrated',
+  ]);
   assert.equal(hasAtlas('jnet'), true);
+  assert.equal(hasAtlas('paris'), true);
+  assert.equal(hasAtlas('lst'), true);
+  assert.equal(hasAtlas('who-serrated'), true);
+  assert.equal(hasAtlas('erefs'), true);
+  assert.equal(hasAtlas('mesda-g'), true);
+  assert.equal(hasAtlas('uchiyama'), true);
   assert.equal(hasAtlas('nice'), false);
+  assert.equal(hasAtlas('net-grade'), false);
+  assert.equal(hasAtlas('kikuchi-mebi'), false);
   assert.equal(getAtlasById('nice'), undefined);
 
   const jnetAtlas = getAtlasById('jnet');
@@ -3099,8 +3121,87 @@ test('アトラスはホストできる CC 図が2つ以上ある分類だけ公
   assert.equal(jnetAtlas.figures[1]?.month, 7);
   assert.equal(jnetAtlas.figures[2]?.month, 4);
   assert.equal(jnetAtlas.figures[3]?.year, 2021);
+
+  const parisAtlas = getAtlasById('paris');
+  assert.ok(parisAtlas);
+  assert.deepEqual(
+    parisAtlas.figures.map((figure) => figure.sourceShort),
+    ['Johnson 2023', 'Fujiyoshi 2022'],
+  );
+  assert.match(parisAtlas.figures[1]?.note ?? '', /胃/);
+
+  const lstAtlas = getAtlasById('lst');
+  assert.ok(lstAtlas);
+  assert.deepEqual(
+    lstAtlas.figures.map((figure) => figure.sourceShort),
+    ['Myung 2017'],
+  );
+
+  const whoAtlas = getAtlasById('who-serrated');
+  assert.ok(whoAtlas);
+  assert.equal(whoAtlas.figures.length, 6);
+  assert.deepEqual(
+    whoAtlas.figures.map((figure) => figure.sourceShort),
+    [
+      'Mezzapesa 2022',
+      'Mezzapesa 2022',
+      'Mezzapesa 2022',
+      'Mezzapesa 2022',
+      'Hyun 2021',
+      'Hyun 2021',
+    ],
+  );
+
+  const erefsAtlas = getAtlasById('erefs');
+  assert.ok(erefsAtlas);
+  assert.deepEqual(
+    erefsAtlas.figures.map((figure) => figure.sourceShort),
+    ['Tanaka 2025'],
+  );
+
+  const mesdaAtlas = getAtlasById('mesda-g');
+  assert.ok(mesdaAtlas);
+  assert.deepEqual(
+    mesdaAtlas.figures.map((figure) => figure.figureRef),
+    ['Fig. 5', 'Fig. 6', 'Fig. 7', 'Fig. 8'],
+  );
+
+  const uchiyamaAtlas = getAtlasById('uchiyama');
+  assert.ok(uchiyamaAtlas);
+  assert.equal(uchiyamaAtlas.figures.length, 2);
+  assert.equal(uchiyamaAtlas.figures[0]?.license, 'CC BY-NC-ND 3.0');
+
+  for (const atlas of listAtlases()) {
+    for (const figure of atlas.figures) {
+      assert.ok(
+        (figure.legend?.trim().length ?? 0) > 20,
+        `${atlas.id} ${figure.sourceShort} ${figure.figureRef}: legend がない`,
+      );
+      assert.ok(
+        (figure.legendEn?.trim().length ?? 0) > 20,
+        `${atlas.id} ${figure.sourceShort} ${figure.figureRef}: legendEn がない`,
+      );
+    }
+  }
+  assert.match(lstAtlas.figures[0]?.legend ?? '', /LST-G/);
+  assert.match(lstAtlas.figures[0]?.legendEn ?? '', /indigo/i);
+  assert.match(parisAtlas.figures[0]?.legend ?? '', /0-Ip/);
+  assert.match(parisAtlas.figures[1]?.legend ?? '', /0-IIa/);
+  assert.match(erefsAtlas.figures[0]?.legend ?? '', /\(a\)/);
+  assert.match(mesdaAtlas.figures[0]?.legend ?? '', /境界線/);
+  assert.match(uchiyamaAtlas.figures[0]?.legend ?? '', /\(A\)/);
+  assert.match(jnetAtlas.figures[2]?.legend ?? '', /Type 1/);
+  assert.equal(UI.ja.atlas.legend, '凡例');
+  assert.equal(UI.en.atlas.legend, 'Legend');
+  assert.equal(localizeAtlasFigure(lstAtlas.figures[0]!, 'en').legend, lstAtlas.figures[0]!.legendEn);
+  assert.equal(localizeAtlasFigure(lstAtlas.figures[0]!, 'ja').legend, lstAtlas.figures[0]!.legend);
+
+  const atlasPage = readFileSync(join(process.cwd(), 'app/atlas/[id].tsx'), 'utf8');
+  assert.match(atlasPage, /localizeAtlasFigure/);
+
   assert.match(UI.ja.atlas.indexIntro, /CC BY-NC-ND/);
   assert.match(UI.en.atlas.indexIntro, /CC BY-NC-ND/);
+  assert.match(UI.ja.atlas.indexIntro, /1枚でも/);
 
   const sorted = [...jnetAtlas.figures].sort(compareAtlasFigures);
   assert.deepEqual(
@@ -3109,8 +3210,7 @@ test('アトラスはホストできる CC 図が2つ以上ある分類だけ公
   );
 
   const published = listAtlases();
-  assert.equal(published.length, 1);
-  assert.equal(published[0]?.id, 'jnet');
+  assert.equal(published.length, 7);
 
   const footer = readFileSync(join(process.cwd(), 'components/GlobalFooter.tsx'), 'utf8');
   assert.match(footer, /pathname === '\/atlas'/);
@@ -3124,7 +3224,30 @@ test('アトラスはホストできる CC 図が2つ以上ある分類だけ公
   assert.equal(UI.en.atlas.open, 'More reference figures');
   assert.match(UI.ja.about.citationsCcBody, /Lee 2021/);
   assert.match(UI.ja.about.citationsCcBody, /図鑑/);
+  assert.match(UI.ja.about.citationsCcBody, /Myung 2017/);
+  assert.match(UI.ja.about.citationsCcBody, /Fujiyoshi 2022/);
+  assert.match(UI.ja.about.citationsCcBody, /Mezzapesa 2022/);
+  assert.match(UI.ja.about.citationsCcBody, /Tanaka 2025/);
+  assert.match(UI.ja.about.citationsCcBody, /Miyaoka 2020/);
+  assert.match(UI.ja.about.citationsCcBody, /Iwashita 2015/);
+  assert.match(UI.ja.about.citationsCcBody, /La Rosa 2021/);
+  assert.match(UI.ja.about.citationsCcBody, /Kurata 2024/);
   assert.match(UI.en.about.citationsCcBody, /JNET atlas/);
+  assert.match(UI.en.about.citationsCcBody, /Paris atlas/);
+  assert.match(UI.en.about.citationsCcBody, /WHO serrated atlas/);
+
+  const netGrade = getScoreById('net-grade');
+  assert.ok(netGrade && isClassification(netGrade));
+  assert.match(netGrade.figures?.[1]?.src ?? '', /net-uccella2021-fig3/);
+  assert.match(netGrade.figures?.[1]?.note ?? '', /改変・切り抜きせず/);
+  assert.equal(netGrade.figures?.[1]?.sourceShort, 'La Rosa 2021');
+
+  const kikuchi = getScoreById('kikuchi-mebi');
+  assert.ok(kikuchi && isClassification(kikuchi));
+  assert.match(kikuchi.figures?.[1]?.src ?? '', /kikuchi-nakagawa2024-fig1/);
+  assert.match(kikuchi.figures?.[1]?.note ?? '', /改変・切り抜きせず/);
+  assert.equal(kikuchi.figures?.[1]?.sourceShort, 'Kurata 2024');
+  assert.equal(kikuchi.figures?.[1]?.license, 'CC BY 4.0');
 });
 
 test('切り抜きがある分類は原図を埋め込まずリンクだけにする', () => {

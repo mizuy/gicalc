@@ -8,7 +8,19 @@ export type AtlasFigure = ClassificationFigure & {
   month?: number;
   /** 同年同月のときの並べ用（第一著者） */
   authors?: string;
+  /** 日本語の Figure legend（必須。パネル説明） */
+  legend: string;
+  /** 英語の Figure legend */
+  legendEn: string;
 };
+
+export function localizeAtlasFigure(
+  figure: AtlasFigure,
+  locale: 'ja' | 'en',
+): ClassificationFigure {
+  if (locale !== 'en') return figure;
+  return { ...figure, legend: figure.legendEn };
+}
 
 export type AtlasDefinition = {
   /** 分類 id と同じ（/atlas/{id}） */
