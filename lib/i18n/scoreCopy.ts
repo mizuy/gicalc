@@ -27,6 +27,10 @@ export type ScoreCopy = {
   hierarchyLabels?: Record<string, string>;
   comments?: Record<string, string>;
   meanings?: Record<string, string>;
+  /** 英語 UI のカード見出し。キーは定義側の entry.label */
+  entryLabels?: Record<string, string>;
+  /** 英語 UI の定義行。キーは定義側の entry.label */
+  entryRows?: Record<string, Array<{ heading: string; text: string }>>;
   figureNotes?: string[];
   /** 分類エントリに載せた切り抜き図の英語注。キーは entry.label */
   entryFigureNotes?: Record<string, string[]>;
@@ -1326,6 +1330,130 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       '0-III': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
       '0-IIc+III': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
       '0-III+IIc': ['Cropped from a contributor-created schematic. Not a figure from the Paris original. License: CC BY 4.0.'],
+    },
+  },
+  macro: {
+    name: 'Japanese Type 0 vs Paris',
+    shortName: 'Macro',
+    description:
+      'How Japanese Type 0 rules for the esophagus, stomach, and colorectum differ from the Paris classification. The symbols match; the gaps are 0-I subtypes, the 0-I versus 0-IIa cut-off, mixed-type notation, and whether 0-III is used. Advanced types 1–5 are not covered.',
+    officialLinkLabel: 'JSCCR Japanese classification (society page)',
+    note: 'The Japanese rule texts and official English editions are not quoted. The gastric “about 2 mm” cut-off is from secondary sources; the 15th Japanese edition itself was not checked here.',
+    groups: {
+      相違点: 'Differences',
+    },
+    meanings: {
+      '0-I の亜分類': 'How 0-I is split',
+      '0-I と 0-IIa': 'Height cut-off',
+      混合型: 'How + is written',
+      '0-III': 'Present or absent',
+    },
+    entryLabels: {
+      '0-I の亜分類': '0-I subtypes',
+      '0-I と 0-IIa': '0-I vs 0-IIa',
+      混合型: 'Mixed type',
+      '0-III': '0-III',
+    },
+    hierarchyLabels: {
+      'macro-0': 'Type 0 (superficial)',
+      'macro-0-i': '0-I protruding',
+      'macro-0-ip': '0-Ip — Paris / colorectum / esophagus',
+      'macro-0-isp': '0-Isp — colorectal rules only',
+      'macro-0-is': '0-Is — Paris / colorectum / esophagus (stomach: 0-I)',
+      'macro-0-ii': '0-II superficial',
+      'macro-0-ii-common': '0-IIa / IIb / IIc — all four documents',
+      'macro-0-mixed': 'Mixed type — notation differs',
+      'macro-0-iii': '0-III — Paris table / stomach / esophagus. Deleted in colorectal rules',
+    },
+    entryRows: {
+      '0-I の亜分類': [
+        {
+          heading: 'Paris',
+          text: 'The 2003/2005 table lists 0-Ip and 0-Is only. Isp is omitted as clinically unhelpful and is treated as Is.',
+        },
+        {
+          heading: 'Colorectum',
+          text: 'Three subtypes: 0-Ip (pedunculated), 0-Isp (subpedunculated), and 0-Is (sessile). Isp is a formal subtype.',
+        },
+        {
+          heading: 'Stomach',
+          text: '0-I only. No split into pedunculated / subpedunculated / sessile.',
+        },
+        {
+          heading: 'Esophagus',
+          text: '0-Ip and 0-Is. Subpedunculated lesions are grouped with Ip; there is no separate Isp field.',
+        },
+        {
+          heading: 'In practice',
+          text: 'A colorectal 0-Isp is Paris 0-Is. Gastric 0-I may map to Paris Ip or Is. Later schematics often put Isp back, which is easy to confuse with the Paris table.',
+        },
+      ],
+      '0-I と 0-IIa': [
+        {
+          heading: 'Paris',
+          text: 'Quantitative. In columnar epithelium (stomach and colorectum), the closed biopsy forceps is about 2.5 mm: above that is 0-Is, below is 0-IIa. Esophageal squamous epithelium uses 1.2 mm.',
+        },
+        {
+          heading: 'Colorectum',
+          text: 'Qualitative. 0-I is a frankly polypoid protrusion; 0-IIa is a low elevation. No millimetre cut-off.',
+        },
+        {
+          heading: 'Stomach',
+          text: 'A height guide is given. The 3rd English edition usually treats less than 3 mm as 0-IIa. Secondary sources say the 15th Japanese edition uses about 2 mm (the 15th Japanese text was not checked here).',
+        },
+        {
+          heading: 'Esophagus',
+          text: 'Impression of height and basal constriction. 0-I is a tall lesion still judged superficial; 0-IIa is only slightly elevated. The 2.5 mm forceps rule is not written.',
+        },
+        {
+          heading: 'In practice',
+          text: 'A 3–4 mm broad sessile elevation or LST-G granules is often 0-IIa in Japanese colorectal notes and 0-Is if Paris is applied strictly. This is the main label swap on the same lesion.',
+        },
+      ],
+      混合型: [
+        {
+          heading: 'Paris',
+          text: 'Defined as shape combinations. 0-IIa+IIc is an elevated lesion with a central depression (including a relative depression still above adjacent mucosa). 0-IIc+IIa is mainly depressed, with elevation at the rim or in part of the lesion.',
+        },
+        {
+          heading: 'Colorectum',
+          text: 'Write the component with the larger area first, joined by + (example: 0-IIc+IIa).',
+        },
+        {
+          heading: 'Stomach',
+          text: 'Same area-first rule as the colorectum (example: 0-IIc+III).',
+        },
+        {
+          heading: 'Esophagus',
+          text: 'Area-first, and the component that suggests deeper invasion is placed in quotation marks (example: 0-IIc+“0-Is”). If an advanced type is mixed in, write that type first.',
+        },
+        {
+          heading: 'In practice',
+          text: 'Japanese rules are “larger + smaller”; Paris is “mainly elevated versus mainly depressed”. Relative depression is explicit in Paris and thin in the Japanese notes. Quotation marks are esophageal only.',
+        },
+      ],
+      '0-III': [
+        {
+          heading: 'Paris',
+          text: 'The table includes 0-III (ulcer / deep excavation). Depth separates it from IIc (about 1.2 mm in columnar epithelium, 0.5 mm in esophageal squamous epithelium). A note says not to apply it in the colorectum (mainly Barrett and stomach).',
+        },
+        {
+          heading: 'Colorectum',
+          text: 'Once listed after the gastric scheme, then deleted as not occurring. Current Type 0 is 0-I and 0-II only.',
+        },
+        {
+          heading: 'Stomach',
+          text: '0-III (excavated) is used: a frankly deep depression.',
+        },
+        {
+          heading: 'Esophagus',
+          text: '0-III (superficial excavated) is used.',
+        },
+        {
+          heading: 'In practice',
+          text: 'In the colorectum, Paris and the Japanese rules agree that 0-III is almost never used. In the stomach and esophagus it is a formal Japanese type. The Paris page keeps 0-III because the table is organ-wide, not because colorectal practice uses it.',
+        },
+      ],
     },
   },
   lst: {

@@ -87,6 +87,10 @@ import {
 } from '../data/atlas';
 import { compareAtlasFigures } from '../data/atlas/types';
 import { BBPS_SCIREP_2024_PUBMED } from '../data/scores/bbps';
+import {
+  MACRO_JSCCR_2019_PUBMED,
+  MACRO_PARIS_2005_PUBMED,
+} from '../data/scores/macro';
 import { PARIS_2003_PUBMED, PARIS_2005_PUBMED } from '../data/scores/paris';
 import { PRAGUE_2006_PUBMED } from '../data/scores/prague';
 import { JSPH_VARICES_2010_PUBMED, KJ_HUGR_2024_PUBMED, NAGASHIMA_2022_PUBMED, PALL_2023_PUBMED } from '../data/scores/jsph-varices';
@@ -137,7 +141,7 @@ import {
   figureOriginLabel,
 } from '../lib/figures/credit';
 
-test('登録スコアは48種で臓器順に並ぶ', () => {
+test('登録スコアは49種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -173,6 +177,7 @@ test('登録スコアは48種で臓器順に並ぶ', () => {
       'net-grade',
       'lauren',
       'paris',
+      'macro',
       'lst',
       'appendiceal-orifice',
       'kudo-tsuruta',
@@ -217,6 +222,7 @@ test('登録スコアは48種で臓器順に並ぶ', () => {
           'apcs',
           'sps',
           'paris',
+          'macro',
           'lst',
           'appendiceal-orifice',
           'kudo-tsuruta',
@@ -239,9 +245,9 @@ test('登録スコアは48種で臓器順に並ぶ', () => {
   assert.equal(getScoreNavCategory(getScoreById('vienna')!), 'pathology');
 });
 
-test('variant 専用 id は一覧から隠し、全定義51種を保持する', () => {
+test('variant 専用 id は一覧から隠し、全定義52種を保持する', () => {
   assert.deepEqual([...HIDDEN_LIST_SCORE_IDS].sort(), ['apcs-modified', 'kyoto-modified', 'modified-spigelman']);
-  assert.equal(ALL_SCORE_DEFINITIONS.length, 51);
+  assert.equal(ALL_SCORE_DEFINITIONS.length, 52);
   assert.ok(getScoreById('kyoto-modified'));
   assert.ok(getScoreById('modified-spigelman'));
   assert.ok(getScoreById('apcs-modified'));
@@ -321,6 +327,7 @@ test('一覧はフェーズ別にグループ化し、出血・病理はサブ�
         [
           'sps',
           'paris',
+          'macro',
           'lst',
           'appendiceal-orifice',
           'kudo-tsuruta',
@@ -373,6 +380,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     'net-grade': 'classification',
     lauren: 'classification',
     paris: 'classification',
+    macro: 'classification',
     lst: 'classification',
     'appendiceal-orifice': 'classification',
     'kudo-tsuruta': 'classification',
@@ -418,6 +426,7 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'toya',
     'uchiyama',
     'ampullary-macroscopic',
+    'macro',
     'lst',
     'appendiceal-orifice',
     'kudo-tsuruta',
@@ -1298,6 +1307,44 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   );
   assert.equal(paris.hierarchy?.[1]?.children?.length, 5);
 
+  const macro = getScoreById('macro');
+  assert.ok(macro && isClassification(macro));
+  assert.equal(macro.developedInJapan, true);
+  assert.equal(macro.originalLocale, 'ja');
+  assert.equal(macro.organ, 'colorectum');
+  assert.equal(macro.figures, undefined);
+  assert.equal(macro.entries.every((entry) => entry.figures === undefined), true);
+  assert.deepEqual(
+    macro.entries.map((entry) => entry.label),
+    ['0-I の亜分類', '0-I と 0-IIa', '混合型', '0-III'],
+  );
+  assert.doesNotMatch(macro.entries.map((entry) => entry.label).join(' '), /0-Ip|0-Isp|0-IIa\+IIc/);
+  assert.match(macro.hierarchy?.map((node) => JSON.stringify(node)).join(' ') ?? '', /0-Isp/);
+  assert.match(macro.entries[0]?.rows.map((row) => row.heading).join(' ') ?? '', /Paris/);
+  assert.match(macro.entries[0]?.rows.map((row) => row.heading).join(' ') ?? '', /大腸規約/);
+  assert.match(macro.entries[1]?.rows.find((row) => row.heading === 'Paris')?.text ?? '', /2\.5 mm/);
+  assert.match(macro.entries[2]?.rows.find((row) => row.heading === '食道規約')?.text ?? '', /引用符/);
+  assert.match(macro.entries[3]?.rows.find((row) => row.heading === '大腸規約')?.text ?? '', /削除/);
+  assert.doesNotMatch(macro.originalLead ?? '', /Type 0 is divided into three categories/);
+  assert.equal(macro.pubmed, MACRO_PARIS_2005_PUBMED);
+  assert.ok(macro.citations?.some((citation) => citation.pubmed === MACRO_JSCCR_2019_PUBMED));
+  assert.equal(classificationOriginalLocale(macro), 'ja');
+  const englishMacro = localizeScore(macro, 'en');
+  assert.ok(isClassification(englishMacro));
+  assert.deepEqual(
+    englishMacro.entries.map((entry) => entry.label),
+    ['0-I subtypes', '0-I vs 0-IIa', 'Mixed type', '0-III'],
+  );
+  const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
+  for (const entry of englishMacro.entries) {
+    assert.doesNotMatch(entry.label, japanese, entry.label);
+    for (const row of entry.rows) {
+      assert.doesNotMatch(row.heading, japanese, row.heading);
+      assert.doesNotMatch(row.text, japanese, row.text);
+    }
+  }
+  assert.match(englishMacro.hierarchy?.map((node) => node.label).join(' ') ?? '', /colorectal rules only/);
+
   const sps = getScoreById('sps');
   assert.ok(sps && isClassification(sps));
   assert.deepEqual(
@@ -1594,11 +1641,11 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.ok(hasAlgorithmFlow(mesda));
   assert.ok(hasAlgorithmFlow(toya));
   assert.ok(hasAlgorithmFlow(kikuchiMebi));
-  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc, uchiyama, ampMacro]) {
+  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, macro, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc, uchiyama, ampMacro]) {
     assert.equal(hasAlgorithmFlow(score), false, score.id);
   }
 
-  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, kikuchiMebi, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc, uchiyama, ampMacro]) {
+  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, macro, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, kikuchiMebi, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc, uchiyama, ampMacro]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -3013,8 +3060,10 @@ test('広い画面の半分幅は図1枚のカードだけ。JES と図なし・
   const paris = getScoreById('paris');
   const jnet = getScoreById('jnet');
   const mesda = getScoreById('mesda-g');
+  const macroPage = getScoreById('macro');
   assert.ok(jes && paris && jnet && mesda && isClassification(jes) && isClassification(paris));
   assert.ok(isClassification(jnet) && isClassification(mesda));
+  assert.ok(macroPage && isClassification(macroPage));
 
   const jesTypeA = jes.entries.find((entry) => entry.label === 'Type A');
   const jesAva = jes.entries.find((entry) => entry.label === 'AVA');
@@ -3038,6 +3087,10 @@ test('広い画面の半分幅は図1枚のカードだけ。JES と図なし・
   assert.equal(isHalfWidthTypeCard(jesTypeA, { twoColumn: true, scoreId: 'jes' }), false);
   assert.equal(isHalfWidthTypeCard(jesAva, { twoColumn: true, scoreId: 'jes' }), false);
   assert.equal(isHalfWidthTypeCard(jnetType1, { twoColumn: false, scoreId: 'jnet' }), false);
+  assert.equal(
+    isHalfWidthTypeCard(macroPage.entries[0]!, { twoColumn: true, scoreId: 'macro' }),
+    false,
+  );
 });
 
 test('画像の権利・加工メモはデータに保持し、ページには表示しない', () => {

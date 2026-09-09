@@ -36,6 +36,7 @@ import { mesdaGScore } from './mesda-g';
 import { modifiedSpigelmanScore } from './modified-spigelman';
 import { niceScore } from './nice';
 import { nobladsScore } from './noblads';
+import { macroScore } from './macro';
 import { parisScore } from './paris';
 import { pragueScore } from './prague';
 import { sarinScore } from './sarin';
@@ -90,6 +91,7 @@ export const ALL_SCORE_DEFINITIONS: ScoreDefinition[] = [
   netGradeScore,
   laurenScore,
   parisScore,
+  macroScore,
   lstScore,
   appendicealOrificeScore,
   kudoTsurutaScore,
