@@ -2,6 +2,10 @@
 
 消化管内視鏡向けスコア・予測・内視鏡分類ツール（Web / PWA）。既定は英語です。ヘッダーの **JA / EN** で日本語と英語を切り替えられ、選んだ言語はブラウザに保存されます。計算は各項目の最低点から始まります。
 
+公開サイト: https://mizuy.github.io/gicalc/
+
+<img src="docs/gicalc-qr.png" alt="GI Calc 公開サイト https://mizuy.github.io/gicalc/ の QR コード" width="180" />
+
 食道、胃、十二指腸、大腸、出血の順です。
 
 | 臓器 | ツール | 対象 | 出力 |
