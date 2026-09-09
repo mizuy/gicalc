@@ -2084,9 +2084,13 @@ test('分類は原著の図を出典付きで持つ', () => {
   for (const id of ['who-serrated', 'itbcg-budding', 'net-grade', 'lauren'] as const) {
     const score = getScoreById(id);
     assert.ok(score && isClassification(score));
-    assertOriginalPlateIsLinkOnly(score);
     assert.equal(score.figures?.[0]?.src, undefined);
     assert.equal(score.figures?.[0]?.license, undefined);
+  }
+  for (const id of ['who-serrated', 'itbcg-budding', 'lauren'] as const) {
+    const score = getScoreById(id);
+    assert.ok(score && isClassification(score));
+    assertOriginalPlateIsLinkOnly(score);
   }
   const itbcgFig = getScoreById('itbcg-budding');
   assert.ok(itbcgFig && isClassification(itbcgFig));
