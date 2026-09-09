@@ -132,6 +132,7 @@ export const SCORES = ALL_SCORE_DEFINITIONS.filter(
 ```
 
 - 一覧の並びは **臓器順**、臓器内は **分類 → リスクスコア → 治療・予測** のおおよその順です。
+- 複数臓器で使う分類（Paris など）は、定義の `organ` は主臓器のまま、[`data/scores/nav-categories.ts`](../data/scores/nav-categories.ts) の `EXTRA_NAV_LISTINGS` に他の臓器を足す。その臓器の一覧の先頭（診断フェーズの先頭）に出る。
 - 新規 `ScoreCategory` が必要なら [`types/score.ts`](../types/score.ts) の `ScoreCategory` と `CATEGORY_LABELS` を更新し、`lib/i18n/ui.ts` の `category` 英訳も追加します。
 
 ---

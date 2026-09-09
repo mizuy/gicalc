@@ -50,7 +50,7 @@ import { computeModifiedSpigelman, computeSpigelman } from '../lib/scores/spigel
 import { lowestFieldValues } from '../lib/scores/initialValues';
 import { getRelatedScores } from '../lib/scores/relatedScores';
 import { getScoreById, getScoresGroupedForHome, SCORES, ALL_SCORE_DEFINITIONS } from '../data/scores';
-import { getScoreNavCategory } from '../data/scores/nav-categories';
+import { getExtraNavCategories, getScoreNavCategory, scoreListedInNavCategory } from '../data/scores/nav-categories';
 import { RELATED_SCORES } from '../data/scores/related-scores';
 import {
   getScoreRouteIds,
@@ -194,10 +194,14 @@ test('登録スコアは48種で臓器順に並ぶ', () => {
   assert.deepEqual(
     getScoresGroupedForHome().map((group) => [group.category, group.scores.map((score) => score.id)]),
     [
-      ['esophagus', ['jes', 'la', 'prague', 'siewert', 'erefs', 'jsph-varices', 'esophagus-esd-curability']],
+      [
+        'esophagus',
+        ['paris', 'jes', 'la', 'prague', 'siewert', 'erefs', 'jsph-varices', 'esophagus-esd-curability'],
+      ],
       [
         'stomach',
         [
+          'paris',
           'kimura-takemoto',
           'hill',
           'sarin',
@@ -237,6 +241,12 @@ test('登録スコアは48種で臓器順に並ぶ', () => {
     ],
   );
   assert.equal(getScoreNavCategory(getScoreById('vienna')!), 'pathology');
+  assert.equal(getScoreNavCategory(getScoreById('paris')!), 'colorectum');
+  assert.deepEqual([...getExtraNavCategories('paris')], ['esophagus', 'stomach']);
+  assert.equal(scoreListedInNavCategory(getScoreById('paris')!, 'esophagus'), true);
+  assert.equal(scoreListedInNavCategory(getScoreById('paris')!, 'stomach'), true);
+  assert.equal(scoreListedInNavCategory(getScoreById('paris')!, 'colorectum'), true);
+  assert.equal(scoreListedInNavCategory(getScoreById('paris')!, 'duodenum'), false);
 });
 
 test('variant 専用 id は一覧から隠し、全定義51種を保持する', () => {
@@ -300,12 +310,21 @@ test('一覧はフェーズ別にグループ化し、出血・病理はサブ�
     ],
   );
 
+  const esophagus = getScoresGroupedForHome().find((group) => group.category === 'esophagus')!.scores;
+  assert.deepEqual(
+    groupScoresByListPhase(esophagus).map((group) => [group.phase, group.scores.map((score) => score.id)]),
+    [
+      ['diagnosis', ['paris', 'jes', 'la', 'prague', 'siewert', 'erefs', 'jsph-varices']],
+      ['treatment', ['esophagus-esd-curability']],
+    ],
+  );
+
   const stomach = getScoresGroupedForHome().find((group) => group.category === 'stomach')!.scores;
   assert.deepEqual(
     groupScoresByListPhase(stomach).map((group) => [group.phase, group.scores.map((score) => score.id)]),
     [
       ['background-mucosa', ['kimura-takemoto', 'kyoto', 'eggim']],
-      ['diagnosis', ['hill', 'sarin', 'mesda-g']],
+      ['diagnosis', ['paris', 'hill', 'sarin', 'mesda-g']],
       ['treatment', ['gastric-esd-curability', 'ecura-hatta', 'sekiguchi', 'best-j']],
     ],
   );
@@ -3358,6 +3377,11 @@ test('関連スコア: 登録 id は有効で colorectal ↔ nomogram が双方�
   const kyotoLinks = getRelatedScores('kyoto-modified', 'ja');
   assert.ok(kyotoLinks.length > 0);
   assert.ok(kyotoLinks.some((item) => item.score.id === 'kimura-takemoto'));
+
+  assert.ok(getRelatedScores('jes', 'ja').some((item) => item.score.id === 'paris'));
+  assert.ok(getRelatedScores('mesda-g', 'ja').some((item) => item.score.id === 'paris'));
+  assert.ok(getRelatedScores('esophagus-esd-curability', 'ja').some((item) => item.score.id === 'paris'));
+  assert.ok(getRelatedScores('gastric-esd-curability', 'ja').some((item) => item.score.id === 'paris'));
 });
 
 test('引用は PubMed へ行く', () => {
