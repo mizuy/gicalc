@@ -3136,6 +3136,15 @@ test('NoDerivatives の図は分類カード用に切り抜かない', () => {
     }
   }
 
+  for (const atlas of listAtlases()) {
+    for (const figure of atlas.figures) {
+      if (/-ND(?:\s|$)/.test(figure.license ?? '')) {
+        assert.match(figure.note, /切り抜きせず/, `${atlas.id} ${figure.sourceShort}`);
+        assert.ok(figure.src, `${atlas.id} ${figure.sourceShort}`);
+      }
+    }
+  }
+
   for (const id of ['forrest', 'appendiceal-orifice']) {
     const score = getScoreById(id);
     assert.ok(score && isClassification(score));
