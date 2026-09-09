@@ -89,6 +89,14 @@ function RootLayoutNav() {
             options={{ headerBackTitle: t.back, headerRight: () => <LanguageToggle /> }}
           />
           <Stack.Screen
+            name="atlas/index"
+            options={{ headerBackTitle: t.back, headerRight: () => <LanguageToggle /> }}
+          />
+          <Stack.Screen
+            name="atlas/[id]"
+            options={{ headerBackTitle: t.back, headerRight: () => <LanguageToggle /> }}
+          />
+          <Stack.Screen
             name="citations"
             options={{
               headerShown: false,

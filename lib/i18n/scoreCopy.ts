@@ -1620,9 +1620,15 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     name: 'JNET classification (colorectal NBI magnifying)',
     description: 'NBI magnifying classification of colorectal tumors (Type 1 / 2A / 2B / 3).',
     figureNotes: [
-      'Original Fig. 7. Wiley / JGES standard copyright; not CC, so the figure is not hosted. Link opens Fig. 7 in the paper.',
-      'Reference figure from Ahmed 2024, not the Sano 2016 original: representative JNET Type 1, 2A, 2B, and 3 lesions. License: CC BY 4.0.',
+      'Original Fig. 7. Wiley / JGES standard copyright; not CC — not hosted, link only. Link opens Fig. 7 in the paper.',
+      'Crops from the lower NBI row are on each type card. The original plate is not hosted — link to Clin Endosc Fig. 1. License: CC BY-NC 4.0. Not the Sano 2016 original.',
     ],
+    entryFigureNotes: {
+      'Type 1': ['Cropped from the lower NBI row of Lee 2021 Fig. 1 (column A). License: CC BY-NC 4.0.'],
+      'Type 2A': ['Cropped from the lower NBI row of Lee 2021 Fig. 1 (column B). License: CC BY-NC 4.0.'],
+      'Type 2B': ['Cropped from the lower NBI row of Lee 2021 Fig. 1 (column C). License: CC BY-NC 4.0.'],
+      'Type 3': ['Cropped from the lower NBI row of Lee 2021 Fig. 1 (column D). License: CC BY-NC 4.0.'],
+    },
   },
   'kajiwara-nomogram': {
     name: 'Colorectal T1 LNM nomogram (Kajiwara / JSCCR)',
