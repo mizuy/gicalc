@@ -2675,7 +2675,7 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   const pkg = require('../package.json') as { version: string };
   const appConfig = require('../app.config.js') as { expo: { version: string } };
   assert.equal(appConfig.expo.version, pkg.version);
-  assert.equal(pkg.version, '1.0.47');
+  assert.equal(pkg.version, '1.0.48');
 });
 
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
@@ -2983,6 +2983,19 @@ test('各ページに原著または定義ガイドラインがあり、画像�
   assert.equal(getScoreById('nice')?.entries[0]?.figures?.[0]?.sourceShort, 'Hamada 2021');
   assert.equal(getScoreById('jes')?.entries[0]?.figures?.[0]?.figureKind, 'original');
   assert.equal(getScoreById('paris')?.entries[0]?.figures?.[0]?.figureKind, 'gicalc');
+
+  const referenceScreen = readFileSync(
+    join(process.cwd(), 'components/calculator/ClassificationReferenceScreen.tsx'),
+    'utf8',
+  );
+  const algorithmScreen = readFileSync(
+    join(process.cwd(), 'components/calculator/AlgorithmFlowScreen.tsx'),
+    'utf8',
+  );
+  assert.match(referenceScreen, /windowWidth >= 600/);
+  assert.match(referenceScreen, /width: '47%'/);
+  assert.match(algorithmScreen, /windowWidth >= 600/);
+  assert.match(algorithmScreen, /width: '47%'/);
 });
 
 test('画像の権利・加工メモはデータに保持し、ページには表示しない', () => {

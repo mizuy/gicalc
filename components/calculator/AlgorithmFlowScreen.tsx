@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import { ClassificationOverview } from '@/components/calculator/ClassificationOverview';
 import { AlgorithmFlowMap } from '@/components/calculator/AlgorithmFlowMap';
@@ -29,10 +29,12 @@ function EntryCard({
   entry,
   emphasized,
   dimmed,
+  twoColumn,
 }: {
   entry: ClassificationEntry;
   emphasized?: boolean;
   dimmed?: boolean;
+  twoColumn?: boolean;
 }) {
   const textSecondary = useThemeColor({}, 'textSecondary');
   const surface = useThemeColor({}, 'surface');
@@ -45,6 +47,7 @@ function EntryCard({
     <View
       style={[
         styles.card,
+        twoColumn ? styles.cardHalf : null,
         {
           backgroundColor: surface,
           borderColor: emphasized ? tint : border,
@@ -83,6 +86,8 @@ function EntryCard({
 }
 
 export function AlgorithmFlowScreen({ score }: Props) {
+  const { width: windowWidth } = useWindowDimensions();
+  const twoColumn = windowWidth >= 600;
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const background = useThemeColor({}, 'background');
   const textSecondary = useThemeColor({}, 'textSecondary');
@@ -190,14 +195,17 @@ export function AlgorithmFlowScreen({ score }: Props) {
         <Text style={[styles.resetText, { color: accent }]}>{t.reset}</Text>
       </Pressable>
 
-      {score.entries.map((entry) => (
-        <EntryCard
-          key={entry.label}
-          entry={entry}
-          emphasized={diagnosis?.label === entry.label}
-          dimmed={Boolean(diagnosis && diagnosis.label !== entry.label)}
-        />
-      ))}
+      <View style={twoColumn ? styles.cardGrid : undefined}>
+        {score.entries.map((entry) => (
+          <EntryCard
+            key={entry.label}
+            entry={entry}
+            twoColumn={twoColumn}
+            emphasized={diagnosis?.label === entry.label}
+            dimmed={Boolean(diagnosis && diagnosis.label !== entry.label)}
+          />
+        ))}
+      </View>
     </ScorePageShell>
   );
 }
@@ -302,12 +310,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
+  cardGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
   card: {
     borderWidth: 1,
     borderLeftWidth: 5,
     borderRadius: 14,
     padding: 14,
     marginBottom: 10,
+  },
+  cardHalf: {
+    width: '47%',
   },
   cardHeader: {
     flexDirection: 'row',
