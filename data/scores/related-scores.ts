@@ -82,6 +82,10 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
       hint: { ja: 'ESD 後 LNM 予測', en: 'Post-ESD LNM prediction' },
     },
     { id: 'paris', hint: { ja: '表在型の肉眼型（食道・胃・大腸）', en: 'Superficial morphology (esophagus, stomach, colorectum)' } },
+    {
+      id: 'macro',
+      hint: { ja: '規約0型と Paris の差', en: 'Japanese Type 0 vs Paris' },
+    },
   ],
   'ecura-hatta': [
     {
@@ -99,6 +103,7 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
     { id: 'siewert', hint: { ja: '胃食管移行部癌の Siewert 分類', en: 'Siewert classification for GEJ cancer' } },
     { id: 'prague', hint: { ja: 'Barrett 長さ（C/M）', en: 'Barrett length (C/M)' } },
     { id: 'paris', hint: { ja: '表在型の肉眼型（食道・胃・大腸）', en: 'Superficial morphology (esophagus, stomach, colorectum)' } },
+    { id: 'macro', hint: { ja: '規約0型と Paris の差', en: 'Japanese Type 0 vs Paris' } },
   ],
   kyoto: [
     { id: 'kimura-takemoto', hint: { ja: '萎縮境界・胃底腺粘膜', en: 'Atrophic border and fundic mucosa' } },
@@ -150,6 +155,10 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
     { id: 'wasp', hint: { ja: 'NBI 拡大の WASP 分類', en: 'WASP on magnifying NBI' } },
     { id: 'colorectal-ec', hint: { ja: '細胞内視鏡 EC 分類', en: 'Endocytoscopy EC classification' } },
   ],
+  jes: [
+    { id: 'paris', hint: { ja: '表在型の肉眼型（食道・胃・大腸）', en: 'Superficial morphology (esophagus, stomach, colorectum)' } },
+    { id: 'macro', hint: { ja: '規約0型と Paris の差', en: 'Japanese Type 0 vs Paris' } },
+  ],
   jnet: [
     { id: 'nice', hint: { ja: '非拡大 NICE', en: 'Non-magnifying NICE' } },
     { id: 'wasp', hint: { ja: 'WASP 分類', en: 'WASP classification' } },
@@ -164,14 +173,21 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
     { id: 'toya', hint: { ja: 'Toya 分類', en: 'Toya classification' } },
     { id: 'paris', hint: { ja: '表在型の肉眼型（食道・胃・大腸）', en: 'Superficial morphology (esophagus, stomach, colorectum)' } },
   ],
-  jes: [{ id: 'paris', hint: { ja: '表在型の肉眼型（食道・胃・大腸）', en: 'Superficial morphology (esophagus, stomach, colorectum)' } }],
   paris: [
+    { id: 'macro', hint: { ja: '規約0型との違い', en: 'Japanese Type 0 vs Paris' } },
     { id: 'lst', hint: { ja: '側方発育型（LST）', en: 'Lateral spreading tumor (LST)' } },
     { id: 'jes', hint: { ja: '食道の JES 分類', en: 'JES classification (esophagus)' } },
     { id: 'mesda-g', hint: { ja: '胃の MESDA-G', en: 'MESDA-G (stomach)' } },
     { id: 'vienna', hint: { ja: 'Vienna 分類', en: 'Vienna classification' } },
   ],
-  lst: [{ id: 'paris', hint: { ja: 'Paris 分類', en: 'Paris classification' } }],
+  macro: [
+    { id: 'paris', hint: { ja: 'Paris 分類（国際表）', en: 'Paris classification' } },
+    { id: 'lst', hint: { ja: 'LST は肉眼型ではない', en: 'LST is not a macroscopic type' } },
+  ],
+  lst: [
+    { id: 'paris', hint: { ja: 'Paris 分類', en: 'Paris classification' } },
+    { id: 'macro', hint: { ja: '規約0型と Paris の差', en: 'Japanese Type 0 vs Paris' } },
+  ],
   vienna: [
     { id: 'paris', hint: { ja: 'Paris 分類', en: 'Paris classification' } },
     { id: 'who-serrated', hint: { ja: 'WHO 鋸歯状組織型', en: 'WHO serrated histology' } },

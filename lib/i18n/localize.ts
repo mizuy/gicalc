@@ -92,7 +92,9 @@ function applyEnglishClassificationBody(
     description: copy.description,
     entries: score.entries.map((entry) => ({
       ...entry,
+      label: copy.entryLabels?.[entry.label] ?? entry.label,
       meaning: copy.meanings?.[entry.label] ?? entry.meaning,
+      rows: copy.entryRows?.[entry.label] ?? entry.rows,
       group: entry.group ? (copy.groups?.[entry.group] ?? entry.group) : entry.group,
       comment:
         options.translateComments && entry.comment
