@@ -1,6 +1,7 @@
 import type {
   ClassificationDefinition,
   ClassificationHierarchyNode,
+  ClassificationOverviewTab,
 } from '../types/score';
 
 function entryLabel(label: string, meaning?: string): string {
@@ -8,9 +9,16 @@ function entryLabel(label: string, meaning?: string): string {
   return `${label} · ${meaning}`;
 }
 
+export function classificationOverviewTabs(
+  score: ClassificationDefinition,
+): ClassificationOverviewTab[] | undefined {
+  return score.hierarchyOverviews?.length ? score.hierarchyOverviews : undefined;
+}
+
 export function classificationOverviewNodes(
   score: ClassificationDefinition,
 ): ClassificationHierarchyNode[] {
+  if (score.hierarchyOverviews?.length) return score.hierarchyOverviews[0].nodes;
   if (score.hierarchy?.length) return score.hierarchy;
 
   const nodes: ClassificationHierarchyNode[] = [];

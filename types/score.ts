@@ -200,6 +200,13 @@ export type ClassificationHierarchyNode = {
   children?: ClassificationHierarchyNode[];
 };
 
+export type ClassificationOverviewTab = {
+  /** 翻訳とReact keyに使う分類内で一意のID */
+  id: string;
+  label: string;
+  nodes: ClassificationHierarchyNode[];
+};
+
 export type CalculatorDefinition = ToolBase & {
   kind?: 'calculator';
   fields: ScoreField[];
@@ -267,6 +274,8 @@ export type ClassificationDefinition = ToolBase & {
   originalLead?: string;
   /** 親子関係を持つ分類で、カード前に示す全体像 */
   hierarchy?: ClassificationHierarchyNode[];
+  /** 複数の全体像をタブで切り替えるとき。あるときは hierarchy より優先 */
+  hierarchyOverviews?: ClassificationOverviewTab[];
   entries: ClassificationEntry[];
   /** WASP / MESDA-G のような手順付きアルゴリズムだけ付ける */
   flow?: AlgorithmFlow;

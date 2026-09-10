@@ -78,13 +78,14 @@ function applyEnglishClassificationBody(
   score: ClassificationDefinition,
   copy: ScoreCopy | undefined,
   options: { translateComments: boolean },
-): Pick<ClassificationDefinition, 'description' | 'entries' | 'flow' | 'hierarchy'> {
+): Pick<ClassificationDefinition, 'description' | 'entries' | 'flow' | 'hierarchy' | 'hierarchyOverviews'> {
   if (!copy) {
     return {
       description: score.description,
       entries: score.entries,
       flow: score.flow,
       hierarchy: score.hierarchy,
+      hierarchyOverviews: score.hierarchyOverviews,
     };
   }
 
@@ -111,6 +112,11 @@ function applyEnglishClassificationBody(
     hierarchy: score.hierarchy?.map((node) =>
       localizeHierarchyNode(node, copy.hierarchyLabels),
     ),
+    hierarchyOverviews: score.hierarchyOverviews?.map((tab) => ({
+      ...tab,
+      label: copy.hierarchyLabels?.[tab.id] ?? tab.label,
+      nodes: tab.nodes.map((node) => localizeHierarchyNode(node, copy.hierarchyLabels)),
+    })),
   };
 }
 
@@ -177,6 +183,7 @@ function localizeClassificationDefinition(
     note: copy?.note ?? score.note,
     entries: englishBody.entries,
     hierarchy: englishBody.hierarchy,
+    hierarchyOverviews: englishBody.hierarchyOverviews,
     figures: score.figures?.map((figure, index) => ({
       ...figure,
       note: copy?.figureNotes?.[index] ?? figure.note,

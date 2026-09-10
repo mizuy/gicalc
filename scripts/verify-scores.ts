@@ -115,7 +115,7 @@ import { WASP_2016_PUBMED, WASP_QUACH_2024_PUBMED } from '../data/scores/wasp';
 import { DEFAULT_LOCALE, localizeResult, localizeScore, SCORE_EN, UI } from '../lib/i18n';
 import { pubmedUrl } from '../lib/pubmed';
 import { buildReportFormUrl, reportEnvironment, REPORT_FORM_URL } from '../lib/reportIssue';
-import { classificationOverviewNodes } from '../lib/classificationOverview';
+import { classificationOverviewNodes, classificationOverviewTabs } from '../lib/classificationOverview';
 import {
   applyAlgorithmAnswer,
   findEntryForResult,
@@ -1335,16 +1335,48 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(macro.entries.every((entry) => entry.figures === undefined), true);
   assert.deepEqual(
     macro.entries.map((entry) => entry.label),
-    ['0-Ip', '0-Isp', '0-Is', '0-IIa', '0-IIb', '0-IIc', '0-IIc+IIa', '0-IIa+IIc', '0-III'],
+    ['0-I', '0-Ip', '0-Isp', '0-Is', '0-IIa', '0-IIb', '0-IIc', '混合型', '0-III'],
   );
-  assert.equal(macro.entries.some((entry) => entry.label === '0-Isp'), true);
-  assert.match(macro.hierarchy?.map((node) => JSON.stringify(node)).join(' ') ?? '', /0-Isp/);
+  assert.equal(macro.hierarchy, undefined);
+  assert.deepEqual(macro.hierarchyOverviews?.map((tab) => tab.label), [
+    'Paris',
+    '食道規約',
+    '胃規約',
+    '大腸規約',
+  ]);
+  const flattenOverview = (
+    nodes: { label: string; children?: { label: string; children?: unknown[] }[] }[],
+  ): string =>
+    nodes
+      .map((node) => `${node.label} ${node.children ? flattenOverview(node.children) : ''}`)
+      .join(' ');
+  const parisOverview = flattenOverview(macro.hierarchyOverviews?.[0]?.nodes ?? []);
+  const esophagusOverview = flattenOverview(macro.hierarchyOverviews?.[1]?.nodes ?? []);
+  const stomachOverview = flattenOverview(macro.hierarchyOverviews?.[2]?.nodes ?? []);
+  const colorectalOverview = flattenOverview(macro.hierarchyOverviews?.[3]?.nodes ?? []);
+  assert.doesNotMatch(parisOverview, /Isp/);
+  assert.match(parisOverview, /0-IIc\+IIa/);
+  assert.match(parisOverview, /0-IIa\+IIc/);
+  assert.match(parisOverview, /0-III/);
+  assert.doesNotMatch(esophagusOverview, /Isp/);
+  assert.match(esophagusOverview, /混合型/);
+  assert.match(esophagusOverview, /0-III/);
+  assert.match(stomachOverview, /0-I/);
+  assert.doesNotMatch(stomachOverview, /0-Ip|0-Isp|0-Is/);
+  assert.match(stomachOverview, /混合型/);
+  assert.match(colorectalOverview, /0-Isp/);
+  assert.match(colorectalOverview, /混合型/);
+  assert.doesNotMatch(colorectalOverview, /0-III/);
   assert.match(macro.entries[0]?.rows.map((row) => row.heading).join(' ') ?? '', /Paris/);
   assert.match(macro.entries[0]?.rows.map((row) => row.heading).join(' ') ?? '', /大腸/);
   assert.match(macro.entries.find((entry) => entry.label === '0-Isp')?.rows.find((row) => row.heading === 'Paris')?.text ?? '', /表にはない/);
+  assert.match(macro.entries.find((entry) => entry.label === '0-I')?.rows.find((row) => row.heading === '胃')?.text ?? '', /2\.5 mm/);
+  assert.match(macro.entries.find((entry) => entry.label === '0-Ip')?.rows.find((row) => row.heading === '胃')?.text ?? '', /0-I を参照/);
   assert.match(macro.entries.find((entry) => entry.label === '0-Is')?.rows.find((row) => row.heading === 'Paris')?.text ?? '', /2\.5 mm/);
-  assert.match(macro.entries.find((entry) => entry.label === '0-IIa')?.rows.find((row) => row.heading === 'Paris')?.text ?? '', /2\.5 mm/);
-  assert.match(macro.entries.find((entry) => entry.label === '0-IIc+IIa')?.rows.find((row) => row.heading === '食道')?.text ?? '', /引用符/);
+  assert.match(macro.entries.find((entry) => entry.label === '0-IIa')?.rows.find((row) => row.heading === '胃')?.text ?? '', /2\.5 mm/);
+  assert.doesNotMatch(macro.entries.map((entry) => JSON.stringify(entry)).join(' '), /約 2 mm|英語第3版|未確認/);
+  assert.match(macro.entries.find((entry) => entry.label === '混合型')?.rows.find((row) => row.heading === '食道')?.text ?? '', /引用符/);
+  assert.match(macro.entries.find((entry) => entry.label === '混合型')?.rows.find((row) => row.heading === '大腸')?.text ?? '', /相対陥凹/);
   assert.match(macro.entries.find((entry) => entry.label === '0-III')?.rows.find((row) => row.heading === '大腸')?.text ?? '', /削除/);
   assert.doesNotMatch(macro.originalLead ?? '', /Type 0 is divided into three categories/);
   assert.equal(macro.pubmed, MACRO_PARIS_2005_PUBMED);
@@ -1354,20 +1386,27 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.ok(isClassification(englishMacro));
   assert.deepEqual(
     englishMacro.entries.map((entry) => entry.label),
-    ['0-Ip', '0-Isp', '0-Is', '0-IIa', '0-IIb', '0-IIc', '0-IIc+IIa', '0-IIa+IIc', '0-III'],
+    ['0-I', '0-Ip', '0-Isp', '0-Is', '0-IIa', '0-IIb', '0-IIc', 'Mixed type', '0-III'],
   );
+  assert.deepEqual(englishMacro.hierarchyOverviews?.map((tab) => tab.label), [
+    'Paris',
+    'Esophageal rules',
+    'Gastric rules',
+    'Colorectal rules',
+  ]);
   const japanese = /[\u3040-\u30ff\u4e00-\u9faf]/;
   for (const entry of englishMacro.entries) {
     assert.doesNotMatch(entry.label, japanese, entry.label);
+    if (entry.comment) assert.doesNotMatch(entry.comment, japanese, entry.comment);
     for (const row of entry.rows) {
       assert.doesNotMatch(row.heading, japanese, row.heading);
       assert.doesNotMatch(row.text, japanese, row.text);
     }
   }
-  assert.match(
-    englishMacro.hierarchy?.[0]?.children?.[0]?.children?.[1]?.label ?? '',
-    /colorectal rules only/,
-  );
+  for (const tab of englishMacro.hierarchyOverviews ?? []) {
+    assert.doesNotMatch(tab.label, japanese, tab.label);
+    assert.doesNotMatch(flattenOverview(tab.nodes), japanese, tab.id);
+  }
 
   const sps = getScoreById('sps');
   assert.ok(sps && isClassification(sps));
@@ -3151,6 +3190,16 @@ test('画像の権利・加工メモはデータに保持し、ページには�
 
 test('全分類ページは先頭に全分類アイテムの全体像を表示する', () => {
   for (const score of ALL_SCORE_DEFINITIONS.filter(isClassification)) {
+    const tabs = classificationOverviewTabs(score);
+    if (tabs?.length) {
+      assert.ok(tabs.length >= 2, `${score.id}: 全体像タブが足りない`);
+      for (const tab of tabs) {
+        assert.ok(tab.nodes.length > 0, `${score.id}: ${tab.id} の全体像が空`);
+      }
+      assert.ok(classificationOverviewNodes(score).length > 0, `${score.id}: 先頭タブの全体像が空`);
+      continue;
+    }
+
     const nodes = classificationOverviewNodes(score);
     const leaves = (function flatten(items: typeof nodes): string[] {
       return items.flatMap((item) =>
@@ -3183,6 +3232,12 @@ test('全分類ページは先頭に全分類アイテムの全体像を表示�
   );
   assert.match(referenceScreen, /<ClassificationOverview score=\{score\} \/>/);
   assert.match(algorithmScreen, /<ClassificationOverview score=\{score\} \/>/);
+  const overviewComponent = readFileSync(
+    join(process.cwd(), 'components/calculator/ClassificationOverview.tsx'),
+    'utf8',
+  );
+  assert.match(overviewComponent, /classificationOverviewTabs/);
+  assert.match(overviewComponent, /accessibilityRole="tab"/);
 
   const englishJnet = localizeScore(getScoreById('jnet')!, 'en');
   assert.match(classificationOverviewNodes(englishJnet)[0]?.label ?? '', /Type 1/);

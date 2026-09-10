@@ -70,46 +70,129 @@ export const macroScore: ClassificationDefinition = {
   officialUrl: 'https://www.jsccr.jp/kiyaku/index.html',
   officialLinkLabel: '大腸癌取扱い規約（研究会）',
   officialLinkRole: 'japanese-reference',
-  note: '規約本文と公式英語版の文章は転載していない。胃の「約 2 mm」は第15版本文を未確認で、二次資料の記載として扱う。',
-  hierarchy: [
+  note: '規約本文と公式英語版の文章は転載していない。胃の 0-I と 0-IIa の境は第15版を確認し、Paris の円柱上皮と同じ 2.5 mm とした。',
+  hierarchyOverviews: [
     {
-      id: 'macro-0',
-      label: 'Type 0（表在）',
-      children: [
+      id: 'macro-overview-paris',
+      label: 'Paris',
+      nodes: [
         {
-          id: 'macro-0-i',
+          id: 'macro-paris-0-i',
           label: '0-I 隆起',
           children: [
-            { id: 'macro-0-ip', label: '0-Ip' },
-            { id: 'macro-0-isp', label: '0-Isp — 大腸規約のみ' },
-            { id: 'macro-0-is', label: '0-Is' },
+            { id: 'macro-paris-0-ip', label: '0-Ip' },
+            { id: 'macro-paris-0-is', label: '0-Is' },
           ],
         },
         {
-          id: 'macro-0-ii',
+          id: 'macro-paris-0-ii',
           label: '0-II 表面',
           children: [
-            { id: 'macro-0-iia', label: '0-IIa' },
-            { id: 'macro-0-iib', label: '0-IIb' },
-            { id: 'macro-0-iic', label: '0-IIc' },
+            { id: 'macro-paris-0-iia', label: '0-IIa' },
+            { id: 'macro-paris-0-iib', label: '0-IIb' },
+            { id: 'macro-paris-0-iic', label: '0-IIc' },
+            { id: 'macro-paris-0-iic-iia', label: '0-IIc+IIa' },
+            { id: 'macro-paris-0-iia-iic', label: '0-IIa+IIc' },
           ],
         },
         {
-          id: 'macro-0-mixed',
-          label: '混合型',
+          id: 'macro-paris-0-iii-family',
+          label: '0-III 陥凹',
           children: [
-            { id: 'macro-0-iic-iia', label: '0-IIc+IIa' },
-            { id: 'macro-0-iia-iic', label: '0-IIa+IIc' },
+            { id: 'macro-paris-0-iii', label: '0-III' },
+            { id: 'macro-paris-0-iic-iii', label: '0-IIc+III' },
+            { id: 'macro-paris-0-iii-iic', label: '0-III+IIc' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'macro-overview-esophagus',
+      label: '食道規約',
+      nodes: [
+        {
+          id: 'macro-eso-0-i',
+          label: '0-I 隆起',
+          children: [
+            { id: 'macro-eso-0-ip', label: '0-Ip' },
+            { id: 'macro-eso-0-is', label: '0-Is' },
           ],
         },
         {
-          id: 'macro-0-iii',
-          label: '0-III — 大腸規約は削除',
+          id: 'macro-eso-0-ii',
+          label: '0-II 表面',
+          children: [
+            { id: 'macro-eso-0-iia', label: '0-IIa' },
+            { id: 'macro-eso-0-iib', label: '0-IIb' },
+            { id: 'macro-eso-0-iic', label: '0-IIc' },
+          ],
         },
+        { id: 'macro-eso-0-mixed', label: '混合型' },
+        { id: 'macro-eso-0-iii', label: '0-III' },
+      ],
+    },
+    {
+      id: 'macro-overview-stomach',
+      label: '胃規約',
+      nodes: [
+        { id: 'macro-sto-0-i', label: '0-I' },
+        {
+          id: 'macro-sto-0-ii',
+          label: '0-II 表面',
+          children: [
+            { id: 'macro-sto-0-iia', label: '0-IIa' },
+            { id: 'macro-sto-0-iib', label: '0-IIb' },
+            { id: 'macro-sto-0-iic', label: '0-IIc' },
+          ],
+        },
+        { id: 'macro-sto-0-mixed', label: '混合型' },
+        { id: 'macro-sto-0-iii', label: '0-III' },
+      ],
+    },
+    {
+      id: 'macro-overview-colorectum',
+      label: '大腸規約',
+      nodes: [
+        {
+          id: 'macro-colo-0-i',
+          label: '0-I 隆起',
+          children: [
+            { id: 'macro-colo-0-ip', label: '0-Ip' },
+            { id: 'macro-colo-0-isp', label: '0-Isp' },
+            { id: 'macro-colo-0-is', label: '0-Is' },
+          ],
+        },
+        {
+          id: 'macro-colo-0-ii',
+          label: '0-II 表面',
+          children: [
+            { id: 'macro-colo-0-iia', label: '0-IIa' },
+            { id: 'macro-colo-0-iib', label: '0-IIb' },
+            { id: 'macro-colo-0-iic', label: '0-IIc' },
+          ],
+        },
+        { id: 'macro-colo-0-mixed', label: '混合型' },
       ],
     },
   ],
   entries: [
+    {
+      label: '0-I',
+      meaning: '隆起',
+      group: '隆起型',
+      severity: 'mild',
+      rows: [
+        { heading: '形態', text: '明らかな隆起。胃では茎の有無で分けない。' },
+        { heading: 'Paris', text: '0-I は 0-Ip と 0-Is に分ける。胃でも Paris では亜型を使う。' },
+        { heading: '大腸', text: '0-Ip / 0-Isp / 0-Is の亜型へ。' },
+        {
+          heading: '胃',
+          text: '正規の型。0-I と 0-IIa の境は周囲から約 2.5 mm（Paris の円柱上皮と同じ）。',
+        },
+        { heading: '食道', text: '0-Ip / 0-Is の亜型へ。' },
+      ],
+      comment: '第15版を確認し、胃の境は Paris に合わせて 2.5 mm とした。条文は転載していない。',
+    },
     {
       label: '0-Ip',
       meaning: '有茎',
@@ -119,7 +202,7 @@ export const macroScore: ClassificationDefinition = {
         { heading: '形態', text: '明らかな茎を持つ隆起。' },
         { heading: 'Paris', text: '表にある（0-Ip）。' },
         { heading: '大腸', text: '0-Ip として正規の亜型。' },
-        { heading: '胃', text: '茎の細分はなく、0-I に含める。' },
+        { heading: '胃', text: '0-I を参照。' },
         { heading: '食道', text: '0-Ip。亜有茎もここへ寄せることがある。' },
       ],
     },
@@ -135,7 +218,7 @@ export const macroScore: ClassificationDefinition = {
           text: '2003/2005 の表にはない。臨床的意義が乏しいとして 0-Is に含める。',
         },
         { heading: '大腸', text: '正規の亜型（0-Ip / 0-Isp / 0-Is の3つ）。' },
-        { heading: '胃', text: '置かない。0-I に含める。' },
+        { heading: '胃', text: '0-I を参照。' },
         { heading: '食道', text: '独立した Isp 欄はない。Ip 側に寄せる。' },
       ],
       comment:
@@ -153,10 +236,7 @@ export const macroScore: ClassificationDefinition = {
           text: '表にある。円柱上皮（胃・大腸）では周囲から約 2.5 mm 以上（閉じた生検鉗子）。食道扁平上皮は 1.2 mm。未満は 0-IIa。',
         },
         { heading: '大腸', text: '明らかな腫瘤状隆起。ミリ基準はない。' },
-        {
-          heading: '胃',
-          text: '0-I に含める。英語第3版はおおむね 3 mm 超を 0-I。二次資料では第15版を約 2 mm 超とする（第15版本文は未確認）。',
-        },
+        { heading: '胃', text: '0-I を参照。' },
         { heading: '食道', text: '基部の広さが目立つ無茎。鉗子のミリ基準は書いていない。' },
       ],
       comment:
@@ -179,7 +259,7 @@ export const macroScore: ClassificationDefinition = {
         },
         {
           heading: '胃',
-          text: '英語第3版はおおむね 3 mm 未満を 0-IIa。二次資料では第15版を約 2 mm までとする（第15版本文は未確認）。',
+          text: '周囲から約 2.5 mm 未満。それを超えると 0-I。Paris の円柱上皮と同じ。',
         },
         { heading: '食道', text: 'わずかに低い隆起。鉗子 2.5 mm は書いていない。' },
       ],
@@ -216,38 +296,28 @@ export const macroScore: ClassificationDefinition = {
       ],
     },
     {
-      label: '0-IIc+IIa',
-      meaning: '陥凹＋辺縁隆起',
+      label: '混合型',
+      meaning: '複数成分',
       group: '混合型',
       severity: 'moderate',
       rows: [
-        { heading: '形態', text: '陥凹が主で、辺縁や一部に隆起がある。' },
-        { heading: 'Paris', text: '形の定義。主体が陥凹で、隆起は辺縁または一部。' },
-        { heading: '大腸', text: '面積の広い要素を先に書き、＋でつなぐ。' },
-        { heading: '胃', text: '大腸と同じく面積順。' },
-        {
-          heading: '食道',
-          text: '面積順。より深い浸潤を示唆する成分は引用符で囲む（例: 0-IIc＋“0-Is”）。',
-        },
-      ],
-      comment: '規約は「広い方＋狭い方」、Paris は「陥凹主体か隆起主体か」。引用符は食道だけ。',
-    },
-    {
-      label: '0-IIa+IIc',
-      meaning: '隆起＋中央陥凹',
-      group: '混合型',
-      severity: 'moderate',
-      rows: [
-        { heading: '形態', text: '全体が隆起で、中央に陥凹がある。' },
+        { heading: '形態', text: '2つ以上の型が混ざる。よく見るのは 0-IIa+IIc と 0-IIc+IIa。' },
         {
           heading: 'Paris',
-          text: '形の定義。陥凹底が周囲粘膜より高い相対陥凹も含む。',
+          text: '形の組み合わせ。相対陥凹（陥凹底が周囲粘膜より高い）は 0-IIa+IIc。0-IIc+IIa は陥凹が主で、辺縁または一部に隆起。',
         },
-        { heading: '大腸', text: '面積の広い要素を先に書く。' },
-        { heading: '胃', text: '面積順（例: 面積が広ければ 0-IIa＋IIc）。' },
-        { heading: '食道', text: '面積順。深い成分は引用符。進行型が混ざるときは進行型を先に書く。' },
+        {
+          heading: '大腸',
+          text: '規約本文は面積の広い要素を先に＋。図譜は面積順ではなく高さで分ける。0-IIc+IIa は陥凹面が粘膜より低い（反応性辺縁隆起が目立つ）。0-IIa+IIc は扁平隆起で、陥凹面が粘膜より高い相対陥凹。',
+        },
+        { heading: '胃', text: '面積の広い要素を先に＋。' },
+        {
+          heading: '食道',
+          text: '面積順。より深い浸潤を示唆する成分は引用符で囲む（例: 0-IIc＋“0-Is”）。進行型が混ざるときは進行型を先に書く。',
+        },
       ],
-      comment: '相対陥凹は Paris が明示し、規約注は薄い。',
+      comment:
+        '図譜の高さルール（IIc+IIa は粘膜より低い1階、IIa+IIc は相対陥凹の2階）は大腸の図譜注記に限る。規約本文は面積順。Paris は形。',
     },
     {
       label: '0-III',
