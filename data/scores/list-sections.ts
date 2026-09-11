@@ -28,6 +28,7 @@ const SCORE_LIST_PHASE: Record<string, ListClinicalPhase> = {
   sekiguchi: 'treatment',
   'best-j': 'treatment',
   'esd-fibrosis': 'treatment',
+  'sydney-dmi': 'treatment',
   'colorectal-esd-curability': 'treatment',
   'kajiwara-nomogram': 'treatment',
   'koyama-et2': 'treatment',

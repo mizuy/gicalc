@@ -12,6 +12,7 @@ import { colorectalEcScore } from './colorectal-ec';
 import { ecuraHattaScore } from './ecura-hatta';
 import { esophagusEsdCurabilityScore } from './esophagus-esd-curability';
 import { esdFibrosisScore } from './esd-fibrosis';
+import { sydneyDmiScore } from './sydney-dmi';
 import { gastricEsdCurabilityScore } from './gastric-esd-curability';
 import { eggimScore } from './eggim';
 import { erefsScore } from './erefs';
@@ -96,6 +97,7 @@ export const ALL_SCORE_DEFINITIONS: ScoreDefinition[] = [
   appendicealOrificeScore,
   kudoTsurutaScore,
   esdFibrosisScore,
+  sydneyDmiScore,
   colorectalEsdCurabilityScore,
   colorectalEcScore,
   niceScore,

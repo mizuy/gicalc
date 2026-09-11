@@ -187,6 +187,27 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
   lst: [
     { id: 'paris', hint: { ja: 'Paris 分類', en: 'Paris classification' } },
     { id: 'macro', hint: { ja: '規約0型と Paris の差', en: 'Japanese Type 0 vs Paris' } },
+    {
+      id: 'sydney-dmi',
+      hint: { ja: '大きな LST の EMR 後の壁損傷', en: 'Post-EMR mural injury after large LST' },
+    },
+  ],
+  'esd-fibrosis': [
+    {
+      id: 'sydney-dmi',
+      hint: { ja: 'EMR/ESD 後の固有筋層損傷', en: 'MP injury after EMR/ESD' },
+    },
+  ],
+  'sydney-dmi': [
+    {
+      id: 'esd-fibrosis',
+      hint: { ja: '線維化は Type II の主因', en: 'Fibrosis is the main cause of Type II' },
+    },
+    {
+      id: 'lst',
+      hint: { ja: '対象は ≥20 mm の LST/LSL', en: 'Described for LST/LSL ≥20 mm' },
+    },
+    { id: 'paris', hint: { ja: 'Paris 肉眼型', en: 'Paris macroscopic type' } },
   ],
   vienna: [
     { id: 'paris', hint: { ja: 'Paris 分類', en: 'Paris classification' } },

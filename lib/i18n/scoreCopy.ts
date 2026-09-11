@@ -1580,6 +1580,32 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Oung 2020 Fig. 2 is shown in full without alteration or cropping. License: CC BY-NC-ND 4.0. The Jacob 2016 Endoscopy original is not CC.',
     ],
   },
+  'sydney-dmi': {
+    name: 'Sydney classification of deep mural injury',
+    shortName: 'Sydney DMI',
+    description:
+      'Grades the post-EMR colorectal defect from Type 0 to V by muscularis propria integrity (deep mural injury). Requires a chromic submucosal injectate. Separate from ESD-F (fibrosis during dissection).',
+    groups: {
+      正常欠損: 'Normal defect',
+      'Potential DMI': 'Potential DMI',
+      '高度 DMI': 'Major DMI',
+      判定: 'Assessment',
+    },
+    comments: {
+      'Type I': 'Potential DMI. Clip placement is not required.',
+      'Type II':
+        'Clip all type II injuries. The only delayed perforation in the original series was an unclipped type II defect.',
+      'Type III': 'Target sign. Close the injured muscularis propria with clips.',
+      'Type IV':
+        'Clean perforation. Close immediately. Where possible, finish resecting surrounding adenoma before clipping.',
+      'Type V': 'Contaminated perforation. Close the hole and obtain a surgical consultation.',
+    },
+    figureNotes: [
+      'Original Fig. 1. BMJ / Gut copyright; not CC, so the figure is not hosted. Link opens Fig. 1 in the paper.',
+      'Original Figs 3–5. BMJ / Gut copyright; not CC, so the figures are not hosted. Link opens Fig. 3 in the paper.',
+    ],
+    note: 'Grade after chromic injectate (indigo carmine or methylene blue). Type I does not need clips; clip all Type II; close Types III–V. Type V also needs surgical consultation. Separate from ESD-F (F0–F2).',
+  },
   'esd-fibrosis': {
     name: 'ESD submucosal fibrosis classification (F0–F2)',
     shortName: 'ESD-F',

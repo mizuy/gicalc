@@ -40,6 +40,7 @@
 | 大腸 | LST（Kudo 2008） | 側方発育型腫瘍の4亜型 | 定義一覧（自作 CC 参考図 + 原著リンク。ほかの CC 図は `/atlas/lst`） |
 | 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（自作 CC 参考図 + 原著リンク） |
 | 大腸 | ESD-F（Matsumoto 2010 / Kim 2016） | 大腸 ESD 粘膜下層線維化 F0–F2 | 定義一覧（原著リンク + Inada 2013 参考図） |
+| 大腸 | Sydney DMI（Burgess 2017） | EMR 後の深部壁損傷 Type 0–V | 定義一覧（原著リンク） |
 | 大腸 | 治癒切除判定（JGES/JSCCR） | 大腸 ESD 後・内視鏡的治癒切除 | 治癒切除 / 追加腸切除 / VM1 |
 | 大腸 | NICE（Hayashi 2013） | 大腸 NBI（非拡大） | 定義一覧（Hamada 2021 CC 図 + Hayashi 原著リンク） |
 | 大腸 | WASP（IJspeert 2016） | HP / SSL / 腺腫（<10 mm） | 定義一覧（文言。図は原著へリンク） |
@@ -143,6 +144,7 @@ npm run preview:pages
 - JNET（Sano 2016, *Dig Endosc*）: Wiley 標準著作権。原著 Fig. 7 は埋め込まずリンクする
 - NICE（Hayashi 2013, *GIE*）: Elsevier 著作権。原著 Fig. 1 は埋め込まずリンクする（CC 図は Hamada 2021 *BMC Gastroenterol* Fig. 1 を埋め込み）
 - WASP（IJspeert 2016, *Gut*）: BMJ 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
+- Sydney DMI（Burgess 2017, *Gut*）: BMJ 著作権。図は埋め込まず、原著 Fig. 1 / Figs 3–5 へリンクする
 - Prague（Sharma 2006, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 3 へリンクする
 - LA 原著（Lundell 1999, *Gut*）: CC ではない（CC 図は Jung 2025 Fig. 1A–D の切り抜きを掲載）
 - 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。図は埋め込まず、*Clin Endosc* 2025 Fig. 4 へリンクする（各型カードには自作 CC 参考図を掲載）

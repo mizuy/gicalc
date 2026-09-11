@@ -70,6 +70,7 @@ import { LST_2008_PUBMED } from '../data/scores/lst';
 import { buildAlgorithmFlowGraph } from '../lib/scores/algorithmFlowGraph';
 import { MESDA_G_2016_PUBMED, MESDA_KURUMI_2021_PUBMED } from '../data/scores/mesda-g';
 import { ESD_FIBROSIS_2010_PUBMED, ESD_FIBROSIS_2016_PUBMED } from '../data/scores/esd-fibrosis';
+import { SYDNEY_DMI_2017_PUBMED, SYDNEY_DMI_TARGET_SIGN_PUBMED } from '../data/scores/sydney-dmi';
 import { EREFS_2013_PUBMED } from '../data/scores/erefs';
 import { FORREST_1974_PUBMED } from '../data/scores/forrest';
 import { HILL_1996_PUBMED } from '../data/scores/hill';
@@ -141,7 +142,7 @@ import {
   figureOriginLabel,
 } from '../lib/figures/credit';
 
-test('登録スコアは49種で臓器順に並ぶ', () => {
+test('登録スコアは50種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
@@ -182,6 +183,7 @@ test('登録スコアは49種で臓器順に並ぶ', () => {
       'appendiceal-orifice',
       'kudo-tsuruta',
       'esd-fibrosis',
+      'sydney-dmi',
       'colorectal-esd-curability',
       'colorectal-ec',
       'nice',
@@ -231,6 +233,7 @@ test('登録スコアは49種で臓器順に並ぶ', () => {
           'appendiceal-orifice',
           'kudo-tsuruta',
           'esd-fibrosis',
+          'sydney-dmi',
           'colorectal-esd-curability',
           'colorectal-ec',
           'nice',
@@ -255,9 +258,9 @@ test('登録スコアは49種で臓器順に並ぶ', () => {
   assert.equal(scoreListedInNavCategory(getScoreById('paris')!, 'duodenum'), false);
 });
 
-test('variant 専用 id は一覧から隠し、全定義52種を保持する', () => {
+test('variant 専用 id は一覧から隠し、全定義53種を保持する', () => {
   assert.deepEqual([...HIDDEN_LIST_SCORE_IDS].sort(), ['apcs-modified', 'kyoto-modified', 'modified-spigelman']);
-  assert.equal(ALL_SCORE_DEFINITIONS.length, 52);
+  assert.equal(ALL_SCORE_DEFINITIONS.length, 53);
   assert.ok(getScoreById('kyoto-modified'));
   assert.ok(getScoreById('modified-spigelman'));
   assert.ok(getScoreById('apcs-modified'));
@@ -356,7 +359,7 @@ test('一覧はフェーズ別にグループ化し、出血・病理はサブ�
           'jnet',
         ],
       ],
-      ['treatment', ['esd-fibrosis', 'colorectal-esd-curability', 'kajiwara-nomogram', 'koyama-et2']],
+      ['treatment', ['esd-fibrosis', 'sydney-dmi', 'colorectal-esd-curability', 'kajiwara-nomogram', 'koyama-et2']],
     ],
   );
 
@@ -404,6 +407,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     'appendiceal-orifice': 'classification',
     'kudo-tsuruta': 'classification',
     'esd-fibrosis': 'classification',
+    'sydney-dmi': 'classification',
     'colorectal-esd-curability': 'algorithm',
     'colorectal-ec': 'classification',
     nice: 'classification',
@@ -474,6 +478,7 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'net-grade',
     'lauren',
     'paris',
+    'sydney-dmi',
     'nice',
     'wasp',
     'bbps',
@@ -1272,6 +1277,23 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.match(localizeScore(esdFibrosis, 'ja').description, /pit pattern/);
   assert.match(esdFibrosis.description, /とは別の分類/);
 
+  const sydneyDmi = getScoreById('sydney-dmi');
+  assert.ok(sydneyDmi && isClassification(sydneyDmi));
+  assert.deepEqual(
+    sydneyDmi.entries.map((entry) => entry.label),
+    ['Type 0', 'Type I', 'Type II', 'Type III', 'Type IV', 'Type V', 'Assessment'],
+  );
+  assert.equal(sydneyDmi.entries[1]?.meaning, 'Whale sign');
+  assert.equal(sydneyDmi.entries[3]?.meaning, 'Target sign');
+  assert.match(sydneyDmi.originalLead ?? '', /whale sign/);
+  assert.match(sydneyDmi.originalLead ?? '', /defect target sign/);
+  assert.equal(sydneyDmi.pubmed, SYDNEY_DMI_2017_PUBMED);
+  assert.equal(sydneyDmi.developedInJapan, undefined);
+  assert.equal(sydneyDmi.organ, 'colorectum');
+  assert.equal(sydneyDmi.citations?.[1]?.pubmed, SYDNEY_DMI_TARGET_SIGN_PUBMED);
+  assert.equal(sydneyDmi.entries.every((entry) => entry.figures === undefined), true);
+  assert.match(localizeScore(sydneyDmi, 'en').description, /ESD-F/);
+
   const colorectalEc = getScoreById('colorectal-ec');
   assert.ok(colorectalEc && isClassification(colorectalEc));
   assert.deepEqual(
@@ -1712,11 +1734,11 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.ok(hasAlgorithmFlow(mesda));
   assert.ok(hasAlgorithmFlow(toya));
   assert.ok(hasAlgorithmFlow(kikuchiMebi));
-  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, macro, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc, uchiyama, ampMacro]) {
+  for (const score of [jnet, kudo, esdFibrosis, sydneyDmi, jes, kimura, paris, macro, lst, nice, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc, uchiyama, ampMacro]) {
     assert.equal(hasAlgorithmFlow(score), false, score.id);
   }
 
-  for (const score of [jnet, kudo, esdFibrosis, jes, kimura, paris, macro, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, kikuchiMebi, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc, uchiyama, ampMacro]) {
+  for (const score of [jnet, kudo, esdFibrosis, sydneyDmi, jes, kimura, paris, macro, lst, nice, mesda, la, prague, siewert, erefs, jsphVarices, hill, sarin, forrest, wasp, toya, kikuchiMebi, vienna, whoSerrated, itbcg, netGrade, lauren, sps, colorectalEc, uchiyama, ampMacro]) {
     for (const entry of score.entries) {
       assert.ok(
         entry.rows.every((row) => row.heading !== '注'),
@@ -1997,6 +2019,27 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(esdFibrosisFig.figures?.[0]?.pubmed, ESD_FIBROSIS_2016_PUBMED);
   assert.equal(esdFibrosisFig.figures?.[0]?.license, undefined);
   assert.match(esdFibrosisFig.figures?.[0]?.note ?? '', /CC ではない/);
+
+  const sydneyDmiFig = getScoreById('sydney-dmi');
+  assert.ok(sydneyDmiFig && isClassification(sydneyDmiFig));
+  assert.equal(sydneyDmiFig.figures?.length, 2);
+  assert.equal(sydneyDmiFig.figures?.[0]?.src, undefined);
+  assert.match(sydneyDmiFig.figures?.[0]?.href ?? '', /66\/10\/1779#F1/);
+  assert.equal(sydneyDmiFig.figures?.[0]?.hrefLabel, 'Fig. 1');
+  assert.equal(sydneyDmiFig.figures?.[0]?.figureKind, 'original');
+  assert.equal(sydneyDmiFig.figures?.[0]?.sourceShort, 'Burgess 2017');
+  assert.match(sydneyDmiFig.figures?.[0]?.caption ?? '', /Fig\. 1/);
+  assert.match(sydneyDmiFig.figures?.[0]?.source ?? '', /Burgess NG/);
+  assert.equal(sydneyDmiFig.pubmed, SYDNEY_DMI_2017_PUBMED);
+  assert.equal(sydneyDmiFig.figures?.[0]?.pubmed, SYDNEY_DMI_2017_PUBMED);
+  assert.equal(sydneyDmiFig.figures?.[0]?.license, undefined);
+  assert.match(sydneyDmiFig.figures?.[0]?.note ?? '', /CC ではない/);
+  assert.equal(sydneyDmiFig.figures?.[1]?.src, undefined);
+  assert.match(sydneyDmiFig.figures?.[1]?.href ?? '', /66\/10\/1779#F3/);
+  assert.equal(sydneyDmiFig.figures?.[1]?.hrefLabel, 'Fig. 3–5');
+  assert.equal(sydneyDmiFig.figures?.[1]?.figureKind, 'original');
+  assert.match(sydneyDmiFig.figures?.[1]?.note ?? '', /CC ではない/);
+  assert.equal(sydneyDmiFig.entries.every((entry) => entry.figures === undefined), true);
 
   const mesda = getScoreById('mesda-g');
   assert.ok(mesda && isClassification(mesda));
@@ -2995,6 +3038,8 @@ test('引用・ライセンス情報は CC と非 CC を分けて書く', () => 
   assert.match(UI.ja.about.citationsNotCcBody, /Spigelman/);
   assert.match(UI.ja.about.citationsNotCcBody, /Vienna/);
   assert.match(UI.ja.about.citationsNotCcBody, /ESD-F/);
+  assert.match(UI.ja.about.citationsNotCcBody, /Sydney DMI/);
+  assert.match(UI.en.about.citationsNotCcBody, /Sydney DMI/);
   assert.match(UI.ja.about.citationsNotCcBody, /Dekker 2020/);
   assert.match(UI.ja.about.citationsCcBody, /Misawa 2021/);
   assert.match(UI.ja.about.citationsNotCcBody, /Kudo 2011/);
@@ -3546,6 +3591,8 @@ test('関連スコア: 登録 id は有効で colorectal ↔ nomogram が双方�
   assert.ok(getRelatedScores('mesda-g', 'ja').some((item) => item.score.id === 'paris'));
   assert.ok(getRelatedScores('esophagus-esd-curability', 'ja').some((item) => item.score.id === 'paris'));
   assert.ok(getRelatedScores('gastric-esd-curability', 'ja').some((item) => item.score.id === 'paris'));
+  assert.ok(getRelatedScores('sydney-dmi', 'ja').some((item) => item.score.id === 'esd-fibrosis'));
+  assert.ok(getRelatedScores('esd-fibrosis', 'en').some((item) => item.score.id === 'sydney-dmi'));
 });
 
 test('引用は PubMed へ行く', () => {
