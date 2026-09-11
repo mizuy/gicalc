@@ -1385,12 +1385,13 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'macro-paris-0-iia': '0-IIa',
       'macro-paris-0-iib': '0-IIb',
       'macro-paris-0-iic': '0-IIc',
-      'macro-paris-0-iic-iia': '0-IIc+IIa',
-      'macro-paris-0-iia-iic': '0-IIa+IIc',
       'macro-paris-0-iii-family': '0-III excavated',
       'macro-paris-0-iii': '0-III',
       'macro-paris-0-iic-iii': '0-IIc+III',
       'macro-paris-0-iii-iic': '0-III+IIc',
+      'macro-paris-0-mixed': 'Mixed type',
+      'macro-paris-0-iic-iia': '0-IIc+IIa',
+      'macro-paris-0-iia-iic': '0-IIa+IIc',
       'macro-eso-0-i': '0-I protruding',
       'macro-eso-0-ip': '0-Ip',
       'macro-eso-0-is': '0-Is',
@@ -1421,18 +1422,15 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       '0-I': [
         { heading: 'Morphology', text: 'A frankly protruding lesion. The stomach does not split by stalk.' },
         { heading: 'Paris', text: '0-I is split into 0-Ip and 0-Is. Paris uses those subtypes in the stomach too.' },
-        { heading: 'Colorectum', text: 'See the 0-Ip / 0-Isp / 0-Is subtypes.' },
         {
           heading: 'Stomach',
           text: 'The formal type. The 0-I versus 0-IIa cut-off is about 2.5 mm above the adjacent mucosa (same as Paris columnar epithelium).',
         },
-        { heading: 'Esophagus', text: 'See the 0-Ip / 0-Is subtypes.' },
       ],
       '0-Ip': [
         { heading: 'Morphology', text: 'A protruding lesion with a distinct stalk.' },
         { heading: 'Paris', text: 'In the table (0-Ip).' },
         { heading: 'Colorectum', text: 'A formal subtype (0-Ip).' },
-        { heading: 'Stomach', text: 'See 0-I.' },
         { heading: 'Esophagus', text: '0-Ip. Subpedunculated lesions may be grouped here.' },
       ],
       '0-Isp': [
@@ -1442,7 +1440,6 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
           text: 'Not in the 2003/2005 table. Treated as 0-Is as clinically unhelpful.',
         },
         { heading: 'Colorectum', text: 'A formal subtype (0-Ip / 0-Isp / 0-Is).' },
-        { heading: 'Stomach', text: 'See 0-I.' },
         { heading: 'Esophagus', text: 'No separate Isp field. Grouped with Ip.' },
       ],
       '0-Is': [
@@ -1452,7 +1449,6 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
           text: 'In the table. In columnar epithelium (stomach and colorectum), at least about 2.5 mm above the adjacent mucosa (closed biopsy forceps). Esophageal squamous epithelium uses 1.2 mm. Below that is 0-IIa.',
         },
         { heading: 'Colorectum', text: 'A frankly polypoid mass. No millimetre cut-off.' },
-        { heading: 'Stomach', text: 'See 0-I.' },
         {
           heading: 'Esophagus',
           text: 'Sessile, with a broad base more conspicuous than height. No forceps millimetre rule.',
@@ -1518,7 +1514,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         },
         {
           heading: 'Colorectum',
-          text: 'Once listed after the gastric scheme, then deleted as not occurring. Current Type 0 is 0-I and 0-II only.',
+          text: 'Almost never used, so it was deleted. Current Type 0 is 0-I and 0-II only.',
         },
         { heading: 'Stomach', text: '0-III (excavated) is used. Mixed forms with IIc (0-IIc+III) also exist.' },
         { heading: 'Esophagus', text: '0-III (superficial excavated) is used. Mixed forms with IIc also exist.' },

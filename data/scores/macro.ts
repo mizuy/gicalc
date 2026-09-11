@@ -91,8 +91,6 @@ export const macroScore: ClassificationDefinition = {
             { id: 'macro-paris-0-iia', label: '0-IIa' },
             { id: 'macro-paris-0-iib', label: '0-IIb' },
             { id: 'macro-paris-0-iic', label: '0-IIc' },
-            { id: 'macro-paris-0-iic-iia', label: '0-IIc+IIa' },
-            { id: 'macro-paris-0-iia-iic', label: '0-IIa+IIc' },
           ],
         },
         {
@@ -102,6 +100,14 @@ export const macroScore: ClassificationDefinition = {
             { id: 'macro-paris-0-iii', label: '0-III' },
             { id: 'macro-paris-0-iic-iii', label: '0-IIc+III' },
             { id: 'macro-paris-0-iii-iic', label: '0-III+IIc' },
+          ],
+        },
+        {
+          id: 'macro-paris-0-mixed',
+          label: '混合型',
+          children: [
+            { id: 'macro-paris-0-iic-iia', label: '0-IIc+IIa' },
+            { id: 'macro-paris-0-iia-iic', label: '0-IIa+IIc' },
           ],
         },
       ],
@@ -127,8 +133,8 @@ export const macroScore: ClassificationDefinition = {
             { id: 'macro-eso-0-iic', label: '0-IIc' },
           ],
         },
-        { id: 'macro-eso-0-mixed', label: '混合型' },
         { id: 'macro-eso-0-iii', label: '0-III' },
+        { id: 'macro-eso-0-mixed', label: '混合型' },
       ],
     },
     {
@@ -145,8 +151,8 @@ export const macroScore: ClassificationDefinition = {
             { id: 'macro-sto-0-iic', label: '0-IIc' },
           ],
         },
-        { id: 'macro-sto-0-mixed', label: '混合型' },
         { id: 'macro-sto-0-iii', label: '0-III' },
+        { id: 'macro-sto-0-mixed', label: '混合型' },
       ],
     },
     {
@@ -184,12 +190,10 @@ export const macroScore: ClassificationDefinition = {
       rows: [
         { heading: '形態', text: '明らかな隆起。胃では茎の有無で分けない。' },
         { heading: 'Paris', text: '0-I は 0-Ip と 0-Is に分ける。胃でも Paris では亜型を使う。' },
-        { heading: '大腸', text: '0-Ip / 0-Isp / 0-Is の亜型へ。' },
         {
           heading: '胃',
           text: '正規の型。0-I と 0-IIa の境は周囲から約 2.5 mm（Paris の円柱上皮と同じ）。',
         },
-        { heading: '食道', text: '0-Ip / 0-Is の亜型へ。' },
       ],
       comment: '第15版を確認し、胃の境は Paris に合わせて 2.5 mm とした。条文は転載していない。',
     },
@@ -202,7 +206,6 @@ export const macroScore: ClassificationDefinition = {
         { heading: '形態', text: '明らかな茎を持つ隆起。' },
         { heading: 'Paris', text: '表にある（0-Ip）。' },
         { heading: '大腸', text: '0-Ip として正規の亜型。' },
-        { heading: '胃', text: '0-I を参照。' },
         { heading: '食道', text: '0-Ip。亜有茎もここへ寄せることがある。' },
       ],
     },
@@ -218,7 +221,6 @@ export const macroScore: ClassificationDefinition = {
           text: '2003/2005 の表にはない。臨床的意義が乏しいとして 0-Is に含める。',
         },
         { heading: '大腸', text: '正規の亜型（0-Ip / 0-Isp / 0-Is の3つ）。' },
-        { heading: '胃', text: '0-I を参照。' },
         { heading: '食道', text: '独立した Isp 欄はない。Ip 側に寄せる。' },
       ],
       comment:
@@ -236,7 +238,6 @@ export const macroScore: ClassificationDefinition = {
           text: '表にある。円柱上皮（胃・大腸）では周囲から約 2.5 mm 以上（閉じた生検鉗子）。食道扁平上皮は 1.2 mm。未満は 0-IIa。',
         },
         { heading: '大腸', text: '明らかな腫瘤状隆起。ミリ基準はない。' },
-        { heading: '胃', text: '0-I を参照。' },
         { heading: '食道', text: '基部の広さが目立つ無茎。鉗子のミリ基準は書いていない。' },
       ],
       comment:
@@ -332,7 +333,7 @@ export const macroScore: ClassificationDefinition = {
         },
         {
           heading: '大腸',
-          text: 'かつては胃癌に倣って置いたが、実在しないとして削除。現行の 0 型は 0-I と 0-II だけ。',
+          text: 'ほとんど使わないので削除されている。現行の 0 型は 0-I と 0-II だけ。',
         },
         { heading: '胃', text: '0-III（陥凹型）あり。IIc との混合（0-IIc＋III など）もある。' },
         { heading: '食道', text: '0-III（表在陥凹型）あり。IIc との混合もある。' },
