@@ -16,7 +16,9 @@ function currentPageUrl(): string | undefined {
 }
 
 function currentUserAgent(): string {
-  if (Platform.OS !== 'web' || typeof navigator === 'undefined') return '';
+  if (Platform.OS !== 'web' || typeof navigator === 'undefined') {
+    return `GI Calc native ${Platform.OS}`;
+  }
   return navigator.userAgent;
 }
 

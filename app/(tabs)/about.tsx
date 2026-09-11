@@ -1,10 +1,11 @@
 import { Link } from 'expo-router';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { ReportIssueButton } from '@/components/ReportIssueButton';
 import { Text, useThemeColor } from '@/components/Themed';
 import { PwaCheckUpdate } from '@/components/web/PwaCheckUpdate';
 import { useLocale } from '@/lib/i18n';
+import { getAppVersion } from '@/lib/web/appVersion';
 
 export default function AboutScreen() {
   const background = useThemeColor({}, 'background');
@@ -36,12 +37,21 @@ export default function AboutScreen() {
         </Pressable>
       </Link>
 
-      <Text style={[styles.section, { color: tint }]}>{t.about.pwaTitle}</Text>
-      <PwaCheckUpdate />
-      <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaIos}</Text>
-      <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaAndroid}</Text>
-      <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaBanner}</Text>
-      <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaUpdate}</Text>
+      {Platform.OS === 'web' ? (
+        <>
+          <Text style={[styles.section, { color: tint }]}>{t.about.pwaTitle}</Text>
+          <PwaCheckUpdate />
+          <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaIos}</Text>
+          <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaAndroid}</Text>
+          <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaBanner}</Text>
+          <Text style={[styles.body, { color: textSecondary }]}>{t.about.pwaUpdate}</Text>
+        </>
+      ) : (
+        <>
+          <Text style={[styles.section, { color: tint }]}>{t.about.versionLabel}</Text>
+          <Text style={[styles.body, { color: textSecondary }]}>{getAppVersion()}</Text>
+        </>
+      )}
 
       <Text style={[styles.section, { color: accent }]}>{t.about.disclaimer}</Text>
       <View style={[styles.card, { backgroundColor: surface, borderColor: border }]}>

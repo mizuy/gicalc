@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
-import { readStoredLocale, writeStoredLocale } from './storage';
+import { hydrateStoredLocale, writeStoredLocale } from './storage';
 import { DEFAULT_LOCALE, type Locale } from './types';
 import { UI, type UiStrings } from './ui';
 
@@ -16,10 +16,11 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
 
   useEffect(() => {
-    const stored = readStoredLocale();
-    if (stored !== DEFAULT_LOCALE) {
-      setLocaleState(stored);
-    }
+    void hydrateStoredLocale().then((stored) => {
+      if (stored !== DEFAULT_LOCALE) {
+        setLocaleState(stored);
+      }
+    });
   }, []);
 
   useEffect(() => {

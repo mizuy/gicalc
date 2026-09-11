@@ -16,8 +16,14 @@ module.exports = {
     userInterfaceStyle: 'automatic',
     ios: {
       supportsTablet: true,
+      bundleIdentifier: 'com.mizuy.gicalc',
+      buildNumber: '1',
+      infoPlist: {
+        ITSAppUsesNonExemptEncryption: false,
+      },
     },
     android: {
+      package: 'com.mizuy.gicalc',
       adaptiveIcon: {
         backgroundColor: '#0D7377',
         foregroundImage: './assets/images/android-icon-foreground.png',

@@ -9,6 +9,7 @@ import {
   StyleSheet,
   View,
   useWindowDimensions,
+  type ImageSourcePropType,
   type ImageStyle,
   type StyleProp,
   type ViewStyle,
@@ -18,7 +19,7 @@ import { CitationLink } from '@/components/calculator/CitationLink';
 import { Text, useThemeColor } from '@/components/Themed';
 import { figureCreditHref, figureCreditLabel } from '@/lib/figures/credit';
 import { useLocale } from '@/lib/i18n';
-import { publicPath } from '@/lib/web/baseUrl';
+import { figureImageSource } from '@/lib/figures/source';
 import type { ClassificationFigure as Figure } from '@/types/score';
 
 type Props = {
@@ -28,7 +29,8 @@ type Props = {
 };
 
 type FigureImageProps = {
-  uri: string;
+  source: ImageSourcePropType;
+  sourceKey: string;
   alt: string;
   aspectRatio: number;
   compact: boolean;
@@ -54,7 +56,8 @@ const LIGHTBOX_PADDING_BOTTOM = 24;
 const LIGHTBOX_PADDING_HORIZONTAL = 32;
 
 function FigureImage({
-  uri,
+  source,
+  sourceKey,
   alt,
   aspectRatio,
   compact,
@@ -73,7 +76,7 @@ function FigureImage({
   useEffect(() => {
     setLoaded(false);
     setFailed(false);
-  }, [uri]);
+  }, [sourceKey]);
 
   const webLazyProps =
     Platform.OS === 'web' && lazy
@@ -101,7 +104,7 @@ function FigureImage({
       ) : (
         <Image
           accessibilityLabel={alt}
-          source={{ uri }}
+          source={source}
           style={[
             styles.image,
             imageStyle,
@@ -130,7 +133,8 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
   const border = useThemeColor({}, 'border');
   const tint = useThemeColor({}, 'tint');
   const { t } = useLocale();
-  const uri = figure.src ? publicPath(figure.src) : undefined;
+  const imageSource = figure.src ? figureImageSource(figure.src) : undefined;
+  const sourceKey = figure.src ?? '';
   const aspectRatio = figure.aspectRatio ?? 16 / 9;
   const lightboxMaxHeight = windowHeight - LIGHTBOX_PADDING_TOP - LIGHTBOX_PADDING_BOTTOM;
   const lightboxMaxWidth = windowWidth - LIGHTBOX_PADDING_HORIZONTAL;
@@ -146,13 +150,20 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
         compact ? styles.boxCompact : null,
         { backgroundColor: surface, borderColor: border },
       ]}>
-      {uri ? (
+      {imageSource ? (
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={`${figure.alt}. ${t.enlargeHint}`}
           onPress={() => setOpen(true)}
           style={({ pressed }) => [styles.thumbWrap, pressed ? styles.thumbPressed : null]}>
-          <FigureImage uri={uri} alt={figure.alt} aspectRatio={aspectRatio} compact={compact} lazy />
+          <FigureImage
+            source={imageSource}
+            sourceKey={sourceKey}
+            alt={figure.alt}
+            aspectRatio={aspectRatio}
+            compact={compact}
+            lazy
+          />
           <View style={[styles.enlargeBadge, compact ? styles.enlargeBadgeCompact : null, { backgroundColor: tint }]}>
             <Text style={styles.enlargeBadgeText}>{t.enlargeHint}</Text>
           </View>
@@ -161,7 +172,7 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
       <FigureLegend text={figure.legend} compact={compact} />
       <FigureCredit label={creditLabel} href={creditHref} compact={compact} />
 
-      {uri && open ? (
+      {imageSource && open ? (
         <Modal
           visible={open}
           transparent
@@ -190,7 +201,8 @@ export function ClassificationFigure({ figure, compact = false }: Props) {
                 contentContainerStyle={styles.lightboxHContent}>
                 <View>
                   <FigureImage
-                    uri={uri}
+                    source={imageSource}
+                    sourceKey={sourceKey}
                     alt={figure.alt}
                     aspectRatio={aspectRatio}
                     compact={false}

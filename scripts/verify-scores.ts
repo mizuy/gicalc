@@ -2803,6 +2803,49 @@ test('アプリバージョンは package.json と expo 設定で一致する', 
   assert.equal(pkg.version, '1.0.54');
 });
 
+test('iOS アプリ配布の Bundle ID と図の同梱マップがある', () => {
+  delete require.cache[require.resolve('../app.config.js')];
+  const { readdirSync } = require('node:fs') as typeof import('node:fs');
+  const appConfig = require('../app.config.js') as {
+    expo: {
+      ios?: {
+        bundleIdentifier?: string;
+        buildNumber?: string;
+        infoPlist?: { ITSAppUsesNonExemptEncryption?: boolean };
+      };
+      android?: { package?: string };
+    };
+  };
+  assert.equal(appConfig.expo.ios?.bundleIdentifier, 'com.mizuy.gicalc');
+  assert.equal(appConfig.expo.ios?.buildNumber, '1');
+  assert.equal(appConfig.expo.ios?.infoPlist?.ITSAppUsesNonExemptEncryption, false);
+  assert.equal(appConfig.expo.android?.package, 'com.mizuy.gicalc');
+
+  const eas = JSON.parse(readFileSync(join(process.cwd(), 'eas.json'), 'utf8')) as {
+    build?: { production?: unknown };
+    submit?: { production?: unknown };
+  };
+  assert.ok(eas.build?.production);
+  assert.ok(eas.submit?.production);
+
+  const bundled = readFileSync(join(process.cwd(), 'lib/figures/bundledAssets.ts'), 'utf8');
+  const rasterFigures = readdirSync(join(process.cwd(), 'public/figures')).filter((name) =>
+    /\.(webp|png|jpe?g)$/i.test(name),
+  );
+  assert.ok(rasterFigures.length > 0);
+  for (const name of rasterFigures) {
+    assert.equal(bundled.includes(`'/figures/${name}'`), true, name);
+  }
+
+  const figureComponent = readFileSync(
+    join(process.cwd(), 'components/calculator/ClassificationFigure.tsx'),
+    'utf8',
+  );
+  assert.match(figureComponent, /figureImageSource/);
+  const aboutScreen = readFileSync(join(process.cwd(), 'app/(tabs)/about.tsx'), 'utf8');
+  assert.match(aboutScreen, /Platform\.OS === 'web'/);
+});
+
 test('臓器ページのサブカテゴリ（フェーズ）にはアイコン画像がある', () => {
   const { existsSync } = require('node:fs') as typeof import('node:fs');
   const { join } = require('node:path') as typeof import('node:path');

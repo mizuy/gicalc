@@ -1,18 +1,18 @@
 import { DEFAULT_LOCALE, isLocale, LOCALE_STORAGE_KEY, type Locale } from './types';
 
-export function readStoredLocale(): Locale {
+function readWebLocale(): Locale | null {
   if (typeof window === 'undefined' || typeof window.localStorage === 'undefined') {
-    return DEFAULT_LOCALE;
+    return null;
   }
   try {
     const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-    return isLocale(stored) ? stored : DEFAULT_LOCALE;
+    return isLocale(stored) ? stored : null;
   } catch {
-    return DEFAULT_LOCALE;
+    return null;
   }
 }
 
-export function writeStoredLocale(locale: Locale): void {
+function writeWebLocale(locale: Locale): void {
   if (typeof window === 'undefined' || typeof window.localStorage === 'undefined') {
     return;
   }
@@ -23,3 +23,14 @@ export function writeStoredLocale(locale: Locale): void {
   }
 }
 
+export function readStoredLocale(): Locale {
+  return readWebLocale() ?? DEFAULT_LOCALE;
+}
+
+export function writeStoredLocale(locale: Locale): void {
+  writeWebLocale(locale);
+}
+
+export async function hydrateStoredLocale(): Promise<Locale> {
+  return readStoredLocale();
+}
