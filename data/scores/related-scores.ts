@@ -32,6 +32,13 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
         en: 'Endoscopic T1b vs T2 distinction (before ESD)',
       },
     },
+    {
+      id: 'haggitt',
+      hint: {
+        ja: '有茎悪性ポリープの浸潤レベル',
+        en: 'Invasion level in pedunculated malignant polyps',
+      },
+    },
   ],
   'kajiwara-nomogram': [
     {
@@ -46,6 +53,13 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
       hint: {
         ja: 'T1b vs T2 の内視鏡鑑別',
         en: 'Endoscopic T1b vs T2 distinction',
+      },
+    },
+    {
+      id: 'haggitt',
+      hint: {
+        ja: '有茎悪性ポリープの Level 0–4',
+        en: 'Haggitt Level 0–4 for pedunculated malignant polyps',
       },
     },
   ],
@@ -108,14 +122,31 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
   kyoto: [
     { id: 'kimura-takemoto', hint: { ja: '萎縮境界・胃底腺粘膜', en: 'Atrophic border and fundic mucosa' } },
     { id: 'eggim', hint: { ja: '地图状萎縮の範囲', en: 'Extent of map-like atrophy' } },
+    { id: 'olga', hint: { ja: '生検萎縮の Stage 0–IV', en: 'Biopsy atrophy Stage 0–IV' } },
+    { id: 'olgim', hint: { ja: '生検腸上皮化生の Stage 0–IV', en: 'Biopsy IM Stage 0–IV' } },
   ],
   'kimura-takemoto': [
     { id: 'kyoto', hint: { ja: '京都分類（改変版）', en: 'Kyoto classification (modified)' } },
     { id: 'eggim', hint: { ja: '地图状萎縮の範囲', en: 'Extent of map-like atrophy' } },
+    { id: 'olga', hint: { ja: '生検萎縮ステージ', en: 'Biopsy atrophy stage' } },
   ],
   eggim: [
     { id: 'kyoto', hint: { ja: '京都分類', en: 'Kyoto classification' } },
     { id: 'kimura-takemoto', hint: { ja: '萎縮境界', en: 'Atrophic border' } },
+    { id: 'olgim', hint: { ja: '生検腸上皮化生ステージ', en: 'Biopsy IM stage' } },
+    { id: 'olga', hint: { ja: '生検萎縮ステージ', en: 'Biopsy atrophy stage' } },
+  ],
+  olga: [
+    { id: 'olgim', hint: { ja: '腸上皮化生で同じ表', en: 'Same table using IM' } },
+    { id: 'kyoto', hint: { ja: '京都分類（内視鏡）', en: 'Kyoto classification (endoscopic)' } },
+    { id: 'eggim', hint: { ja: '内視鏡的腸上皮化生', en: 'Endoscopic IM score' } },
+    { id: 'kimura-takemoto', hint: { ja: '内視鏡的萎縮境界', en: 'Endoscopic atrophic border' } },
+  ],
+  olgim: [
+    { id: 'olga', hint: { ja: '萎縮で同じ表', en: 'Same table using atrophy' } },
+    { id: 'kyoto', hint: { ja: '京都分類（内視鏡）', en: 'Kyoto classification (endoscopic)' } },
+    { id: 'eggim', hint: { ja: '内視鏡的腸上皮化生', en: 'Endoscopic IM score' } },
+    { id: 'kimura-takemoto', hint: { ja: '内視鏡的萎縮境界', en: 'Endoscopic atrophic border' } },
   ],
   spigelman: [
     { id: 'ishii', hint: { ja: 'SNADET C3 vs C4/5', en: 'SNADET C3 vs C4/5' } },
@@ -158,6 +189,25 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
   jes: [
     { id: 'paris', hint: { ja: '表在型の肉眼型（食道・胃・大腸）', en: 'Superficial morphology (esophagus, stomach, colorectum)' } },
     { id: 'macro', hint: { ja: '規約0型と Paris の差', en: 'Japanese Type 0 vs Paris' } },
+    { id: 'barrett', hint: { ja: '日本の Barrett 定義', en: 'Japanese Barrett definition' } },
+    { id: 'bing', hint: { ja: 'Barrett NBI（BING）', en: 'Barrett NBI (BING)' } },
+  ],
+  prague: [
+    { id: 'barrett', hint: { ja: '日本の定義と SSBE/LSBE', en: 'Japanese definition and SSBE/LSBE' } },
+    { id: 'bing', hint: { ja: 'NBI での異形成予測', en: 'NBI prediction of dysplasia' } },
+    { id: 'jes', hint: { ja: '扁平上皮の拡大分類', en: 'Squamous magnifying classification' } },
+  ],
+  barrett: [
+    { id: 'prague', hint: { ja: 'C / M の計測', en: 'C and M measurement' } },
+    { id: 'bing', hint: { ja: 'NBI での異形成予測', en: 'NBI prediction of dysplasia' } },
+    { id: 'jes', hint: { ja: '扁平上皮の拡大分類', en: 'Squamous magnifying classification' } },
+    { id: 'paris', hint: { ja: '表在型の肉眼型', en: 'Superficial morphology' } },
+  ],
+  bing: [
+    { id: 'barrett', hint: { ja: '日本の Barrett 定義', en: 'Japanese Barrett definition' } },
+    { id: 'prague', hint: { ja: 'C / M の計測', en: 'C and M measurement' } },
+    { id: 'jes', hint: { ja: '扁平上皮の拡大分類', en: 'Squamous magnifying classification' } },
+    { id: 'paris', hint: { ja: '表在型の肉眼型', en: 'Superficial morphology' } },
   ],
   jnet: [
     { id: 'nice', hint: { ja: '非拡大 NICE', en: 'Non-magnifying NICE' } },
@@ -178,11 +228,26 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
     { id: 'lst', hint: { ja: '側方発育型（LST）', en: 'Lateral spreading tumor (LST)' } },
     { id: 'jes', hint: { ja: '食道の JES 分類', en: 'JES classification (esophagus)' } },
     { id: 'mesda-g', hint: { ja: '胃の MESDA-G', en: 'MESDA-G (stomach)' } },
+    { id: 'yamada', hint: { ja: '胃隆起の山田分類', en: 'Yamada elevated gastric types' } },
+    { id: 'borrmann', hint: { ja: '進行胃癌の肉眼型', en: 'Advanced gastric macroscopic type' } },
     { id: 'vienna', hint: { ja: 'Vienna 分類', en: 'Vienna classification' } },
   ],
   macro: [
     { id: 'paris', hint: { ja: 'Paris 分類（国際表）', en: 'Paris classification' } },
     { id: 'lst', hint: { ja: 'LST は肉眼型ではない', en: 'LST is not a macroscopic type' } },
+    { id: 'yamada', hint: { ja: '胃隆起の山田分類', en: 'Yamada elevated gastric types' } },
+    { id: 'borrmann', hint: { ja: '進行胃癌 1–5 型', en: 'Advanced gastric types 1–5' } },
+  ],
+  yamada: [
+    { id: 'paris', hint: { ja: 'Paris 表在型', en: 'Paris superficial types' } },
+    { id: 'macro', hint: { ja: '規約0型と Paris の差', en: 'Japanese Type 0 vs Paris' } },
+    { id: 'borrmann', hint: { ja: '進行胃癌の肉眼型', en: 'Advanced gastric macroscopic type' } },
+  ],
+  borrmann: [
+    { id: 'paris', hint: { ja: '表在型（0 型）', en: 'Superficial Type 0' } },
+    { id: 'macro', hint: { ja: '規約0型と Paris の差', en: 'Japanese Type 0 vs Paris' } },
+    { id: 'lauren', hint: { ja: '胃癌組織型', en: 'Gastric histology' } },
+    { id: 'yamada', hint: { ja: '隆起性病変の山田分類', en: 'Yamada elevated types' } },
   ],
   lst: [
     { id: 'paris', hint: { ja: 'Paris 分類', en: 'Paris classification' } },
@@ -229,11 +294,33 @@ export const RELATED_SCORES: Record<string, readonly RelatedScoreEntry[]> = {
   lauren: [
     { id: 'net-grade', hint: { ja: 'NET G1–G3', en: 'NET G1–G3' } },
     { id: 'kyoto', hint: { ja: '萎縮・化生背景', en: 'Atrophy / metaplasia background' } },
+    { id: 'borrmann', hint: { ja: '進行胃癌の肉眼型', en: 'Advanced gastric macroscopic type' } },
+  ],
+  haggitt: [
+    {
+      id: 'colorectal-esd-curability',
+      hint: { ja: '内視鏡的治癒切除の 5 項目', en: 'Five-criteria endoscopic curative resection' },
+    },
+    {
+      id: 'kajiwara-nomogram',
+      hint: { ja: 'T1 LNM 確率', en: 'T1 LNM probability' },
+    },
+    { id: 'paris', hint: { ja: 'Paris 肉眼型', en: 'Paris macroscopic type' } },
   ],
   bbps: [{ id: 'aronchick', hint: { ja: 'Aronchick 分類', en: 'Aronchick classification' } }],
   aronchick: [{ id: 'bbps', hint: { ja: 'BBPS スコア', en: 'BBPS score' } }],
-  gbs: [{ id: 'forrest', hint: { ja: 'Forrest 分類', en: 'Forrest classification' } }],
-  forrest: [{ id: 'gbs', hint: { ja: 'Glasgow-Blatchford スコア', en: 'Glasgow-Blatchford score' } }],
+  gbs: [
+    { id: 'rockall', hint: { ja: '死亡リスク（complete score）', en: 'Mortality risk (complete score)' } },
+    { id: 'forrest', hint: { ja: 'Forrest 分類', en: 'Forrest classification' } },
+  ],
+  forrest: [
+    { id: 'gbs', hint: { ja: 'Glasgow-Blatchford スコア', en: 'Glasgow-Blatchford score' } },
+    { id: 'rockall', hint: { ja: 'Rockall 死亡リスク', en: 'Rockall mortality risk' } },
+  ],
+  rockall: [
+    { id: 'gbs', hint: { ja: '介入必要性（GBS）', en: 'Need for intervention (GBS)' } },
+    { id: 'forrest', hint: { ja: '潰瘍出血の内視鏡所見', en: 'Ulcer bleeding stigmata' } },
+  ],
   'colorectal-ec': [
     { id: 'nice', hint: { ja: 'NICE 分類', en: 'NICE classification' } },
     { id: 'kudo-tsuruta', hint: { ja: 'pit pattern', en: 'Pit pattern (Kudo–Tsuruta)' } },

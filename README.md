@@ -13,15 +13,21 @@
 | 食道 | JES（Oyama 2017） | 扁平上皮の拡大（IPCL） | 定義一覧（原著の図・文言） |
 | 食道 | LA（Lundell 1999） | 逆流性食道炎 A–D | 定義一覧（文言。図は VideoGIE へリンク） |
 | 食道 | Prague C & M（Sharma 2006） | Barrett の C / M | 定義一覧（原著リンク + Oyanagi 2022 参考図） |
+| 食道 | Barrett（日本の定義） | 柵状血管・SSBE / LSBE | 定義一覧（規約リンク） |
+| 食道 | BING（Sharma 2016） | Barrett NBI regular / irregular | 定義一覧（原著リンク） |
 | 食道 | EREFS（Hirano 2013） | 好酸球性食道炎の所見 | 定義一覧（Abe 2022 の図・文言。ほかの CC 図は `/atlas/erefs`） |
 | 食道 | 門脈圧亢進症学会分類（F / L / C / RC） | 食道胃静脈瘤 | 定義一覧 |
 | 食道 | 治癒切除判定（JGES/JES） | 食道 ESD 後・根治度 | 治癒切除 / 追加治療 / 非治癒切除 |
 | 胃 | 木村–竹本（Quach 2019） | 内視鏡的萎縮 | 定義一覧（Quach 2019 の図・文言） |
 | 胃 | Hill（1996） | 胃食道フラップ弁 I–IV | 定義一覧（Ge 2023 の図・文言） |
 | 胃 | MESDA-G（Muto 2016） | 早期胃癌の拡大（M-NBI） | 定義一覧（Kurumi 2021 切り抜き + 原著リンク。ほかの CC 図は `/atlas/mesda-g`） |
+| 胃 | 山田分類（1966 / 1974） | 胃隆起性病変 I–IV | 定義一覧（原著リンク） |
+| 胃 | Borrmann（1926） | 進行胃癌の肉眼型 I–IV（規約 5 型） | 定義一覧（原著リンク） |
 | 胃 | 京都分類（原法） | 胃炎・胃癌リスク | 点数 0–8 |
 | 胃 | 改変京都（Kawamura 2021） | 胃炎・胃癌リスク | 点数 0–5 |
 | 胃 | EGGIM | 内視鏡的腸上皮化生 | 点数 0–8 |
+| 胃 | OLGA | 生検萎縮の胃炎ステージ | Stage 0–IV |
+| 胃 | OLGIM | 生検腸上皮化生の胃炎ステージ | Stage 0–IV |
 | 胃 | 治癒切除判定（JGES/JGCA） | ESD 後・内視鏡的根治度 | eCuraA / B / C-1 / C-2 |
 | 胃 | eCura LNM（Hatta 2017） | 早期胃癌・非治癒切除後 LNM | 点数 0–7 |
 | 胃 | Sekiguchi（2016） | 早期胃癌 LNM（混合型を区別） | 点数 0–11 |
@@ -41,6 +47,7 @@
 | 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（自作 CC 参考図 + 原著リンク） |
 | 大腸 | ESD-F（Matsumoto 2010 / Kim 2016） | 大腸 ESD 粘膜下層線維化 F0–F2 | 定義一覧（原著リンク + Inada 2013 参考図） |
 | 大腸 | Sydney DMI（Burgess 2017） | EMR 後の深部壁損傷 Type 0–V | 定義一覧（原著リンク） |
+| 大腸・病理 | Haggitt（1985） | 有茎悪性ポリープの浸潤 Level 0–4 | 定義一覧（原著リンク） |
 | 大腸 | 治癒切除判定（JGES/JSCCR） | 大腸 ESD 後・内視鏡的治癒切除 | 治癒切除 / 追加腸切除 / VM1 |
 | 大腸 | NICE（Hayashi 2013） | 大腸 NBI（非拡大） | 定義一覧（Hamada 2021 CC 図 + Hayashi 原著リンク） |
 | 大腸 | WASP（IJspeert 2016） | HP / SSL / 腺腫（<10 mm） | 定義一覧（文言。図は原著へリンク） |
@@ -51,6 +58,7 @@
 | 大腸 | Aronchick | 腸管前処置（洗浄前・全体） | 5段階（JGES 2020 Table 11 準拠） |
 | 出血 | Forrest（1974） | 消化性潰瘍出血の所見 | 定義一覧（Zhou 2025 の図・文言） |
 | 出血 | GBS（Blatchford 2000） | 上部消化管出血 | 点数 0–23 |
+| 出血 | Rockall（1996） | 上部消化管出血の死亡リスク | 点数 0–11 |
 | 出血 | NOBLADS（Aoki 2016） | 急性下部消化管出血 | 点数 0–8 |
 
 ## 開発
@@ -145,6 +153,14 @@ npm run preview:pages
 - NICE（Hayashi 2013, *GIE*）: Elsevier 著作権。原著 Fig. 1 は埋め込まずリンクする（CC 図は Hamada 2021 *BMC Gastroenterol* Fig. 1 を埋め込み）
 - WASP（IJspeert 2016, *Gut*）: BMJ 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
 - Sydney DMI（Burgess 2017, *Gut*）: BMJ 著作権。図は埋め込まず、原著 Fig. 1 / Figs 3–5 へリンクする
+- Rockall（Rockall 1996, *Gut*）: BMJ 著作権。図は埋め込まず、論文へリンクする
+- Yamada（山田 1966『胃と腸』/ Yamada 1974, *Radiology*）: CC ではない。図は埋め込まず、PubMed へリンクする
+- Haggitt（Haggitt 1985, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、論文へリンクする
+- OLGA（Rugge 2007, *Dig Liver Dis*）: CC ではない。図は埋め込まず、論文へリンクする
+- OLGIM（Capelle 2010, *GIE*）: Elsevier 著作権。図は埋め込まず、論文へリンクする
+- BING（Sharma 2016, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
+- Barrett 定義（食道癌取扱い規約第11版）: 図は埋め込まず論文へリンクする
+- Borrmann（1926 原著 / JGCA 2011）: CC ではない。図は埋め込まず、論文へリンクする
 - Prague（Sharma 2006, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 3 へリンクする
 - LA 原著（Lundell 1999, *Gut*）: CC ではない（CC 図は Jung 2025 Fig. 1A–D の切り抜きを掲載）
 - 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。図は埋め込まず、*Clin Endosc* 2025 Fig. 4 へリンクする（各型カードには自作 CC 参考図を掲載）

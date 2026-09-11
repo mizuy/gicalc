@@ -13,6 +13,7 @@ const SCORE_LIST_PHASE: Record<string, ListClinicalPhase> = {
   // スクリーニング
   apcs: 'screening',
   gbs: 'screening',
+  rockall: 'screening',
   noblads: 'screening',
   // 検査
   bbps: 'examination',
@@ -21,6 +22,8 @@ const SCORE_LIST_PHASE: Record<string, ListClinicalPhase> = {
   'kimura-takemoto': 'background-mucosa',
   kyoto: 'background-mucosa',
   eggim: 'background-mucosa',
+  olga: 'background-mucosa',
+  olgim: 'background-mucosa',
   // 治療
   'esophagus-esd-curability': 'treatment',
   'gastric-esd-curability': 'treatment',
@@ -29,6 +32,7 @@ const SCORE_LIST_PHASE: Record<string, ListClinicalPhase> = {
   'best-j': 'treatment',
   'esd-fibrosis': 'treatment',
   'sydney-dmi': 'treatment',
+  haggitt: 'treatment',
   'colorectal-esd-curability': 'treatment',
   'kajiwara-nomogram': 'treatment',
   'koyama-et2': 'treatment',

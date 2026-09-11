@@ -16,6 +16,7 @@ const PATHOLOGY_NAV_SCORE_IDS = new Set<string>([
  */
 const EXTRA_NAV_LISTINGS: Record<string, readonly ListNavCategory[]> = {
   paris: ['esophagus', 'stomach'],
+  haggitt: ['pathology'],
 };
 
 export function getScoreNavCategory(score: ScoreDefinition): ListNavCategory {

@@ -108,6 +108,47 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Reference figure from Oyanagi 2022, not the Sharma 2006 original: Prague C&M schematic and a C1M4 example. License: CC BY 4.0.',
     ],
   },
+  barrett: {
+    name: 'Barrett esophagus (Japanese definition, SSBE/LSBE)',
+    shortName: 'Barrett',
+    description:
+      'In Japan the EGJ is the lower end of the palisade vessels, and columnar epithelium oral to it is Barrett esophagus. Length <3 cm is SSBE and ≥3 cm is LSBE. Record C and M with Prague. Intestinal metaplasia is not required for the Japanese endoscopic diagnosis.',
+    groups: {
+      ランドマーク: 'Landmarks',
+      定義: 'Definition',
+      長さ: 'Length',
+      計測: 'Measurement',
+    },
+    entryLabels: {
+      定義: 'Definition',
+    },
+    comments: {
+      EGJ: 'Palisade vessels are often hard to see with a hernia or Barrett segment; then use the fold tops.',
+      Prague: 'Measurement steps are on the Prague page. This page is the Japanese definition and SSBE/LSBE.',
+    },
+    figureNotes: [
+      'Japanese Classification of Esophageal Cancer, 11th ed., English Part I. Springer Open, CC BY 4.0, but no standalone Barrett plate was confirmed, so the paper is linked rather than hosted.',
+      'Secondary paper on Japanese vs Western Barrett criteria. Separate from Prague Fig. 5. License: CC BY 4.0. The composite is linked rather than hosted.',
+    ],
+  },
+  bing: {
+    name: 'BING classification (Barrett NBI)',
+    shortName: 'BING',
+    description:
+      'Classifies Barrett mucosa on NBI as regular or irregular mucosal and vascular patterns to predict NDBE versus HGD/EAC. Both regular → NDBE; either irregular → HGD/EAC. High-confidence reads are more accurate.',
+    groups: {
+      粘膜模様: 'Mucosal pattern',
+      血管模様: 'Vascular pattern',
+      予測組織: 'Predicted histology',
+      判定: 'Assessment',
+    },
+    comments: {
+      'HGD/EAC': 'Either irregular mucosa or irregular vessels predicts HGD/EAC.',
+    },
+    figureNotes: [
+      'Original Fig. 1. Elsevier / Gastroenterology copyright; not CC, so the figure is not hosted. Link opens the paper.',
+    ],
+  },
   siewert: {
     name: 'Siewert classification (EGJ adenocarcinoma)',
     shortName: 'Siewert',
@@ -393,6 +434,48 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       },
     },
   },
+  yamada: {
+    name: 'Yamada classification (elevated gastric lesions)',
+    shortName: 'Yamada',
+    description:
+      'Macroscopic types I–IV of elevated gastric lesions by the shape of the base. Not a histologic classification. Mapping onto Paris 0-Ip / 0-Is / 0-IIa is approximate.',
+    groups: {
+      山田: 'Yamada',
+      注意: 'Notes',
+    },
+    entryLabels: {
+      I型: 'Type I',
+      II型: 'Type II',
+      III型: 'Type III',
+      IV型: 'Type IV',
+      判定: 'Assessment',
+    },
+    comments: {
+      III型: 'Often close to Paris 0-Isp. The correspondence is not exact.',
+      IV型: 'Close to Paris 0-Ip.',
+    },
+    figureNotes: [
+      'English report (Radiology 1974). RSNA copyright. The 1966 Stomach and Intestine original is also not CC. Figures are not hosted — link to PubMed.',
+    ],
+  },
+  borrmann: {
+    name: 'Borrmann classification (advanced gastric cancer)',
+    shortName: 'Borrmann',
+    description:
+      'Macroscopic types I–IV of advanced gastric cancer: polypoid, sharply marginated ulcer, infiltrative ulcer, and diffuse infiltration. Japanese Type 5 (unclassifiable) is not in the 1926 original. Superficial Type 0 is Paris / Japanese Type 0.',
+    groups: {
+      Borrmann: 'Borrmann',
+      規約: 'Japanese rules',
+      判定: 'Assessment',
+    },
+    comments: {
+      'Type 4': 'Often overlaps Lauren diffuse type, but macroscopic type and histology are separate.',
+      'Type 5': 'Unclassifiable type in the Japanese rules. Not in the original.',
+    },
+    figureNotes: [
+      'JGCA English 3rd edition. Springer. The 1926 original is also not CC. Figures are not hosted — link to PubMed.',
+    ],
+  },
   kyoto: {
     name: 'Kyoto classification risk score (original 0–8)',
     shortName: 'Kyoto',
@@ -518,6 +601,64 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
           { label: 'None', description: pts(0, false) },
           { label: 'Focal ≤30%', description: pts(1) },
           { label: 'Extensive >30%', description: pts(2) },
+        ],
+      },
+    },
+  },
+  olga: {
+    name: 'OLGA (gastritis stage by atrophy)',
+    shortName: 'OLGA',
+    description:
+      'Stages biopsy atrophy in the antrum and corpus (0–3 each) on a lookup table to Stage 0–IV. Stages III–IV are high gastric-cancer risk. Use OLGIM when staging by intestinal metaplasia.',
+    figureNotes: [
+      'Original paper. Elsevier / Digestive and Liver Disease copyright; not CC, so the figure is not hosted. Link opens PubMed.',
+    ],
+    fields: {
+      antrum: {
+        label: 'Antral atrophy',
+        options: [
+          { label: 'None (0)', description: '0' },
+          { label: 'Mild (1)', description: 'mild' },
+          { label: 'Moderate (2)', description: 'moderate' },
+          { label: 'Severe (3)', description: 'severe' },
+        ],
+      },
+      corpus: {
+        label: 'Corpus atrophy',
+        options: [
+          { label: 'None (0)', description: '0' },
+          { label: 'Mild (1)', description: 'mild' },
+          { label: 'Moderate (2)', description: 'moderate' },
+          { label: 'Severe (3)', description: 'severe' },
+        ],
+      },
+    },
+  },
+  olgim: {
+    name: 'OLGIM (gastritis stage by intestinal metaplasia)',
+    shortName: 'OLGIM',
+    description:
+      'Stages biopsy intestinal metaplasia in the antrum and corpus (0–3 each) on the same OLGA lookup table to Stage 0–IV. Stages III–IV are high gastric-cancer risk. Use OLGA when staging by atrophy.',
+    figureNotes: [
+      'Original paper. Elsevier / GIE copyright; not CC, so the figure is not hosted. Link opens PubMed.',
+    ],
+    fields: {
+      antrum: {
+        label: 'Antral intestinal metaplasia',
+        options: [
+          { label: 'None (0)', description: '0' },
+          { label: 'Mild (1)', description: 'mild' },
+          { label: 'Moderate (2)', description: 'moderate' },
+          { label: 'Severe (3)', description: 'severe' },
+        ],
+      },
+      corpus: {
+        label: 'Corpus intestinal metaplasia',
+        options: [
+          { label: 'None (0)', description: '0' },
+          { label: 'Mild (1)', description: 'mild' },
+          { label: 'Moderate (2)', description: 'moderate' },
+          { label: 'Severe (3)', description: 'severe' },
         ],
       },
     },
@@ -1606,6 +1747,22 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     ],
     note: 'Grade after chromic injectate (indigo carmine or methylene blue). Type I does not need clips; clip all Type II; close Types III–V. Type V also needs surgical consultation. Separate from ESD-F (F0–F2).',
   },
+  haggitt: {
+    name: 'Haggitt classification (malignant-polyp invasion level)',
+    shortName: 'Haggitt',
+    description:
+      'Levels 0–4 of invasion in pedunculated malignant polyps. Sessile malignant polyps are Level 4 by definition. Additional colectomy also depends on SM depth, budding, and lymphovascular invasion (curative-resection page).',
+    groups: {
+      Haggitt: 'Haggitt',
+      判定: 'Assessment',
+    },
+    comments: {
+      'Level 4': 'Any sessile polyp with submucosal invasion is Level 4.',
+    },
+    figureNotes: [
+      'Original paper. Elsevier / Gastroenterology copyright; not CC, so the figure is not hosted. Link opens PubMed.',
+    ],
+  },
   'esd-fibrosis': {
     name: 'ESD submucosal fibrosis classification (F0–F2)',
     shortName: 'ESD-F',
@@ -2138,6 +2295,57 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
         options: [
           { label: 'No', description: pts(0, false) },
           { label: 'Yes', description: pts(2) },
+        ],
+      },
+    },
+  },
+  rockall: {
+    name: 'Rockall score (upper GI bleeding)',
+    shortName: 'Rockall',
+    description:
+      'Scores mortality risk after acute upper GI bleeding from three clinical items (age, shock, comorbidity) and two endoscopic items (diagnosis, stigmata) as 0–11. The pre-endoscopy clinical score is at most 7.',
+    figureNotes: [
+      'Original paper. BMJ / Gut copyright; not CC, so the figure is not hosted. Link opens the paper.',
+    ],
+    fields: {
+      age: {
+        label: 'Age',
+        options: [
+          { label: '<60 years', description: pts(0, false) },
+          { label: '60–79 years', description: pts(1) },
+          { label: '≥80 years', description: pts(2) },
+        ],
+      },
+      shock: {
+        label: 'Shock',
+        description: 'Systolic blood pressure and pulse',
+        options: [
+          { label: 'None (SBP ≥100 and pulse <100)', description: pts(0, false) },
+          { label: 'Tachycardia (SBP ≥100 and pulse ≥100)', description: pts(1) },
+          { label: 'Hypotension (SBP <100)', description: pts(2) },
+        ],
+      },
+      comorbidity: {
+        label: 'Comorbidity',
+        options: [
+          { label: 'None', description: pts(0, false) },
+          { label: 'Heart failure, IHD, or any major comorbidity', description: pts(2) },
+          { label: 'Renal failure, liver failure, or disseminated malignancy', description: pts(3) },
+        ],
+      },
+      diagnosis: {
+        label: 'Endoscopic diagnosis',
+        options: [
+          { label: 'Mallory–Weiss or no lesion (no SRH)', description: pts(0, false) },
+          { label: 'All other diagnoses', description: pts(1) },
+          { label: 'Upper-GI malignancy', description: pts(2) },
+        ],
+      },
+      srh: {
+        label: 'Major stigmata of recent hemorrhage',
+        options: [
+          { label: 'None, or dark spot only', description: pts(0, false) },
+          { label: 'Blood, adherent clot, visible or spurting vessel', description: pts(2) },
         ],
       },
     },

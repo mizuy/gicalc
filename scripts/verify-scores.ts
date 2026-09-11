@@ -35,6 +35,8 @@ import {
 import { computeGastricEsdCurability, resolveGastricEsdCurabilityHighlight } from '../lib/scores/gastric-esd-curability';
 import { computeEggim } from '../lib/scores/eggim';
 import { computeGbs } from '../lib/scores/gbs';
+import { computeRockall } from '../lib/scores/rockall';
+import { computeOlga, computeOlgim, olgaStage } from '../lib/scores/olga';
 import { computeKyoto } from '../lib/scores/kyoto';
 import { computeKyotoModified } from '../lib/scores/kyoto-modified';
 import { computeNoblads } from '../lib/scores/noblads';
@@ -71,6 +73,14 @@ import { buildAlgorithmFlowGraph } from '../lib/scores/algorithmFlowGraph';
 import { MESDA_G_2016_PUBMED, MESDA_KURUMI_2021_PUBMED } from '../data/scores/mesda-g';
 import { ESD_FIBROSIS_2010_PUBMED, ESD_FIBROSIS_2016_PUBMED } from '../data/scores/esd-fibrosis';
 import { SYDNEY_DMI_2017_PUBMED, SYDNEY_DMI_TARGET_SIGN_PUBMED } from '../data/scores/sydney-dmi';
+import { ROCKALL_1996_PUBMED } from '../data/scores/rockall';
+import { YAMADA_1974_PUBMED } from '../data/scores/yamada';
+import { HAGGITT_1985_PUBMED } from '../data/scores/haggitt';
+import { OLGA_2007_PUBMED } from '../data/scores/olga';
+import { OLGIM_2010_PUBMED } from '../data/scores/olgim';
+import { BING_2016_PUBMED } from '../data/scores/bing';
+import { BARRETT_JCE11_PUBMED, BARRETT_SSBE_1998_PUBMED } from '../data/scores/barrett';
+import { BORRMANN_JGCA_2011_PUBMED } from '../data/scores/borrmann';
 import { EREFS_2013_PUBMED } from '../data/scores/erefs';
 import { FORREST_1974_PUBMED } from '../data/scores/forrest';
 import { HILL_1996_PUBMED } from '../data/scores/hill';
@@ -142,13 +152,15 @@ import {
   figureOriginLabel,
 } from '../lib/figures/credit';
 
-test('登録スコアは50種で臓器順に並ぶ', () => {
+test('登録スコアは58種で臓器順に並ぶ', () => {
   assert.deepEqual(
     SCORES.map((score) => score.id),
     [
       'jes',
       'la',
       'prague',
+      'barrett',
+      'bing',
       'siewert',
       'erefs',
       'jsph-varices',
@@ -157,8 +169,12 @@ test('登録スコアは50種で臓器順に並ぶ', () => {
       'hill',
       'sarin',
       'mesda-g',
+      'yamada',
+      'borrmann',
       'kyoto',
       'eggim',
+      'olga',
+      'olgim',
       'gastric-esd-curability',
       'ecura-hatta',
       'sekiguchi',
@@ -184,6 +200,7 @@ test('登録スコアは50種で臓器順に並ぶ', () => {
       'kudo-tsuruta',
       'esd-fibrosis',
       'sydney-dmi',
+      'haggitt',
       'colorectal-esd-curability',
       'colorectal-ec',
       'nice',
@@ -195,6 +212,7 @@ test('登録スコアは50種で臓器順に並ぶ', () => {
       'aronchick',
       'forrest',
       'gbs',
+      'rockall',
       'noblads',
     ],
   );
@@ -203,7 +221,7 @@ test('登録スコアは50種で臓器順に並ぶ', () => {
     [
       [
         'esophagus',
-        ['paris', 'jes', 'la', 'prague', 'siewert', 'erefs', 'jsph-varices', 'esophagus-esd-curability'],
+        ['paris', 'jes', 'la', 'prague', 'barrett', 'bing', 'siewert', 'erefs', 'jsph-varices', 'esophagus-esd-curability'],
       ],
       [
         'stomach',
@@ -213,8 +231,12 @@ test('登録スコアは50種で臓器順に並ぶ', () => {
           'hill',
           'sarin',
           'mesda-g',
+          'yamada',
+          'borrmann',
           'kyoto',
           'eggim',
+          'olga',
+          'olgim',
           'gastric-esd-curability',
           'ecura-hatta',
           'sekiguchi',
@@ -234,6 +256,7 @@ test('登録スコアは50種で臓器順に並ぶ', () => {
           'kudo-tsuruta',
           'esd-fibrosis',
           'sydney-dmi',
+          'haggitt',
           'colorectal-esd-curability',
           'colorectal-ec',
           'nice',
@@ -245,8 +268,8 @@ test('登録スコアは50種で臓器順に並ぶ', () => {
           'aronchick',
         ],
       ],
-      ['pathology', ['vienna', 'who-serrated', 'itbcg-budding', 'net-grade', 'lauren']],
-      ['bleeding', ['forrest', 'gbs', 'noblads']],
+      ['pathology', ['haggitt', 'vienna', 'who-serrated', 'itbcg-budding', 'net-grade', 'lauren']],
+      ['bleeding', ['forrest', 'gbs', 'rockall', 'noblads']],
     ],
   );
   assert.equal(getScoreNavCategory(getScoreById('vienna')!), 'pathology');
@@ -256,11 +279,15 @@ test('登録スコアは50種で臓器順に並ぶ', () => {
   assert.equal(scoreListedInNavCategory(getScoreById('paris')!, 'stomach'), true);
   assert.equal(scoreListedInNavCategory(getScoreById('paris')!, 'colorectum'), true);
   assert.equal(scoreListedInNavCategory(getScoreById('paris')!, 'duodenum'), false);
+  assert.equal(getScoreNavCategory(getScoreById('haggitt')!), 'colorectum');
+  assert.deepEqual([...getExtraNavCategories('haggitt')], ['pathology']);
+  assert.equal(scoreListedInNavCategory(getScoreById('haggitt')!, 'colorectum'), true);
+  assert.equal(scoreListedInNavCategory(getScoreById('haggitt')!, 'pathology'), true);
 });
 
-test('variant 専用 id は一覧から隠し、全定義53種を保持する', () => {
+test('variant 専用 id は一覧から隠し、全定義61種を保持する', () => {
   assert.deepEqual([...HIDDEN_LIST_SCORE_IDS].sort(), ['apcs-modified', 'kyoto-modified', 'modified-spigelman']);
-  assert.equal(ALL_SCORE_DEFINITIONS.length, 53);
+  assert.equal(ALL_SCORE_DEFINITIONS.length, 61);
   assert.ok(getScoreById('kyoto-modified'));
   assert.ok(getScoreById('modified-spigelman'));
   assert.ok(getScoreById('apcs-modified'));
@@ -306,6 +333,10 @@ test('一覧はフェーズ別にグループ化し、出血・病理はサブ�
   assert.equal(getScoreListPhase('kajiwara-nomogram'), 'treatment');
   assert.equal(getScoreListPhase('koyama-et2'), 'treatment');
   assert.equal(getScoreListPhase('jes'), 'diagnosis');
+  assert.equal(getScoreListPhase('rockall'), 'screening');
+  assert.equal(getScoreListPhase('olga'), 'background-mucosa');
+  assert.equal(getScoreListPhase('olgim'), 'background-mucosa');
+  assert.equal(getScoreListPhase('haggitt'), 'treatment');
   assert.equal(navCategoryUsesListPhases('bleeding'), false);
   assert.equal(navCategoryUsesListPhases('pathology'), false);
   assert.equal(navCategoryUsesListPhases('duodenum'), false);
@@ -323,7 +354,7 @@ test('一覧はフェーズ別にグループ化し、出血・病理はサブ�
   assert.deepEqual(
     groupScoresByListPhase(esophagus).map((group) => [group.phase, group.scores.map((score) => score.id)]),
     [
-      ['diagnosis', ['paris', 'jes', 'la', 'prague', 'siewert', 'erefs', 'jsph-varices']],
+      ['diagnosis', ['paris', 'jes', 'la', 'prague', 'barrett', 'bing', 'siewert', 'erefs', 'jsph-varices']],
       ['treatment', ['esophagus-esd-curability']],
     ],
   );
@@ -332,8 +363,8 @@ test('一覧はフェーズ別にグループ化し、出血・病理はサブ�
   assert.deepEqual(
     groupScoresByListPhase(stomach).map((group) => [group.phase, group.scores.map((score) => score.id)]),
     [
-      ['background-mucosa', ['kimura-takemoto', 'kyoto', 'eggim']],
-      ['diagnosis', ['paris', 'hill', 'sarin', 'mesda-g']],
+      ['background-mucosa', ['kimura-takemoto', 'kyoto', 'eggim', 'olga', 'olgim']],
+      ['diagnosis', ['paris', 'hill', 'sarin', 'mesda-g', 'yamada', 'borrmann']],
       ['treatment', ['gastric-esd-curability', 'ecura-hatta', 'sekiguchi', 'best-j']],
     ],
   );
@@ -359,7 +390,7 @@ test('一覧はフェーズ別にグループ化し、出血・病理はサブ�
           'jnet',
         ],
       ],
-      ['treatment', ['esd-fibrosis', 'sydney-dmi', 'colorectal-esd-curability', 'kajiwara-nomogram', 'koyama-et2']],
+      ['treatment', ['esd-fibrosis', 'sydney-dmi', 'haggitt', 'colorectal-esd-curability', 'kajiwara-nomogram', 'koyama-et2']],
     ],
   );
 
@@ -373,6 +404,8 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     jes: 'classification',
     la: 'classification',
     prague: 'classification',
+    barrett: 'classification',
+    bing: 'classification',
     siewert: 'classification',
     erefs: 'classification',
     'jsph-varices': 'classification',
@@ -381,8 +414,12 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     hill: 'classification',
     sarin: 'classification',
     'mesda-g': 'algorithm',
+    yamada: 'classification',
+    borrmann: 'classification',
     kyoto: 'score',
     eggim: 'score',
+    olga: 'score',
+    olgim: 'score',
     'gastric-esd-curability': 'algorithm',
     'ecura-hatta': 'score',
     sekiguchi: 'score',
@@ -408,6 +445,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     'kudo-tsuruta': 'classification',
     'esd-fibrosis': 'classification',
     'sydney-dmi': 'classification',
+    haggitt: 'classification',
     'colorectal-esd-curability': 'algorithm',
     'colorectal-ec': 'classification',
     nice: 'classification',
@@ -419,6 +457,7 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
     aronchick: 'score',
     forrest: 'classification',
     gbs: 'score',
+    rockall: 'score',
     noblads: 'score',
   };
   assert.deepEqual(
@@ -434,10 +473,12 @@ test('各ツールは CLASSIFICATION / SCORE / PREDICTION MODEL / ALGORITHM の�
 test('日本で開発されたツールだけに日本マークを付ける', () => {
   const japan = [
     'jes',
+    'barrett',
     'jsph-varices',
     'esophagus-esd-curability',
     'kimura-takemoto',
     'mesda-g',
+    'yamada',
     'kyoto',
     'gastric-esd-curability',
     'ecura-hatta',
@@ -464,11 +505,15 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
   const international = [
     'la',
     'prague',
+    'bing',
     'siewert',
     'erefs',
     'hill',
     'sarin',
+    'borrmann',
     'eggim',
+    'olga',
+    'olgim',
     'spigelman',
     'apcs',
     'sps',
@@ -479,12 +524,14 @@ test('日本で開発されたツールだけに日本マークを付ける', ()
     'lauren',
     'paris',
     'sydney-dmi',
+    'haggitt',
     'nice',
     'wasp',
     'bbps',
     'aronchick',
     'forrest',
     'gbs',
+    'rockall',
   ];
   assert.deepEqual(
     SCORES.filter((score) => isJapanDeveloped(score)).map((score) => score.id),
@@ -1081,6 +1128,76 @@ test('GBS: 全因子オフは 0、男性 Hb<10 + BUN≥70 は高点', () => {
   assert.equal(maleMidHb.total, 3);
 });
 
+test('Rockall: 臨床スコアと complete score、死亡率バンド', () => {
+  const zero = computeRockall({
+    age: 0,
+    shock: 0,
+    comorbidity: 0,
+    diagnosis: 0,
+    srh: 0,
+  });
+  assert.equal(zero.total, 0);
+  assert.equal(zero.maxScore, 11);
+  assert.equal(zero.interpretation, '極低リスク');
+  assert.match(zero.details?.[0] ?? '', /臨床（内視鏡前）スコア 0 \/ 7/);
+  assert.match(zero.details?.[1] ?? '', /0%/);
+
+  const clinicalOnly = computeRockall({
+    age: 2,
+    shock: 2,
+    comorbidity: 3,
+    diagnosis: 0,
+    srh: 0,
+  });
+  assert.equal(clinicalOnly.total, 7);
+  assert.match(clinicalOnly.details?.[0] ?? '', /臨床（内視鏡前）スコア 7 \/ 7/);
+  assert.equal(clinicalOnly.interpretation, '高リスク');
+
+  const max = computeRockall({
+    age: 2,
+    shock: 2,
+    comorbidity: 3,
+    diagnosis: 2,
+    srh: 2,
+  });
+  assert.equal(max.total, 11);
+  assert.equal(max.interpretation, '超高リスク');
+  assert.match(max.details?.[1] ?? '', /41\.1%/);
+
+  const english = localizeResult(zero, 'en');
+  assert.equal(english.interpretation, 'Very low risk');
+  assert.match(english.details?.[0] ?? '', /Clinical \(pre-endoscopy\) score 0 \/ 7/);
+  assert.doesNotMatch(english.details?.join(' ') ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+});
+
+test('OLGA / OLGIM: 交差表は同じで Stage III–IV が高リスク', () => {
+  assert.equal(olgaStage(0, 0), 0);
+  assert.equal(olgaStage(0, 1), 1);
+  assert.equal(olgaStage(0, 2), 2);
+  assert.equal(olgaStage(0, 3), 2);
+  assert.equal(olgaStage(1, 0), 1);
+  assert.equal(olgaStage(1, 3), 3);
+  assert.equal(olgaStage(2, 2), 3);
+  assert.equal(olgaStage(3, 2), 4);
+  assert.equal(olgaStage(3, 3), 4);
+
+  const none = computeOlga({ antrum: 0, corpus: 0 });
+  assert.equal(none.total, 0);
+  assert.equal(none.interpretation, 'Stage 0');
+  assert.equal(none.severity, 'none');
+
+  const high = computeOlgim({ antrum: 3, corpus: 3 });
+  assert.equal(high.total, 4);
+  assert.equal(high.interpretation, 'Stage IV');
+  assert.equal(high.severity, 'severe');
+  assert.match(high.details?.join(' ') ?? '', /サーベイランス/);
+
+  const english = localizeResult(high, 'en');
+  assert.equal(english.interpretation, 'Stage IV');
+  assert.match(english.details?.join(' ') ?? '', /intestinal metaplasia/);
+  assert.doesNotMatch(english.details?.join(' ') ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+});
+
 test('NOBLADS: 0 は低リスク、5 以上は超高リスク', () => {
   const low = computeNoblads({
     nsaids: 0,
@@ -1293,6 +1410,59 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(sydneyDmi.citations?.[1]?.pubmed, SYDNEY_DMI_TARGET_SIGN_PUBMED);
   assert.equal(sydneyDmi.entries.every((entry) => entry.figures === undefined), true);
   assert.match(localizeScore(sydneyDmi, 'en').description, /ESD-F/);
+
+  const haggitt = getScoreById('haggitt');
+  assert.ok(haggitt && isClassification(haggitt));
+  assert.deepEqual(
+    haggitt.entries.map((entry) => entry.label),
+    ['Level 0', 'Level 1', 'Level 2', 'Level 3', 'Level 4', 'Assessment'],
+  );
+  assert.equal(haggitt.pubmed, HAGGITT_1985_PUBMED);
+  assert.equal(haggitt.developedInJapan, undefined);
+  assert.match(haggitt.originalLead ?? '', /Level 4/);
+  assert.match(haggitt.entries[4]?.rows.find((row) => row.heading === 'Sessile')?.text ?? '', /Level 4/);
+
+  const yamada = getScoreById('yamada');
+  assert.ok(yamada && isClassification(yamada));
+  assert.equal(classificationOriginalLocale(yamada), 'ja');
+  assert.equal(yamada.developedInJapan, true);
+  assert.equal(yamada.pubmed, YAMADA_1974_PUBMED);
+  assert.deepEqual(
+    yamada.entries.map((entry) => entry.label),
+    ['I型', 'II型', 'III型', 'IV型', '判定'],
+  );
+
+  const borrmann = getScoreById('borrmann');
+  assert.ok(borrmann && isClassification(borrmann));
+  assert.equal(borrmann.pubmed, BORRMANN_JGCA_2011_PUBMED);
+  assert.ok(borrmann.citations?.some((citation) => citation.role === 'original'));
+  assert.ok(borrmann.entries.some((entry) => entry.label === 'Type 5'));
+  assert.match(borrmann.originalLead ?? '', /Type 5 is not in the 1926 original/);
+
+  const barrett = getScoreById('barrett');
+  assert.ok(barrett && isClassification(barrett));
+  assert.equal(classificationOriginalLocale(barrett), 'ja');
+  assert.equal(barrett.developedInJapan, true);
+  assert.equal(barrett.pubmed, BARRETT_JCE11_PUBMED);
+  assert.ok(barrett.citations?.some((citation) => citation.pubmed === BARRETT_SSBE_1998_PUBMED));
+  assert.match(localizeScore(barrett, 'ja').description, /柵状血管/);
+
+  const bing = getScoreById('bing');
+  assert.ok(bing && isClassification(bing));
+  assert.equal(bing.pubmed, BING_2016_PUBMED);
+  assert.match(bing.originalLead ?? '', /high-confidence/i);
+  assert.ok(bing.entries.some((entry) => entry.label === 'HGD/EAC'));
+
+  const olgaDef = getScoreById('olga');
+  const olgimDef = getScoreById('olgim');
+  assert.equal(olgaDef?.pubmed, OLGA_2007_PUBMED);
+  assert.equal(olgimDef?.pubmed, OLGIM_2010_PUBMED);
+  assert.equal(olgaDef?.category, 'gastritis');
+  assert.equal(olgimDef?.category, 'gastritis');
+
+  const rockallDef = getScoreById('rockall');
+  assert.equal(rockallDef?.pubmed, ROCKALL_1996_PUBMED);
+  assert.equal(rockallDef?.organ, 'bleeding');
 
   const colorectalEc = getScoreById('colorectal-ec');
   assert.ok(colorectalEc && isClassification(colorectalEc));
@@ -2040,6 +2210,24 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(sydneyDmiFig.figures?.[1]?.figureKind, 'original');
   assert.match(sydneyDmiFig.figures?.[1]?.note ?? '', /CC ではない/);
   assert.equal(sydneyDmiFig.entries.every((entry) => entry.figures === undefined), true);
+
+  for (const id of ['yamada', 'haggitt', 'bing', 'borrmann']) {
+    const score = getScoreById(id);
+    assert.ok(score && isClassification(score), id);
+    assertOriginalPlateIsLinkOnly(score);
+    assert.equal(score.entries.every((entry) => entry.figures === undefined), true, id);
+  }
+  assert.equal(getScoreById('bing')?.figures?.[0]?.figureKind, 'original');
+  assert.equal(getScoreById('bing')?.figures?.[0]?.pubmed, BING_2016_PUBMED);
+  assert.equal(figureCreditLabel(getScoreById('bing')!.figures![0]!), 'Sharma 2016, Fig. 1, Original');
+
+  const barrettFig = getScoreById('barrett');
+  assert.ok(barrettFig && isClassification(barrettFig));
+  assert.equal(barrettFig.figures?.[0]?.src, undefined);
+  assert.equal(barrettFig.figures?.[0]?.figureKind, 'original');
+  assert.equal(barrettFig.figures?.[1]?.figureKind, 'secondary');
+  assert.equal(barrettFig.figures?.[1]?.pubmed, '35310704');
+  assert.match(barrettFig.figures?.[1]?.note ?? '', /埋め込まず/);
 
   const mesda = getScoreById('mesda-g');
   assert.ok(mesda && isClassification(mesda));
@@ -3040,6 +3228,10 @@ test('引用・ライセンス情報は CC と非 CC を分けて書く', () => 
   assert.match(UI.ja.about.citationsNotCcBody, /ESD-F/);
   assert.match(UI.ja.about.citationsNotCcBody, /Sydney DMI/);
   assert.match(UI.en.about.citationsNotCcBody, /Sydney DMI/);
+  assert.match(UI.ja.about.citationsNotCcBody, /Rockall/);
+  assert.match(UI.ja.about.citationsNotCcBody, /Haggitt/);
+  assert.match(UI.ja.about.citationsNotCcBody, /BING/);
+  assert.match(UI.en.about.citationsNotCcBody, /Borrmann/);
   assert.match(UI.ja.about.citationsNotCcBody, /Dekker 2020/);
   assert.match(UI.ja.about.citationsCcBody, /Misawa 2021/);
   assert.match(UI.ja.about.citationsNotCcBody, /Kudo 2011/);
@@ -3593,6 +3785,10 @@ test('関連スコア: 登録 id は有効で colorectal ↔ nomogram が双方�
   assert.ok(getRelatedScores('gastric-esd-curability', 'ja').some((item) => item.score.id === 'paris'));
   assert.ok(getRelatedScores('sydney-dmi', 'ja').some((item) => item.score.id === 'esd-fibrosis'));
   assert.ok(getRelatedScores('esd-fibrosis', 'en').some((item) => item.score.id === 'sydney-dmi'));
+  assert.ok(getRelatedScores('rockall', 'ja').some((item) => item.score.id === 'gbs'));
+  assert.ok(getRelatedScores('olga', 'en').some((item) => item.score.id === 'olgim'));
+  assert.ok(getRelatedScores('barrett', 'ja').some((item) => item.score.id === 'prague'));
+  assert.ok(getRelatedScores('haggitt', 'ja').some((item) => item.score.id === 'colorectal-esd-curability'));
 });
 
 test('引用は PubMed へ行く', () => {

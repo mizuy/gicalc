@@ -40,6 +40,14 @@ import { nobladsScore } from './noblads';
 import { macroScore } from './macro';
 import { parisScore } from './paris';
 import { pragueScore } from './prague';
+import { barrettScore } from './barrett';
+import { bingScore } from './bing';
+import { yamadaScore } from './yamada';
+import { borrmannScore } from './borrmann';
+import { olgaScore } from './olga';
+import { olgimScore } from './olgim';
+import { haggittScore } from './haggitt';
+import { rockallScore } from './rockall';
 import { sarinScore } from './sarin';
 import { sekiguchiScore } from './sekiguchi';
 import { siewertScore } from './siewert';
@@ -60,6 +68,8 @@ export const ALL_SCORE_DEFINITIONS: ScoreDefinition[] = [
   jesScore,
   laScore,
   pragueScore,
+  barrettScore,
+  bingScore,
   siewertScore,
   erefsScore,
   jsphVaricesScore,
@@ -68,9 +78,13 @@ export const ALL_SCORE_DEFINITIONS: ScoreDefinition[] = [
   hillScore,
   sarinScore,
   mesdaGScore,
+  yamadaScore,
+  borrmannScore,
   kyotoScore,
   kyotoModifiedScore,
   eggimScore,
+  olgaScore,
+  olgimScore,
   gastricEsdCurabilityScore,
   ecuraHattaScore,
   sekiguchiScore,
@@ -98,6 +112,7 @@ export const ALL_SCORE_DEFINITIONS: ScoreDefinition[] = [
   kudoTsurutaScore,
   esdFibrosisScore,
   sydneyDmiScore,
+  haggittScore,
   colorectalEsdCurabilityScore,
   colorectalEcScore,
   niceScore,
@@ -109,6 +124,7 @@ export const ALL_SCORE_DEFINITIONS: ScoreDefinition[] = [
   aronchickScore,
   forrestScore,
   gbsScore,
+  rockallScore,
   nobladsScore,
 ];
 

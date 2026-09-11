@@ -9,6 +9,7 @@ const INTERPRETATION_EN: Record<string, string> = {
   高リスク: 'High risk',
   超高リスク: 'Very high risk',
   超低リスク: 'Very low risk',
+  極低リスク: 'Very low risk',
   '低リスク群（0–4）': 'Low-risk group (0–4)',
   LNM予測確率: 'Predicted LNM probability',
   腸上皮化生なし: 'No intestinal metaplasia',
@@ -271,6 +272,25 @@ const DETAIL_EXACT_EN: Record<string, string> = {
     'Note: HM1. Consider additional resection or careful follow-up because of local residual risk.',
   '5 項目すべて充足：VM0、乳頭/管状腺癌、SM<1000 µm、脈管陰性、簇出 G1。':
     'All five criteria met: VM0, papillary/tubular adenocarcinoma, SM <1000 µm, negative lymphovascular invasion, budding G1.',
+  '再出血・死亡リスクはごく低いです。早期退院の候補になります。':
+    'Rebleeding and death risk is very low. A candidate for early discharge.',
+  'complete score ≤2 は原著で死亡リスクがごく低い群です。':
+    'A complete score ≤2 had very low mortality in the original series.',
+  '入院管理と早期内視鏡を検討してください。':
+    'Consider inpatient care and early endoscopy.',
+  '死亡リスクが高く、集中治療と確実な止血を検討してください。':
+    'Mortality risk is high. Consider intensive care and secure hemostasis.',
+  'complete score ≥8 は原著で死亡率約 41% です。':
+    'Complete scores ≥8 had about 41% mortality in the original series.',
+  '前庭 × 体部の萎縮から Stage を求めます。':
+    'Stage is read from antral × corpus atrophy.',
+  '前庭 × 体部の腸上皮化生から Stage を求めます。':
+    'Stage is read from antral × corpus intestinal metaplasia.',
+  'Stage III–IV は胃癌高リスクで、サーベイランスを検討します。':
+    'Stages III–IV are high gastric-cancer risk; consider surveillance.',
+  '組織学的な萎縮を認めません。': 'No histologic atrophy.',
+  '組織学的な腸上皮化生を認めません。': 'No histologic intestinal metaplasia.',
+  'Stage I–II は低〜中等度リスクです。': 'Stages I–II are low to intermediate risk.',
 };
 
 const DETAIL_PATTERNS: Array<{ re: RegExp; to: (...args: string[]) => string }> = [
@@ -391,6 +411,14 @@ const DETAIL_PATTERNS: Array<{ re: RegExp; to: (...args: string[]) => string }> 
   {
     re: /^Modified Spigelman stage (.+)（Vienna: LGD 1 点 \/ HGD 3 点）。$/,
     to: (stage) => `Modified Spigelman stage ${stage} (Vienna: LGD 1 point / HGD 3 points).`,
+  },
+  {
+    re: /^臨床（内視鏡前）スコア (\d+) \/ 7$/,
+    to: (clinical) => `Clinical (pre-endoscopy) score ${clinical} / 7`,
+  },
+  {
+    re: /^原著 complete score の死亡率は約 (.+) です。$/,
+    to: (rate) => `Mortality in the original complete-score table is about ${rate}.`,
   },
   {
     re: /^ESGE 2019 の十二指腸サーベイランス目安: (.+)。$/,
