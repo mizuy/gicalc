@@ -1380,6 +1380,26 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.equal(kudo.entries[5]?.meaning, 'Irregular pits');
   assert.match(kudo.originalLead ?? '', /Type V was later subdivided/);
   assert.match(kudo.entries[2]?.rows.find((row) => row.heading === 'Note')?.text ?? '', /small or short/);
+  assert.match(kudo.description, /箱根合意/);
+  assert.match(kudo.entries[5]?.comment ?? '', /箱根合意/);
+  assert.match(kudo.entries[5]?.comment ?? '', /invasive pattern|別カード/);
+  assert.deepEqual(
+    kudo.entries.filter((entry) => /^Type VI/i.test(entry.label)).map((entry) => entry.label),
+    ['Type VI'],
+  );
+  assert.match(kudo.entries[5]?.rows.find((row) => row.heading === 'Hakone 2004')?.text ?? '', /Hakone/);
+  assert.match(kudo.entries[5]?.rows.find((row) => row.heading === 'Mild vs severe')?.text ?? '', /VI severe/);
+  assert.match(kudo.entries[5]?.rows.find((row) => row.heading === 'Invasive pattern')?.text ?? '', /demarcated|Fujii/);
+  assert.match(kudo.entries[5]?.rows.find((row) => row.heading === 'Histology')?.text ?? '', /deep SM/);
+  assert.match(kudo.entries[6]?.comment ?? '', /箱根合意|無構造/);
+  assert.match(kudo.entries[6]?.rows.find((row) => row.heading === 'Note')?.text ?? '', /Hakone 2004/);
+  const englishKudoNotes = localizeScore(kudo, 'en');
+  assert.match(englishKudoNotes.description, /Hakone/);
+  assert.match(englishKudoNotes.entries[5]?.comment ?? '', /Hakone/);
+  assert.match(englishKudoNotes.entries[5]?.comment ?? '', /invasive pattern/);
+  assert.doesNotMatch(englishKudoNotes.entries[5]?.comment ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+  assert.match(englishKudoNotes.entries[6]?.comment ?? '', /Hakone|amorphous/);
+  assert.doesNotMatch(englishKudoNotes.entries[6]?.comment ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
 
   const esdFibrosis = getScoreById('esd-fibrosis');
   assert.ok(esdFibrosis && isClassification(esdFibrosis));

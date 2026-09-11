@@ -1841,11 +1841,18 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
   },
   'kudo-tsuruta': {
     name: 'Kudo–Tsuruta classification (pit pattern)',
-    description: 'Chromoendoscopic pit-pattern classification of colorectal neoplasia (I / II / IIIs / IIIL / IV / VI / VN).',
+    description:
+      'Chromoendoscopic pit-pattern classification of colorectal neoplasia (I / II / IIIs / IIIL / IV / VI / VN). The VI / VN boundary of type V was unified by the 2004 Hakone consensus.',
     groups: {
       非腫瘍: 'Non-neoplastic',
       腺腫: 'Adenoma',
       癌: 'Carcinoma',
+    },
+    comments: {
+      'Type VI':
+        'Hakone consensus (2004) unified irregular glands as VI. VI severe irregularity and invasive pattern are explained on this card (not as separate cards) as depth-of-invasion clues.',
+      'Type VN':
+        'Hakone consensus limits VN to a clear amorphous area. A reliable marker of deep SM invasion.',
     },
     figureNotes: [
       'Types I–VN. Tanaka 2004 Dig Endosc original is not CC, so the figure is not hosted. Link opens Clin Endosc 2025 Fig. 4 (permission reprint).',
