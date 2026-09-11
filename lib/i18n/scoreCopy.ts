@@ -456,7 +456,14 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'English report (Radiology 1974). RSNA copyright. The 1966 Stomach and Intestine original is also not CC. Figures are not hosted — link to PubMed.',
+      'GI Calc original schematic of types I–IV. License: CC BY 4.0. Not a figure from the original papers.',
     ],
+    entryFigureNotes: {
+      I型: ['Cropped from a GI Calc schematic. Not a figure from the Yamada original. License: CC BY 4.0.'],
+      II型: ['Cropped from a GI Calc schematic. Not a figure from the Yamada original. License: CC BY 4.0.'],
+      III型: ['Cropped from a GI Calc schematic. Not a figure from the Yamada original. License: CC BY 4.0.'],
+      IV型: ['Cropped from a GI Calc schematic. Not a figure from the Yamada original. License: CC BY 4.0.'],
+    },
   },
   borrmann: {
     name: 'Borrmann classification (advanced gastric cancer)',
@@ -474,7 +481,14 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'JGCA English 3rd edition. Springer. The 1926 original is also not CC. Figures are not hosted — link to PubMed.',
+      'GI Calc original schematic of types 1–4. License: CC BY 4.0. Not a figure from the original papers.',
     ],
+    entryFigureNotes: {
+      'Type 1': ['Cropped from a GI Calc schematic. Not a figure from the Borrmann original. License: CC BY 4.0.'],
+      'Type 2': ['Cropped from a GI Calc schematic. Not a figure from the Borrmann original. License: CC BY 4.0.'],
+      'Type 3': ['Cropped from a GI Calc schematic. Not a figure from the Borrmann original. License: CC BY 4.0.'],
+      'Type 4': ['Cropped from a GI Calc schematic. Not a figure from the Borrmann original. License: CC BY 4.0.'],
+    },
   },
   kyoto: {
     name: 'Kyoto classification risk score (original 0–8)',
@@ -611,7 +625,7 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     description:
       'Stages biopsy atrophy in the antrum and corpus (0–3 each) on a lookup table to Stage 0–IV. Stages III–IV are high gastric-cancer risk. Use OLGIM when staging by intestinal metaplasia.',
     figureNotes: [
-      'Original paper. Elsevier / Digestive and Liver Disease copyright; not CC, so the figure is not hosted. Link opens PubMed.',
+      'Original 2005 Gastroenterology letter. Elsevier copyright; not CC, so the figure is not hosted. Link opens PubMed. Gut 2007 is the clinical validation; Dig Liver Dis 2008 is the tutorial.',
     ],
     fields: {
       antrum: {
@@ -1761,7 +1775,18 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
     },
     figureNotes: [
       'Original paper. Elsevier / Gastroenterology copyright; not CC, so the figure is not hosted. Link opens PubMed.',
+      'GI Calc original schematic of Levels 0–4. License: CC BY 4.0. Not a figure from the 1985 original.',
     ],
+    entryFigureNotes: {
+      'Level 0': ['Cropped from a GI Calc schematic. Not a figure from the Haggitt original. License: CC BY 4.0.'],
+      'Level 1': ['Cropped from a GI Calc schematic. Not a figure from the Haggitt original. License: CC BY 4.0.'],
+      'Level 2': ['Cropped from a GI Calc schematic. Not a figure from the Haggitt original. License: CC BY 4.0.'],
+      'Level 3': ['Cropped from a GI Calc schematic. Not a figure from the Haggitt original. License: CC BY 4.0.'],
+      'Level 4': [
+        'Cropped from a GI Calc schematic. Pedunculated Level 4. License: CC BY 4.0.',
+        'Cropped from a GI Calc schematic. Sessile SM invasion is Level 4. License: CC BY 4.0.',
+      ],
+    },
   },
   'esd-fibrosis': {
     name: 'ESD submucosal fibrosis classification (F0–F2)',

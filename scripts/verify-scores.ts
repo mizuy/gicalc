@@ -76,7 +76,7 @@ import { SYDNEY_DMI_2017_PUBMED, SYDNEY_DMI_TARGET_SIGN_PUBMED } from '../data/s
 import { ROCKALL_1996_PUBMED } from '../data/scores/rockall';
 import { YAMADA_1974_PUBMED } from '../data/scores/yamada';
 import { HAGGITT_1985_PUBMED } from '../data/scores/haggitt';
-import { OLGA_2007_PUBMED } from '../data/scores/olga';
+import { OLGA_2005_PUBMED } from '../data/scores/olga';
 import { OLGIM_2010_PUBMED } from '../data/scores/olgim';
 import { BING_2016_PUBMED } from '../data/scores/bing';
 import { BARRETT_JCE11_PUBMED, BARRETT_SSBE_1998_PUBMED } from '../data/scores/barrett';
@@ -1455,7 +1455,10 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
 
   const olgaDef = getScoreById('olga');
   const olgimDef = getScoreById('olgim');
-  assert.equal(olgaDef?.pubmed, OLGA_2007_PUBMED);
+  assert.equal(olgaDef?.pubmed, OLGA_2005_PUBMED);
+  assert.ok(olgaDef?.citations?.some((citation) => citation.pubmed === '17142647'));
+  assert.ok(olgaDef?.citations?.some((citation) => citation.pubmed === '18424244'));
+  assert.match(olgaDef?.reference ?? '', /2005/);
   assert.equal(olgimDef?.pubmed, OLGIM_2010_PUBMED);
   assert.equal(olgaDef?.category, 'gastritis');
   assert.equal(olgimDef?.category, 'gastritis');
@@ -2211,12 +2214,36 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.match(sydneyDmiFig.figures?.[1]?.note ?? '', /CC ではない/);
   assert.equal(sydneyDmiFig.entries.every((entry) => entry.figures === undefined), true);
 
-  for (const id of ['yamada', 'haggitt', 'bing', 'borrmann']) {
-    const score = getScoreById(id);
-    assert.ok(score && isClassification(score), id);
-    assertOriginalPlateIsLinkOnly(score);
-    assert.equal(score.entries.every((entry) => entry.figures === undefined), true, id);
-  }
+  const bingOnly = getScoreById('bing');
+  assert.ok(bingOnly && isClassification(bingOnly));
+  assertOriginalPlateIsLinkOnly(bingOnly);
+  assert.equal(bingOnly.entries.every((entry) => entry.figures === undefined), true);
+
+  const haggittFig = getScoreById('haggitt');
+  assert.ok(haggittFig && isClassification(haggittFig));
+  assertOriginalPlateIsLinkOnly(haggittFig);
+  assert.equal(haggittFig.figures?.[1]?.figureKind, 'gicalc');
+  assert.equal(haggittFig.figures?.[1]?.href, '/figures/haggitt-gicalc2026-original.svg');
+  const haggittCrops = haggittFig.entries.flatMap((entry) => entry.figures ?? []);
+  assert.equal(haggittCrops.length, 6);
+  assert.equal(haggittCrops.every((figure) => figure.figureKind === 'gicalc'), true);
+  assert.equal(haggittFig.entries.find((entry) => entry.label === 'Level 4')?.figures?.length, 2);
+
+  const yamadaFig = getScoreById('yamada');
+  assert.ok(yamadaFig && isClassification(yamadaFig));
+  assertOriginalPlateIsLinkOnly(yamadaFig);
+  assert.equal(yamadaFig.figures?.[1]?.figureKind, 'gicalc');
+  const yamadaCrops = yamadaFig.entries.flatMap((entry) => entry.figures ?? []);
+  assert.equal(yamadaCrops.length, 4);
+  assert.equal(yamadaCrops.every((figure) => figure.src?.startsWith('/figures/yamada-gicalc2026-')), true);
+
+  const borrmannFig = getScoreById('borrmann');
+  assert.ok(borrmannFig && isClassification(borrmannFig));
+  assertOriginalPlateIsLinkOnly(borrmannFig);
+  assert.equal(borrmannFig.figures?.[1]?.figureKind, 'gicalc');
+  const borrmannCrops = borrmannFig.entries.flatMap((entry) => entry.figures ?? []);
+  assert.equal(borrmannCrops.length, 4);
+  assert.equal(borrmannCrops.every((figure) => figure.src?.startsWith('/figures/borrmann-gicalc2026-')), true);
   assert.equal(getScoreById('bing')?.figures?.[0]?.figureKind, 'original');
   assert.equal(getScoreById('bing')?.figures?.[0]?.pubmed, BING_2016_PUBMED);
   assert.equal(figureCreditLabel(getScoreById('bing')!.figures![0]!), 'Sharma 2016, Fig. 1, Original');
@@ -3237,6 +3264,10 @@ test('引用・ライセンス情報は CC と非 CC を分けて書く', () => 
   assert.match(UI.ja.about.citationsNotCcBody, /Kudo 2011/);
   assert.match(UI.ja.about.citationsCcBody, /Paris分類カードの模式図/);
   assert.match(UI.en.about.citationsCcBody, /Paris card schematics/);
+  assert.match(UI.ja.about.citationsCcBody, /Haggitt \/ 山田 \/ Borrmann カード模式図/);
+  assert.match(UI.en.about.citationsCcBody, /Haggitt \/ Yamada \/ Borrmann card schematics/);
+  assert.match(UI.ja.about.citationsNotCcBody, /Rugge 2005/);
+  assert.match(UI.en.about.citationsNotCcBody, /Rugge 2005/);
   assert.equal(UI.en.figureKind.original, 'Original');
   assert.equal(UI.en.figureKind.secondary, 'Not original');
   assert.equal(UI.en.figureKind.gicalc, 'Not original');
