@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <defs>
+    <style>
+      .mp { fill: #9e9e9e; stroke: #616161; stroke-width: 1.4; }
+      .sm { fill: #d0d0d0; stroke: none; }
+      .mucosa { fill: #f2f2f2; stroke: #bdbdbd; stroke-width: 1.3; stroke-linejoin: round; }
+      .tumor { fill: #ff80ab; stroke: #f50057; stroke-width: 1.4; stroke-linejoin: round; }
+      .title { font-family: sans-serif; font-size: 24px; font-weight: bold; fill: #333; text-anchor: middle; }
+      .label { font-family: sans-serif; font-size: 18px; font-weight: bold; fill: #333; text-anchor: middle; }
+      .sublabel { font-family: sans-serif; font-size: 13px; fill: #666; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <text x="500" y="36" class="title">Haggitt levels of invasion in malignant polyps</text>
+
+  <g transform="translate(30, 60)">
+    <rect class="mp" x="10" y="150" width="280" height="20" rx="2" />
+    <rect class="sm" x="10" y="130" width="280" height="20" />
+    <path class="mucosa" d="M10,120 H136 L141,76 H159 L164,120 H290 V130 H10 Z" />
+    <rect class="sm" x="143" y="76" width="14" height="54" />
+    <path class="mucosa" d="M141,76 C98,8 202,8 159,76 Z" />
+    <path class="tumor" d="M138,40 C128,22 172,22 162,40 Z" />
+    <text x="150" y="198" class="label">Level 0</text>
+    <text x="150" y="218" class="sublabel">CIS / intramucosal</text>
+  </g>
+
+  <g transform="translate(350, 60)">
+    <rect class="mp" x="10" y="150" width="280" height="20" rx="2" />
+    <rect class="sm" x="10" y="130" width="280" height="20" />
+    <path class="mucosa" d="M10,120 H136 L141,76 H159 L164,120 H290 V130 H10 Z" />
+    <rect class="sm" x="143" y="76" width="14" height="54" />
+    <path class="mucosa" d="M141,76 C98,8 202,8 159,76 Z" />
+    <path class="tumor" d="M144,72 C112,20 188,20 156,72 Z" />
+    <text x="150" y="198" class="label">Level 1</text>
+    <text x="150" y="218" class="sublabel">SM limited to the head</text>
+  </g>
+
+  <g transform="translate(670, 60)">
+    <rect class="mp" x="10" y="150" width="280" height="20" rx="2" />
+    <rect class="sm" x="10" y="130" width="280" height="20" />
+    <path class="mucosa" d="M10,120 H136 L141,76 H159 L164,120 H290 V130 H10 Z" />
+    <rect class="sm" x="143" y="76" width="14" height="54" />
+    <path class="mucosa" d="M141,76 C98,8 202,8 159,76 Z" />
+    <path class="tumor" d="M141,76 C110,18 190,18 159,76 Z" />
+    <text x="150" y="198" class="label">Level 2</text>
+    <text x="150" y="218" class="sublabel">Neck</text>
+  </g>
+
+  <g transform="translate(30, 360)">
+    <rect class="mp" x="10" y="150" width="280" height="20" rx="2" />
+    <rect class="sm" x="10" y="130" width="280" height="20" />
+    <path class="mucosa" d="M10,120 H136 L141,76 H159 L164,120 H290 V130 H10 Z" />
+    <rect class="sm" x="143" y="76" width="14" height="54" />
+    <path class="mucosa" d="M141,76 C98,8 202,8 159,76 Z" />
+    <path class="tumor" d="M144,118 V76 C110,18 190,18 156,76 V118 Z" />
+    <text x="150" y="198" class="label">Level 3</text>
+    <text x="150" y="218" class="sublabel">Stalk</text>
+  </g>
+
+  <g transform="translate(350, 360)">
+    <rect class="mp" x="10" y="150" width="280" height="20" rx="2" />
+    <rect class="sm" x="10" y="130" width="280" height="20" />
+    <path class="mucosa" d="M10,120 H136 L141,76 H159 L164,120 H290 V130 H10 Z" />
+    <rect class="sm" x="143" y="76" width="14" height="54" />
+    <path class="mucosa" d="M141,76 C98,8 202,8 159,76 Z" />
+    <path class="tumor" d="M108,148 H192 V132 H156 V76 C110,18 190,18 144,76 V132 H108 Z" />
+    <text x="150" y="198" class="label">Level 4</text>
+    <text x="150" y="218" class="sublabel">Bowel-wall SM</text>
+  </g>
+
+  <g transform="translate(670, 360)">
+    <rect class="mp" x="10" y="150" width="280" height="20" rx="2" />
+    <rect class="sm" x="10" y="130" width="280" height="20" />
+    <path class="mucosa" d="M10,120 H78 L78,130 H222 L222,120 H290 V130 H10 Z" />
+    <path class="mucosa" d="M78,120 C78,74 222,74 222,120 L222,130 L78,130 Z" />
+    <path class="tumor" d="M96,148 H204 V130 C204,88 96,88 96,130 Z" />
+    <text x="150" y="198" class="label">Sessile = L4</text>
+    <text x="150" y="218" class="sublabel">Any SM invasion</text>
+  </g>
+</svg>

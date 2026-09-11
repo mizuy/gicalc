@@ -1,7 +1,25 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
 
 /** JGCA. Gastric Cancer 2011;14:101-112. English 3rd ed. */
 export const BORRMANN_JGCA_2011_PUBMED = '21573743';
+
+const BORRMANN_USER_FIGURE_PATH = '/figures/borrmann-gicalc2026-original.svg';
+
+function userSchematicCrop(file: string, label: string, meaning: string): ClassificationFigure {
+  return {
+    src: `/figures/borrmann-gicalc2026-${file}.webp`,
+    href: BORRMANN_USER_FIGURE_PATH,
+    hrefLabel: 'Full schematic',
+    figureKind: 'gicalc',
+    sourceShort: 'GI Calc',
+    alt: `Schematic of Borrmann ${label}: ${meaning}`,
+    caption: `${label}. ${meaning} (original schematic supplied for GI Calc)`,
+    source: 'GI Calc original schematic, 2026.',
+    license: 'CC BY 4.0',
+    note: `Borrmann原著の図ではなく、GI Calc自作のCC BY模式図から${label}を切り抜いて掲載。`,
+    aspectRatio: 1200 / 680,
+  };
+}
 
 export const borrmannScore: ClassificationDefinition = {
   id: 'borrmann',
@@ -39,7 +57,18 @@ export const borrmannScore: ClassificationDefinition = {
         'Japanese Gastric Cancer Association. Japanese classification of gastric carcinoma: 3rd English edition. Gastric Cancer. 2011;14:101-112. Original types: Borrmann R. In: Henke F, Lubarsch O, eds. Handbuch der speziellen pathologischen Anatomie und Histologie. 1926.',
       doi: 'https://doi.org/10.1007/s10120-011-0041-5',
       pubmed: BORRMANN_JGCA_2011_PUBMED,
-      note: '規約英語第3版。Springer。1926 年原著も CC ではない。画像は埋め込まず、PubMed へリンクする。',
+      note: '規約英語第3版。Springer。1926 年原著も CC ではない。画像は埋め込まず、PubMed へリンクする。進行胃癌 I–IV を揃えたホスト可能な内視鏡 CC 図は見つからなかった（超音波図やリンパ腫の Borrmann 様写真は使わない）。',
+    },
+    {
+      href: BORRMANN_USER_FIGURE_PATH,
+      hrefLabel: 'Full supplied schematic',
+      figureKind: 'gicalc',
+      sourceShort: 'GI Calc',
+      alt: 'Original schematic of Borrmann types 1–4 supplied for GI Calc',
+      caption: 'Borrmann types 1–4 — supplied original schematic',
+      source: 'GI Calc original schematic, 2026.',
+      license: 'CC BY 4.0',
+      note: '原著図ではない GI Calc 自作 SVG。複合図は埋め込まず、各型の crop を WebP で掲載。',
     },
   ],
   entries: [
@@ -48,6 +77,7 @@ export const borrmannScore: ClassificationDefinition = {
       meaning: 'Polypoid / fungating',
       group: 'Borrmann',
       severity: 'moderate',
+      figures: [userSchematicCrop('type-1', 'Type 1', 'Polypoid / fungating')],
       rows: [
         {
           heading: 'Appearance',
@@ -60,6 +90,7 @@ export const borrmannScore: ClassificationDefinition = {
       meaning: 'Ulcerative, sharp margins',
       group: 'Borrmann',
       severity: 'moderate',
+      figures: [userSchematicCrop('type-2', 'Type 2', 'Ulcerative, sharp margins')],
       rows: [
         {
           heading: 'Appearance',
@@ -72,6 +103,7 @@ export const borrmannScore: ClassificationDefinition = {
       meaning: 'Infiltrative ulcerative',
       group: 'Borrmann',
       severity: 'severe',
+      figures: [userSchematicCrop('type-3', 'Type 3', 'Infiltrative ulcerative')],
       rows: [
         {
           heading: 'Appearance',
@@ -84,6 +116,7 @@ export const borrmannScore: ClassificationDefinition = {
       meaning: 'Diffuse / linitis plastica',
       group: 'Borrmann',
       severity: 'severe',
+      figures: [userSchematicCrop('type-4', 'Type 4', 'Diffuse / linitis plastica')],
       rows: [
         {
           heading: 'Appearance',

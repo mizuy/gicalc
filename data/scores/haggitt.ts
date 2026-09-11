@@ -1,7 +1,25 @@
-import type { ClassificationDefinition } from '../../types/score';
+import type { ClassificationDefinition, ClassificationFigure } from '../../types/score';
 
 /** Haggitt RC et al. Gastroenterology 1985;89:328-336 */
 export const HAGGITT_1985_PUBMED = '4007423';
+
+const HAGGITT_USER_FIGURE_PATH = '/figures/haggitt-gicalc2026-original.svg';
+
+function userSchematicCrop(file: string, label: string, meaning: string): ClassificationFigure {
+  return {
+    src: `/figures/haggitt-gicalc2026-${file}.webp`,
+    href: HAGGITT_USER_FIGURE_PATH,
+    hrefLabel: 'Full schematic',
+    figureKind: 'gicalc',
+    sourceShort: 'GI Calc',
+    alt: `Schematic of Haggitt ${label}: ${meaning}`,
+    caption: `${label}. ${meaning} (original schematic supplied for GI Calc)`,
+    source: 'GI Calc original schematic, 2026.',
+    license: 'CC BY 4.0',
+    note: `Haggitt原著の図ではなく、GI Calc自作のCC BY模式図から${label}を切り抜いて掲載。`,
+    aspectRatio: 1200 / 680,
+  };
+}
 
 export const haggittScore: ClassificationDefinition = {
   id: 'haggitt',
@@ -29,7 +47,18 @@ export const haggittScore: ClassificationDefinition = {
         'Haggitt RC, Glotzbach RE, Soffer EE, Wruble LD. Prognostic factors in colorectal carcinomas arising in adenomas: implications for lesions removed by endoscopic polypectomy. Gastroenterology. 1985;89:328-336.',
       doi: 'https://doi.org/10.1016/0016-5085(85)90331-3',
       pubmed: HAGGITT_1985_PUBMED,
-      note: '原著。Elsevier / Gastroenterology の著作権。CC ではないので画像は埋め込まず、PubMed へリンクする。',
+      note: '原著。Elsevier / Gastroenterology の著作権。CC ではないので画像は埋め込まず、PubMed へリンクする。JCM 2024 Fig. 1 は CC BY 記事だが McKigney 2020 Surgery (Oxford) からの再掲なので埋め込まない。Kuo 2020 Gastroenterol Res Fig. 6 は CC BY-NC 4.0 の二次模式図だが、カードには GI Calc 図を載せる。',
+    },
+    {
+      href: HAGGITT_USER_FIGURE_PATH,
+      hrefLabel: 'Full supplied schematic',
+      figureKind: 'gicalc',
+      sourceShort: 'GI Calc',
+      alt: 'Original schematic of Haggitt levels 0–4 supplied for GI Calc',
+      caption: 'Haggitt Level 0–4 and sessile Level 4 — supplied original schematic',
+      source: 'GI Calc original schematic, 2026.',
+      license: 'CC BY 4.0',
+      note: '原著図ではない GI Calc 自作 SVG。複合図は埋め込まず、各レベルの crop を WebP で掲載。',
     },
   ],
   entries: [
@@ -38,6 +67,7 @@ export const haggittScore: ClassificationDefinition = {
       meaning: 'CIS / intramucosal',
       group: 'Haggitt',
       severity: 'none',
+      figures: [userSchematicCrop('level-0', 'Level 0', 'CIS / intramucosal')],
       rows: [
         {
           heading: 'Definition',
@@ -50,6 +80,7 @@ export const haggittScore: ClassificationDefinition = {
       meaning: 'SM limited to the head',
       group: 'Haggitt',
       severity: 'mild',
+      figures: [userSchematicCrop('level-1', 'Level 1', 'SM limited to the head')],
       rows: [
         {
           heading: 'Definition',
@@ -62,6 +93,7 @@ export const haggittScore: ClassificationDefinition = {
       meaning: 'Neck',
       group: 'Haggitt',
       severity: 'moderate',
+      figures: [userSchematicCrop('level-2', 'Level 2', 'Neck')],
       rows: [
         {
           heading: 'Definition',
@@ -74,6 +106,7 @@ export const haggittScore: ClassificationDefinition = {
       meaning: 'Stalk',
       group: 'Haggitt',
       severity: 'moderate',
+      figures: [userSchematicCrop('level-3', 'Level 3', 'Stalk')],
       rows: [
         {
           heading: 'Definition',
@@ -86,6 +119,10 @@ export const haggittScore: ClassificationDefinition = {
       meaning: 'Bowel-wall SM',
       group: 'Haggitt',
       severity: 'severe',
+      figures: [
+        userSchematicCrop('level-4', 'Level 4', 'Bowel-wall SM'),
+        userSchematicCrop('sessile', 'Sessile = L4', 'Any SM invasion'),
+      ],
       rows: [
         {
           heading: 'Definition',

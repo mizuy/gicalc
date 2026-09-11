@@ -3,6 +3,10 @@ import type { ImageSourcePropType } from 'react-native';
 
 export const BUNDLED_FIGURES: Record<string, ImageSourcePropType> = {
   '/figures/bbps-scirep2024-fig1.webp': require('../../public/figures/bbps-scirep2024-fig1.webp'),
+  '/figures/borrmann-gicalc2026-type-1.webp': require('../../public/figures/borrmann-gicalc2026-type-1.webp'),
+  '/figures/borrmann-gicalc2026-type-2.webp': require('../../public/figures/borrmann-gicalc2026-type-2.webp'),
+  '/figures/borrmann-gicalc2026-type-3.webp': require('../../public/figures/borrmann-gicalc2026-type-3.webp'),
+  '/figures/borrmann-gicalc2026-type-4.webp': require('../../public/figures/borrmann-gicalc2026-type-4.webp'),
   '/figures/ec-maeda2021-fig2-ec1a.webp': require('../../public/figures/ec-maeda2021-fig2-ec1a.webp'),
   '/figures/ec-maeda2021-fig2-ec1b.webp': require('../../public/figures/ec-maeda2021-fig2-ec1b.webp'),
   '/figures/ec-maeda2021-fig2-ec2.webp': require('../../public/figures/ec-maeda2021-fig2-ec2.webp'),
@@ -23,6 +27,12 @@ export const BUNDLED_FIGURES: Record<string, ImageSourcePropType> = {
   '/figures/erefs-sawada2025-fig1.webp': require('../../public/figures/erefs-sawada2025-fig1.webp'),
   '/figures/esd-fibrosis-inada2013-fig1.webp': require('../../public/figures/esd-fibrosis-inada2013-fig1.webp'),
   '/figures/forrest-jsmu2025-fig1.webp': require('../../public/figures/forrest-jsmu2025-fig1.webp'),
+  '/figures/haggitt-gicalc2026-level-0.webp': require('../../public/figures/haggitt-gicalc2026-level-0.webp'),
+  '/figures/haggitt-gicalc2026-level-1.webp': require('../../public/figures/haggitt-gicalc2026-level-1.webp'),
+  '/figures/haggitt-gicalc2026-level-2.webp': require('../../public/figures/haggitt-gicalc2026-level-2.webp'),
+  '/figures/haggitt-gicalc2026-level-3.webp': require('../../public/figures/haggitt-gicalc2026-level-3.webp'),
+  '/figures/haggitt-gicalc2026-level-4.webp': require('../../public/figures/haggitt-gicalc2026-level-4.webp'),
+  '/figures/haggitt-gicalc2026-sessile.webp': require('../../public/figures/haggitt-gicalc2026-sessile.webp'),
   '/figures/hill-ge2023-fig1-grade-i.webp': require('../../public/figures/hill-ge2023-fig1-grade-i.webp'),
   '/figures/hill-ge2023-fig1-grade-ii.webp': require('../../public/figures/hill-ge2023-fig1-grade-ii.webp'),
   '/figures/hill-ge2023-fig1-grade-iii.webp': require('../../public/figures/hill-ge2023-fig1-grade-iii.webp'),
@@ -121,4 +131,8 @@ export const BUNDLED_FIGURES: Record<string, ImageSourcePropType> = {
   '/figures/wasp-quach2024-fig4.webp': require('../../public/figures/wasp-quach2024-fig4.webp'),
   '/figures/wasp-quach2024-indistinct-border.webp': require('../../public/figures/wasp-quach2024-indistinct-border.webp'),
   '/figures/wasp-quach2024-irregular-shape.webp': require('../../public/figures/wasp-quach2024-irregular-shape.webp'),
+  '/figures/yamada-gicalc2026-type-i.webp': require('../../public/figures/yamada-gicalc2026-type-i.webp'),
+  '/figures/yamada-gicalc2026-type-ii.webp': require('../../public/figures/yamada-gicalc2026-type-ii.webp'),
+  '/figures/yamada-gicalc2026-type-iii.webp': require('../../public/figures/yamada-gicalc2026-type-iii.webp'),
+  '/figures/yamada-gicalc2026-type-iv.webp': require('../../public/figures/yamada-gicalc2026-type-iv.webp'),
 };

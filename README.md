@@ -21,8 +21,8 @@
 | 胃 | 木村–竹本（Quach 2019） | 内視鏡的萎縮 | 定義一覧（Quach 2019 の図・文言） |
 | 胃 | Hill（1996） | 胃食道フラップ弁 I–IV | 定義一覧（Ge 2023 の図・文言） |
 | 胃 | MESDA-G（Muto 2016） | 早期胃癌の拡大（M-NBI） | 定義一覧（Kurumi 2021 切り抜き + 原著リンク。ほかの CC 図は `/atlas/mesda-g`） |
-| 胃 | 山田分類（1966 / 1974） | 胃隆起性病変 I–IV | 定義一覧（原著リンク） |
-| 胃 | Borrmann（1926） | 進行胃癌の肉眼型 I–IV（規約 5 型） | 定義一覧（原著リンク） |
+| 胃 | 山田分類（1966 / 1974） | 胃隆起性病変 I–IV | 定義一覧 + 模式図 |
+| 胃 | Borrmann（1926） | 進行胃癌の肉眼型 I–IV（規約 5 型） | 定義一覧 + 模式図 |
 | 胃 | 京都分類（原法） | 胃炎・胃癌リスク | 点数 0–8 |
 | 胃 | 改変京都（Kawamura 2021） | 胃炎・胃癌リスク | 点数 0–5 |
 | 胃 | EGGIM | 内視鏡的腸上皮化生 | 点数 0–8 |
@@ -47,7 +47,7 @@
 | 大腸 | 工藤–鶴田（pit pattern） | 色素拡大 pit pattern | 定義一覧（自作 CC 参考図 + 原著リンク） |
 | 大腸 | ESD-F（Matsumoto 2010 / Kim 2016） | 大腸 ESD 粘膜下層線維化 F0–F2 | 定義一覧（原著リンク + Inada 2013 参考図） |
 | 大腸 | Sydney DMI（Burgess 2017） | EMR 後の深部壁損傷 Type 0–V | 定義一覧（原著リンク） |
-| 大腸・病理 | Haggitt（1985） | 有茎悪性ポリープの浸潤 Level 0–4 | 定義一覧（原著リンク） |
+| 大腸・病理 | Haggitt（1985） | 有茎悪性ポリープの浸潤 Level 0–4 | 定義一覧 + 模式図 |
 | 大腸 | 治癒切除判定（JGES/JSCCR） | 大腸 ESD 後・内視鏡的治癒切除 | 治癒切除 / 追加腸切除 / VM1 |
 | 大腸 | NICE（Hayashi 2013） | 大腸 NBI（非拡大） | 定義一覧（Hamada 2021 CC 図 + Hayashi 原著リンク） |
 | 大腸 | WASP（IJspeert 2016） | HP / SSL / 腺腫（<10 mm） | 定義一覧（文言。図は原著へリンク） |
@@ -146,6 +146,7 @@ npm run preview:pages
 - 工藤–鶴田 pit pattern カード模式図: プロジェクト提供者の自作図をSVG要素から抽出して高解像度化。**CC BY 4.0**（原著図ではない）
 - Paris分類カードの模式図: プロジェクト提供者の自作図を切り抜き。**CC BY 4.0**（Paris原著図ではない）
 - LST分類カードの模式図: プロジェクト提供者の自作図を切り抜き。**CC BY 4.0**（LST原著図ではない）
+- Haggitt / 山田 / Borrmann カード模式図: GI Calc 自作図を切り抜き。**CC BY 4.0**（いずれも原著図ではない）
 
 **CC ではないソース**
 
@@ -154,13 +155,13 @@ npm run preview:pages
 - WASP（IJspeert 2016, *Gut*）: BMJ 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
 - Sydney DMI（Burgess 2017, *Gut*）: BMJ 著作権。図は埋め込まず、原著 Fig. 1 / Figs 3–5 へリンクする
 - Rockall（Rockall 1996, *Gut*）: BMJ 著作権。図は埋め込まず、論文へリンクする
-- Yamada（山田 1966『胃と腸』/ Yamada 1974, *Radiology*）: CC ではない。図は埋め込まず、PubMed へリンクする
-- Haggitt（Haggitt 1985, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、論文へリンクする
-- OLGA（Rugge 2007, *Dig Liver Dis*）: CC ではない。図は埋め込まず、論文へリンクする
+- Yamada（山田 1966『胃と腸』/ Yamada 1974, *Radiology*）: CC ではない。原著図は埋め込まず PubMed へリンクする（各型カードは GI Calc 模式図）
+- Haggitt（Haggitt 1985, *Gastroenterology*）: Elsevier 著作権。原著図は埋め込まず論文へリンクする（各レベルカードは GI Calc 模式図）
+- OLGA（Rugge 2005, *Gastroenterology*）: Elsevier 著作権。原著は 2005 年の提案レター。図は埋め込まず論文へリンクする
 - OLGIM（Capelle 2010, *GIE*）: Elsevier 著作権。図は埋め込まず、論文へリンクする
 - BING（Sharma 2016, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 1 へリンクする
 - Barrett 定義（食道癌取扱い規約第11版）: 図は埋め込まず論文へリンクする
-- Borrmann（1926 原著 / JGCA 2011）: CC ではない。図は埋め込まず、論文へリンクする
+- Borrmann（1926 原著 / JGCA 2011）: CC ではない。原著図は埋め込まず論文へリンクする（各型カードは GI Calc 模式図）
 - Prague（Sharma 2006, *Gastroenterology*）: Elsevier 著作権。図は埋め込まず、原著 Fig. 3 へリンクする
 - LA 原著（Lundell 1999, *Gut*）: CC ではない（CC 図は Jung 2025 Fig. 1A–D の切り抜きを掲載）
 - 工藤–鶴田の原図（Tanaka 2004, *Dig Endosc* / Kudo 1996, *GIE*）: CC ではない。図は埋め込まず、*Clin Endosc* 2025 Fig. 4 へリンクする（各型カードには自作 CC 参考図を掲載）
