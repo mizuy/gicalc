@@ -1375,31 +1375,35 @@ test('分類は選択計算ではなく定義一覧を持つ', () => {
   assert.ok(kudo && isClassification(kudo));
   assert.deepEqual(
     kudo.entries.map((entry) => entry.label),
-    ['Type I', 'Type II', 'Type IIIs', 'Type IIIL', 'Type IV', 'Type VI', 'Type VN'],
+    ['Type I', 'Type II', 'Type IIIs', 'Type IIIL', 'Type IV', 'Type VI mild', 'Type VI severe', 'Type VN'],
   );
-  assert.equal(kudo.entries[5]?.meaning, 'Irregular pits');
+  assert.equal(kudo.entries[5]?.meaning, 'Mild irregular pits');
+  assert.equal(kudo.entries[6]?.meaning, 'Severe irregular pits');
   assert.match(kudo.originalLead ?? '', /Type V was later subdivided/);
   assert.match(kudo.entries[2]?.rows.find((row) => row.heading === 'Note')?.text ?? '', /small or short/);
   assert.match(kudo.description, /箱根合意/);
-  assert.match(kudo.entries[5]?.comment ?? '', /箱根合意/);
-  assert.match(kudo.entries[5]?.comment ?? '', /invasive pattern|別カード/);
+  assert.match(kudo.description, /軽度不整|高度不整|VI mild|VI severe/);
+  assert.match(kudo.entries[5]?.comment ?? '', /箱根合意|軽度不整/);
+  assert.match(kudo.entries[6]?.comment ?? '', /高度不整|invasive pattern/);
   assert.deepEqual(
     kudo.entries.filter((entry) => /^Type VI/i.test(entry.label)).map((entry) => entry.label),
-    ['Type VI'],
+    ['Type VI mild', 'Type VI severe'],
   );
   assert.match(kudo.entries[5]?.rows.find((row) => row.heading === 'Hakone 2004')?.text ?? '', /Hakone/);
-  assert.match(kudo.entries[5]?.rows.find((row) => row.heading === 'Mild vs severe')?.text ?? '', /VI severe/);
-  assert.match(kudo.entries[5]?.rows.find((row) => row.heading === 'Invasive pattern')?.text ?? '', /demarcated|Fujii/);
-  assert.match(kudo.entries[5]?.rows.find((row) => row.heading === 'Histology')?.text ?? '', /deep SM/);
-  assert.match(kudo.entries[6]?.comment ?? '', /箱根合意|無構造/);
-  assert.match(kudo.entries[6]?.rows.find((row) => row.heading === 'Note')?.text ?? '', /Hakone 2004/);
+  assert.match(kudo.entries[5]?.rows.find((row) => row.heading === 'Histology')?.text ?? '', /shallow SM|intramucosal/);
+  assert.match(kudo.entries[6]?.rows.find((row) => row.heading === 'Invasive pattern')?.text ?? '', /demarcated|Fujii/);
+  assert.match(kudo.entries[6]?.rows.find((row) => row.heading === 'Histology')?.text ?? '', /deep/);
+  assert.match(kudo.entries[7]?.comment ?? '', /箱根合意|無構造/);
+  assert.match(kudo.entries[7]?.rows.find((row) => row.heading === 'Note')?.text ?? '', /Hakone 2004/);
   const englishKudoNotes = localizeScore(kudo, 'en');
   assert.match(englishKudoNotes.description, /Hakone/);
-  assert.match(englishKudoNotes.entries[5]?.comment ?? '', /Hakone/);
-  assert.match(englishKudoNotes.entries[5]?.comment ?? '', /invasive pattern/);
+  assert.match(englishKudoNotes.description, /mild|severe/i);
+  assert.match(englishKudoNotes.entries[5]?.comment ?? '', /Mild|preserved|Hakone/i);
   assert.doesNotMatch(englishKudoNotes.entries[5]?.comment ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
-  assert.match(englishKudoNotes.entries[6]?.comment ?? '', /Hakone|amorphous/);
+  assert.match(englishKudoNotes.entries[6]?.comment ?? '', /severe|invasive pattern|Fujii/i);
   assert.doesNotMatch(englishKudoNotes.entries[6]?.comment ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
+  assert.match(englishKudoNotes.entries[7]?.comment ?? '', /Hakone|amorphous/);
+  assert.doesNotMatch(englishKudoNotes.entries[7]?.comment ?? '', /[\u3040-\u30ff\u4e00-\u9faf]/);
 
   const esdFibrosis = getScoreById('esd-fibrosis');
   assert.ok(esdFibrosis && isClassification(esdFibrosis));
@@ -2030,13 +2034,19 @@ test('分類は原著の図を出典付きで持つ', () => {
   assert.equal(kudo.figures?.[1]?.sourceShort, 'GI Calc');
   assert.equal(kudo.figures?.[1]?.license, 'CC BY 4.0');
   const kudoCrops = kudo.entries.flatMap((entry) => entry.figures ?? []);
-  assert.equal(kudoCrops.length, 7);
+  assert.equal(kudoCrops.length, 8);
   assert.equal(kudo.entries.every((entry) => entry.figures?.length === 1), true);
   assert.equal(kudoCrops.every((figure) => figure.figureKind === 'gicalc'), true);
   assert.equal(kudoCrops.every((figure) => figure.sourceShort === 'GI Calc'), true);
   assert.equal(kudoCrops.every((figure) => figure.license === 'CC BY 4.0'), true);
   assert.equal(
     kudoCrops.every((figure) => figure.src?.startsWith('/figures/pit-pattern-gemini2-')),
+    true,
+  );
+  assert.equal(
+    kudo.entries.filter((entry) => /^Type VI/i.test(entry.label)).every((entry) =>
+      entry.figures?.[0]?.src?.includes('type-vi'),
+    ),
     true,
   );
   const englishKudo = localizeScore(kudo, 'en');

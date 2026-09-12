@@ -1842,15 +1842,17 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
   'kudo-tsuruta': {
     name: 'Kudo–Tsuruta classification (pit pattern)',
     description:
-      'Chromoendoscopic pit-pattern classification of colorectal neoplasia (I / II / IIIs / IIIL / IV / VI / VN). The VI / VN boundary of type V was unified by the 2004 Hakone consensus.',
+      'Chromoendoscopic pit-pattern classification of colorectal neoplasia (I / II / IIIs / IIIL / IV / VI mild / VI severe / VN). The VI / VN boundary of type V was unified by the 2004 Hakone consensus. VI is shown as mild vs severe irregularity.',
     groups: {
       非腫瘍: 'Non-neoplastic',
       腺腫: 'Adenoma',
       癌: 'Carcinoma',
     },
     comments: {
-      'Type VI':
-        'Hakone consensus (2004) unified irregular glands as VI. VI severe irregularity and invasive pattern are explained on this card (not as separate cards) as depth-of-invasion clues.',
+      'Type VI mild':
+        'Mild irregularity after Hakone (2004) unified irregular glands as VI. Pit architecture is preserved. See the next card for severe irregularity.',
+      'Type VI severe':
+        'VI severe (destroyed / desert pits). Overlaps Fujii invasive pattern as a deep-invasion clue. Clear amorphous areas belong to Type VN.',
       'Type VN':
         'Hakone consensus limits VN to a clear amorphous area. A reliable marker of deep SM invasion.',
     },
@@ -1864,7 +1866,8 @@ export const SCORE_EN: Record<string, ScoreCopy> = {
       'Type IIIs': ['Extracted from the supplied Gemini-generated reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
       'Type IIIL': ['Extracted from the supplied Gemini-generated reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
       'Type IV': ['Extracted from the supplied Gemini-generated reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
-      'Type VI': ['Extracted from the supplied Gemini-generated reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
+      'Type VI mild': ['Extracted from the supplied Gemini-generated reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
+      'Type VI severe': ['Extracted from the supplied Gemini-generated reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
       'Type VN': ['Extracted from the supplied Gemini-generated reference schematic and rasterized at high resolution. Not an original Kudo–Tsuruta figure. License: CC BY 4.0.'],
     },
   },
