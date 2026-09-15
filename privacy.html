@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Moved to EndoGIzmo</title>
+    <meta name="robots" content="noindex" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      (function () {
+        var dest =
+          'https://mizuy.github.io/endogizmo' +
+          location.pathname.replace(/^\/gicalc\/?/, '/') +
+          location.search +
+          location.hash;
+        var link = document.createElement('link');
+        link.rel = 'canonical';
+        link.href = dest;
+        document.head.appendChild(link);
+        var refresh = document.createElement('meta');
+        refresh.httpEquiv = 'refresh';
+        refresh.content = '0;url=' + dest;
+        document.head.appendChild(refresh);
+        location.replace(dest);
+      })();
+    </script>
+  </head>
+  <body>
+    <p>This site moved to <a href="https://mizuy.github.io/endogizmo/">EndoGIzmo</a>.</p>
+    <p>サイトは <a href="https://mizuy.github.io/endogizmo/">EndoGIzmo</a> に移しました。</p>
+  </body>
+</html>
